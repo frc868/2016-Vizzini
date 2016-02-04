@@ -3,6 +3,7 @@ package com.techhounds.commands;
 import com.techhounds.OI;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -10,7 +11,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class UpdateController extends Command {
 
     public UpdateController() {
-    	
+    	setRunWhenDisabled(true);
     }
 
     protected void initialize() {
@@ -18,7 +19,6 @@ public class UpdateController extends Command {
     }
 
     protected void execute() {
-    
     }
 
     protected boolean isFinished() {

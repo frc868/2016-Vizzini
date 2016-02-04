@@ -30,10 +30,13 @@ public class OI {
 		
 		driverChooser = createControllerChooser();
 		operatorChooser = createControllerChooser();
+
+		SmartDashboard.putData("Driver Controller Chooser", driverChooser);
+		SmartDashboard.putData("Operator Controller Chooser", operatorChooser);
 		
 		driver = new ControllerMap(new Joystick(0), (ControllerMap.Type) driverChooser.getSelected());
 		operator = new ControllerMap(new Joystick(1), (ControllerMap.Type) operatorChooser.getSelected());
-		
+	
 		setupDriver();
 		setupOperator();
 		setupSmartDashboard();
@@ -43,8 +46,9 @@ public class OI {
 	 * @return Gets the only instance of the OI
 	 */
 	public static OI getInstance() {
-		if(instance == null)
+		if(instance == null) {
 			instance = new OI();
+		}
 		return instance;
 	}
 	
@@ -76,9 +80,6 @@ public class OI {
 	 */
 	public void setupSmartDashboard() {
 		// TODO: Add Smart Dashboard Controls
-		
-		SmartDashboard.putData("Driver Controller Chooser", driverChooser);
-		SmartDashboard.putData("Operator Controller Chooser", operatorChooser);
 		
 		SmartDashboard.putData("Update Controller Choice", new UpdateController());
 	}
@@ -113,6 +114,7 @@ public class OI {
 	 * Update Controllers
 	 */
 	public void updateControllers() {
+		SmartDashboard.putNumber("WORKS", 2);
 		driver.setControllerType((ControllerMap.Type) driverChooser.getSelected());
 		operator.setControllerType((ControllerMap.Type) operatorChooser.getSelected());
 	}

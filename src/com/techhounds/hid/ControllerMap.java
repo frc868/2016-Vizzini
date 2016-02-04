@@ -35,9 +35,9 @@ public class ControllerMap {
 	}
 	
 	public ControllerMap(Joystick joystick, Type type) {
-		setControllerType(type);
 		this.joystick = joystick;
 		buttons = new HashMap<>();
+		setControllerType(type);
 	}
 	
 	public void setControllerType(Type type) {

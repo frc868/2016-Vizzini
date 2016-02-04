@@ -6,6 +6,7 @@ import com.techhounds.commands.UpdateSmartDashboard;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Robot extends IterativeRobot {
 	
@@ -18,6 +19,9 @@ public class Robot extends IterativeRobot {
     	
     	OI.getInstance();
     	(new UpdateSmartDashboard()).start();
+    	
+    	System.out.println("*** TECHHOUNDS IS READY TO ROBOT ***");
+    	SmartDashboard.putNumber("HEY", 2);
     }
 	
     /**
@@ -39,6 +43,8 @@ public class Robot extends IterativeRobot {
 	 */
 	public void autonomousInit() {
 		// TODO: Get Selected Auton Command and Run It!
+
+    	System.out.println("*** TECHHOUNDS IS READY TO AUTON ***");
     }
 
 	/**
@@ -53,6 +59,8 @@ public class Robot extends IterativeRobot {
      */
     public void teleopInit() {
     	// TODO: Cancel Auton Command
+
+    	System.out.println("*** TECHHOUNDS IS READY TO TELEOP ***");
     }
 
     /**
