@@ -41,6 +41,8 @@ public class ControllerMap {
 	}
 	
 	public void setControllerType(Type type) {
+		this.type = type;
+		
 		switch(type){
 			case PS4:
 				buttonPorts = ps4; 
@@ -57,6 +59,17 @@ public class ControllerMap {
 			default:
 				buttonPorts = logitech;
 				break;
+		}
+		
+		// Iterate through all possible Joystick buttons to replace type
+		for(int buttonID = 0; buttonID < 14; buttonID++) {
+			JoystickButton button = buttons.get(buttonID);
+			if(button != null) {
+				if((type == Type.XBOX_ONE || type == Type.XBOX_360) && (buttonID == Key.LT  || buttonID == Key.RT))
+					buttons.replace(buttonID, new TriggerButton(joystick, buttonPorts[buttonID]));
+				else
+					buttons.replace(buttonID, new JoystickButton(joystick, buttonPorts[buttonID]));
+			}
 		}
 	}
 	
