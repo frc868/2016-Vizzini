@@ -1,18 +1,15 @@
-
 package com.techhounds.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-import com.techhounds.Robot;
-
 /**
  *
  */
-public class ExampleCommand extends Command {
+public class Commado extends Command {
 
-    public ExampleCommand() {
+    public Commado() {
         // Use requires() here to declare subsystem dependencies
-        requires(Robot.exampleSubsystem);
+        // eg. requires(chassis);
     }
 
     // Called just before this Command runs the first time
