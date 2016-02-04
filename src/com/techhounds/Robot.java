@@ -1,6 +1,8 @@
 
 package com.techhounds;
 
+import com.techhounds.commands.UpdateSmartDashboard;
+
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -15,6 +17,7 @@ public class Robot extends IterativeRobot {
     	// TODO: Start Smart Dashboard
     	
     	OI.getInstance();
+    	(new UpdateSmartDashboard()).start();
     }
 	
     /**
