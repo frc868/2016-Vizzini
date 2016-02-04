@@ -75,8 +75,8 @@ public class ControllerMap {
 	
 	public Button getButton(Integer buttonID) {
 		if(buttons.get(buttonID) == null) {
-			if(DPADButton.isDPADButton(buttonID))
-				buttons.put(buttonID, new DPADButton(joystick, buttonID));
+			if(DPadButton.isDPADButton(buttonID))
+				buttons.put(buttonID, new DPadButton(joystick, buttonID));
 			else if((type == Type.XBOX_ONE || type == Type.XBOX_360) && 
 					(buttonID == Key.LT  || buttonID == Key.RT))
 				buttons.put(buttonID, new TriggerButton(joystick, buttonID));

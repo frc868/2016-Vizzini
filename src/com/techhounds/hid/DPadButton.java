@@ -2,7 +2,7 @@ package com.techhounds.hid;
 
 import edu.wpi.first.wpilibj.GenericHID;
 
-public class DPADButton extends JoystickButton {
+public class DPadButton extends JoystickButton {
 	
 	protected boolean isEightDirectional;
 	protected int direction;
@@ -12,11 +12,11 @@ public class DPADButton extends JoystickButton {
 				DOWN = 24, DOWN_LEFT = 25, LEFT = 26, UP_LEFT = 27;
 	}
    
-    public DPADButton(GenericHID joystick, int direction) {
+    public DPadButton(GenericHID joystick, int direction) {
     	this(joystick, direction, false);
     }
     
-    public DPADButton(GenericHID joystick, int direction, boolean isEightDirectional) {
+    public DPadButton(GenericHID joystick, int direction, boolean isEightDirectional) {
     	super(joystick);
     	this.isEightDirectional = isEightDirectional;
     	this.direction = direction;

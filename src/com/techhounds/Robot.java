@@ -13,6 +13,8 @@ public class Robot extends IterativeRobot {
     public void robotInit() {
     	// TODO: Initialize Subsystems and OI
     	// TODO: Start Smart Dashboard
+    	
+    	OI.getInstance();
     }
 	
     /**

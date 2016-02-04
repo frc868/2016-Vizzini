@@ -1,11 +1,13 @@
 package com.techhounds;
 
 import com.techhounds.commands.Commado;
+import com.techhounds.commands.UpdateController;
 import com.techhounds.hid.ControllerMap;
-import com.techhounds.hid.DPADButton;
+import com.techhounds.hid.DPadButton;
 
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class OI {
     
@@ -14,16 +16,23 @@ public class OI {
 	private ControllerMap driver;
 	private ControllerMap operator;
 	
+	// DRIVER & OPERATOR CONTROLLER CHOOSER
+	private SendableChooser driverChooser;
+	private SendableChooser operatorChooser;
+	
 	// DRIVER CONTROLS
 	int driverTestCommando = ControllerMap.Key.A;
-	int driverTestCommandoTwo = DPADButton.Direction.UP;
+	int driverTestCommandoTwo = DPadButton.Direction.UP;
 	
 	// OPERATOR CONTROLS
 	
 	private OI() {
 		
-		driver = new ControllerMap(new Joystick(0), ControllerMap.Type.LOGITECH);
-		operator = new ControllerMap(new Joystick(1), ControllerMap.Type.LOGITECH);
+		driverChooser = createControllerChooser();
+		operatorChooser = createControllerChooser();
+		
+		driver = new ControllerMap(new Joystick(0), (ControllerMap.Type) driverChooser.getSelected());
+		operator = new ControllerMap(new Joystick(1), (ControllerMap.Type) operatorChooser.getSelected());
 		
 		setupDriver();
 		setupOperator();
@@ -67,5 +76,44 @@ public class OI {
 	 */
 	public void setupSmartDashboard() {
 		// TODO: Add Smart Dashboard Controls
+		
+		SmartDashboard.putData("Driver Controller Chooser", driverChooser);
+		SmartDashboard.putData("Operator Controller Chooser", operatorChooser);
+		
+		SmartDashboard.putData("Update Controller Choice", new UpdateController());
+	}
+	
+	/**
+	 * Gets the Driver's Gamepad
+	 */
+	public ControllerMap getDriver() {
+		return driver;
+	}
+	
+	/**
+	 * Gets the Operator's Gamepad
+	 */
+	public ControllerMap getOperator() {
+		return operator;
+	}
+	
+	/**
+	 * Create Chooser for Controllers
+	 */
+	private SendableChooser createControllerChooser() {
+		SendableChooser chooser = new SendableChooser();
+		chooser.addDefault("Logitech", ControllerMap.Type.LOGITECH);
+		chooser.addObject("XBOX ONE", ControllerMap.Type.XBOX_ONE);
+		chooser.addObject("XBOX 360", ControllerMap.Type.XBOX_360);
+		chooser.addObject("Playstation 4", ControllerMap.Type.PS4);
+		return chooser;
+	}
+	
+	/** 
+	 * Update Controllers
+	 */
+	public void updateControllers() {
+		driver.setControllerType((ControllerMap.Type) driverChooser.getSelected());
+		operator.setControllerType((ControllerMap.Type) operatorChooser.getSelected());
 	}
 }
