@@ -1,9 +1,9 @@
 package com.techhounds;
 
-import com.techhounds.commands.Commado;
+import com.techhounds.commands.Commando;
 import com.techhounds.commands.UpdateController;
-import com.techhounds.hid.ControllerMap;
-import com.techhounds.hid.DPadButton;
+import com.techhounds.lib.hid.ControllerMap;
+import com.techhounds.lib.hid.DPadButton;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -21,7 +21,7 @@ public class OI {
 	private SendableChooser operatorChooser;
 	
 	// DRIVER CONTROLS
-	int driverTestCommando = ControllerMap.Key.A;
+	int driverTestCommando = ControllerMap.Key.RT;
 	int driverTestCommandoTwo = DPadButton.Direction.UP;
 	
 	// OPERATOR CONTROLS
@@ -59,12 +59,12 @@ public class OI {
 		
 		// SAMPLE USAGE
 		driver.getButton(driverTestCommando)
-			.whenPressed(new Commado(), new Commado())
-			.whenReleased(new Commado())
-			.whileHeld(new Commado(), new Commado(), new Commado());
+			.whenPressed(new Commando(), new Commando())
+			.whenReleased(new Commando())
+			.whileHeld(new Commando(), new Commando(), new Commando());
 		
 		driver.getButton(driverTestCommandoTwo)
-			.whenPressed(new Commado())
+			.whenPressed(new Commando())
 			.whenReleased(); // It Will Just do A 0 Second Wait Command
 	}
 	
@@ -114,8 +114,34 @@ public class OI {
 	 * Update Controllers
 	 */
 	public void updateControllers() {
-		SmartDashboard.putNumber("WORKS", 2);
 		driver.setControllerType((ControllerMap.Type) driverChooser.getSelected());
 		operator.setControllerType((ControllerMap.Type) operatorChooser.getSelected());
+		
+		setupDriver();
+		setupOperator();
+	}
+	
+	/** 
+	 * Update dashboard when Called
+	 */
+	public void updateDashboard() {
+		SmartDashboard.putString("Driver Type", getControllerString(driver));
+		SmartDashboard.putString("Operator Type", getControllerString(operator));
+	}
+	
+	public String getControllerString(ControllerMap joystick) {
+		switch(joystick.getType()) {
+			case PS4:
+				return "PS4";
+			case XBOX_360:
+				return "XBOX_360";
+			case XBOX_ONE:
+				return "XBOX_ONE";
+			case LOGITECH:
+				return "LOGITECH";
+			default:
+				return "";
+			
+		}
 	}
 }

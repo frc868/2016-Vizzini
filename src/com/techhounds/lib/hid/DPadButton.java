@@ -1,4 +1,4 @@
-package com.techhounds.hid;
+package com.techhounds.lib.hid;
 
 import edu.wpi.first.wpilibj.GenericHID;
 
@@ -24,6 +24,9 @@ public class DPadButton extends JoystickButton {
 
     @Override
     public boolean get() {
+
+		if(off)
+			return false;
     	
     	if(!isDPADButton(direction))
     		return super.get();

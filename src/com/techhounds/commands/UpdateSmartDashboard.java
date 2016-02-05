@@ -2,14 +2,14 @@ package com.techhounds.commands;
 
 import java.util.List;
 
-import com.techhounds.subsystems.BasicSubsystem;
+import com.techhounds.OI;
+import com.techhounds.lib.subsystems.BasicSubsystem;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
- *
+ * 
  */
 public class UpdateSmartDashboard extends Command {
 
@@ -32,8 +32,8 @@ public class UpdateSmartDashboard extends Command {
 	    	
 	    	for(BasicSubsystem subsystem : subsystems)
 	    		subsystem.updateSmartDashboard();
+	    	OI.getInstance().updateDashboard();
 	    	timer.reset();
-	    	SmartDashboard.putNumber("TIME", timer.get());
 		}
     }
 

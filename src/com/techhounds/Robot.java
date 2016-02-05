@@ -2,6 +2,12 @@
 package com.techhounds;
 
 import com.techhounds.commands.UpdateSmartDashboard;
+import com.techhounds.subsystems.CollectorSubsystem;
+import com.techhounds.subsystems.DriveSubsystem;
+import com.techhounds.subsystems.ElevatorSubsystem;
+import com.techhounds.subsystems.GyroSubsystem;
+import com.techhounds.subsystems.ShooterSubsystem;
+import com.techhounds.subsystems.VisionSubsystem;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -17,6 +23,7 @@ public class Robot extends IterativeRobot {
     	// TODO: Initialize Subsystems and OI
     	// TODO: Start Smart Dashboard
     	
+    	initSubsystems();
     	OI.getInstance();
     	(new UpdateSmartDashboard()).start();
     	
@@ -28,7 +35,7 @@ public class Robot extends IterativeRobot {
      * Runs once the instant the robot is disabled
      */
     public void disabledInit(){
-
+    	
     }
 	
     /**
@@ -72,5 +79,14 @@ public class Robot extends IterativeRobot {
     
     public void testPeriodic() {
         LiveWindow.run();
+    }
+    
+    private void initSubsystems() {
+    	CollectorSubsystem.getInstance();
+    	DriveSubsystem.getInstance();
+    	ElevatorSubsystem.getInstance();
+    	GyroSubsystem.getInstance();
+    	ShooterSubsystem.getInstance();
+    	VisionSubsystem.getInstance();
     }
 }
