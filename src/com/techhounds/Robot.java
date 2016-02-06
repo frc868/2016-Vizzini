@@ -16,6 +16,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Robot extends IterativeRobot {
 	
+	public static boolean oneControllerMode = true;
+	
 	/**
 	 * Run once the instant the robot starts
 	 */

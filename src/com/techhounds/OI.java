@@ -37,8 +37,17 @@ public class OI {
 		driver = new ControllerMap(new Joystick(0), (ControllerMap.Type) driverChooser.getSelected());
 		operator = new ControllerMap(new Joystick(1), (ControllerMap.Type) operatorChooser.getSelected());
 	
-		setupDriver();
-		setupOperator();
+		setup();
+	}
+	
+	private void setup() {
+		if(Robot.oneControllerMode) {
+			setupController();
+		} else {
+			setupDriver();
+			setupOperator();
+		}
+
 		setupSmartDashboard();
 	}
 	
@@ -73,6 +82,22 @@ public class OI {
 	 */
 	public void setupOperator() {
 		// TODO: Add Operator Controls
+	}
+	
+	/**
+	 * Setup Single Controller Control
+	 */
+	public void setupController() {
+
+		// SAMPLE USAGE
+		driver.getButton(driverTestCommando)
+			.whenPressed(new Commando(), new Commando())
+			.whenReleased(new Commando())
+			.whileHeld(new Commando(), new Commando(), new Commando());
+		
+		driver.getButton(driverTestCommandoTwo)
+			.whenPressed(new Commando())
+			.whenReleased(); // It Will Just do A 0 Second Wait Command
 	}
 
 	/**
@@ -117,8 +142,7 @@ public class OI {
 		driver.setControllerType((ControllerMap.Type) driverChooser.getSelected());
 		operator.setControllerType((ControllerMap.Type) operatorChooser.getSelected());
 		
-		setupDriver();
-		setupOperator();
+		setup();
 	}
 	
 	/** 
