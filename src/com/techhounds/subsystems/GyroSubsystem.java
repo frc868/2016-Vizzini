@@ -1,8 +1,6 @@
 package com.techhounds.subsystems;
 
-import com.techhounds.lib.subsystems.BasicSubsystem;
-
-public class GyroSubsystem extends BasicSubsystem {
+public class GyroSubsystem{
 
 	private static GyroSubsystem instance;
 	
@@ -12,12 +10,10 @@ public class GyroSubsystem extends BasicSubsystem {
 		return instance;
 	}
 	
-	@Override
 	public void updateSmartDashboard() {
 		// TODO: Add Things That Need to be Sent to SmartDashboard for Information
 	}
 
-	@Override
 	protected void initDefaultCommand() {
 		// TODO Auto-generated method stub
 

@@ -1,8 +1,6 @@
 package com.techhounds.subsystems;
 
-import com.techhounds.lib.subsystems.BasicSubsystem;
-
-public class ElevatorSubsystem extends BasicSubsystem {
+public class ElevatorSubsystem{
 	
 	// TODO: Add SpeedController(s) for the Elevator
 	// TODO: Add Ports for the Elevator
@@ -16,12 +14,10 @@ public class ElevatorSubsystem extends BasicSubsystem {
 		return instance;
 	}
 	
-	@Override
 	public void updateSmartDashboard() {
 		// TODO: Add Things That Need to be Sent to SmartDashboard for Information
 	}
 
-	@Override
 	protected void initDefaultCommand() {
 		// TODO Auto-generated method stub
 

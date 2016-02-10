@@ -3,7 +3,6 @@ package com.techhounds.commands;
 import java.util.List;
 
 import com.techhounds.OI;
-import com.techhounds.lib.subsystems.BasicSubsystem;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
@@ -28,11 +27,6 @@ public class UpdateSmartDashboard extends Command {
     protected void execute() {
     	
     	if(timer.get() >= 0.3) {
-	    	List<BasicSubsystem> subsystems = BasicSubsystem.getSubsystems();
-	    	
-	    	for(BasicSubsystem subsystem : subsystems)
-	    		subsystem.updateSmartDashboard();
-	    	OI.getInstance().updateDashboard();
 	    	timer.reset();
 		}
     }
