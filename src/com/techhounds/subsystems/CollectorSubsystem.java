@@ -30,7 +30,7 @@ public class CollectorSubsystem extends Subsystem {
 	
 	public static CollectorSubsystem getInstance() {
 		if(instance == null){
-			CANTalon a = new CANTalon(RobotMap.COLLECTOR_MOTOR);
+			CANTalon a = new CANTalon(RobotMap.Collector.COLLECTOR_MOTOR);
 			instance = new CollectorSubsystem(a);
 		}
 		return instance;

@@ -28,7 +28,7 @@ public class CollectorAnglerSubsystem extends Subsystem {
 	
 	public static CollectorAnglerSubsystem getInstance(){
 		if(instance == null){
-			CANTalon x = new CANTalon(RobotMap.COLLECTOR_ANGLER);
+			CANTalon x = new CANTalon(RobotMap.Collector.COLLECTOR_ANGLER);
 			instance = new CollectorAnglerSubsystem(x);
 		}
 		return instance;
