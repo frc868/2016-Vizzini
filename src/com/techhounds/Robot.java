@@ -2,9 +2,9 @@
 package com.techhounds;
 
 import com.techhounds.commands.UpdateSmartDashboard;
+import com.techhounds.subsystems.CollectorAnglerSubsystem;
 import com.techhounds.subsystems.CollectorSubsystem;
 import com.techhounds.subsystems.DriveSubsystem;
-import com.techhounds.subsystems.ElevatorSubsystem;
 import com.techhounds.subsystems.GyroSubsystem;
 import com.techhounds.subsystems.ShooterSubsystem;
 import com.techhounds.subsystems.VisionSubsystem;
@@ -85,8 +85,8 @@ public class Robot extends IterativeRobot {
     
     private void initSubsystems() {
     	CollectorSubsystem.getInstance();
+    	CollectorAnglerSubsystem.getInstance();
     	DriveSubsystem.getInstance();
-    	ElevatorSubsystem.getInstance();
     	GyroSubsystem.getInstance();
     	ShooterSubsystem.getInstance();
     	VisionSubsystem.getInstance();
