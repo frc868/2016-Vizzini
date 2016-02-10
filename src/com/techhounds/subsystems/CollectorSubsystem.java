@@ -17,15 +17,27 @@ public class CollectorSubsystem extends Subsystem {
 	
 	public void setPower(double power){
 		power = Math.max(Math.min(power, 1), -1);
-		motor.set(power);
+		if(getInverted()){
+			motor.set(-power);
+		}else{
+			motor.set(power);
+		}
+	}
+	
+	public void stopPower(){
+		motor.set(0);
 	}
 	
 	public double getPower(){
 		return motor.get();
 	}
 	
+	public boolean getInverted(){
+		return RobotMap.Collector.COLLECTOR_IS_INVERTED;
+	}
+	
 	public void updateSmartDashboard(){
-		SmartDashboard.putNumber("COLLECTOR_POWER", getPower());
+		SmartDashboard.putNumber("Collector_Power", getPower());
 	}
 	
 	public static CollectorSubsystem getInstance() {

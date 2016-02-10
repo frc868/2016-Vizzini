@@ -4,6 +4,7 @@ import com.techhounds.RobotMap;
 
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -14,16 +15,36 @@ public class CollectorAnglerSubsystem extends Subsystem {
 	
 	private CANTalon angler;
     
-	public CollectorAnglerSubsystem(CANTalon angler) {
-		this.angler = angler;
-		this.angler.enableForwardSoftLimit(true);
-		this.angler.enableReverseSoftLimit(true);
+	public CollectorAnglerSubsystem(CANTalon ang) {
+		angler = ang;
+		angler.enableForwardSoftLimit(true);
+		angler.enableReverseSoftLimit(true);
 	}
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 	public void setPower(double power) {
-		power = Math.min(power, 1);
-		power = Math.max(power, -1);
+		power = Math.min(Math.max(power, -1), 1);
+		if(getInverted()){
+			angler.set(-power);
+		}else{
+			angler.set(power);
+		}
+	}
+	
+	public void stopPower(){
+		angler.set(0);
+	}
+	
+	public double getPower(){
+		return angler.get();
+	}
+	
+	public boolean getInverted(){
+		return RobotMap.Collector.ANGLER_IS_INVERTED;
+	}
+	
+	public void updateSmartDashboard(){
+		SmartDashboard.putNumber("Angler_Power", getPower());
 	}
 	
 	public static CollectorAnglerSubsystem getInstance(){
