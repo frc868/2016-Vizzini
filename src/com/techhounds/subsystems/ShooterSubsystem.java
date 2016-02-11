@@ -2,38 +2,41 @@ package com.techhounds.subsystems;
 
 import com.techhounds.RobotMap;
 
-import edu.wpi.first.wpilibj.Spark;
+import edu.wpi.first.wpilibj.CANTalon;
+import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class ShooterSubsystem {
+public class ShooterSubsystem extends Subsystem{
 
 	private static ShooterSubsystem instance;
-	private Spark shoot;
-	private boolean isInverted;
+	private CANTalon shooter;
 	
 	private ShooterSubsystem() {
-		shoot = new Spark(RobotMap.Shooter.SHOOTER_MOTOR);
-		isInverted = RobotMap.Shooter.SHOOTER_IS_INVERTED;
+		shooter = new CANTalon(RobotMap.Shooter.SHOOTER_MOTOR);
 	}
 	
 	public void setPower(double power){
 		power = Math.min((Math.max(power, -1)), 1);
-		if(isInverted){
-			shoot.set(-power);
+		if(getInverted()){
+			shooter.set(-power);
 		}else{
-			shoot.set(power);
+			shooter.set(power);
 		}
 	}
 	
 	public void stopPower(){
-		shoot.set(0);
+		shooter.set(0);
+	}
+	
+	public boolean getInverted(){
+		return RobotMap.Shooter.SHOOTER_IS_INVERTED;
 	}
 	
 	public double getPower(){
-		return shoot.get();
+		return shooter.get();
 	}
 	
-	public void UpdateSmartDashboard(){
+	public void updateSmartDashboard(){
 		SmartDashboard.putNumber("Shooter_Power", getPower());
 	}
 	
