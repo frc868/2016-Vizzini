@@ -3,6 +3,7 @@ package com.techhounds.subsystems;
 import com.techhounds.RobotMap;
 
 import edu.wpi.first.wpilibj.CANTalon;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -10,6 +11,7 @@ public class ShooterSubsystem extends Subsystem{
 
 	private static ShooterSubsystem instance;
 	private CANTalon shooter;
+	private Encoder encode;
 	
 	private ShooterSubsystem() {
 		shooter = new CANTalon(RobotMap.Shooter.SHOOTER_MOTOR);
@@ -26,6 +28,14 @@ public class ShooterSubsystem extends Subsystem{
 	
 	public void stopPower(){
 		shooter.set(0);
+	}
+	
+	public double getSpeed(){
+		return encode.getRate();
+	}
+	
+	public void resetEncoder(){
+		encode.reset();
 	}
 	
 	public boolean getInverted(){
