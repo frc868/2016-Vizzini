@@ -2,8 +2,16 @@ package com.techhounds;
 
 public class RobotMap {
 	
-	public static class Shooter{
+	public static class Shooter {
 		public static final int SHOOTER_MOTOR = -1;
 		public static final boolean SHOOTER_IS_INVERTED = false;
+	}
+	
+	public static class DriveTrain {
+		public static final int DRIVE_LEFT_MOTOR = -1;
+		public static final boolean DRIVE_LEFT_IS_INVERTED = false;
+		public static final int DRIVE_RIGHT_MOTOR = -1;
+		public static final boolean DRIVE_RIGHT_IS_INVERTED = false;
+		
 	}
 }

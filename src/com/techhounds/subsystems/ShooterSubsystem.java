@@ -11,8 +11,8 @@ public class ShooterSubsystem extends Subsystem{
 	private static ShooterSubsystem instance;
 	private CANTalon shooter;
 	
-	private ShooterSubsystem() {
-		shooter = new CANTalon(RobotMap.Shooter.SHOOTER_MOTOR);
+	private ShooterSubsystem(CANTalon s) {
+		shooter = s;
 	}
 	
 	public void setPower(double power){
@@ -44,8 +44,10 @@ public class ShooterSubsystem extends Subsystem{
 	}
 	
 	public static ShooterSubsystem getInstance() {
-		if(instance == null)
-			instance = new ShooterSubsystem();
+		if(instance == null) {
+			CANTalon s = new CANTalon(RobotMap.Shooter.SHOOTER_MOTOR);
+			instance = new ShooterSubsystem(s);
+		}
 		return instance;
 	}
 }
