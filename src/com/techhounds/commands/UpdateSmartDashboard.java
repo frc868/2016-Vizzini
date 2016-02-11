@@ -1,8 +1,5 @@
 package com.techhounds.commands;
 
-import java.util.List;
-
-import com.techhounds.OI;
 import com.techhounds.subsystems.*;
 
 import edu.wpi.first.wpilibj.Timer;
@@ -29,6 +26,7 @@ public class UpdateSmartDashboard extends Command {
     	
     	if(timer.get() >= 0.3) {
     		ShooterSubsystem.getInstance().updateSmartDashboard();
+    		CollectorSubsystem.getInstance().updateSmartDashboard();
 	    	timer.reset();
 		}
     }
