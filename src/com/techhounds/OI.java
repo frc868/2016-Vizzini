@@ -55,10 +55,12 @@ public class OI {
 	 * @return Gets the only instance of the OI
 	 */
 	public static OI getInstance() {
-		if(instance == null) {
-			instance = new OI();
-		}
-		return instance;
+		return instance == null ? instance = new OI(): instance;
+		/* if(instance == null){
+		 *   instance = new OI();
+		 * }
+		 * return instance
+		 */
 	}
 	
 	/**

@@ -3,6 +3,8 @@ package com.techhounds.subsystems;
 import com.techhounds.RobotMap;
 
 import edu.wpi.first.wpilibj.CANTalon;
+import edu.wpi.first.wpilibj.CANTalon.TalonControlMode;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -12,39 +14,49 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class CollectorAnglerSubsystem extends Subsystem {
 	
 	private static CollectorAnglerSubsystem instance;
-	
 	private CANTalon angler;
+	private Encoder enc;
     
 	public CollectorAnglerSubsystem(CANTalon ang) {
 		angler = ang;
 		angler.enableForwardSoftLimit(true);
 		angler.enableReverseSoftLimit(true);
+		angler.changeControlMode(TalonControlMode.Position);
 	}
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
-	public void setPower(double power) {
-		power = Math.min(Math.max(power, -1), 1);
-		if(getInverted()){
-			angler.set(-power);
-		}else{
-			angler.set(power);
+	public void setPosition(double position) {
+		angler.set(position);
+	}
+	
+	public double getPosition(){
+		return angler.getPosition();
+	}
+	
+	public double getSpeed(){
+		return enc.getRate();
+	}
+	
+	public void resetEncoder(){
+		enc.reset();
+	}
+	
+	public boolean getIsForwardLimitHit(){
+		return angler.isFwdLimitSwitchClosed();
+	}
+	
+	public boolean getIsReverseLimitHit(){
+		boolean limit;
+		limit = angler.isRevLimitSwitchClosed();
+		if(limit){
+			angler.setEncPosition(0);
 		}
-	}
-	
-	public void stopPower(){
-		angler.set(0);
-	}
-	
-	public double getPower(){
-		return angler.get();
-	}
-	
-	public boolean getInverted(){
-		return RobotMap.Collector.ANGLER_IS_INVERTED;
+		return limit;
 	}
 	
 	public void updateSmartDashboard(){
-		SmartDashboard.putNumber("Angler_Power", getPower());
+		SmartDashboard.putNumber("Angler_Speed", getSpeed());
+		SmartDashboard.putNumber("Angler_Position", getPosition());
 	}
 	
 	public static CollectorAnglerSubsystem getInstance(){

@@ -16,13 +16,13 @@ public class ShooterPIDCommand extends Command {
 	private ShooterSubsystem shoot;
 	private final double P = 0, I = 0, D = 0;
 	private double setPower = 0;
-	private PIDController control;
+	private PIDController controller;
 	
     public ShooterPIDCommand(double set) {
     	shoot = ShooterSubsystem.getInstance();
     	requires(shoot);
     	setPower = set;
-    	control = new PIDController(P, I, D, new PIDSource(){
+    	controller = new PIDController(P, I, D, new PIDSource(){
 
 			public void setPIDSourceType(PIDSourceType pidSource) {
 				// TODO Auto-generated method stub
@@ -44,13 +44,13 @@ public class ShooterPIDCommand extends Command {
 			}
     		
     	});
-    	control.setAbsoluteTolerance(3);
-    	control.setOutputRange(-1, 1);
+    	controller.setAbsoluteTolerance(3);
+    	controller.setOutputRange(-1, 1);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	control.setSetpoint(setPower);
+    	controller.setSetpoint(setPower);
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -60,11 +60,11 @@ public class ShooterPIDCommand extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return control.onTarget();
+        return controller.onTarget();
     }
     // Called once after isFinished returns true
     protected void end() {
-    	control.disable();
+    	controller.disable();
     }
 
     // Called when another command which requires one or more of the same
