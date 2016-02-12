@@ -1,45 +1,40 @@
 package com.techhounds.commands;
 
-import com.techhounds.subsystems.CollectorAnglerSubsystem;
+import com.techhounds.subsystems.ShooterSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class AnglerCommand extends Command {
+public class ShooterCommand extends Command {
 	
-	private CollectorAnglerSubsystem angle;
-	private int spot;
-
-    public AnglerCommand(int position) {
-    	angle = CollectorAnglerSubsystem.getInstance();
-    	requires(angle);
-    	spot = position;
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
-    }
-    
-    public AnglerCommand(){
-    	this(0);
+	private ShooterSubsystem shoot;
+	private double power = 0;
+	
+    public ShooterCommand(double set) {
+    	shoot = ShooterSubsystem.getInstance();
+    	requires(shoot);
+    	power = set;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	angle.setPosition(spot);
+    	shoot.setPower(power);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+    	return false;
     }
-
     // Called once after isFinished returns true
     protected void end() {
+    	shoot.stopPower();
     }
 
     // Called when another command which requires one or more of the same

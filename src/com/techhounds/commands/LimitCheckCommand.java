@@ -7,30 +7,25 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class AnglerCommand extends Command {
+public class LimitCheckCommand extends Command {
 	
-	private CollectorAnglerSubsystem angle;
-	private int spot;
-
-    public AnglerCommand(int position) {
-    	angle = CollectorAnglerSubsystem.getInstance();
-    	requires(angle);
-    	spot = position;
+	public CollectorAnglerSubsystem angler;
+	
+    public LimitCheckCommand() {
+    	angler = CollectorAnglerSubsystem.getInstance();
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    }
-    
-    public AnglerCommand(){
-    	this(0);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	angle.setPosition(spot);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	if(angler.getIsForwardLimitHit() || angler.getIsReverseLimitHit()){
+    		angler.stopPower();
+    	}
     }
 
     // Make this return true when this Command no longer needs to run execute()

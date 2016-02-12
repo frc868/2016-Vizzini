@@ -5,8 +5,9 @@ import edu.wpi.first.wpilibj.I2C;
 public class RobotMap {
 	public static class Collector{
 		public static final int COLLECTOR_MOTOR = -1;
-		public static final int COLLECTOR_ANGLER = -1;
+		public static final double inPower = .5, outPower = -.5;
 		public static final boolean COLLECTOR_IS_INVERTED = false;
+		public static final int COLLECTOR_ANGLER = -1;
 	}
 	
 	public static class Shooter{

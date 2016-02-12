@@ -1,12 +1,16 @@
 package com.techhounds.subsystems;
 
 import com.techhounds.RobotMap;
+import com.techhounds.commands.LimitCheckCommand;
 
 import edu.wpi.first.wpilibj.CANTalon;
+import edu.wpi.first.wpilibj.PIDOutput;
+import edu.wpi.first.wpilibj.PIDSource;
+import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.CANTalon.TalonControlMode;
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.PIDController;
 
 /**
  *
@@ -15,30 +19,51 @@ public class CollectorAnglerSubsystem extends Subsystem {
 	
 	private static CollectorAnglerSubsystem instance;
 	private CANTalon angler;
-	private Encoder enc;
+	private final double P = 0, I = 0, D = 0;
+	private PIDController controller;
     
-	public CollectorAnglerSubsystem(CANTalon ang) {
-		angler = ang;
+	private CollectorAnglerSubsystem() {
+		angler = new CANTalon(RobotMap.Collector.COLLECTOR_ANGLER);
 		angler.enableForwardSoftLimit(true);
 		angler.enableReverseSoftLimit(true);
 		angler.changeControlMode(TalonControlMode.Position);
+		controller = new PIDController(P, I, D, new PIDSource(){
+
+			public void setPIDSourceType(PIDSourceType pidSource) {
+				// TODO Auto-generated method stub
+			}
+			
+			public PIDSourceType getPIDSourceType() {
+				// TODO Auto-generated method stub
+				return null;
+			}
+			
+			public double pidGet() {
+				return angler.getSpeed();
+			}
+    		
+    	}, new PIDOutput(){
+    		
+			public void pidWrite(double output) {
+				angler.set(output);
+			}
+    		
+    	});
+    	controller.setAbsoluteTolerance(2);
+    	controller.setOutputRange(-1, 1);
 	}
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
-	public void setPosition(double position) {
-		angler.set(position);
+	public void setPosition(int position) {
+		angler.setEncPosition(position);
 	}
 	
-	public double getPosition(){
-		return angler.getPosition();
+	public void stopPower(){
+		angler.set(0);
 	}
 	
-	public double getSpeed(){
-		return enc.getRate();
-	}
-	
-	public void resetEncoder(){
-		enc.reset();
+	public int getPosition(){
+		return angler.getEncPosition();
 	}
 	
 	public boolean getIsForwardLimitHit(){
@@ -46,8 +71,7 @@ public class CollectorAnglerSubsystem extends Subsystem {
 	}
 	
 	public boolean getIsReverseLimitHit(){
-		boolean limit;
-		limit = angler.isRevLimitSwitchClosed();
+		boolean limit = angler.isRevLimitSwitchClosed();
 		if(limit){
 			angler.setEncPosition(0);
 		}
@@ -55,21 +79,18 @@ public class CollectorAnglerSubsystem extends Subsystem {
 	}
 	
 	public void updateSmartDashboard(){
-		SmartDashboard.putNumber("Angler_Speed", getSpeed());
 		SmartDashboard.putNumber("Angler_Position", getPosition());
 	}
 	
 	public static CollectorAnglerSubsystem getInstance(){
 		if(instance == null){
-			CANTalon x = new CANTalon(RobotMap.Collector.COLLECTOR_ANGLER);
-			instance = new CollectorAnglerSubsystem(x);
+			instance = new CollectorAnglerSubsystem();
 		}
 		return instance;
 	}
 
     public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
-        //setDefaultCommand(new MySpecialCommand());
+    	setDefaultCommand(new LimitCheckCommand());
     }
 }
 

@@ -23,6 +23,10 @@ public class Robot extends IterativeRobot {
 		return finalRobot;
 	}
 	
+	public static double rangeCheck(double power){
+		return Math.max(Math.min(power, 1), -1);
+	}
+	
 	/**
 	 * Run once the instant the robot starts
 	 */
