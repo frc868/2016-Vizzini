@@ -3,7 +3,6 @@ package com.techhounds.subsystems;
 import com.techhounds.RobotMap;
 
 import edu.wpi.first.wpilibj.CANTalon;
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -11,7 +10,6 @@ public class CollectorSubsystem extends Subsystem {
 
 	private static CollectorSubsystem instance;
 	private CANTalon motor;
-	private Encoder enc;
 	
 	private CollectorSubsystem(CANTalon a) {
 		motor = a;
@@ -32,14 +30,6 @@ public class CollectorSubsystem extends Subsystem {
 	
 	public double getPower(){
 		return motor.get();
-	}
-	
-	public double getSpeed(){
-		return enc.getRate();
-	}
-	
-	public void resetEncoder(){
-		enc.reset();
 	}
 	
 	public boolean getInverted(){
