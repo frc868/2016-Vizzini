@@ -23,19 +23,17 @@ public class DriveSubsystem{
 	
 	private static DriveSubsystem instance;
 	
-	private DriveSubsystem(Spark l, boolean l_i, Spark r, boolean r_i) {
-		left = l;
-		left.setInverted(l_i);
-		right = r;
-		right.setInverted(r_i);
+	private DriveSubsystem() {
+		left = new Spark(RobotMap.DriveTrain.DRIVE_LEFT_MOTOR);
+		left.setInverted(RobotMap.DriveTrain.DRIVE_LEFT_IS_INVERTED);
+		
+		right = new Spark(RobotMap.DriveTrain.DRIVE_RIGHT_MOTOR);
+		right.setInverted(RobotMap.DriveTrain.DRIVE_RIGHT_IS_INVERTED);
 	}
 	
 	public static DriveSubsystem getInstance() {
-		if(instance == null) {
-			Spark l = new Spark(RobotMap.DriveTrain.DRIVE_LEFT_MOTOR);
-			Spark r = new Spark(RobotMap.DriveTrain.DRIVE_RIGHT_MOTOR);
-			instance = new DriveSubsystem(l, RobotMap.DriveTrain.DRIVE_LEFT_IS_INVERTED, r,RobotMap.DriveTrain.DRIVE_RIGHT_IS_INVERTED);
-		}
+		if(instance == null)
+			instance = new DriveSubsystem();
 		return instance;
 	}
 	
@@ -100,6 +98,7 @@ public class DriveSubsystem{
 					setBothSpeed(output);
 				}
 			});
+		pid.enable();
 	}
 	
 	public void setLeftSpeed(double speed) {
