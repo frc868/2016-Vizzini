@@ -3,6 +3,7 @@ package com.techhounds.subsystems;
 import com.techhounds.RobotMap;
 
 import edu.wpi.first.wpilibj.CANTalon;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -12,8 +13,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class CollectorAnglerSubsystem extends Subsystem {
 	
 	private static CollectorAnglerSubsystem instance;
-	
 	private CANTalon angler;
+	private Encoder enc;
     
 	public CollectorAnglerSubsystem(CANTalon ang) {
 		angler = ang;
@@ -39,6 +40,13 @@ public class CollectorAnglerSubsystem extends Subsystem {
 		return angler.get();
 	}
 	
+	public double getSpeed(){
+		return enc.getRate();
+	}
+	
+	public void resetEncoder(){
+		enc.reset();
+	}
 	public boolean getInverted(){
 		return RobotMap.Collector.ANGLER_IS_INVERTED;
 	}
