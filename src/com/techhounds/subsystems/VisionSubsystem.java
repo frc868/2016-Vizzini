@@ -1,9 +1,10 @@
 package com.techhounds.subsystems;
 
+import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.networktables.*;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class VisionSubsystem{
+public class VisionSubsystem extends Subsystem{
 
 	private static VisionSubsystem instance;
 	private NetworkTable netTable;
