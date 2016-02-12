@@ -1,5 +1,7 @@
 package com.techhounds;
 
+import edu.wpi.first.wpilibj.I2C;
+
 public class RobotMap {
 	public static class Collector{
 		public static final int COLLECTOR_MOTOR = -1;
@@ -18,6 +20,10 @@ public class RobotMap {
 		public static final boolean DRIVE_LEFT_IS_INVERTED = false;
 		public static final int DRIVE_RIGHT_MOTOR = -1;
 		public static final boolean DRIVE_RIGHT_IS_INVERTED = false;
-		
+	}
+	
+	public static class Gyro {
+		public static final I2C.Port GYRO = I2C.Port.kMXP;
+		public static final I2C.Port GYRO_PRACT = null;//I2C.Port.kMXP;
 	}
 }

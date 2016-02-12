@@ -2,13 +2,14 @@ package com.techhounds.subsystems;
 
 import com.techhounds.RobotMap;
 
+import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class DriveSubsystem implements PIDOutput, PIDSource{
+public class DriveSubsystem{
 
 	// TODO: Add Encoders
 	// TODO: Add Implementation for Set Drive Power (maybe Voltage?)
@@ -17,8 +18,8 @@ public class DriveSubsystem implements PIDOutput, PIDSource{
 	
 	private Spark left;
 	private Spark right;
-	private boolean rotating = false;
-	private boolean straight = false;
+	private boolean rotating;
+	private PIDController pid;
 	
 	private static DriveSubsystem instance;
 	
@@ -39,7 +40,66 @@ public class DriveSubsystem implements PIDOutput, PIDSource{
 	}
 	
 	public void loadStraightPIDValues(double p, double i, double d, double f) {
-		
+		rotating = false;
+		pid = new PIDController(p, i, d, f,
+			new PIDSource() {
+						
+						@Override
+						public void setPIDSourceType(PIDSourceType pidSource) {
+							// TODO Auto-generated method stub
+							
+						}
+						
+						@Override
+						public double pidGet() {
+							// TODO Auto-generated method stub
+							return getLeftSpeed();
+						}
+						
+						@Override
+						public PIDSourceType getPIDSourceType() {
+							// TODO Auto-generated method stub
+							return PIDSourceType.kDisplacement;
+						};
+					},
+			new PIDOutput() {
+				
+				@Override
+				public void pidWrite(double output) {
+					setBothSpeed(output);
+				}
+			});
+		pid.enable();
+	}
+	
+	public void loadGyroPIDValues(double p, double i, double d, double f) {
+		rotating = true;
+		pid = new PIDController(p, i, d, f,
+			new PIDSource() {
+						
+						@Override
+						public void setPIDSourceType(PIDSourceType pidSource) {
+							
+						}
+						
+						@Override
+						public double pidGet() {
+							return GyroSubsystem.getInstance().getRotation();
+						}
+						
+						@Override
+						public PIDSourceType getPIDSourceType() {
+							// TODO Auto-generated method stub
+							return PIDSourceType.kDisplacement;
+						};
+					},
+			new PIDOutput() {
+				
+				@Override
+				public void pidWrite(double output) {
+					setBothSpeed(output);
+				}
+			});
 	}
 	
 	public void setLeftSpeed(double speed) {
@@ -52,7 +112,8 @@ public class DriveSubsystem implements PIDOutput, PIDSource{
 	
 	public void setBothSpeed(double output) {
 		left.set(output);
-		right.set(output);
+		if(rotating) right.set(-output);
+		else right.set(output);
 	}
 	
 	public double getLeftSpeed() {
@@ -63,33 +124,17 @@ public class DriveSubsystem implements PIDOutput, PIDSource{
 		return right.get();
 	}
 	
+	public double getPIDError() {
+		return pid.getError();
+	}
+	
 	public void updateSmartDashboard() {
 		SmartDashboard.putNumber("Driver Left Speed", getLeftSpeed());
 		SmartDashboard.putNumber("Driver Right Speed", getRightSpeed());
+		SmartDashboard.putNumber("Driver PID Error", getPIDError());
 	}
 
 	protected void initDefaultCommand() {
 		// TODO: Add Default command for DriveWithGamepad()
 	}
-
-	@Override
-	public void pidWrite(double output) {
-		setBothSpeed(output);
-	}
-
-	@Override
-	public void setPIDSourceType(PIDSourceType pidSource) {
-		// TODO Auto-generated method stub
-	}
-
-	@Override
-	public PIDSourceType getPIDSourceType() {
-		return PIDSourceType.kDisplacement;
-	}
-
-	@Override
-	public double pidGet() {
-		return getLeftSpeed();
-	}
-
 }
