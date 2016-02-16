@@ -5,6 +5,7 @@ import com.techhounds.RobotMap;
 
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class CollectorSubsystem extends Subsystem {
@@ -16,6 +17,7 @@ public class CollectorSubsystem extends Subsystem {
 		motor = new CANTalon(RobotMap.Collector.COLLECTOR_MOTOR);
 		motor.setInverted(getInverted());
 		motor.enableBrakeMode(true);
+		LiveWindow.addActuator("collector", "motor", motor);
 	}
 	
 	public void setPower(double power){
