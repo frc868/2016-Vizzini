@@ -8,9 +8,10 @@ import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.Spark;
+import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class DriveSubsystem{
+public class DriveSubsystem extends Subsystem{
 
 	// TODO: Add Encoders
 	// TODO: Add Implementation for Set Drive Power (maybe Voltage?)
@@ -104,7 +105,7 @@ public class DriveSubsystem{
 		}
 	}
 	
-	public void loadGyroPIDValues(double p, double i, double d) {
+	public void loadGyroPIDValues() {
 		rotating = true;
 		gyro.resetGyro();
 		pid = new PIDController(gyro_p, gyro_i, gyro_d,
