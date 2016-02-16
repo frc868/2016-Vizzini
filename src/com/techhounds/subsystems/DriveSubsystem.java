@@ -21,6 +21,14 @@ public class DriveSubsystem{
 	private boolean rotating;
 	private PIDController pid;
 	
+	private final double driver_p;
+	private final double driver_i;
+	private final double driver_d;
+	
+	private final double gyro_p;
+	private final double gyro_i;
+	private final double gyro_d;
+	
 	private static DriveSubsystem instance;
 	
 	private DriveSubsystem() {
@@ -29,17 +37,25 @@ public class DriveSubsystem{
 		
 		right = new Spark(RobotMap.DriveTrain.DRIVE_RIGHT_MOTOR);
 		right.setInverted(RobotMap.DriveTrain.DRIVE_RIGHT_IS_INVERTED);
+		
+		driver_p = 0.0001;
+		driver_i = 0;
+		driver_d = 0;
+		
+		gyro_p = 0.0001;
+		gyro_i = 0;
+		gyro_d = 0;
 	}
 	
 	public static DriveSubsystem getInstance() {
-		if(instance == null)
+		if(instance == null) 
 			instance = new DriveSubsystem();
 		return instance;
 	}
 	
-	public void loadStraightPIDValues(double p, double i, double d, double f) {
+	public void loadStraightPIDValues(double p, double i, double d) {
 		rotating = false;
-		pid = new PIDController(p, i, d, f,
+		pid = new PIDController(p, i, d,
 			new PIDSource() {
 						
 						@Override
@@ -67,12 +83,24 @@ public class DriveSubsystem{
 					setBothSpeed(output);
 				}
 			});
-		pid.enable();
+		enablePID();
 	}
 	
-	public void loadGyroPIDValues(double p, double i, double d, double f) {
+	public void enablePID() {
+		if(pid != null) {
+			pid.enable();
+		}
+	}
+	
+	public void disablePID() {
+		if(pid != null) {
+			pid.disable();
+		}
+	}
+	
+	public void loadGyroPIDValues(double p, double i, double d) {
 		rotating = true;
-		pid = new PIDController(p, i, d, f,
+		pid = new PIDController(p, i, d,
 			new PIDSource() {
 						
 						@Override
@@ -98,7 +126,7 @@ public class DriveSubsystem{
 					setBothSpeed(output);
 				}
 			});
-		pid.enable();
+		enablePID();
 	}
 	
 	public void setLeftSpeed(double speed) {
