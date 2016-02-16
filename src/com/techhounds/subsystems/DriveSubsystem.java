@@ -1,5 +1,6 @@
 package com.techhounds.subsystems;
 
+import com.techhounds.Robot;
 import com.techhounds.RobotMap;
 
 import edu.wpi.first.wpilibj.Encoder;
@@ -24,17 +25,31 @@ public class DriveSubsystem extends Subsystem{
 	private boolean rotating;
 	private PIDController pid;
 	
+
 	private Encoder rightEncoder;
 	private Encoder leftEncoder;
+
+	private final double driver_p;
+	private final double driver_i;
+	private final double driver_d;
+	
+	
+	private final double gyro_p;
+	private final double gyro_i;
+	private final double gyro_d;
+	
+	private final double percentTolerable = .1;
+
 	
 	private static DriveSubsystem instance;
 	
-	private DriveSubsystem() {
+	private DriveSubsystem() {		
 		left = new Spark(RobotMap.DriveTrain.DRIVE_LEFT_MOTOR);
 		left.setInverted(RobotMap.DriveTrain.DRIVE_LEFT_IS_INVERTED);
 		
 		right = new Spark(RobotMap.DriveTrain.DRIVE_RIGHT_MOTOR);
 		right.setInverted(RobotMap.DriveTrain.DRIVE_RIGHT_IS_INVERTED);
+
 		rightEncoder = new Encoder(RobotMap.DriveTrain.ENC_RIGHT_A, RobotMap.DriveTrain.ENC_RIGHT_B);
 		leftEncoder = new Encoder(RobotMap.DriveTrain.ENC_LEFT_A, RobotMap.DriveTrain.ENC_LEFT_B);
 		
@@ -42,52 +57,47 @@ public class DriveSubsystem extends Subsystem{
 		LiveWindow.addActuator("drive", "right motors", right);
 		LiveWindow.addSensor("drive", "left encoder", leftEncoder);
 		LiveWindow.addSensor("drive", "right encoder", rightEncoder);
+
+		
+		driver_p = 0.0001;
+		driver_i = 0;
+		driver_d = 0;
+		
+		
+		gyro_p = 0.0001;
+		gyro_i = 0;
+		gyro_d = 0;
+
 	}
 	
 	public static DriveSubsystem getInstance() {
-		if(instance == null)
+		if(instance == null) 
 			instance = new DriveSubsystem();
 		return instance;
 	}
-	
-	
-	
-	public void loadGyroPIDValues(double p, double i, double d, double f) {
-		rotating = true;
-		pid = new PIDController(p, i, d, f,
-			new PIDSource() {
-						
-						@Override
-						public void setPIDSourceType(PIDSourceType pidSource) {
-							
-						}
-						
-						@Override
-						public double pidGet() {
-							return GyroSubsystem.getInstance().getRotation();
-						}
-						
-						@Override
-						public PIDSourceType getPIDSourceType() {
-							// TODO Auto-generated method stub
-							return PIDSourceType.kDisplacement;
-						};
-					},
-			new PIDOutput() {
-				
-				@Override
-				public void pidWrite(double output) {
-					setPower(output, output);
-				}
-			});
-		pid.enable();
-	}
-	
+
+
+
 	public void setLeftPower(double speed) {
+		if(speed > 1){
+			speed = 1;
+		}
+		else if(speed < -1){
+			speed = -1;
+		}
+
 		left.set(speed);
 	}
 	
+
 	public void setRightPower(double speed) {
+		if(speed > 1){ 
+			speed = 1;
+	}
+		else if(speed < -1){
+			speed = -1;
+	}
+
 		right.set(speed);
 	}
 	

@@ -44,9 +44,9 @@ public class Robot extends IterativeRobot {
     	// TODO: Initialize Subsystems and OI
     	// TODO: Start Smart Dashboard
     	
-    	//initSubsystems();
+    	initSubsystems();
     	OI.getInstance();
-    	//(new UpdateSmartDashboard()).start();
+    	new UpdateSmartDashboard().start();
     	
     	System.out.println("*** TECHHOUNDS IS READY TO ROBOT ***");
     	SmartDashboard.putNumber("HEY", 3);
