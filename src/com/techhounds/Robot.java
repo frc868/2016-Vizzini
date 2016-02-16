@@ -18,6 +18,12 @@ public class Robot extends IterativeRobot {
 	
 	public static boolean oneControllerMode = true;
 	private static boolean finalRobot = false;
+	public static GyroSubsystem gyro;
+	public static DriveSubsystem drive;
+	public static CollectorSubsystem collector;
+	public static CollectorAnglerSubsystem collectorAngler;
+	public static ShooterSubsystem shooter;
+	public static VisionSubsystem vision;
 	
 	public static boolean isFinal(){
 		return finalRobot;
@@ -36,7 +42,7 @@ public class Robot extends IterativeRobot {
     	
     	initSubsystems();
     	OI.getInstance();
-    	(new UpdateSmartDashboard()).start();
+    	new UpdateSmartDashboard().start();
     	
     	System.out.println("*** TECHHOUNDS IS READY TO ROBOT ***");
     	SmartDashboard.putNumber("HEY", 2);
@@ -93,11 +99,11 @@ public class Robot extends IterativeRobot {
     }
     
     private void initSubsystems() {
-    	CollectorSubsystem.getInstance();
-    	CollectorAnglerSubsystem.getInstance();
-    	DriveSubsystem.getInstance();
-    	GyroSubsystem.getInstance();
-    	ShooterSubsystem.getInstance();
-    	VisionSubsystem.getInstance();
+    	collector = CollectorSubsystem.getInstance();
+    	collectorAngler = CollectorAnglerSubsystem.getInstance();
+    	drive = DriveSubsystem.getInstance();
+    	gyro = GyroSubsystem.getInstance();
+    	shooter = ShooterSubsystem.getInstance();
+    	vision = VisionSubsystem.getInstance();
     }
 }

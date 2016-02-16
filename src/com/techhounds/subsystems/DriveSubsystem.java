@@ -1,5 +1,6 @@
 package com.techhounds.subsystems;
 
+import com.techhounds.Robot;
 import com.techhounds.RobotMap;
 
 import edu.wpi.first.wpilibj.PIDController;
@@ -25,13 +26,16 @@ public class DriveSubsystem{
 	private final double driver_i;
 	private final double driver_d;
 	
+	private final GyroSubsystem gyro;
 	private final double gyro_p;
 	private final double gyro_i;
 	private final double gyro_d;
 	
+	private final double percentTolerable = .1;
+	
 	private static DriveSubsystem instance;
 	
-	private DriveSubsystem() {
+	private DriveSubsystem() {		
 		left = new Spark(RobotMap.DriveTrain.DRIVE_LEFT_MOTOR);
 		left.setInverted(RobotMap.DriveTrain.DRIVE_LEFT_IS_INVERTED);
 		
@@ -42,6 +46,7 @@ public class DriveSubsystem{
 		driver_i = 0;
 		driver_d = 0;
 		
+		gyro = Robot.gyro;
 		gyro_p = 0.0001;
 		gyro_i = 0;
 		gyro_d = 0;
@@ -53,9 +58,9 @@ public class DriveSubsystem{
 		return instance;
 	}
 	
-	public void loadStraightPIDValues(double p, double i, double d) {
+	public void loadStraightPIDValues() {
 		rotating = false;
-		pid = new PIDController(p, i, d,
+		pid = new PIDController(driver_p, driver_i, driver_d,
 			new PIDSource() {
 						
 						@Override
@@ -83,6 +88,7 @@ public class DriveSubsystem{
 					setBothSpeed(output);
 				}
 			});
+		pid.setPercentTolerance(percentTolerable);
 		enablePID();
 	}
 	
@@ -100,7 +106,8 @@ public class DriveSubsystem{
 	
 	public void loadGyroPIDValues(double p, double i, double d) {
 		rotating = true;
-		pid = new PIDController(p, i, d,
+		gyro.resetGyro();
+		pid = new PIDController(gyro_p, gyro_i, gyro_d,
 			new PIDSource() {
 						
 						@Override
@@ -126,14 +133,81 @@ public class DriveSubsystem{
 					setBothSpeed(output);
 				}
 			});
+		pid.setPercentTolerance(percentTolerable);
+		enablePID();
+	}
+	
+	public void loadLeftPIDValues() {
+		pid = new PIDController(driver_p, driver_i, driver_d,
+			new PIDSource() {
+						@Override
+						public void setPIDSourceType(PIDSourceType pidSource) {
+							// TODO Auto-generated method stub
+							
+						}
+						
+						@Override
+						public double pidGet() {
+							// TODO Auto-generated method stub
+							return getLeftSpeed();
+						}
+						
+						@Override
+						public PIDSourceType getPIDSourceType() {
+							// TODO Auto-generated method stub
+							return PIDSourceType.kRate;
+						};
+					},
+			new PIDOutput() {
+				
+				@Override
+				public void pidWrite(double output) {
+					setLeftSpeed(output);
+				}
+			});
+		enablePID();
+	}
+	
+	public void loadRightPIDValues() {
+		pid = new PIDController(driver_p, driver_i, driver_d,
+			new PIDSource() {
+						@Override
+						public void setPIDSourceType(PIDSourceType pidSource) {
+							// TODO Auto-generated method stub
+							
+						}
+						
+						@Override
+						public double pidGet() {
+							// TODO Auto-generated method stub
+							return getRightSpeed();
+						}
+						
+						@Override
+						public PIDSourceType getPIDSourceType() {
+							// TODO Auto-generated method stub
+							return PIDSourceType.kRate;
+						};
+					},
+			new PIDOutput() {
+				
+				@Override
+				public void pidWrite(double output) {
+					setRightSpeed(output);
+				}
+			});
 		enablePID();
 	}
 	
 	public void setLeftSpeed(double speed) {
+		if(speed > 1) speed = 1;
+		else if(speed < -1) speed = -1;
 		left.set(speed);
 	}
 	
 	public void setRightSpeed(double speed) {
+		if(speed > 1) speed = 1;
+		else if(speed < -1) speed = -1;
 		right.set(speed);
 	}
 	
