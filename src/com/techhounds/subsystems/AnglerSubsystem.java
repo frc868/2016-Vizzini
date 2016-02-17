@@ -1,5 +1,6 @@
 package com.techhounds.subsystems;
 
+import com.techhounds.Robot;
 import com.techhounds.RobotMap;
 import com.techhounds.commands.LimitCheckCommand;
 
@@ -35,6 +36,7 @@ public class AnglerSubsystem extends Subsystem {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 	public void setPosition(double position) {
+		angler.changeControlMode(TalonControlMode.Position);
 		P = SmartDashboard.getNumber("Angler_P", P);
 		I = SmartDashboard.getNumber("Angler_I", I);
 		D = SmartDashboard.getNumber("Angler_D", D);
@@ -45,6 +47,11 @@ public class AnglerSubsystem extends Subsystem {
 	
 	public void stopPower(){
 		angler.disable();
+	}
+	
+	public void setPower(double pow){
+		angler.changeControlMode(TalonControlMode.PercentVbus);
+		angler.set(Robot.rangeCheck(pow));
 	}
 	
 	public double getPosition(){
