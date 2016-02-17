@@ -1,6 +1,6 @@
 package com.techhounds.commands;
 
-import com.techhounds.subsystems.CollectorAnglerSubsystem;
+import com.techhounds.subsystems.AnglerSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -9,11 +9,11 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class AnglerCommand extends Command {
 	
-	private CollectorAnglerSubsystem angle;
+	private AnglerSubsystem angle;
 	private double spot;
 
     public AnglerCommand(double position) {
-    	angle = CollectorAnglerSubsystem.getInstance();
+    	angle = AnglerSubsystem.getInstance();
     	requires(angle);
     	spot = position;
         // Use requires() here to declare subsystem dependencies

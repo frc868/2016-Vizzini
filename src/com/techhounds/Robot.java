@@ -2,7 +2,7 @@
 package com.techhounds;
 
 import com.techhounds.commands.UpdateSmartDashboard;
-import com.techhounds.subsystems.CollectorAnglerSubsystem;
+import com.techhounds.subsystems.AnglerSubsystem;
 import com.techhounds.subsystems.CollectorSubsystem;
 import com.techhounds.subsystems.DriveSubsystem;
 import com.techhounds.subsystems.GyroSubsystem;
@@ -23,7 +23,7 @@ public class Robot extends IterativeRobot {
 	public static GyroSubsystem gyro;
 	public static DriveSubsystem drive;
 	public static CollectorSubsystem collector;
-	public static CollectorAnglerSubsystem collectorAngler;
+	public static AnglerSubsystem angler;
 	public static ShooterSubsystem shooter;
 	public static VisionSubsystem vision;
 	
@@ -102,7 +102,7 @@ public class Robot extends IterativeRobot {
     
     private void initSubsystems() {
     	collector = CollectorSubsystem.getInstance();
-    	collectorAngler = CollectorAnglerSubsystem.getInstance();
+    	angler = AnglerSubsystem.getInstance();
     	drive = DriveSubsystem.getInstance();
     	gyro = GyroSubsystem.getInstance();
     	shooter = ShooterSubsystem.getInstance();

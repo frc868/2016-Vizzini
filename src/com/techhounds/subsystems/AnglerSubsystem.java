@@ -1,7 +1,7 @@
 package com.techhounds.subsystems;
 
 import com.techhounds.RobotMap;
-import com.techhounds.commands.LimitCheckCommand2;
+import com.techhounds.commands.LimitCheckCommand;
 
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.CANTalon.TalonControlMode;
@@ -62,7 +62,7 @@ public class AnglerSubsystem extends Subsystem {
 	}
 
     public void initDefaultCommand() {
-    	setDefaultCommand(new LimitCheckCommand2());
+    	setDefaultCommand(new LimitCheckCommand());
     }
 }
 

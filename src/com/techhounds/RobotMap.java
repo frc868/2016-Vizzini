@@ -9,6 +9,8 @@ public interface RobotMap {
 		final boolean COLLECTOR_IS_INVERTED = false;
 		final int COLLECTOR_ANGLER = 23;
 		final int BEAM_BREAK_SENSOR = 4;
+		final double ANGLER_FORWARD_LIMIT = 0;
+		final double ANGLER_REVERSE_LIMIT = 1;
 	}
 	
 	interface Shooter{

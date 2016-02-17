@@ -1,6 +1,6 @@
 package com.techhounds.commands;
 
-import com.techhounds.subsystems.CollectorAnglerSubsystem;
+import com.techhounds.subsystems.AnglerSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -10,11 +10,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class AnglerTester extends Command {
 	
-	private CollectorAnglerSubsystem angler;
+	private AnglerSubsystem angler;
 	private static String positionKey = "Angler_Position";
 	private double position = .5;
     public AnglerTester() {
-    	angler = CollectorAnglerSubsystem.getInstance();
+    	angler = AnglerSubsystem.getInstance();
     	requires(angler);
     	SmartDashboard.putNumber(positionKey, position);
         // Use requires() here to declare subsystem dependencies
