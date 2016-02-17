@@ -1,17 +1,21 @@
 package com.techhounds.commands;
 
-import com.techhounds.subsystems.CollectorAnglerSubsystem;
-
 import edu.wpi.first.wpilibj.command.Command;
+
+import com.techhounds.RobotMap;
+import com.techhounds.RobotMap.Collector;
+import com.techhounds.subsystems.CollectorAnglerSubsystem;
 
 /**
  *
  */
-public class LimitCheckCommand extends Command {
+public class LimitCheckCommand2 extends Command {
 	
-	public CollectorAnglerSubsystem angler;
-	
-    public LimitCheckCommand() {
+	private CollectorAnglerSubsystem angler;
+	public double forLim = RobotMap.Collector.ANGLER_FORWARD_LIMIT;
+	public double revLim = RobotMap.Collector.ANGLER_REVERSE_LIMIT;
+
+    public LimitCheckCommand2() {
     	angler = CollectorAnglerSubsystem.getInstance();
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
@@ -23,8 +27,12 @@ public class LimitCheckCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if(angler.getIsForwardLimitHit() || angler.getIsReverseLimitHit()){
+    	if(angler.getPosition() <= revLim){
     		angler.stopPower();
+    		angler.setPosition(revLim);
+    	}else if(angler.getPosition() >= forLim){
+    		angler.stopPower();
+    		angler.setPosition(forLim);
     	}
     }
 
