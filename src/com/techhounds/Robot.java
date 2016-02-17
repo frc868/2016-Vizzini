@@ -6,6 +6,7 @@ import com.techhounds.subsystems.AnglerSubsystem;
 import com.techhounds.subsystems.CollectorSubsystem;
 import com.techhounds.subsystems.DriveSubsystem;
 import com.techhounds.subsystems.GyroSubsystem;
+import com.techhounds.subsystems.ServoSubsystem;
 import com.techhounds.subsystems.ShooterSubsystem;
 import com.techhounds.subsystems.VisionSubsystem;
 
@@ -26,6 +27,7 @@ public class Robot extends IterativeRobot {
 	public static AnglerSubsystem angler;
 	public static ShooterSubsystem shooter;
 	public static VisionSubsystem vision;
+	public static ServoSubsystem servo;
 	
 	public static boolean isFinal(){
 		return finalRobot;
@@ -107,5 +109,6 @@ public class Robot extends IterativeRobot {
     	gyro = GyroSubsystem.getInstance();
     	shooter = ShooterSubsystem.getInstance();
     	vision = VisionSubsystem.getInstance();
+    	servo = ServoSubsystem.getInstance();
     }
 }
