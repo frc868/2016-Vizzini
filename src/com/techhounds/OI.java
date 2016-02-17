@@ -22,14 +22,14 @@ public class OI {
 	private SendableChooser operatorChooser;
 	
 	// DRIVER CONTROLS
-	int startCollector = 	ControllerMap.Key.RT;
-	int stopCollector = 	ControllerMap.Key.RB;
-	int angleUp = 			ControllerMap.Key.LT;
-	int angleDown = 		ControllerMap.Key.LB;
-	int upShooterSpeed = 	ControllerMap.Key.X;
-	int downShooterSpeed = 	ControllerMap.Key.Y;
-	int stopShooter = 		ControllerMap.Key.B;
-	int startShooter = 		ControllerMap.Key.A;
+	final int startCollector = 		ControllerMap.Key.RT;
+	final int stopCollector = 		ControllerMap.Key.RB;
+	final int angleUp = 			ControllerMap.Key.LT;
+	final int angleDown = 			ControllerMap.Key.LB;
+	final int upShooterSpeed = 		ControllerMap.Key.X;
+	final int downShooterSpeed = 	ControllerMap.Key.Y;
+	final int stopShooter = 		ControllerMap.Key.B;
+	final int startShooter = 		ControllerMap.Key.A;
 	
 	// OPERATOR CONTROLS
 	

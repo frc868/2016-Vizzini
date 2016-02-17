@@ -189,6 +189,7 @@ public class AutonChooser {
 			System.out.print("-- INVALID AUTON --");
 			return new AutonCommand();
 		} else {
+			// TODO: If Invalid Auton, just reach the defense so we get points
 			return new Commando();
 		}
 	}
@@ -226,7 +227,8 @@ public class AutonChooser {
 			}
 			
 			if(goal == Goal.DO_NOTHING) {
-				// TODO: Drive 2 feet
+				// TODO: Drive 1 foot
+				addSequential(new DriveDistance(1));
 			} else if(goal == Goal.LEFT) {
 				addSequential(new SetGyro(5));
 				addSequential(new DriveDistance(2));
