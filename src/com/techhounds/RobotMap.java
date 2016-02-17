@@ -24,7 +24,7 @@ public interface RobotMap {
 		// Not sure if there will be a second shooter motor
 		final int SHOOTER_MOTOR_B = 21;
 		final boolean SHOOTER_IS_INVERTED = false;
-		final int SHOOTER_SPEED_DIO = 5;
+		final int SHOOTER_SPEED_DIO = 4;
 	}
 	
 	interface DriveTrain {

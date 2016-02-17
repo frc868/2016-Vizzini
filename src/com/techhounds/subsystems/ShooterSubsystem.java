@@ -41,7 +41,7 @@ public class ShooterSubsystem extends Subsystem{
 			}
 			
 			public double pidGet() {
-				return count.getPeriod();
+				return count.getRate();
 			}
     		
     	}, new PIDOutput(){
@@ -85,6 +85,7 @@ public class ShooterSubsystem extends Subsystem{
 	
 	public void updateSmartDashboard(){
 		SmartDashboard.putNumber("Shooter_Power", getPower());
+		SmartDashboard.putNumber("Shooter Speed", getSpeed());
 	}
 	
 	public void initDefaultCommand(){
