@@ -26,10 +26,10 @@ public class LimitCheckCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if(angler.getPosition() <= revLim){
+    	if(angler.getPosition() < revLim){
     		angler.stopPower();
     		angler.setPosition(revLim);
-    	}else if(angler.getPosition() >= forLim){
+    	}else if(angler.getPosition() > forLim){
     		angler.stopPower();
     		angler.setPosition(forLim);
     	}
