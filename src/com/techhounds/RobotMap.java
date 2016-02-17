@@ -50,6 +50,14 @@ public interface RobotMap {
 		final int WINCH_LOCK = -1;
 		final int SCISSOR_ONE = -1;
 		final int SCISSOR_TWO = -1;
+		final double WINCH_ENABLE_MAX = 1;
+		final double WINCH_ENABLE_MIN = 0;
+		final double WINCH_LOCK_MAX = 1;
+		final double WINCH_LOCK_MIN = 0;
+		final double SCISSOR_ONE_MAX = 1;
+		final double SCISSOR_ONE_MIN = 0;
+		final double SCISSOR_TWO_MAX = 1;
+		final double SCISSOR_TWO_MIN = 0;
 	}
 	
 	interface Gyro {
