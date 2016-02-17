@@ -10,9 +10,9 @@ import edu.wpi.first.wpilibj.command.Command;
 public class AnglerCommand extends Command {
 	
 	private CollectorAnglerSubsystem angle;
-	private int spot;
+	private double spot;
 
-    public AnglerCommand(int position) {
+    public AnglerCommand(double position) {
     	angle = CollectorAnglerSubsystem.getInstance();
     	requires(angle);
     	spot = position;
