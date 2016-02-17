@@ -3,6 +3,12 @@ package com.techhounds;
 import edu.wpi.first.wpilibj.I2C;
 
 public interface RobotMap {
+	
+	interface OI {
+		final int DRIVER_PORT = 0;
+		final int OPERATOR_PORT = 1;
+	}
+	
 	interface Collector{
 		final int COLLECTOR_MOTOR = 17;
 		final double inPower = .5, outPower = -.5;

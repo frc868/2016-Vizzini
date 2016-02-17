@@ -23,48 +23,35 @@ public class OI {
 	private SendableChooser operatorChooser;
 	
 	// DRIVER CONTROLS
-	int driverTestCommando = ControllerMap.Key.RT;
-	int driverTestCommandoTwo = DPadButton.Direction.UP;
+	int dr_startCollector = 	ControllerMap.Key.RT;
+	int dr_stopCollector = 		ControllerMap.Key.RB;
+	int dr_angleUp = 			ControllerMap.Key.LT;
+	int dr_angleDown = 			ControllerMap.Key.LB;
+	int dr_upShooterSpeed = 	ControllerMap.Key.X;
+	int dr_downShooterSpeed = 	ControllerMap.Key.Y;
+	int dr_stopShooter = 		ControllerMap.Key.B;
+	int dr_startShooter = 		ControllerMap.Key.A;
 	
 	// OPERATOR CONTROLS
 	
 	private OI() {
 		
-		joy = new Joystick(ControllerMap.Key.PORT_NUM);
 		driverChooser = createControllerChooser();
 		operatorChooser = createControllerChooser();
 
 		SmartDashboard.putData("Driver Controller Chooser", driverChooser);
 		SmartDashboard.putData("Operator Controller Chooser", operatorChooser);
 		
-		driver = new ControllerMap(new Joystick(0), (ControllerMap.Type) driverChooser.getSelected());
-		operator = new ControllerMap(new Joystick(1), (ControllerMap.Type) operatorChooser.getSelected());
+		driver = new ControllerMap(new Joystick(RobotMap.OI.DRIVER_PORT), (ControllerMap.Type) driverChooser.getSelected());
+		operator = new ControllerMap(new Joystick(RobotMap.OI.OPERATOR_PORT), (ControllerMap.Type) operatorChooser.getSelected());
 		
 		initJoystickButtons();
 	
 		setup();
 	}
 	
-	Button startCollector, stopCollector, angleUp, angleDown, upShooterSpeed, downShooterSpeed, stopShooter, startShooter;
-	
 	public void initJoystickButtons(){
-		startCollector 		= new JoystickButton(joy, ControllerMap.Key.RT);
-		stopCollector 		= new JoystickButton(joy, ControllerMap.Key.RB);
-		angleUp				= new JoystickButton(joy, ControllerMap.Key.LT);
-		angleDown			= new JoystickButton(joy, ControllerMap.Key.LB);
-		upShooterSpeed		= new JoystickButton(joy, ControllerMap.Key.X);
-		downShooterSpeed	= new JoystickButton(joy, ControllerMap.Key.Y);
-		stopShooter			= new JoystickButton(joy, ControllerMap.Key.B);
-		startShooter		= new JoystickButton(joy, ControllerMap.Key.A);
 		
-		startCollector.whenPressed(new CollectorCommand(.5));
-		stopCollector.whenPressed(new CollectorCommand());
-		angleUp.whenPressed(new AnglerCommand(.95));
-		angleDown.whenPressed(new AnglerCommand(.05));
-		upShooterSpeed.whenPressed(new ChangeShooterSpeedCommand(.3));
-		downShooterSpeed.whenPressed(new ChangeShooterSpeedCommand(-.3));
-		stopShooter.whenPressed(new ShooterCommand());
-		startShooter.whenPressed(new ShooterCommand(.5));
 	}
 	
 	private void setup() {
@@ -90,15 +77,6 @@ public class OI {
 	 */
 	public void setupDriver() {
 		
-		// SAMPLE USAGE
-		driver.getButton(driverTestCommando)
-			.whenPressed(new Commando(), new Commando())
-			.whenReleased(new Commando())
-			.whileHeld(new Commando(), new Commando(), new Commando());
-		
-		driver.getButton(driverTestCommandoTwo)
-			.whenPressed(new Commando())
-			.whenReleased(); // It Will Just do A 0 Second Wait Command
 	}
 	
 	/**
@@ -112,16 +90,30 @@ public class OI {
 	 * Setup Single Controller Control
 	 */
 	public void setupController() {
-
-		// SAMPLE USAGE
-		driver.getButton(driverTestCommando)
-			.whenPressed(new Commando(), new Commando())
-			.whenReleased(new Commando())
-			.whileHeld(new Commando(), new Commando(), new Commando());
 		
-		driver.getButton(driverTestCommandoTwo)
-			.whenPressed(new Commando())
-			.whenReleased(); // It Will Just do A 0 Second Wait Command
+		driver.getButton(dr_startCollector)
+			.whenPressed(new CollectorCommand(.5));
+		
+		driver.getButton(dr_stopCollector)
+			.whenPressed(new CollectorCommand());
+		
+		driver.getButton(dr_angleUp)
+			.whenPressed(new AnglerCommand(.95));
+		
+		driver.getButton(dr_angleDown)
+			.whenPressed(new AnglerCommand(.05));
+		
+		driver.getButton(dr_upShooterSpeed)
+			.whenPressed(new ChangeShooterSpeedCommand(.3));
+		
+		driver.getButton(dr_downShooterSpeed)
+			.whenPressed(new ChangeShooterSpeedCommand(-.3));
+		
+		driver.getButton(dr_stopShooter)
+			.whenPressed(new ShooterCommand());
+		
+		driver.getButton(dr_startShooter)
+			.whenPressed(new ShooterCommand(.5));
 	}
 
 	/**
