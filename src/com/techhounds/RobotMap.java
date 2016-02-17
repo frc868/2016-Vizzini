@@ -37,8 +37,12 @@ public interface RobotMap {
 		final int ENC_RIGHT_B = 3;
 		final int ENC_LEFT_B = 1;
 		
-		final int DRIVE_LEFT_PDP = 0;
-		final int DRIVE_RIGHT_PDP = 0;
+		final int DRIVE_LEFT_PDP_1 = 0;
+		final int DRIVE_LEFT_PDP_2 = 1;
+		final int DRIVE_LEFT_PDP_3 = 2;
+		final int DRIVE_RIGHT_PDP_1 = 13;
+		final int DRIVE_RIGHT_PDP_2 = 14;
+		final int DRIVE_RIGHT_PDP_3 = 15;
 	}
 	
 	interface Servo {

@@ -124,11 +124,15 @@ public class DriveSubsystem extends Subsystem{
 	}
 	
 	public double getLeftCurrent() {
-		return panel.getCurrent(RobotMap.DriveTrain.DRIVE_LEFT_PDP);
+		return (panel.getCurrent(RobotMap.DriveTrain.DRIVE_LEFT_PDP_1) +
+				panel.getCurrent(RobotMap.DriveTrain.DRIVE_LEFT_PDP_2) +
+				 panel.getCurrent(RobotMap.DriveTrain.DRIVE_LEFT_PDP_3)) / 3;
 	}
 	
 	public double getRightCurrent() {
-		return panel.getCurrent(RobotMap.DriveTrain.DRIVE_RIGHT_PDP);
+		return (panel.getCurrent(RobotMap.DriveTrain.DRIVE_RIGHT_PDP_1) +
+				panel.getCurrent(RobotMap.DriveTrain.DRIVE_RIGHT_PDP_2) +
+				 panel.getCurrent(RobotMap.DriveTrain.DRIVE_RIGHT_PDP_3)) / 3;
 	}
 	
 	public double getLeftPower() {
