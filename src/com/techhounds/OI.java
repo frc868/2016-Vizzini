@@ -56,11 +56,6 @@ public class OI {
 	 */
 	public static OI getInstance() {
 		return instance == null ? instance = new OI(): instance;
-		/* if(instance == null){
-		 *   instance = new OI();
-		 * }
-		 * return instance
-		 */
 	}
 	
 	/**
@@ -106,9 +101,7 @@ public class OI {
 	 * Gets the Smart Dashboard Ready with Commands (Act as Buttons)
 	 */
 	public void setupSmartDashboard() {
-		// TODO: Add Smart Dashboard Controls
-		
-		SmartDashboard.putData("Update Controller Choice", new UpdateController());
+		SmartDashboard.putData("Update Controllers", new UpdateController());
 	}
 	
 	/**
@@ -169,5 +162,11 @@ public class OI {
 				return "";
 			
 		}
+	}
+	public double getRight(){
+		return driver.getRightPower();
+	}
+	public double getLeft(){
+		return driver.getLeftPower();
 	}
 }

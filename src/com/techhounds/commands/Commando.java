@@ -1,5 +1,6 @@
 package com.techhounds.commands;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -8,24 +9,32 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Commando extends Command {
 
-	// TEST COMMAND
+private Timer timer;
+	
     public Commando() {
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
+    	timer = new Timer();
     }
 
-    // Called just before this Command runs the first time
     protected void initialize() {
-    	SmartDashboard.putString("BUTTON PRESSED", "" + System.currentTimeMillis());
+    	timer.reset();
+    	timer.start();
     }
 
-    // Called repeatedly when this Command is scheduled to run
+    int cnt = 0;
+    
     protected void execute() {
+    	
+    	if(timer.get() >= 0.3) {
+    		SmartDashboard.putNumber("counted", cnt);
+    		cnt++;
+    		timer.reset();
+    	}
+    
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return true;
+        return false;
     }
 
     // Called once after isFinished returns true

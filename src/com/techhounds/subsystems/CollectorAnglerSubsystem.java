@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.CANTalon.TalonControlMode;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.PIDController;
 
@@ -24,7 +25,7 @@ public class CollectorAnglerSubsystem extends Subsystem {
     
 	private CollectorAnglerSubsystem() {
 		angler = new CANTalon(RobotMap.Collector.COLLECTOR_ANGLER);
-		angler.enableForwardSoftLimit(true);
+		angler.enableForwardSoftLimit(true); //TODO: Verify that we will be wiring a limit switch.
 		angler.enableReverseSoftLimit(true);
 		angler.changeControlMode(TalonControlMode.Position);
 		controller = new PIDController(P, I, D, new PIDSource(){
@@ -51,6 +52,8 @@ public class CollectorAnglerSubsystem extends Subsystem {
     	});
     	controller.setAbsoluteTolerance(2);
     	controller.setOutputRange(-1, 1);
+    	
+    	LiveWindow.addActuator("angler", "motor", angler);
 	}
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
