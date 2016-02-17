@@ -2,9 +2,9 @@ package com.techhounds.subsystems;
 
 import com.techhounds.Robot;
 import com.techhounds.RobotMap;
-import com.techhounds.gyro.GyroItg3200;
-import com.techhounds.gyro.RotationTracker;
-import com.techhounds.gyro.RotationTrackerInverted;
+import com.techhounds.lib.gyro.GyroItg3200;
+import com.techhounds.lib.gyro.RotationTracker;
+import com.techhounds.lib.gyro.RotationTrackerInverted;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;

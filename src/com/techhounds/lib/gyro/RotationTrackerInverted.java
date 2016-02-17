@@ -31,7 +31,7 @@
  * </p>
  */
 
-package com.techhounds.gyro;
+package com.techhounds.lib.gyro;
 
 import edu.wpi.first.wpilibj.PIDSourceType;
 

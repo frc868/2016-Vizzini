@@ -1,4 +1,4 @@
-package com.techhounds.sensors;
+package com.techhounds.lib.sensors;
 
 import java.util.TimerTask;
 
