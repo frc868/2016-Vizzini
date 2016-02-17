@@ -13,7 +13,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class OI {
     
 	private static OI instance;
-	private Joystick joy;
 	
 	private ControllerMap driver;
 	private ControllerMap operator;
@@ -23,14 +22,14 @@ public class OI {
 	private SendableChooser operatorChooser;
 	
 	// DRIVER CONTROLS
-	int dr_startCollector = 	ControllerMap.Key.RT;
-	int dr_stopCollector = 		ControllerMap.Key.RB;
-	int dr_angleUp = 			ControllerMap.Key.LT;
-	int dr_angleDown = 			ControllerMap.Key.LB;
-	int dr_upShooterSpeed = 	ControllerMap.Key.X;
-	int dr_downShooterSpeed = 	ControllerMap.Key.Y;
-	int dr_stopShooter = 		ControllerMap.Key.B;
-	int dr_startShooter = 		ControllerMap.Key.A;
+	int startCollector = 	ControllerMap.Key.RT;
+	int stopCollector = 	ControllerMap.Key.RB;
+	int angleUp = 			ControllerMap.Key.LT;
+	int angleDown = 		ControllerMap.Key.LB;
+	int upShooterSpeed = 	ControllerMap.Key.X;
+	int downShooterSpeed = 	ControllerMap.Key.Y;
+	int stopShooter = 		ControllerMap.Key.B;
+	int startShooter = 		ControllerMap.Key.A;
 	
 	// OPERATOR CONTROLS
 	
@@ -45,13 +44,7 @@ public class OI {
 		driver = new ControllerMap(new Joystick(RobotMap.OI.DRIVER_PORT), (ControllerMap.Type) driverChooser.getSelected());
 		operator = new ControllerMap(new Joystick(RobotMap.OI.OPERATOR_PORT), (ControllerMap.Type) operatorChooser.getSelected());
 		
-		initJoystickButtons();
-	
 		setup();
-	}
-	
-	public void initJoystickButtons(){
-		
 	}
 	
 	private void setup() {
@@ -91,28 +84,28 @@ public class OI {
 	 */
 	public void setupController() {
 		
-		driver.getButton(dr_startCollector)
+		driver.getButton(startCollector)
 			.whenPressed(new CollectorCommand(.5));
 		
-		driver.getButton(dr_stopCollector)
+		driver.getButton(stopCollector)
 			.whenPressed(new CollectorCommand());
 		
-		driver.getButton(dr_angleUp)
+		driver.getButton(angleUp)
 			.whenPressed(new AnglerCommand(.95));
 		
-		driver.getButton(dr_angleDown)
+		driver.getButton(angleDown)
 			.whenPressed(new AnglerCommand(.05));
 		
-		driver.getButton(dr_upShooterSpeed)
+		driver.getButton(upShooterSpeed)
 			.whenPressed(new ChangeShooterSpeedCommand(.3));
 		
-		driver.getButton(dr_downShooterSpeed)
+		driver.getButton(downShooterSpeed)
 			.whenPressed(new ChangeShooterSpeedCommand(-.3));
 		
-		driver.getButton(dr_stopShooter)
+		driver.getButton(stopShooter)
 			.whenPressed(new ShooterCommand());
 		
-		driver.getButton(dr_startShooter)
+		driver.getButton(startShooter)
 			.whenPressed(new ShooterCommand(.5));
 	}
 
@@ -182,9 +175,11 @@ public class OI {
 			
 		}
 	}
+	
 	public double getRight(){
 		return driver.getRightPower();
 	}
+	
 	public double getLeft(){
 		return driver.getLeftPower();
 	}
