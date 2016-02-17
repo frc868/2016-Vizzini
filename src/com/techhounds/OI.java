@@ -1,9 +1,10 @@
 package com.techhounds;
 
-import com.techhounds.commands.Commando;
-import com.techhounds.commands.UpdateController;
+import com.techhounds.commands.*;
+import com.techhounds.lib.hid.Button;
 import com.techhounds.lib.hid.ControllerMap;
 import com.techhounds.lib.hid.DPadButton;
+import com.techhounds.lib.hid.JoystickButton;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -12,6 +13,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class OI {
     
 	private static OI instance;
+	private Joystick joy;
 	
 	private ControllerMap driver;
 	private ControllerMap operator;
@@ -28,6 +30,7 @@ public class OI {
 	
 	private OI() {
 		
+		joy = new Joystick(ControllerMap.Key.PORT_NUM);
 		driverChooser = createControllerChooser();
 		operatorChooser = createControllerChooser();
 
@@ -36,8 +39,32 @@ public class OI {
 		
 		driver = new ControllerMap(new Joystick(0), (ControllerMap.Type) driverChooser.getSelected());
 		operator = new ControllerMap(new Joystick(1), (ControllerMap.Type) operatorChooser.getSelected());
+		
+		initJoystickButtons();
 	
 		setup();
+	}
+	
+	Button startCollector, stopCollector, angleUp, angleDown, upShooterSpeed, downShooterSpeed, stopShooter, startShooter;
+	
+	public void initJoystickButtons(){
+		startCollector 		= new JoystickButton(joy, ControllerMap.Key.RT);
+		stopCollector 		= new JoystickButton(joy, ControllerMap.Key.RB);
+		angleUp				= new JoystickButton(joy, ControllerMap.Key.LT);
+		angleDown			= new JoystickButton(joy, ControllerMap.Key.LB);
+		upShooterSpeed		= new JoystickButton(joy, ControllerMap.Key.X);
+		downShooterSpeed	= new JoystickButton(joy, ControllerMap.Key.Y);
+		stopShooter			= new JoystickButton(joy, ControllerMap.Key.B);
+		startShooter		= new JoystickButton(joy, ControllerMap.Key.A);
+		
+		startCollector.whenPressed(new CollectorCommand(.5));
+		stopCollector.whenPressed(new CollectorCommand());
+		angleUp.whenPressed(new AnglerCommand(.95));
+		angleDown.whenPressed(new AnglerCommand(.05));
+		upShooterSpeed.whenPressed(new ChangeShooterSpeedCommand(.3));
+		downShooterSpeed.whenPressed(new ChangeShooterSpeedCommand(-.3));
+		stopShooter.whenPressed(new ShooterCommand());
+		startShooter.whenPressed(new ShooterCommand(.5));
 	}
 	
 	private void setup() {

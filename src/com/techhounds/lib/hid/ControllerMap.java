@@ -27,6 +27,8 @@ public class ControllerMap {
 		// PLAYSTATION KEYS (START = 8 but already defined)
 		int CROSS = 0, CIRCLE = 1, SQUARE = 2, TRIANGLE = 3, R1 = 4, R2 = 5, L1 = 6,
 	    		L2 = 7, SELECT = 9, OPTIONS = 8, SHARE = 9;
+		
+		int PORT_NUM = -1;
 	}
 	
 	public interface Direction {
