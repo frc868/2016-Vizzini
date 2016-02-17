@@ -8,14 +8,14 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 /**
  *
  */
-public class SetWinchEnable extends Command {
+public class SetScissorsTwo extends Command {
 	
 	private ServoSubsystem servo;
 
-    public SetWinchEnable() {
-    	servo = ServoSubsystem.getWinchEnable();
+    public SetScissorsTwo() {
+    	servo = ServoSubsystem.getScissorTwo();
     	requires(servo);
-    	LiveWindow.addActuator("Winch_Enable", "Servo", servo.getServo());
+    	LiveWindow.addActuator("Scissor_Two", "Servo", servo.getServo());
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }

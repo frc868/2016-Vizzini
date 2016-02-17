@@ -30,19 +30,19 @@ public class ServoSubsystem extends Subsystem {
 	}
 	
 	public static ServoSubsystem getWinchEnable(){
-		return instance_winch_enable == null ? instance_winch_enable = new ServoSubsystem(RobotMap.Servo.WINCH_ENABLE) : instance_winch_enable;
+		return instance_winch_enable == null ? instance_winch_enable = new ServoSubsystem(RobotMap.Servo.WINCH_ENABLE, RobotMap.Servo.WINCH_ENABLE_MIN, RobotMap.Servo.WINCH_ENABLE_MAX) : instance_winch_enable;
 	}
 	
 	public static ServoSubsystem getWinchLock(){
-		return instance_winch_lock == null ? instance_winch_lock = new ServoSubsystem(RobotMap.Servo.WINCH_LOCK) : instance_winch_lock;
+		return instance_winch_lock == null ? instance_winch_lock = new ServoSubsystem(RobotMap.Servo.WINCH_LOCK, RobotMap.Servo.WINCH_LOCK_MIN, RobotMap.Servo.WINCH_LOCK_MAX) : instance_winch_lock;
 	}
 	
 	public static ServoSubsystem getScissorOne(){
-		return instance_scissor_one == null ? instance_scissor_one = new ServoSubsystem(RobotMap.Servo.SCISSOR_ONE) : instance_scissor_one;
+		return instance_scissor_one == null ? instance_scissor_one = new ServoSubsystem(RobotMap.Servo.SCISSOR_ONE, RobotMap.Servo.SCISSOR_ONE_MIN, RobotMap.Servo.SCISSOR_ONE_MAX) : instance_scissor_one;
 	}
 	
 	public static ServoSubsystem getScissorTwo(){
-		return instance_scissor_two == null ? instance_scissor_two = new ServoSubsystem(RobotMap.Servo.SCISSOR_TWO) : instance_scissor_two;
+		return instance_scissor_two == null ? instance_scissor_two = new ServoSubsystem(RobotMap.Servo.SCISSOR_TWO, RobotMap.Servo.SCISSOR_TWO_MIN, RobotMap.Servo.SCISSOR_TWO_MAX) : instance_scissor_two;
 	}
 	
 	public void setPosition(double position) {
@@ -60,6 +60,10 @@ public class ServoSubsystem extends Subsystem {
 	
 	public boolean getState() {
 		return isMax;
+	}
+	
+	public Servo getServo(){
+		return servo;
 	}
 
     public void initDefaultCommand() {
