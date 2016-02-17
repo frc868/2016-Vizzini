@@ -2,7 +2,7 @@ package com.techhounds.subsystems;
 
 import com.techhounds.Robot;
 import com.techhounds.RobotMap;
-import com.techhounds.commands.LimitCheckCommand;
+import com.techhounds.commands.angler.LimitCheckCommand;
 
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.CANTalon.TalonControlMode;

@@ -1,36 +1,36 @@
-package com.techhounds.commands;
-
-import com.techhounds.subsystems.AnglerSubsystem;
+package com.techhounds.commands.angler;
 
 import edu.wpi.first.wpilibj.command.Command;
+
+import com.techhounds.RobotMap;
+import com.techhounds.subsystems.AnglerSubsystem;
 
 /**
  *
  */
-public class AnglerCommand extends Command {
+public class LimitCheckCommand extends Command {
 	
-	private AnglerSubsystem angle;
-	private double spot;
+	private AnglerSubsystem angler;
+	public double forLim = RobotMap.Collector.ANGLER_FORWARD_LIMIT;
+	public double revLim = RobotMap.Collector.ANGLER_REVERSE_LIMIT;
 
-    public AnglerCommand(double position) {
-    	angle = AnglerSubsystem.getInstance();
-    	requires(angle);
-    	spot = position;
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
-    }
-    
-    public AnglerCommand(){
-    	this(0);
+    public LimitCheckCommand() {
+    	angler = AnglerSubsystem.getInstance();
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	angle.setPosition(spot);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	if(angler.getPosition() < revLim){
+    		angler.stopPower();
+    		angler.setPosition(revLim);
+    	}else if(angler.getPosition() > forLim){
+    		angler.stopPower();
+    		angler.setPosition(forLim);
+    	}
     }
 
     // Make this return true when this Command no longer needs to run execute()

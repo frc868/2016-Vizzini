@@ -1,6 +1,9 @@
 package com.techhounds;
 
 import com.techhounds.commands.*;
+import com.techhounds.commands.angler.SetAnglerPosition;
+import com.techhounds.commands.collector.SetCollectorPower;
+import com.techhounds.commands.shooter.SetShooterPower;
 import com.techhounds.lib.hid.Button;
 import com.techhounds.lib.hid.ControllerMap;
 import com.techhounds.lib.hid.DPadButton;
@@ -85,28 +88,28 @@ public class OI {
 	public void setupController() {
 		
 		driver.getButton(startCollector)
-			.whenPressed(new CollectorCommand(.5));
+			.whenPressed(new SetCollectorPower(.5));
 		
 		driver.getButton(stopCollector)
-			.whenPressed(new CollectorCommand());
+			.whenPressed(new SetCollectorPower());
 		
 		driver.getButton(angleUp)
-			.whenPressed(new AnglerCommand(.95));
+			.whenPressed(new SetAnglerPosition(.95));
 		
 		driver.getButton(angleDown)
-			.whenPressed(new AnglerCommand(.05));
+			.whenPressed(new SetAnglerPosition(.05));
 		
 		driver.getButton(upShooterSpeed)
-			.whenPressed(new ChangeShooterSpeedCommand(.3));
+			.whenPressed(new SetShooterPower(.3, true));
 		
 		driver.getButton(downShooterSpeed)
-			.whenPressed(new ChangeShooterSpeedCommand(-.3));
+			.whenPressed(new SetShooterPower(-.3, true));
 		
 		driver.getButton(stopShooter)
-			.whenPressed(new ShooterCommand());
+			.whenPressed(new SetShooterPower());
 		
 		driver.getButton(startShooter)
-			.whenPressed(new ShooterCommand(.5));
+			.whenPressed(new SetShooterPower(.5));
 	}
 
 	/**
