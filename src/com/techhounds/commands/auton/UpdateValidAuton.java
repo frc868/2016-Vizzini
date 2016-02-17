@@ -1,7 +1,5 @@
 package com.techhounds.commands.auton;
 
-import com.techhounds.subsystems.*;
-
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;

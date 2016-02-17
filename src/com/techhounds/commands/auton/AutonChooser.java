@@ -1,6 +1,5 @@
 package com.techhounds.commands.auton;
 
-import com.techhounds.commands.Commando;
 import com.techhounds.commands.DriveDistance;
 import com.techhounds.commands.gyro.ResetGyro;
 import com.techhounds.commands.gyro.SetGyro;
@@ -191,7 +190,7 @@ public class AutonChooser {
 			return new AutonCommand();
 		} else {
 			// TODO: If Invalid Auton, just reach the defense so we get points
-			return new Commando();
+			return new DriveDistance(2);
 		}
 	}
 	

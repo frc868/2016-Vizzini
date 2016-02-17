@@ -70,7 +70,7 @@ public class AnglerSubsystem extends Subsystem {
 	}
 
     public void initDefaultCommand() {
-    	setDefaultCommand(new LimitCheckCommand());
+    	
     }
 }
 

@@ -3,6 +3,7 @@ package com.techhounds;
 
 import com.techhounds.commands.UpdateSmartDashboard;
 import com.techhounds.subsystems.AnglerSubsystem;
+import com.techhounds.subsystems.BeamBreakSubsystem;
 import com.techhounds.subsystems.CollectorSubsystem;
 import com.techhounds.subsystems.DriveSubsystem;
 import com.techhounds.subsystems.GyroSubsystem;
@@ -20,23 +21,18 @@ public class Robot extends IterativeRobot {
 	public static double powToSpeedConst = 20;
 	
 	public static boolean oneControllerMode = true;
-	private static boolean finalRobot = false;
-	public static GyroSubsystem gyro;
-	public static DriveSubsystem drive;
-	public static CollectorSubsystem collector;
-	public static AnglerSubsystem angler;
-	public static ShooterSubsystem shooter;
-	public static VisionSubsystem vision;
-	public static ServoSubsystem servo;
 	
 	public static boolean isFinal(){
-		return finalRobot;
+		return true;
 	}
 	
 	public static double rangeCheck(double power){
-		return Math.max(Math.min(power, 1), -1);
+		return rangeCheck(power, -1, 1);
 	}
 	
+	public static double rangeCheck(double power, double min, double max) {
+		return Math.max(Math.min(power, max), min);
+	}
 	/**
 	 * Run once the instant the robot starts
 	 */
@@ -103,12 +99,16 @@ public class Robot extends IterativeRobot {
     }
     
     private void initSubsystems() {
-    	collector = CollectorSubsystem.getInstance();
-    	angler = AnglerSubsystem.getInstance();
-    	drive = DriveSubsystem.getInstance();
-    	gyro = GyroSubsystem.getInstance();
-    	shooter = ShooterSubsystem.getInstance();
-    	vision = VisionSubsystem.getInstance();
-    	servo = ServoSubsystem.getInstance();
+    	AnglerSubsystem.getInstance();
+    	//BeamBreakSubsystem.getInstance();
+    	CollectorSubsystem.getInstance();
+    	DriveSubsystem.getInstance();
+    	GyroSubsystem.getInstance();
+    	ServoSubsystem.getScissorOne();
+    	ServoSubsystem.getScissorTwo();
+    	ServoSubsystem.getWinchEnable();
+    	ServoSubsystem.getWinchLock();
+    	ShooterSubsystem.getInstance();
+    	VisionSubsystem.getInstance();
     }
 }

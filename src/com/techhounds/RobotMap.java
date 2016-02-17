@@ -39,6 +39,13 @@ public interface RobotMap {
 		
 	}
 	
+	interface Servo {
+		final int WINCH_ENABLE = -1;
+		final int WINCH_LOCK = -1;
+		final int SCISSOR_ONE = -1;
+		final int SCISSOR_TWO = -1;
+	}
+	
 	interface Gyro {
 		final I2C.Port GYRO = I2C.Port.kMXP;
 		final I2C.Port GYRO_PRACT = null;//I2C.Port.kMXP;
