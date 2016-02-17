@@ -34,10 +34,8 @@ public class OI {
 	final int stopShooter = 		ControllerMap.Key.B;
 	final int startShooter = 		ControllerMap.Key.A;
 	
-	// OPERATOR CONTROLS
-	
 	private OI() {
-		
+	
 		driverChooser = createControllerChooser();
 		operatorChooser = createControllerChooser();
 
@@ -46,7 +44,7 @@ public class OI {
 		
 		driver = new ControllerMap(new Joystick(RobotMap.OI.DRIVER_PORT), (ControllerMap.Type) driverChooser.getSelected());
 		operator = new ControllerMap(new Joystick(RobotMap.OI.OPERATOR_PORT), (ControllerMap.Type) operatorChooser.getSelected());
-		
+
 		setup();
 	}
 	

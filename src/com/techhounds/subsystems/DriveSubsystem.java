@@ -3,11 +3,13 @@ package com.techhounds.subsystems;
 import com.techhounds.Robot;
 import com.techhounds.RobotMap;
 
+import edu.wpi.first.wpilibj.BuiltInAccelerometer;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.PIDSourceType;
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -39,11 +41,17 @@ public class DriveSubsystem extends Subsystem{
 	private final double gyro_d;
 	
 	private final double percentTolerable = .1;
-
+	
+	private BuiltInAccelerometer accelerometer;
+	private PowerDistributionPanel panel;
 	
 	private static DriveSubsystem instance;
 	
-	private DriveSubsystem() {		
+	private DriveSubsystem() {	
+		
+		accelerometer = new BuiltInAccelerometer();
+		panel = new PowerDistributionPanel();
+		
 		left = new Spark(RobotMap.DriveTrain.DRIVE_LEFT_MOTOR);
 		left.setInverted(RobotMap.DriveTrain.DRIVE_LEFT_IS_INVERTED);
 		
@@ -76,6 +84,18 @@ public class DriveSubsystem extends Subsystem{
 		return instance;
 	}
 
+	public double getAccerometerX() {
+		return accelerometer.getX();
+	}
+
+	public double getAccerometerY() {
+		return accelerometer.getY();
+	}
+
+	public double getAccerometerZ() {
+		return accelerometer.getZ();
+		
+	}
 
 
 	public void setLeftPower(double speed) {
@@ -101,6 +121,14 @@ public class DriveSubsystem extends Subsystem{
 	public void setPower(double right, double left) {
 		this.left.set(left);
 		this.right.set(right);
+	}
+	
+	public double getLeftCurrent() {
+		return panel.getCurrent(RobotMap.DriveTrain.DRIVE_LEFT_PDP);
+	}
+	
+	public double getRightCurrent() {
+		return panel.getCurrent(RobotMap.DriveTrain.DRIVE_RIGHT_PDP);
 	}
 	
 	public double getLeftPower() {
@@ -140,17 +168,25 @@ public class DriveSubsystem extends Subsystem{
 	}
 	
 	public void updateSmartDashboard() {
-		SmartDashboard.putNumber("Driver Left Speed", getLeftPower());
-		SmartDashboard.putNumber("Driver Right Speed", getRightPower());
+		SmartDashboard.putNumber("Driver Left Power", getLeftPower());
+		SmartDashboard.putNumber("Driver Right Powers", getRightPower());
+		
 		SmartDashboard.putNumber("Driver PID Error", getPIDError());
+
+		SmartDashboard.putNumber("Accelerometer X", getAccerometerX());
+		SmartDashboard.putNumber("Accelerometer Y", getAccerometerY());
+		SmartDashboard.putNumber("Accelerometer Z", getAccerometerZ());
+		
+		SmartDashboard.putNumber("Left Distance", getLeftDistance());
+		SmartDashboard.putNumber("Right Distance", getRightDistance());
+		SmartDashboard.putNumber("Avg Distance", getAvgDistance());
+
+		SmartDashboard.putNumber("Left Current", getLeftCurrent());
+		SmartDashboard.putNumber("Right Current", getRightCurrent());
+	
 	}
 
 	protected void initDefaultCommand() {
 		// TODO: Add Default command for DriveWithGamepad()
-	}
-
-	public double getDistance() {
-		
-		return 0;
 	}
 }

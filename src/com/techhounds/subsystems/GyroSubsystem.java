@@ -48,8 +48,8 @@ public class GyroSubsystem extends Subsystem {
 	}
 	
 	public void updateSmartDashboard() {
-//		SmartDashboard.putNumber("Tilt", getTilt());
-//		SmartDashboard.putNumber("Lean", getLean());
+		SmartDashboard.putNumber("Tilt", getTilt());
+		SmartDashboard.putNumber("Lean", getLean());
 		SmartDashboard.putNumber("Rotation", getRotation());
 	}
 

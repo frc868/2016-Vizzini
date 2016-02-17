@@ -1,9 +1,11 @@
 package com.techhounds.commands;
 
+import com.techhounds.commands.auton.AutonChooser;
 import com.techhounds.subsystems.*;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * 
@@ -28,6 +30,8 @@ public class UpdateSmartDashboard extends Command {
     		ShooterSubsystem.getInstance().updateSmartDashboard();
     		CollectorSubsystem.getInstance().updateSmartDashboard();
     		AnglerSubsystem.getInstance().updateSmartDashboard();
+    		
+    		AutonChooser.getInstance().updateSmartDashboard();
 	    	timer.reset();
 		}
     }

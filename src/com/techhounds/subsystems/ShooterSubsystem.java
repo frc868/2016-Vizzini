@@ -25,6 +25,10 @@ public class ShooterSubsystem extends Subsystem{
 	private ShooterSubsystem() {
 		shooter = new CANTalon(RobotMap.Shooter.SHOOTER_MOTOR);
 		shooter.setInverted(getInverted());
+		
+		DigitalInput countIn = new DigitalInput(RobotMap.Shooter.SHOOTER_SPEED_DIO);
+    	count = new Counter(countIn);
+    	
 		controller = new PIDController(P, I, D, new PIDSource(){
 
 			public void setPIDSourceType(PIDSourceType pidSource) {
@@ -37,7 +41,7 @@ public class ShooterSubsystem extends Subsystem{
 			}
 			
 			public double pidGet() {
-				return shooter.getSpeed();
+				return count.getPeriod();
 			}
     		
     	}, new PIDOutput(){
@@ -48,9 +52,7 @@ public class ShooterSubsystem extends Subsystem{
     		
     	});
     	controller.setAbsoluteTolerance(2);
-    	controller.setOutputRange(-1, 1);
-    	DigitalInput countIn = new DigitalInput(RobotMap.Shooter.SHOOTER_SPEED_DIO);
-    	count = new Counter(countIn);
+    	controller.setOutputRange(0, 1);
     	
     	LiveWindow.addActuator("shooter", "motor", shooter);
     	LiveWindow.addSensor("shooter", "counter", count);
@@ -58,7 +60,7 @@ public class ShooterSubsystem extends Subsystem{
 	}
 	
 	public void setPower(double power){
-		shooter.set(Robot.rangeCheck(power));
+		shooter.set(Robot.rangeCheck(power, 0, 1));
 	}
 	
 	public void stopPower(){

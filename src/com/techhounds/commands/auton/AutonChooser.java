@@ -280,4 +280,8 @@ public class AutonChooser {
 			}
 		}
 	}
+
+	public void updateSmartDashboard() {
+		SmartDashboard.putBoolean("Valid Auton", isValid());
+	}
 }

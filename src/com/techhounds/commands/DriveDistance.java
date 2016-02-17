@@ -28,7 +28,7 @@ public class DriveDistance extends Command implements PIDSource, PIDOutput {
 	
 	@Override
 	protected void initialize() {
-		double curDist = drive.getDistance();
+		double curDist = drive.getAvgDistance();
 		pid.setSetpoint(targetDist + curDist);
 		pid.enable();
 	}
@@ -78,7 +78,7 @@ public class DriveDistance extends Command implements PIDSource, PIDOutput {
 
 	@Override
 	public double pidGet() {
-		return drive.getDistance();
+		return drive.getAvgDistance();
 	}
 
 }
