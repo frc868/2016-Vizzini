@@ -5,11 +5,13 @@ import com.techhounds.RobotMap;
 
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.Counter;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class ShooterSubsystem extends Subsystem{
@@ -47,6 +49,12 @@ public class ShooterSubsystem extends Subsystem{
     	});
     	controller.setAbsoluteTolerance(2);
     	controller.setOutputRange(-1, 1);
+    	DigitalInput countIn = new DigitalInput(RobotMap.Shooter.SHOOTER_SPEED_DIO);
+    	count = new Counter(countIn);
+    	
+    	LiveWindow.addActuator("shooter", "motor", shooter);
+    	LiveWindow.addSensor("shooter", "counter", count);
+    	LiveWindow.addSensor("shooter", "input", countIn);
 	}
 	
 	public void setPower(double power){

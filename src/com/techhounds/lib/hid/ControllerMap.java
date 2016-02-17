@@ -2,6 +2,8 @@ package com.techhounds.lib.hid;
 
 import java.util.HashMap;
 
+import com.techhounds.Robot;
+
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -83,7 +85,12 @@ public class ControllerMap {
 			}
 		}
 	}
-	
+	public double getRightPower(){
+		return Robot.rangeCheck(getAxis(Direction.LEFT_VERTICAL) + getAxis(Direction.RIGHT_HORIZONTAL));
+	}
+	public double getLeftPower(){
+		return Robot.rangeCheck(getAxis(Direction.LEFT_VERTICAL) - getAxis(Direction.RIGHT_HORIZONTAL));
+	}
 	public Type getType() {
 		return type;
 	}
@@ -116,6 +123,7 @@ public class ControllerMap {
 	public enum Type {
 		PS4, LOGITECH, XBOX_ONE, XBOX_360
 	}
+	
 }
 
 

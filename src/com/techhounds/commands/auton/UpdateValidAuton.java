@@ -1,17 +1,22 @@
-package com.techhounds.commands;
+package com.techhounds.commands.auton;
+
+import com.techhounds.subsystems.*;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
- *
+ * 
  */
-public class Commando extends Command {
+public class UpdateValidAuton extends Command {
 
-private Timer timer;
+	private Timer timer;
+	private AutonChooser chooser;
 	
-    public Commando() {
+    public UpdateValidAuton() {
+    	setRunWhenDisabled(true);
+    	chooser = AutonChooser.getInstance();
     	timer = new Timer();
     }
 
@@ -20,19 +25,14 @@ private Timer timer;
     	timer.start();
     }
 
-    int cnt = 0;
-    
     protected void execute() {
     	
     	if(timer.get() >= 0.3) {
-    		SmartDashboard.putNumber("counted", cnt);
-    		cnt++;
-    		timer.reset();
-    	}
-    
+    		SmartDashboard.putBoolean("Valid Auton", chooser.isValid());
+	    	timer.reset();
+		}
     }
 
-    // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
         return false;
     }
