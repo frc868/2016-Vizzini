@@ -40,6 +40,7 @@ public class AnglerPowerCommand extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
+    	angler.stopPower();
     }
 
     // Called when another command which requires one or more of the same
