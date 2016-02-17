@@ -156,24 +156,8 @@ public class OI {
 	 * Update dashboard when Called
 	 */
 	public void updateDashboard() {
-		SmartDashboard.putString("Driver Type", getControllerString(driver));
-		SmartDashboard.putString("Operator Type", getControllerString(operator));
-	}
-	
-	public String getControllerString(ControllerMap joystick) {
-		switch(joystick.getType()) {
-			case PS4:
-				return "PS4";
-			case XBOX_360:
-				return "XBOX_360";
-			case XBOX_ONE:
-				return "XBOX_ONE";
-			case LOGITECH:
-				return "LOGITECH";
-			default:
-				return "";
-			
-		}
+		SmartDashboard.putString("Driver Type", driver.getType().toString());
+		SmartDashboard.putString("Operator Type", operator.getType().toString());
 	}
 	
 	public double getRight(){
