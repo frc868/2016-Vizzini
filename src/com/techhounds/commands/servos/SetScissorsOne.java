@@ -22,7 +22,7 @@ public class SetScissorsOne extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	servo.set(servo.getState());
+    	servo.set(servo.getIsMax());
     }
 
     // Called repeatedly when this Command is scheduled to run

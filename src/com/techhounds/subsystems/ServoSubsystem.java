@@ -14,7 +14,6 @@ public class ServoSubsystem extends Subsystem {
     
 	private Servo servo;
 	private double min, max;
-	private boolean isMax;
 	private static ServoSubsystem instance_winch_enable, instance_winch_lock,
 		instance_scissor_one, instance_scissor_two;
 	
@@ -50,16 +49,15 @@ public class ServoSubsystem extends Subsystem {
 	}
 	
 	public void set(boolean position) {
-		servo.set(Robot.rangeCheck(isMax ? min : max));
-		isMax = position;
+		servo.set(Robot.rangeCheck(position ? max : min));
 	}
 	
 	public double getPosition() {
 		return servo.get();
 	}
 	
-	public boolean getState() {
-		return isMax;
+	public boolean getIsMax() {
+		return getPosition() == max;
 	}
 	
 	public Servo getServo(){
