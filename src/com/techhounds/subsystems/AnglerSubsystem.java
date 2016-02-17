@@ -2,7 +2,6 @@ package com.techhounds.subsystems;
 
 import com.techhounds.Robot;
 import com.techhounds.RobotMap;
-import com.techhounds.commands.angler.LimitCheckCommand;
 
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.CANTalon.TalonControlMode;
@@ -41,7 +40,7 @@ public class AnglerSubsystem extends Subsystem {
 		I = SmartDashboard.getNumber("Angler_I", I);
 		D = SmartDashboard.getNumber("Angler_D", D);
 		angler.setPID(P, I, D);
-		angler.set(position);
+		angler.set(Robot.rangeCheck(position, 0, 1));
 		angler.enable();
 	}
 	
