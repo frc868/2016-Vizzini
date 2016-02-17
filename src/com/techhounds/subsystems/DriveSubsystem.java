@@ -85,10 +85,7 @@ public class DriveSubsystem extends Subsystem{
 		else if(speed < -1){
 			speed = -1;
 		}
-
-		left.set(speed);
 	}
-	
 
 	public void setRightPower(double speed) {
 		if(speed > 1){ 
