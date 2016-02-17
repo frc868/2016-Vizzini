@@ -1,28 +1,30 @@
-package com.techhounds.commands;
+package com.techhounds.commands.angler;
 
-import com.techhounds.subsystems.ShooterSubsystem;
+import com.techhounds.subsystems.AnglerSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class ChangeShooterSpeedCommand extends Command {
+public class SetAnglerPosition extends Command {
 	
-	private ShooterSubsystem launch;
-	private double speed;
+	private AnglerSubsystem angle;
+	private double position;
 
-    public ChangeShooterSpeedCommand(double change) {
-    	launch = ShooterSubsystem.getInstance();
-    	requires(launch);
-    	speed = launch.getPower() + change;
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
+    public SetAnglerPosition(double position) {
+    	angle = AnglerSubsystem.getInstance();
+    	requires(angle);
+    	this.position = position;
+    }
+    
+    public SetAnglerPosition(){
+    	this(0);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	launch.setPower(speed);
+    	angle.setPosition(position);
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -31,11 +33,12 @@ public class ChangeShooterSpeedCommand extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return true;
     }
 
     // Called once after isFinished returns true
     protected void end() {
+    
     }
 
     // Called when another command which requires one or more of the same

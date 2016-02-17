@@ -27,6 +27,7 @@ public class UpdateSmartDashboard extends Command {
     	if(timer.get() >= 0.3) {
     		ShooterSubsystem.getInstance().updateSmartDashboard();
     		CollectorSubsystem.getInstance().updateSmartDashboard();
+    		AnglerSubsystem.getInstance().updateSmartDashboard();
 	    	timer.reset();
 		}
     }

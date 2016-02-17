@@ -1,32 +1,30 @@
-package com.techhounds.commands;
+package com.techhounds.commands.angler;
 
-import com.techhounds.subsystems.CollectorSubsystem;
+import com.techhounds.subsystems.AnglerSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class CollectorCommand extends Command {
+public class SetAnglerPower extends Command {
 	
-	private CollectorSubsystem collect;
-	private double colPower;
+	private AnglerSubsystem angler;
+	private double power;
 
-    public CollectorCommand(double power) {
-    	collect = CollectorSubsystem.getInstance();
-    	requires(collect);
-    	colPower = power;
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
+    public SetAnglerPower(double power) {
+    	angler = AnglerSubsystem.getInstance();
+    	requires(angler);
+    	this.power = power;
     }
     
-    public CollectorCommand(){
+    public SetAnglerPower(){
     	this(0);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	collect.setPower(colPower);
+    	angler.setPower(power);
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -35,12 +33,12 @@ public class CollectorCommand extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return true;
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	collect.stopPower();
+    	
     }
 
     // Called when another command which requires one or more of the same

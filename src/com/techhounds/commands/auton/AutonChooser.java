@@ -4,7 +4,8 @@ import com.techhounds.commands.Commando;
 import com.techhounds.commands.DriveDistance;
 import com.techhounds.commands.gyro.ResetGyro;
 import com.techhounds.commands.gyro.SetGyro;
-import com.techhounds.commands.shoot.*;
+import com.techhounds.commands.shooter.VisionAim;
+import com.techhounds.commands.shooter.VisionShoot;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
