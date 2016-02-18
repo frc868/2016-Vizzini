@@ -1,88 +1,179 @@
 package com.techhounds.subsystems;
 
-import com.techhounds.Robot;
-import com.techhounds.RobotMap;
-import com.techhounds.lib.gyro.GyroItg3200;
-import com.techhounds.lib.gyro.RotationTracker;
-import com.techhounds.lib.gyro.RotationTrackerInverted;
+import com.techhounds.lib.sensors.BNO055;
+import com.techhounds.lib.sensors.GyroAdapter;
+import com.techhounds.lib.sensors.ITG3200;
 
+import edu.wpi.first.wpilibj.GyroBase;
+import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class GyroSubsystem extends Subsystem {
-
-	private static GyroSubsystem instance;
+/**
+ * Subsystem that provides access to sensors used to track rotation about x, y
+ * an z axis.
+ * 
+ * <p>
+ * General Usage:
+ * </p>
+ * 
+ * <ul>
+ * <li>Use {@link #getInstance()}.{@link #createRotation()} to create a
+ * zeroed Gryo instance in your Command's initialize() implementation.</li>
+ * <li>Use the gyro's getAngle() method in your isFinished() method
+ * (it will be zero initially and change as the robot rotates).</li>
+ * </ul>
+ * 
+ * <p>
+ * NOTE: This is a "read only" subsystem. You do NOT use requires() in your
+ * Command constructor as it is valid for multiple commands to read gyro values
+ * at the same time!
+ * </p>
+ */
+public abstract class GyroSubsystem extends Subsystem {
 	
-	private GyroItg3200 gyro;
-	private RotationTracker tilt, lean, rotation;
+	// NOTE: Several of these constants could be relocated to RobotMap if you want to make them public
+	// (I just grew tired of fighting conflicts).
 	
-	public boolean gyroEnabled;
-	
-	private GyroSubsystem() {
-
-		if (Robot.isFinal()){
-			if(gyroEnabled = RobotMap.Gyro.GYRO != null) { 
-	
-				gyro = new GyroItg3200(RobotMap.Gyro.GYRO, false);
-				
-				tilt = getTiltTracker();
-				lean = getLeanTracker();
-				rotation = getRotationTracker();		
-			}
-		}else{
-			if(gyroEnabled = RobotMap.Gyro.GYRO_PRACT != null) {
-				
-				gyro = new GyroItg3200(RobotMap.Gyro.GYRO_PRACT, false);
-				
-				tilt = getTiltTracker();
-				lean = getLeanTracker();
-				rotation = getRotationTracker();		
-			}
-		}
+	/**
+	 * Type of Gyro hardware that can be used by this subsystem (NOTE: FAKE always returns 0).
+	 */
+	private enum GyroType {
+		FAKE, 
+		BNO055,
+		ITG3200
 	}
 	
+	/**
+	 * Set to type of gyro that is currently installed on the robot.
+	 */
+	private static final GyroType GYRO_INSTALLED = GyroType.FAKE;
+	
+	/** The I2C port the BNO055 is connected to (when BNO055 is used). */
+	private static final I2C.Port BNO055_PORT = I2C.Port.kOnboard;
+	
+	/** The I2C port the ITG-3200 is connected to (when ITG-3200 is used). */
+	private static final I2C.Port ITG3200_PORT = I2C.Port.kMXP;
+
+	/** Set to true if the address jumper has been installed on your ITG-3200 board. */
+	private static final boolean ITG3200_ADDR_JUMPER = false;
+	
+	// Single instance of the subsystem
+	private static GyroSubsystem instance;
+
+	// Instance used to track the rotation throughout the entire match
+	private GyroBase gyrox;
+
+	/**
+	 * Private constructor to force {@link #getInstance()} usage.
+	 */
+	private GyroSubsystem() {
+	}
+
+	/**
+	 * Get access to the single instance of the gyro subsystem.
+	 * 
+	 * @return Reference to gyro subsystem implementation.
+	 */
 	public static GyroSubsystem getInstance() {
-		if(instance == null)
-			instance = new GyroSubsystem();
+		if (instance == null) {
+			switch (GYRO_INSTALLED) {
+			case BNO055:
+				instance = new GyroBNO055();
+				break;
+			case ITG3200:
+				instance = new GyroITG3200();
+				break;
+			default:
+				instance = new GyroFake();	
+			}
+
+			// NOTE: This must be done here and not in the constructor to
+			// make use of overridden methods.
+			instance.gyrox = instance.createRotationGyro();
+			LiveWindow.addSensor("Gyro", "Rotation", instance.gyrox);
+		}
 		return instance;
 	}
-	
+
+	/**
+	 * Update the dashboard with current heading of the robot (since boot).
+	 */
 	public void updateSmartDashboard() {
-		SmartDashboard.putNumber("Tilt", getTilt());
-		SmartDashboard.putNumber("Lean", getLean());
+		// SmartDashboard.putNumber("Tilt", getTilt());
+		// SmartDashboard.putNumber("Lean", getLean());
 		SmartDashboard.putNumber("Rotation", getRotation());
 	}
 
-	protected void initDefaultCommand() {
-		// TODO Auto-generated method stub
+	/**
+	 * No default command is required.
+	 */
+	protected final void initDefaultCommand() {
+
 	}
-	
-	public double getTilt() {
-		return gyroEnabled ? tilt.getAngle() : 0.0;
+
+	/**
+	 * Get the total rotation in degrees since the gyro subsystem was first
+	 * realized.
+	 * 
+	 * @return Number of degrees rotated in the range of [-INF, +INF].
+	 */
+	public final double getRotation() {
+		return gyrox.getAngle();
 	}
-	
-	public double getLean() {
-		return gyroEnabled ? lean.getAngle() : 0.0;
+
+	/**
+	 * Returns a "nice" independent Gyro your can used in PID methods to track
+	 * rotation.
+	 * 
+	 * @return A Gyro (initially 0) you can use to track relative rotation with.
+	 */
+	public abstract GyroBase createRotationGyro();
+
+	/**
+	 * Implementation using BNO055 sensor as the gyro source.
+	 */
+	private static class GyroBNO055 extends GyroSubsystem {
+		private BNO055 sensor;
+
+		GyroBNO055() {
+			sensor = BNO055.getInstance(BNO055_PORT);
+		}
+
+		@Override
+		public GyroBase createRotationGyro() {
+			return sensor.createGyroX();
+		}
 	}
-	
-	public double getRotation() {
-		return gyroEnabled ? rotation.getAngle() : 0.0;
+
+	/**
+	 * Implementation using BNO055 sensor as the gyro source.
+	 */
+	private static class GyroITG3200 extends GyroSubsystem {
+		private ITG3200 sensor;
+
+		public GyroITG3200() {
+			sensor = new ITG3200(ITG3200_PORT, ITG3200_ADDR_JUMPER);
+		}
+
+		@Override
+		public GyroBase createRotationGyro() {
+			GyroAdapter gyro = sensor.createGyroX();
+			gyro.setInverted(true);
+			return gyro;
+		}
 	}
-	
-	public RotationTracker getTiltTracker() {
-		return gyroEnabled ? gyro.getRotationZ() : null;
+
+	/**
+	 * Fake implementation when no gyro is available.
+	 */
+	private static class GyroFake extends GyroSubsystem {
+
+		@Override
+		public GyroBase createRotationGyro() {
+			return GyroAdapter.createFakeGyro();
+		}
 	}
-	
-	public RotationTracker getLeanTracker() {
-		return gyroEnabled ? gyro.getRotationY() : null;
-	}
-	
-	public RotationTracker getRotationTracker() {
-		return gyroEnabled ? new RotationTrackerInverted(gyro.getRotationX()) : null;
-	}
-	
-	public void resetGyro() {
-		if (gyroEnabled)
-			gyro.reset();
-	}
+
 }
