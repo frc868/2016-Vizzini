@@ -19,7 +19,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * </p>
  * 
  * <ul>
- * <li>Use {@link #getInstance()}.{@link #createRotation()} to create a
+ * <li>Use {@link #getInstance()}.{@link #createRotationGyro()} to create a
  * zeroed Gryo instance in your Command's initialize() implementation.</li>
  * <li>Use the gyro's getAngle() method in your isFinished() method
  * (it will be zero initially and change as the robot rotates).</li>
