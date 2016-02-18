@@ -47,7 +47,6 @@ public class AnglerSubsystem extends Subsystem {
 		angler.set(Robot.rangeCheck(position, 0.156, 0.575)); //0.575 is greatest position ever (only @ portcullis)
 		angler.enable();
 	}
-	
 	public void stopPower(){
 		angler.disable();
 	}
