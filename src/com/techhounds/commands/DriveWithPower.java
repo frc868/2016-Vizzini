@@ -1,47 +1,42 @@
-package com.techhounds.commands.angler;
+package com.techhounds.commands;
 
-import com.techhounds.subsystems.AnglerSubsystem;
+import com.techhounds.RobotMap.OI_Constants;
+import com.techhounds.subsystems.DriveSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
  */
-public class SetAnglerPosition extends Command {
-	
-	private AnglerSubsystem angle;
-	private double position;
-	private double TOLERANCE = 10;
+public class DriveWithPower extends Command {
 
-    public SetAnglerPosition(double position) {
-    	angle = AnglerSubsystem.getInstance();
-    	requires(angle);
-    	this.position = position;
-    }
-    
-    public SetAnglerPosition(){
-    	this(0);
+	DriveSubsystem drive;
+	
+    public DriveWithPower() {
+    	drive = DriveSubsystem.getInstance();
+    	requires(drive);
+        // Use requires() here to declare subsystem dependencies
+        // eg. requires(chassis);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	angle.setPosition(position);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	
+    	drive.setPower(com.techhounds.OI.getInstance().getRight(), com.techhounds.OI.getInstance().getLeft());
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	
-        return angle.reachedTarget(TOLERANCE);
+        return false;
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	angle.stopPower();
+    	
     }
 
     // Called when another command which requires one or more of the same

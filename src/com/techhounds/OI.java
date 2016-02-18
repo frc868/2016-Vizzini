@@ -42,8 +42,8 @@ public class OI {
 		SmartDashboard.putData("Driver Controller Chooser", driverChooser);
 		SmartDashboard.putData("Operator Controller Chooser", operatorChooser);
 		
-		driver = new ControllerMap(new Joystick(RobotMap.OI.DRIVER_PORT), (ControllerMap.Type) driverChooser.getSelected());
-		operator = new ControllerMap(new Joystick(RobotMap.OI.OPERATOR_PORT), (ControllerMap.Type) operatorChooser.getSelected());
+		driver = new ControllerMap(new Joystick(RobotMap.OI_Constants.DRIVER_PORT), (ControllerMap.Type) driverChooser.getSelected());
+		operator = new ControllerMap(new Joystick(RobotMap.OI_Constants.OPERATOR_PORT), (ControllerMap.Type) operatorChooser.getSelected());
 
 		setup();
 	}
@@ -92,10 +92,10 @@ public class OI {
 			.whenPressed(new SetCollectorPower());
 		
 		driver.getButton(angleUp)
-			.whenPressed(new SetAnglerPosition(.95));
+			.whenPressed(new SetAnglerPosition(.15));
 		
 		driver.getButton(angleDown)
-			.whenPressed(new SetAnglerPosition(.05));
+			.whenPressed(new SetAnglerPosition(.5));
 		
 		driver.getButton(upShooterSpeed)
 			.whenPressed(new SetShooterPower(.3, true));

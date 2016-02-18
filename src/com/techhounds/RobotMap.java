@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj.I2C;
 
 public interface RobotMap {
 	
-	interface OI {
+	interface OI_Constants {
 		final int DRIVER_PORT = 0;
 		final int OPERATOR_PORT = 1;
 	}

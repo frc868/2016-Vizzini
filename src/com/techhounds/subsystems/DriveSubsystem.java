@@ -2,6 +2,7 @@ package com.techhounds.subsystems;
 
 import com.techhounds.Robot;
 import com.techhounds.RobotMap;
+import com.techhounds.commands.DriveWithPower;
 
 import edu.wpi.first.wpilibj.BuiltInAccelerometer;
 import edu.wpi.first.wpilibj.Encoder;
@@ -191,6 +192,7 @@ public class DriveSubsystem extends Subsystem{
 	}
 
 	protected void initDefaultCommand() {
+		setDefaultCommand(new DriveWithPower());
 		// TODO: Add Default command for DriveWithGamepad()
 	}
 }

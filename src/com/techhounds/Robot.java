@@ -104,10 +104,10 @@ public class Robot extends IterativeRobot {
     	CollectorSubsystem.getInstance();
     	DriveSubsystem.getInstance();
     	GyroSubsystem.getInstance();
-    	ServoSubsystem.getScissorOne();
-    	ServoSubsystem.getScissorTwo();
-    	ServoSubsystem.getWinchEnable();
-    	ServoSubsystem.getWinchLock();
+    	//ServoSubsystem.getScissorOne();
+    	//ServoSubsystem.getScissorTwo();
+    	//ServoSubsystem.getWinchEnable();
+    	//ServoSubsystem.getWinchLock();
     	ShooterSubsystem.getInstance();
     	VisionSubsystem.getInstance();
     }

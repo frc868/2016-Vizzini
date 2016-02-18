@@ -16,7 +16,7 @@ public class AnglerSubsystem extends Subsystem {
 	
 	private static AnglerSubsystem instance;
 	private CANTalon angler;
-	private double P = 0, I = 0, D = 0;
+	private double P = .5, I = 0, D = 0;
     
 	private AnglerSubsystem() {
 		angler = new CANTalon(RobotMap.Collector.COLLECTOR_ANGLER);
@@ -26,9 +26,9 @@ public class AnglerSubsystem extends Subsystem {
 		angler.changeControlMode(TalonControlMode.Position);
 		angler.configPotentiometerTurns(1);
 		angler.setFeedbackDevice(CANTalon.FeedbackDevice.AnalogPot);
-		SmartDashboard.getNumber("Angler_P", P);
-		SmartDashboard.getNumber("Angler_I", I);
-		SmartDashboard.getNumber("Angler_D", D);
+		SmartDashboard.putNumber("Angler_P", P);
+		SmartDashboard.putNumber("Angler_I", I);
+		SmartDashboard.putNumber("Angler_D", D);
 		angler.setPID(P, I, D);
 		
 	}
@@ -56,9 +56,16 @@ public class AnglerSubsystem extends Subsystem {
 	public double getPosition(){
 		return angler.get();
 	}
-	
+	public boolean reachedTarget(double tolerance){
+		return Math.abs(angler.getError()) < tolerance;
+	}
+	public double getError(){
+		return angler.getError();
+	}
 	public void updateSmartDashboard(){
 		SmartDashboard.putNumber("Angler_Position", getPosition());
+		SmartDashboard.putNumber("Error: ", angler.getError());
+		SmartDashboard.putData("Angler: ", angler);
 	}
 	
 	public static AnglerSubsystem getInstance(){
