@@ -27,9 +27,11 @@ public class UpdateSmartDashboard extends Command {
     protected void execute() {
     	
     	if(timer.get() >= 0.3) {
+    		SmartDashboard.putData(AnglerSubsystem.getInstance());
     		ShooterSubsystem.getInstance().updateSmartDashboard();
     		CollectorSubsystem.getInstance().updateSmartDashboard();
     		AnglerSubsystem.getInstance().updateSmartDashboard();
+    		DriveSubsystem.getInstance().updateSmartDashboard();
     		
     		AutonChooser.getInstance().updateSmartDashboard();
 	    	timer.reset();

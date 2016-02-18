@@ -28,6 +28,7 @@ public class ShooterSubsystem extends Subsystem{
 		
 		DigitalInput countIn = new DigitalInput(RobotMap.Shooter.SHOOTER_SPEED_DIO);
     	count = new Counter(countIn);
+    	count.setDistancePerPulse(1);
     	
 		controller = new PIDController(P, I, D, new PIDSource(){
 
@@ -71,6 +72,14 @@ public class ShooterSubsystem extends Subsystem{
 		return count.getRate();
 	}
 	
+	public double getDistance() {
+		return count.getDistance();
+	}
+	
+	public double getCount() {
+		return count.get();
+	}
+	
 	public void resetEncoder(){
 		count.reset();
 	}
@@ -86,6 +95,8 @@ public class ShooterSubsystem extends Subsystem{
 	public void updateSmartDashboard(){
 		SmartDashboard.putNumber("Shooter_Power", getPower());
 		SmartDashboard.putNumber("Shooter Speed", getSpeed());
+		SmartDashboard.putNumber("Shooter Distance", getDistance());
+		SmartDashboard.putNumber("Shooter Count", getCount());
 	}
 	
 	public void initDefaultCommand(){

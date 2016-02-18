@@ -176,7 +176,7 @@ public class DriveSubsystem extends Subsystem{
 		SmartDashboard.putNumber("Driver Left Power", getLeftPower());
 		SmartDashboard.putNumber("Driver Right Powers", getRightPower());
 		
-		SmartDashboard.putNumber("Driver PID Error", getPIDError());
+		//SmartDashboard.putNumber("Driver PID Error", getPIDError());
 
 		SmartDashboard.putNumber("Accelerometer X", getAccerometerX());
 		SmartDashboard.putNumber("Accelerometer Y", getAccerometerY());

@@ -1,6 +1,7 @@
 package com.techhounds.commands;
 
 import com.techhounds.RobotMap.OI_Constants;
+import com.techhounds.OI;
 import com.techhounds.subsystems.DriveSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -26,7 +27,7 @@ public class DriveWithPower extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	
-    	drive.setPower(com.techhounds.OI.getInstance().getRight(), com.techhounds.OI.getInstance().getLeft());
+    	drive.setPower(OI.getInstance().getRight(), OI.getInstance().getLeft());
     }
 
     // Make this return true when this Command no longer needs to run execute()

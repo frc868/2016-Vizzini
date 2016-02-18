@@ -2,7 +2,9 @@ package com.techhounds;
 
 import com.techhounds.commands.*;
 import com.techhounds.commands.angler.SetAnglerPosition;
+import com.techhounds.commands.angler.SetAnglerPower;
 import com.techhounds.commands.collector.SetCollectorPower;
+import com.techhounds.commands.shooter.Fire;
 import com.techhounds.commands.shooter.SetShooterPower;
 import com.techhounds.lib.hid.Button;
 import com.techhounds.lib.hid.ControllerMap;
@@ -27,13 +29,14 @@ public class OI {
 	// DRIVER CONTROLS
 	final int startCollector = 		ControllerMap.Key.RT;
 	final int stopCollector = 		ControllerMap.Key.RB;
-	final int angleUp = 			ControllerMap.Key.LT;
-	final int angleDown = 			ControllerMap.Key.LB;
-	final int upShooterSpeed = 		ControllerMap.Key.X;
-	final int downShooterSpeed = 	ControllerMap.Key.Y;
-	final int stopShooter = 		ControllerMap.Key.B;
-	final int startShooter = 		ControllerMap.Key.A;
-	
+	final int angleUp = 			ControllerMap.Key.Y;
+	final int angleDown = 			ControllerMap.Key.A;
+	final int upShooterSpeed = 		DPadButton.Direction.UP;
+	final int downShooterSpeed = 	DPadButton.Direction.DOWN;
+	final int stopShooter = 		DPadButton.Direction.LEFT;
+	final int startShooter = 		ControllerMap.Key.X;
+	final int fireShooter = 		ControllerMap.Key.B;
+
 	private OI() {
 	
 		driverChooser = createControllerChooser();
@@ -86,28 +89,37 @@ public class OI {
 	public void setupController() {
 		
 		driver.getButton(startCollector)
-			.whenPressed(new SetCollectorPower(.5));
+			.whenPressed(new SetCollectorPower(.5))
+			.whenReleased(new SetCollectorPower(0));
 		
 		driver.getButton(stopCollector)
-			.whenPressed(new SetCollectorPower());
+			.whenPressed(new SetCollectorPower(-.5))
+			.whenReleased(new SetCollectorPower(0));
 		
 		driver.getButton(angleUp)
-			.whenPressed(new SetAnglerPosition(.15));
-		
+			//.whenPressed(new SetAnglerPosition(.15));
+			.whenPressed(new SetAnglerPower(.3))
+			.whenReleased(new SetAnglerPower(0));
+			
 		driver.getButton(angleDown)
-			.whenPressed(new SetAnglerPosition(.5));
+			//.whenPressed(new SetAnglerPosition(.15));
+			.whenPressed(new SetAnglerPower(-.3))
+			.whenReleased(new SetAnglerPower(0));
 		
 		driver.getButton(upShooterSpeed)
-			.whenPressed(new SetShooterPower(.3, true));
+			.whenPressed(new SetShooterPower(.1, true));
 		
 		driver.getButton(downShooterSpeed)
-			.whenPressed(new SetShooterPower(-.3, true));
+			.whenPressed(new SetShooterPower(-.1, true));
 		
 		driver.getButton(stopShooter)
 			.whenPressed(new SetShooterPower());
 		
 		driver.getButton(startShooter)
 			.whenPressed(new SetShooterPower(.5));
+		
+		driver.getButton(fireShooter)
+			.whenPressed(new Fire());
 	}
 
 	/**

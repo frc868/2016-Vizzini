@@ -5,6 +5,10 @@ import com.techhounds.RobotMap;
 
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.CANTalon.TalonControlMode;
+import edu.wpi.first.wpilibj.PIDController;
+import edu.wpi.first.wpilibj.PIDOutput;
+import edu.wpi.first.wpilibj.PIDSource;
+import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -40,7 +44,7 @@ public class AnglerSubsystem extends Subsystem {
 		I = SmartDashboard.getNumber("Angler_I", I);
 		D = SmartDashboard.getNumber("Angler_D", D);
 		angler.setPID(P, I, D);
-		angler.set(Robot.rangeCheck(position, 0, 1));
+		angler.set(Robot.rangeCheck(position, 0.156, 0.575)); //0.575 is greatest position ever (only @ portcullis)
 		angler.enable();
 	}
 	
@@ -49,13 +53,15 @@ public class AnglerSubsystem extends Subsystem {
 	}
 	
 	public void setPower(double pow){
-		angler.changeControlMode(TalonControlMode.PercentVbus);
-		angler.set(Robot.rangeCheck(pow));
+		//angler.changeControlMode(TalonControlMode.PercentVbus);
+		//angler.set(Robot.rangeCheck(pow));
 	}
 	
 	public double getPosition(){
-		return angler.get();
+		return angler.getEncPosition();
+		//return angler.get();
 	}
+	
 	public boolean reachedTarget(double tolerance){
 		return Math.abs(angler.getError()) < tolerance;
 	}
@@ -65,7 +71,7 @@ public class AnglerSubsystem extends Subsystem {
 	public void updateSmartDashboard(){
 		SmartDashboard.putNumber("Angler_Position", getPosition());
 		SmartDashboard.putNumber("Error: ", angler.getError());
-		SmartDashboard.putData("Angler: ", angler);
+		//SmartDashboard.putNumber("Angler: ", angler.getPosition());
 	}
 	
 	public static AnglerSubsystem getInstance(){
