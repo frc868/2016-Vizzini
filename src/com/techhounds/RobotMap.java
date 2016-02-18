@@ -30,7 +30,7 @@ public interface RobotMap {
 	
 	interface DriveTrain {
 		final int DRIVE_LEFT_MOTOR = 1;
-		final boolean DRIVE_LEFT_IS_INVERTED = false;
+		final boolean DRIVE_LEFT_IS_INVERTED = true;
 		final int DRIVE_RIGHT_MOTOR = 0;
 		final boolean DRIVE_RIGHT_IS_INVERTED = false;
 		final int ENC_RIGHT_A = 2;

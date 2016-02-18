@@ -58,7 +58,7 @@ public class AnglerSubsystem extends Subsystem {
 	}
 	
 	public double getPosition(){
-		return angler.getEncPosition();
+		return angler.getAnalogInRaw();
 		//return angler.get();
 	}
 	

@@ -23,8 +23,8 @@ public class DriveWithSpeed extends Command {
 	public DriveWithSpeed(double speed) {
 		this.speed = speed;
 
-		rightPID = new PIDController(0,0,0, new PID(false), new PID(false));
-		leftPID = new PIDController(0,0,0, new PID(true), new PID(true));
+		rightPID = new PIDController(1,0,0, new PID(false), new PID(false));
+		leftPID = new PIDController(1,0,0, new PID(true), new PID(true));
 
 		drive = DriveSubsystem.getInstance();
 		requires(drive);
@@ -84,7 +84,8 @@ public class DriveWithSpeed extends Command {
 
 		@Override
 		public double pidGet() {
-			return (isLeft ? OI.getInstance().getLeft() * Robot.powToSpeedConst : OI.getInstance().getRight()) * Robot.powToSpeedConst;
+			return 50;
+			//return (isLeft ? OI.getInstance().getLeft() * Robot.powToSpeedConst : OI.getInstance().getRight()) * Robot.powToSpeedConst;
 		}
 	}
 }

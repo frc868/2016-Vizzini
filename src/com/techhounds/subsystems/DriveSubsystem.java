@@ -188,6 +188,9 @@ public class DriveSubsystem extends Subsystem{
 
 		SmartDashboard.putNumber("Left Current", getLeftCurrent());
 		SmartDashboard.putNumber("Right Current", getRightCurrent());
+		
+		SmartDashboard.putNumber("Left Speed", getLeftSpeed());
+		SmartDashboard.putNumber("Right Speed", getRightSpeed());
 	
 	}
 
