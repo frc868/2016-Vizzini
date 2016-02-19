@@ -20,35 +20,56 @@ public class AnglerSubsystem extends Subsystem {
 	
 	private static AnglerSubsystem instance;
 	private CANTalon angler;
-	private double P = .5, I = 0, D = 0;
+	private double P = 0.2, I = 0, D = 0;
+	private PIDController pid;
     
 	private AnglerSubsystem() {
 		angler = new CANTalon(RobotMap.Collector.COLLECTOR_ANGLER);
 		LiveWindow.addActuator("Angler", "Motor", angler);
 		angler.enableForwardSoftLimit(false);
 		angler.enableReverseSoftLimit(false);
-		angler.changeControlMode(TalonControlMode.Position);
+		angler.changeControlMode(TalonControlMode.PercentVbus);
 		angler.configPotentiometerTurns(1);
 		angler.setFeedbackDevice(CANTalon.FeedbackDevice.AnalogPot);
-		SmartDashboard.putNumber("Angler_P", P);
-		SmartDashboard.putNumber("Angler_I", I);
-		SmartDashboard.putNumber("Angler_D", D);
-		angler.setPID(P, I, D);
+		
+		pid = new PIDController(P, I, D, new PIDSource() {
+
+			@Override
+			public void setPIDSourceType(PIDSourceType pidSource) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public PIDSourceType getPIDSourceType() {
+				return PIDSourceType.kDisplacement;
+			}
+
+			@Override
+			public double pidGet() {
+				return Robot.rangeCheck(angler.getAnalogInRaw(), 100, 500);
+			}
+			
+		}, angler);
+		pid.setOutputRange(-.3, .3);
+		pid.setInputRange(100, 500);
+		pid.enable();
 		
 	}
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 	public void setPosition(double position) {
-		angler.changeControlMode(TalonControlMode.Position);
+		//angler.changeControlMode(TalonControlMode.Position);
 		P = SmartDashboard.getNumber("Angler_P", P);
 		I = SmartDashboard.getNumber("Angler_I", I);
 		D = SmartDashboard.getNumber("Angler_D", D);
-		angler.setPID(P, I, D);
-		angler.set(Robot.rangeCheck(position, 0.156, 0.575)); //0.575 is greatest position ever (only @ portcullis)
-		angler.enable();
+		pid.setPID(P, I, D);
+		pid.setSetpoint(Robot.rangeCheck(position, 100, 500)); //0.575 is greatest position ever (only @ portcullis)
+		pid.enable();
 	}
 	
 	public void stopPower(){
+		pid.disable();
 		angler.disable();
 	}
 	
@@ -58,19 +79,19 @@ public class AnglerSubsystem extends Subsystem {
 	}
 	
 	public double getPosition(){
-		return angler.getEncPosition();
+		return angler.getAnalogInRaw();
 		//return angler.get();
 	}
 	
 	public boolean reachedTarget(double tolerance){
-		return Math.abs(angler.getError()) < tolerance;
+		return Math.abs(pid.getError()) < tolerance;
 	}
 	public double getError(){
-		return angler.getError();
+		return pid.getError();
 	}
 	public void updateSmartDashboard(){
 		SmartDashboard.putNumber("Angler_Position", getPosition());
-		SmartDashboard.putNumber("Error: ", angler.getError());
+		SmartDashboard.putNumber("Error: ", pid.getError());
 		//SmartDashboard.putNumber("Angler: ", angler.getPosition());
 	}
 	

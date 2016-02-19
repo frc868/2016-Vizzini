@@ -127,6 +127,12 @@ public class OI {
 	 */
 	public void setupSmartDashboard() {
 		SmartDashboard.putData("Update Controllers", new UpdateController());
+
+		SmartDashboard.putData("Set Position 100", new SetAnglerPosition(100));
+		SmartDashboard.putData("Set Position 200", new SetAnglerPosition(200));
+		SmartDashboard.putData("Set Position 300", new SetAnglerPosition(300));
+		SmartDashboard.putData("Set Position 400", new SetAnglerPosition(400));
+		SmartDashboard.putData("Set Position 500", new SetAnglerPosition(500));
 	}
 	
 	/**
