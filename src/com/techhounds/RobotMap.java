@@ -18,10 +18,13 @@ public interface RobotMap {
 		final double inPower = .5, outPower = -.5;
 		final boolean COLLECTOR_IS_INVERTED = false;
 		final int COLLECTOR_ANGLER = 23;
-		final int BEAM_BREAK_SENSOR = 4;
+		final int BEAM_BREAK_SENSOR = 5;
 		final double ANGLER_FORWARD_LIMIT = 0;
 		final double ANGLER_REVERSE_LIMIT = 1;
 		final int COLLECTOR_PDP = 11;
+		
+		final double COLLECTOR_HEIGHT = 420;
+		final double DEFENSE_PASS_HEIGHT = 155;
 	}
 	
 	interface Shooter{

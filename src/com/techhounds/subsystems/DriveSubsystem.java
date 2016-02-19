@@ -121,7 +121,7 @@ public class DriveSubsystem extends Subsystem{
 
 			@Override
 			public void pidWrite(double output) {
-				setPower(-output, output);
+				setPower(output, -output);
 			}
 		});
 		gyroPID.setOutputRange(-1, 1);

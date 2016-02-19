@@ -28,7 +28,7 @@ public class SetCollectorPower extends Command {
     	beam = BeamBreakSubsystem.getInstance();
     	
     	requires(collect);
-    	this.power = power;
+    	this.power = -power;
     	this.isShooting = isShooting;
     	
     }
@@ -40,7 +40,7 @@ public class SetCollectorPower extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if(beam.ballPresent() && power > 0 && !isShooting){
+    	if(beam.ballPresent() && power < 0 && !isShooting){
     		collect.setPower(0);
     	}else{
     		collect.setPower(power);

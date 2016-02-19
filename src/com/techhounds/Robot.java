@@ -99,7 +99,7 @@ public class Robot extends IterativeRobot {
     
     private void initSubsystems() {
     	AnglerSubsystem.getInstance();
-    	//BeamBreakSubsystem.getInstance();
+    	BeamBreakSubsystem.getInstance();
     	CollectorSubsystem.getInstance();
     	DriveSubsystem.getInstance();
     	GyroSubsystem.getInstance();

@@ -32,6 +32,7 @@ public class UpdateSmartDashboard extends Command {
     		CollectorSubsystem.getInstance().updateSmartDashboard();
     		AnglerSubsystem.getInstance().updateSmartDashboard();
     		DriveSubsystem.getInstance().updateSmartDashboard();
+    		BeamBreakSubsystem.getInstance().updateSmartDashboard();
     		
     		AutonChooser.getInstance().updateSmartDashboard();
 	    	timer.reset();

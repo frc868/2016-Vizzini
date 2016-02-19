@@ -39,7 +39,9 @@ public class OI {
 	final int stopShooter = 		DPadButton.Direction.LEFT;
 	final int startShooter = 		ControllerMap.Key.X;
 	final int fireShooter = 		ControllerMap.Key.B;
-
+	final int collectAngler = 		ControllerMap.Key.LB;
+	final int collectDefenses = 	ControllerMap.Key.LT;
+	
 	private OI() {
 	
 		driverChooser = createControllerChooser();
@@ -100,13 +102,13 @@ public class OI {
 			.whenReleased(new SetCollectorPower(0));
 		
 		driver.getButton(angleUp)
-			.whenPressed(new SetAnglerPosition(100));
+			.whenPressed(new SetAnglerPosition(100.0))
 			//.whenPressed(new SetAnglerPower(.3))
-			//.whenReleased(new SetAnglerPower(0));
+			.whenReleased(new SetAnglerPosition());
 		driver.getButton(angleDown)
-			.whenPressed(new SetAnglerPosition(500));
+			.whenPressed(new SetAnglerPosition(500.0))
 			//.whenPressed(new SetAnglerPower(-.3))
-			//.whenReleased(new SetAnglerPower(0));
+			.whenReleased(new SetAnglerPosition());
 		driver.getButton(upShooterSpeed)
 			.whenPressed(new SetShooterPower(.1, true));
 		
@@ -121,18 +123,24 @@ public class OI {
 		
 		driver.getButton(fireShooter)
 			.whenPressed(new Fire());
+		
+		driver.getButton(collectAngler)
+			.whenPressed(new SetAnglerPosition(RobotMap.Collector.COLLECTOR_HEIGHT));
+		
+		driver.getButton(collectDefenses)
+			.whenPressed(new SetAnglerPosition(RobotMap.Collector.DEFENSE_PASS_HEIGHT));
 	}
 
 	/**
 	 * Gets the Smart Dashboard Ready with Commands (Act as Buttons)
 	 */
 	public void setupSmartDashboard() {
-		SmartDashboard.putData("Update Controllers", new UpdateController());
+		/*SmartDashboard.putData("Update Controllers", new UpdateController());
 		SmartDashboard.putData("Toggle Camera", new USBCameraCommand(true));
 		SmartDashboard.putData("Toggle_Scissors_1", new SetScissorsOne());
 		SmartDashboard.putData("Toggle_Scissors_2", new SetScissorsTwo());
 		SmartDashboard.putData("Toggle_Winch_Enable", new SetWinchEnable());
-		SmartDashboard.putData("Toggle_Winch_Lock", new SetWinchLock());
+		SmartDashboard.putData("Toggle_Winch_Lock", new SetWinchLock());*/
 	}
 	
 	/**

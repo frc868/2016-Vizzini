@@ -11,28 +11,31 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class SetAnglerPosition extends Command {
 	
 	private AnglerSubsystem angle;
-	private double position;
+	private Double position;
 	
 
-    public SetAnglerPosition(double position) {
+    public SetAnglerPosition(Double position) {
     	angle = AnglerSubsystem.getInstance();
     	requires(angle);
     	this.position = position;
     }
     
     public SetAnglerPosition(){
-    	this(0);
+    	this(null);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	angle.setPosition(position);
+    	if(position == null)
+    		angle.setPosition(angle.getPosition());
+    	else
+    		angle.setPosition(position);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	if(!angle.onTarget()){
-    		new SetAnglerPosition(position).start();
+    		//new SetAnglerPosition(position).start();
     	}
     }
 
