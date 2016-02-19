@@ -187,10 +187,10 @@ public class OI {
 	}
 	
 	public double getRight(){
-		return driver.getRightPower();
+		return driver.getBackwardsRightPower();
 	}
 	
 	public double getLeft(){
-		return driver.getLeftPower();
+		return driver.getBackwardsLeftPower();
 	}
 }

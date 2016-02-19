@@ -154,23 +154,11 @@ public class DriveSubsystem extends Subsystem{
 	}
 
 	public void setLeftPower(double speed) {
-		if(speed > 1){
-			speed = 1;
-		}
-		else if(speed < -1){
-			speed = -1;
-		}
+		left.set(Robot.rangeCheck(speed));
 	}
 
 	public void setRightPower(double speed) {
-		if(speed > 1){ 
-			speed = 1;
-	}
-		else if(speed < -1){
-			speed = -1;
-	}
-
-		right.set(speed);
+		right.set(Robot.rangeCheck(speed));
 	}
 	
 	public void setPower(double right, double left) {

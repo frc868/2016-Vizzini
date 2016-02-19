@@ -45,11 +45,12 @@ public class ServoSubsystem extends Subsystem {
 	}
 	
 	public void setPosition(double position) {
-		servo.set(Robot.rangeCheck(position));
+		servo.set(Robot.rangeCheck(position, min, max));
 	}
 	
-	public void set(boolean position) {
-		servo.set(Robot.rangeCheck(position ? max : min));
+	public void set(boolean setMax) {
+		servo.set(Robot.rangeCheck(setMax ? max : min));
+		//if setMax servo is set to max, else set to min
 	}
 	
 	public double getPosition() {
