@@ -67,7 +67,6 @@ public class Robot extends IterativeRobot {
 	 */
 	public void autonomousInit() {
 		// TODO: Get Selected Auton Command and Run It!
-
     	System.out.println("*** TECHHOUNDS IS READY TO AUTON ***");
     }
 

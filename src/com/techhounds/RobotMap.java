@@ -9,6 +9,10 @@ public interface RobotMap {
 		final int OPERATOR_PORT = 1;
 	}
 	
+	interface Angler {
+		final boolean IS_INVERTED = true;
+	}
+	
 	interface Collector{
 		final int COLLECTOR_MOTOR = 17;
 		final double inPower = .5, outPower = -.5;
@@ -30,7 +34,7 @@ public interface RobotMap {
 	
 	interface DriveTrain {
 		final int DRIVE_LEFT_MOTOR = 1;
-		final boolean DRIVE_LEFT_IS_INVERTED = false;
+		final boolean DRIVE_LEFT_IS_INVERTED = true;
 		final int DRIVE_RIGHT_MOTOR = 0;
 		final boolean DRIVE_RIGHT_IS_INVERTED = false;
 		final int ENC_RIGHT_A = 2;

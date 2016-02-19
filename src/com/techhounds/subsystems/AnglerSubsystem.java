@@ -20,11 +20,12 @@ public class AnglerSubsystem extends Subsystem {
 	
 	private static AnglerSubsystem instance;
 	private CANTalon angler;
-	private double P = 0.2, I = 0, D = 0;
+	private double P = 0.008, I = 0, D = 0.01;
 	private PIDController pid;
     
 	private AnglerSubsystem() {
 		angler = new CANTalon(RobotMap.Collector.COLLECTOR_ANGLER);
+		angler.setInverted(RobotMap.Angler.IS_INVERTED);
 		LiveWindow.addActuator("Angler", "Motor", angler);
 		angler.enableForwardSoftLimit(false);
 		angler.enableReverseSoftLimit(false);
@@ -47,14 +48,23 @@ public class AnglerSubsystem extends Subsystem {
 
 			@Override
 			public double pidGet() {
-				return Robot.rangeCheck(angler.getAnalogInRaw(), 100, 500);
+				return Robot.rangeCheck(angler.getAnalogInRaw(), 155, 500);
 			}
 			
-		}, angler);
-		pid.setOutputRange(-.3, .3);
-		pid.setInputRange(100, 500);
-		pid.enable();
+		}, new PIDOutput() {
+
+			@Override
+			public void pidWrite(double output) {
+				angler.set(output);
+			}
+			
+		});
 		
+		pid.setOutputRange(-.35, .35);
+		pid.setInputRange(100, 500);
+		pid.setAbsoluteTolerance(5);
+		//pid.enable();
+		SmartDashboard.putData("Angler PID", pid);
 	}
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
@@ -64,13 +74,16 @@ public class AnglerSubsystem extends Subsystem {
 		I = SmartDashboard.getNumber("Angler_I", I);
 		D = SmartDashboard.getNumber("Angler_D", D);
 		pid.setPID(P, I, D);
-		pid.setSetpoint(Robot.rangeCheck(position, 100, 500)); //0.575 is greatest position ever (only @ portcullis)
+		pid.setSetpoint(Robot.rangeCheck(position, 155, 500)); //0.575 is greatest position ever (only @ portcullis)
 		pid.enable();
 	}
-	
 	public void stopPower(){
 		pid.disable();
-		angler.disable();
+		angler.set(0);
+	}
+	
+	public void disableControl() {
+		pid.disable();
 	}
 	
 	public void setPower(double pow){

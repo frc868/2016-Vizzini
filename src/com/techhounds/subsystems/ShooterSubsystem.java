@@ -38,11 +38,11 @@ public class ShooterSubsystem extends Subsystem{
 			
 			public PIDSourceType getPIDSourceType() {
 				// TODO Auto-generated method stub
-				return null;
+				return PIDSourceType.kRate;
 			}
 			
 			public double pidGet() {
-				return count.getRate();
+				return getSpeed();
 			}
     		
     	}, new PIDOutput(){
@@ -58,6 +58,8 @@ public class ShooterSubsystem extends Subsystem{
     	LiveWindow.addActuator("shooter", "motor", shooter);
     	LiveWindow.addSensor("shooter", "counter", count);
     	LiveWindow.addSensor("shooter", "input", countIn);
+    	
+    	SmartDashboard.putData("Shooter PID", controller);
 	}
 	
 	public void setPower(double power){

@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj.GyroBase;
 
 /**
  * A helper class converting sensor's that provide gyro readings into standard
- * {@link Gyro} objects.
+ * {@link GyroSubsystem} objects.
  */
 public abstract class GyroAdapter extends GyroBase {
 	// The value from the sensor when last reset/constructed

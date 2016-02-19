@@ -10,19 +10,29 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
  */
 public class SetWinchLock extends Command {
 	
-	private ServoSubsystem servo;
+	private ServoSubsystem winchLock;
+	
+	private boolean setMax;
 	
     public SetWinchLock() {
-    	servo = ServoSubsystem.getWinchLock();
-    	requires(servo);
-    	LiveWindow.addActuator("Winch_Lock", "Servo", servo.getServo());
+    	winchLock = ServoSubsystem.getWinchLock();
+    	requires(winchLock);
+    	LiveWindow.addActuator("Winch_Lock", "Servo", winchLock.getServo());
+    	setMax = !winchLock.getIsMax();
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
+    }
+    
+    public SetWinchLock(boolean setMax) {
+    	winchLock = ServoSubsystem.getWinchLock();
+    	requires(winchLock);
+    	LiveWindow.addActuator("Winch_Lock", "Servo", winchLock.getServo());
+    	this.setMax = setMax;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	servo.set(servo.getIsMax());
+    	winchLock.set(setMax);
     }
 
     // Called repeatedly when this Command is scheduled to run

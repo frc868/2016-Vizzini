@@ -48,7 +48,7 @@ public abstract class GyroSubsystem extends Subsystem {
 	/**
 	 * Set to type of gyro that is currently installed on the robot.
 	 */
-	private static final GyroType GYRO_INSTALLED = GyroType.FAKE;
+	private static final GyroType GYRO_INSTALLED = GyroType.BNO055;
 	
 	/** The I2C port the BNO055 is connected to (when BNO055 is used). */
 	private static final I2C.Port BNO055_PORT = I2C.Port.kOnboard;

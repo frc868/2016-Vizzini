@@ -1,15 +1,18 @@
 package com.techhounds;
 
-import com.techhounds.commands.*;
+import com.techhounds.commands.USBCameraCommand;
+import com.techhounds.commands.UpdateController;
 import com.techhounds.commands.angler.SetAnglerPosition;
 import com.techhounds.commands.angler.SetAnglerPower;
 import com.techhounds.commands.collector.SetCollectorPower;
+import com.techhounds.commands.servos.SetScissorsOne;
+import com.techhounds.commands.servos.SetScissorsTwo;
+import com.techhounds.commands.servos.SetWinchEnable;
+import com.techhounds.commands.servos.SetWinchLock;
 import com.techhounds.commands.shooter.Fire;
 import com.techhounds.commands.shooter.SetShooterPower;
-import com.techhounds.lib.hid.Button;
 import com.techhounds.lib.hid.ControllerMap;
 import com.techhounds.lib.hid.DPadButton;
-import com.techhounds.lib.hid.JoystickButton;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -97,13 +100,13 @@ public class OI {
 			.whenReleased(new SetCollectorPower(0));
 		
 		driver.getButton(angleUp)
-			//.whenPressed(new SetAnglerPosition(.15));
-			.whenPressed(new SetAnglerPower(.3))
+			.whenPressed(new SetAnglerPosition(100))
+			//.whenPressed(new SetAnglerPower(.3))
 			.whenReleased(new SetAnglerPower(0));
 			
 		driver.getButton(angleDown)
-			//.whenPressed(new SetAnglerPosition(.15));
-			.whenPressed(new SetAnglerPower(-.3))
+			.whenPressed(new SetAnglerPosition(500))
+			//.whenPressed(new SetAnglerPower(-.3))
 			.whenReleased(new SetAnglerPower(0));
 		
 		driver.getButton(upShooterSpeed)
@@ -133,6 +136,12 @@ public class OI {
 		SmartDashboard.putData("Set Position 300", new SetAnglerPosition(300));
 		SmartDashboard.putData("Set Position 400", new SetAnglerPosition(400));
 		SmartDashboard.putData("Set Position 500", new SetAnglerPosition(500));
+		
+	//	SmartDashboard.putData("Toggle Camera", new USBCameraCommand(true));
+		//SmartDashboard.putData("Toggle_Scissors_1", new SetScissorsOne());
+	//	SmartDashboard.putData("Toggle_Scissors_2", new SetScissorsTwo());
+	//	SmartDashboard.putData("Toggle_Winch_Enable", new SetWinchEnable());
+	//	SmartDashboard.putData("Toggle_Winch_Lock", new SetWinchLock());
 	}
 	
 	/**
