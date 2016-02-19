@@ -1,5 +1,7 @@
 package com.techhounds;
 
+import com.techhounds.commands.DriveWithPowerBackwards;
+import com.techhounds.commands.DriveWithPowerForwards;
 import com.techhounds.commands.USBCameraCommand;
 import com.techhounds.commands.UpdateController;
 import com.techhounds.commands.angler.SetAnglerPosition;
@@ -42,6 +44,7 @@ public class OI {
 	final int fireShooter = 		ControllerMap.Key.B;
 	final int collectAngler = 		ControllerMap.Key.LB;
 	final int collectDefenses = 	ControllerMap.Key.LT;
+	final int toggleDrive =			ControllerMap.Key.START;
 	
 	private OI() {
 	
@@ -129,6 +132,15 @@ public class OI {
 		
 		driver.getButton(collectDefenses)
 			.whenPressed(new SetAnglerPosition(RobotMap.Collector.DEFENSE_PASS_HEIGHT));
+		if(ControllerMap.driverToggle){
+			driver.getButton(toggleDrive)
+				.whenPressed(new DriveWithPowerForwards());
+			ControllerMap.driverToggle = false;
+		}else{
+			driver.getButton(toggleDrive)
+				.whenPressed(new DriveWithPowerBackwards());
+			ControllerMap.driverToggle = true;
+		}
 	}
 
 	/**
@@ -187,19 +199,19 @@ public class OI {
 		SmartDashboard.putString("Operator Type", operator.getType().toString());
 	}
 	
-	public double getRight(){
+	public double getRightBackward(){
 		return driver.getBackwardsRightPower();
 	}
 	
-	public double getLeft(){
+	public double getLeftBackward(){
 		return driver.getBackwardsLeftPower();
 	}
 	
 	public double getRightForward(){
-		return driver.getRightPower();
+		return driver.getForwardsRightPower();
 	}
 	
 	public double getLeftForward(){
-		return driver.getLeftPower();
+		return driver.getForwardsLeftPower();
 	}
 }
