@@ -9,6 +9,10 @@ public interface RobotMap {
 		final int OPERATOR_PORT = 1;
 	}
 	
+	interface Angler {
+		final boolean IS_INVERTED = true;
+	}
+	
 	interface Collector{
 		final int COLLECTOR_MOTOR = 17;
 		final double inPower = .5, outPower = -.5;

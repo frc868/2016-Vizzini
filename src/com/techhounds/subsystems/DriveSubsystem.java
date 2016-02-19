@@ -26,9 +26,10 @@ public class DriveSubsystem extends Subsystem{
 	private Spark left;
 	private Spark right;
 	private boolean rotating;
-	private PIDController pid;
 	
-
+	private PIDController gyroPID;
+	private PIDController drivePID;
+	
 	private Encoder rightEncoder;
 	private Encoder leftEncoder;
 
@@ -47,11 +48,13 @@ public class DriveSubsystem extends Subsystem{
 	private PowerDistributionPanel panel;
 	
 	private static DriveSubsystem instance;
+	private GyroSubsystem gyro;
 	
 	private DriveSubsystem() {	
 		
 		accelerometer = new BuiltInAccelerometer();
 		panel = new PowerDistributionPanel();
+		gyro = GyroSubsystem.getInstance();
 		
 		left = new Spark(RobotMap.DriveTrain.DRIVE_LEFT_MOTOR);
 		left.setInverted(RobotMap.DriveTrain.DRIVE_LEFT_IS_INVERTED);
@@ -67,16 +70,64 @@ public class DriveSubsystem extends Subsystem{
 		LiveWindow.addSensor("drive", "left encoder", leftEncoder);
 		LiveWindow.addSensor("drive", "right encoder", rightEncoder);
 
-		
 		driver_p = 0.0001;
 		driver_i = 0;
 		driver_d = 0;
 		
-		
 		gyro_p = 0.0001;
 		gyro_i = 0;
 		gyro_d = 0;
+		
+		drivePID = new PIDController(driver_p, driver_i, driver_d, new PIDSource() {
 
+			@Override
+			public void setPIDSourceType(PIDSourceType pidSource) {}
+
+			@Override
+			public PIDSourceType getPIDSourceType() {
+				return PIDSourceType.kDisplacement;
+			}
+
+			@Override
+			public double pidGet() {
+				return getAvgDistance();
+			}
+			
+		}, new PIDOutput() {
+
+			@Override
+			public void pidWrite(double output) {
+				setPower(output, output);
+			}
+		});
+		drivePID.setOutputRange(-1, 1);
+		
+		gyroPID = new PIDController(gyro_p, gyro_i, gyro_d, new PIDSource() {
+
+			@Override
+			public void setPIDSourceType(PIDSourceType pidSource) {}
+
+			@Override
+			public PIDSourceType getPIDSourceType() {
+				return PIDSourceType.kDisplacement;
+			}
+
+			@Override
+			public double pidGet() {
+				return getRotationX();
+			}
+			
+		}, new PIDOutput() {
+
+			@Override
+			public void pidWrite(double output) {
+				setPower(-output, output);
+			}
+		});
+		gyroPID.setOutputRange(-1, 1);
+		
+		SmartDashboard.putData("Gyro PID", gyroPID);
+	
 	}
 	
 	public static DriveSubsystem getInstance() {
@@ -98,6 +149,9 @@ public class DriveSubsystem extends Subsystem{
 		
 	}
 
+	public double getRotationX() {
+		return gyro.getRotation();
+	}
 
 	public void setLeftPower(double speed) {
 		if(speed > 1){
@@ -169,7 +223,7 @@ public class DriveSubsystem extends Subsystem{
 	}
 	
 	public double getPIDError() {
-		return pid.getError();
+		return gyroPID.getError();
 	}
 	
 	public void updateSmartDashboard() {
@@ -191,6 +245,8 @@ public class DriveSubsystem extends Subsystem{
 		
 		SmartDashboard.putNumber("Left Speed", getLeftSpeed());
 		SmartDashboard.putNumber("Right Speed", getRightSpeed());
+		
+		SmartDashboard.putNumber("Rotation X", getRotationX());
 	
 	}
 

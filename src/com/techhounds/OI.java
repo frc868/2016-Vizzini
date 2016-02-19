@@ -1,16 +1,18 @@
 package com.techhounds;
 
-import com.techhounds.commands.*;
+import com.techhounds.commands.USBCameraCommand;
+import com.techhounds.commands.UpdateController;
 import com.techhounds.commands.angler.SetAnglerPosition;
 import com.techhounds.commands.angler.SetAnglerPower;
 import com.techhounds.commands.collector.SetCollectorPower;
-import com.techhounds.commands.servos.*;
+import com.techhounds.commands.servos.SetScissorsOne;
+import com.techhounds.commands.servos.SetScissorsTwo;
+import com.techhounds.commands.servos.SetWinchEnable;
+import com.techhounds.commands.servos.SetWinchLock;
 import com.techhounds.commands.shooter.Fire;
 import com.techhounds.commands.shooter.SetShooterPower;
-import com.techhounds.lib.hid.Button;
 import com.techhounds.lib.hid.ControllerMap;
 import com.techhounds.lib.hid.DPadButton;
-import com.techhounds.lib.hid.JoystickButton;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
