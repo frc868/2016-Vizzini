@@ -22,7 +22,7 @@ public class AnglerSubsystem extends Subsystem {
 	private CANTalon angler;
 	private double P = 0.008, I = 0, D = 0.01;
 	private PIDController pid;
-	private double TOLERANCE = 5;
+	private double TOLERANCE = 3;
     
 	private AnglerSubsystem() {
 		angler = new CANTalon(RobotMap.Collector.COLLECTOR_ANGLER);

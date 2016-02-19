@@ -23,7 +23,7 @@ public interface RobotMap {
 		final double ANGLER_REVERSE_LIMIT = 1;
 		final int COLLECTOR_PDP = 11;
 		
-		final double COLLECTOR_HEIGHT = 420;
+		final double COLLECTOR_HEIGHT = 416;
 		final double DEFENSE_PASS_HEIGHT = 155;
 	}
 	
