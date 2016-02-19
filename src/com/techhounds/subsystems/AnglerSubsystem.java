@@ -33,7 +33,8 @@ public class AnglerSubsystem extends Subsystem {
 		angler.configPotentiometerTurns(1);
 		angler.setFeedbackDevice(CANTalon.FeedbackDevice.AnalogPot);
 		
-		pid = new PIDController(P, I, D, new PIDSource() {
+		angler.setPID(P, I, D);
+		/*pid = new PIDController(P, I, D, new PIDSource() {
 
 			@Override
 			public void setPIDSourceType(PIDSourceType pidSource) {
@@ -64,7 +65,7 @@ public class AnglerSubsystem extends Subsystem {
 		pid.setInputRange(100, 500);
 		pid.setAbsoluteTolerance(5);
 		//pid.enable();
-		SmartDashboard.putData("Angler PID", pid);
+		SmartDashboard.putData("Angler PID", pid);*/
 	}
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
@@ -73,17 +74,16 @@ public class AnglerSubsystem extends Subsystem {
 		P = SmartDashboard.getNumber("Angler_P", P);
 		I = SmartDashboard.getNumber("Angler_I", I);
 		D = SmartDashboard.getNumber("Angler_D", D);
-		pid.setPID(P, I, D);
-		pid.setSetpoint(Robot.rangeCheck(position, 155, 500)); //0.575 is greatest position ever (only @ portcullis)
-		pid.enable();
+		angler.setPID(P, I, D);
+		angler.setSetpoint(Robot.rangeCheck(position, 155, 500)); //0.575 is greatest position ever (only @ portcullis)
+		angler.enable();
 	}
 	public void stopPower(){
-		pid.disable();
-		angler.set(0);
+		angler.disableControl();
 	}
 	
 	public void disableControl() {
-		pid.disable();
+		angler.disableControl();
 	}
 	
 	public void setPower(double pow){
