@@ -57,13 +57,9 @@ public class ServoSubsystem extends Subsystem {
 	}
 	
 	public boolean getIsMax() {
-		return getPosition() == max;
+		return getPosition() >= max;
 	}
 	
-	public Servo getServo(){
-		return servo;
-	}
-
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());

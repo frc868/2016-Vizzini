@@ -3,7 +3,6 @@ package com.techhounds.commands.servos;
 import com.techhounds.subsystems.ServoSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 /**
  *
@@ -15,10 +14,7 @@ public class SetWinchEnable extends Command {
 	private boolean setMax;
 
     public SetWinchEnable() {
-    	winchEnable = ServoSubsystem.getWinchEnable();
-    	requires(winchEnable);
-    	LiveWindow.addActuator("Winch_Enable", "Servo", winchEnable.getServo());
-    	setMax = !winchEnable.getIsMax();
+    	this(!ServoSubsystem.getWinchEnable().getIsMax());
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }
@@ -26,7 +22,6 @@ public class SetWinchEnable extends Command {
     public SetWinchEnable(boolean setMax) {
     	winchEnable = ServoSubsystem.getWinchEnable();
     	requires(winchEnable);
-    	LiveWindow.addActuator("Winch_Enable", "Servo", winchEnable.getServo());
     	this.setMax = setMax;
     }
 
