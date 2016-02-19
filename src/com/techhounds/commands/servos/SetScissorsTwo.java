@@ -3,7 +3,6 @@ package com.techhounds.commands.servos;
 import com.techhounds.subsystems.ServoSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 /**
  *
@@ -15,10 +14,7 @@ public class SetScissorsTwo extends Command {
 	private boolean setMax;
 
     public SetScissorsTwo() {
-    	scissorTwo = ServoSubsystem.getScissorTwo();
-    	requires(scissorTwo);
-    	LiveWindow.addActuator("Scissor_Two", "Servo", scissorTwo.getServo());
-    	setMax = !scissorTwo.getIsMax();
+    	this(ServoSubsystem.getScissorTwo().getIsMax());
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }
@@ -26,7 +22,6 @@ public class SetScissorsTwo extends Command {
     public SetScissorsTwo(boolean setMax) {
     	scissorTwo = ServoSubsystem.getScissorTwo();
     	requires(scissorTwo);
-    	LiveWindow.addActuator("Scissor_Two", "Servo", scissorTwo.getServo());
     	this.setMax = setMax;
     }
     
