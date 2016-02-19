@@ -13,6 +13,7 @@ public class ControllerMap {
 	
 	private Joystick joystick;
 	private Type type;
+	public static boolean driverToggle = true;
 	
 	private int [] buttonPorts;
 	
@@ -85,10 +86,10 @@ public class ControllerMap {
 			}
 		}
 	}
-	public double getRightPower(){
+	public double getForwardsRightPower(){
 		return Robot.rangeCheck(getAxis(Direction.LEFT_VERTICAL) + getAxis(Direction.RIGHT_HORIZONTAL));
 	}
-	public double getLeftPower(){
+	public double getForwardsLeftPower(){
 		return Robot.rangeCheck(getAxis(Direction.LEFT_VERTICAL) - getAxis(Direction.RIGHT_HORIZONTAL));
 	}
 	public double getBackwardsRightPower(){
