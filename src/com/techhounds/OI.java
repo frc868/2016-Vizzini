@@ -101,12 +101,10 @@ public class OI {
 			.whenPressed(new SetAnglerPosition(100));
 			//.whenPressed(new SetAnglerPower(.3))
 			//.whenReleased(new SetAnglerPower(0));
-			
 		driver.getButton(angleDown)
 			.whenPressed(new SetAnglerPosition(500));
 			//.whenPressed(new SetAnglerPower(-.3))
 			//.whenReleased(new SetAnglerPower(0));
-		
 		driver.getButton(upShooterSpeed)
 			.whenPressed(new SetShooterPower(.1, true));
 		
