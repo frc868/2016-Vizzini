@@ -6,6 +6,8 @@ import com.techhounds.commands.USBCameraCommand;
 import com.techhounds.commands.UpdateController;
 import com.techhounds.commands.angler.SetAnglerPosition;
 import com.techhounds.commands.angler.SetAnglerPower;
+import com.techhounds.commands.angler.SetStateDown;
+import com.techhounds.commands.angler.SetStateUp;
 import com.techhounds.commands.collector.SetCollectorPower;
 import com.techhounds.commands.servos.SetScissorsOne;
 import com.techhounds.commands.servos.SetScissorsTwo;
@@ -105,13 +107,22 @@ public class OI {
 			.whenPressed(new SetCollectorPower(-.5))
 			.whenReleased(new SetCollectorPower(0));
 		
-		driver.getButton(angleUp)
+		
+		/*driver.getButton(angleUp)
 			.whenPressed(new SetAnglerPosition(100.0))
 			//.whenPressed(new SetAnglerPower(.3))
 			.whenReleased(new SetAnglerPosition());
+
 		driver.getButton(angleDown)
 			.whenPressed(new SetAnglerPosition(518.0));
-			//.whenPressed(new SetAnglerPower(-.3))
+			//.whenPressed(new SetAnglerPower(-.3))*/
+		
+		driver.getButton(angleUp)
+			.whenPressed(new SetStateUp());
+		
+		driver.getButton(angleDown)
+			.whenPressed(new SetStateDown());
+
 		driver.getButton(upShooterSpeed)
 			.whenPressed(new SetShooterPower(.1, true));
 		

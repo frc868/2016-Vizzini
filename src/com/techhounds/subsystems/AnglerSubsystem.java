@@ -23,6 +23,7 @@ public class AnglerSubsystem extends Subsystem {
 	private double P = 0.008, I = 0, D = 0.01;
 	private PIDController pid;
 	private double TOLERANCE = 3;
+	private int state = 0;
     
 	private AnglerSubsystem() {
 		angler = new CANTalon(RobotMap.Collector.COLLECTOR_ANGLER);
@@ -125,6 +126,24 @@ public class AnglerSubsystem extends Subsystem {
 
     public void initDefaultCommand() {
     	
+    }
+    
+    public int getState() {
+    	return state;
+    }
+    
+    public void increaseState() {
+    	state = state + 1;
+    	if(state >= 2){
+    		state = 2;
+    	}
+    }
+    
+    public void decreaseState() {
+    	state = state - 1;
+    	if(state <= 0){
+    		state = 0;
+    	}
     }
 }
 
