@@ -21,6 +21,7 @@ public interface RobotMap {
 		final int BEAM_BREAK_SENSOR = 5;
 		final double ANGLER_FORWARD_LIMIT = 0;
 		final double ANGLER_REVERSE_LIMIT = 1;
+		final double ANGLER_DEFAULT_POSITION = .5;
 		final int COLLECTOR_PDP = 11;
 		
 		final double COLLECTOR_HEIGHT = 420;
@@ -66,6 +67,11 @@ public interface RobotMap {
 		final double SCISSOR_ONE_MIN = 0;
 		final double SCISSOR_TWO_MAX = 1;
 		final double SCISSOR_TWO_MIN = 0;
+		final boolean WINCH_ENABLE_IS_UP_DEFAULT = false;
+		final boolean WINCH_LOCK_IS_UP_DEFAULT = false;
+		final boolean SCISSOR_ONE_IS_UP_DEFAULT = false;
+		final boolean SCISSOR_TWO_IS_UP_DEFAULT = false;
+		
 	}
 	
 	interface Gyro {
