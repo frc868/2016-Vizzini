@@ -4,6 +4,7 @@ import com.techhounds.commands.*;
 import com.techhounds.commands.angler.SetAnglerPosition;
 import com.techhounds.commands.angler.SetAnglerPower;
 import com.techhounds.commands.collector.SetCollectorPower;
+import com.techhounds.commands.servos.*;
 import com.techhounds.commands.shooter.Fire;
 import com.techhounds.commands.shooter.SetShooterPower;
 import com.techhounds.lib.hid.Button;
@@ -128,6 +129,10 @@ public class OI {
 	public void setupSmartDashboard() {
 		SmartDashboard.putData("Update Controllers", new UpdateController());
 		SmartDashboard.putData("Toggle Camera", new USBCameraCommand(true));
+		SmartDashboard.putData("Toggle_Scissors_1", new SetScissorsOne());
+		SmartDashboard.putData("Toggle_Scissors_2", new SetScissorsTwo());
+		SmartDashboard.putData("Toggle_Winch_Enable", new SetWinchEnable());
+		SmartDashboard.putData("Toggle_Winch_Lock", new SetWinchLock());
 	}
 	
 	/**
