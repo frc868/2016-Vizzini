@@ -21,11 +21,10 @@ public interface RobotMap {
 		final int BEAM_BREAK_SENSOR = 5;
 		final double ANGLER_FORWARD_LIMIT = 0;
 		final double ANGLER_REVERSE_LIMIT = 1;
-		final double ANGLER_DEFAULT_POSITION = .5;
 		final int COLLECTOR_PDP = 11;
 		
 		final double COLLECTOR_HEIGHT = 416;
-		final double DEFENSE_PASS_HEIGHT = 155;
+		final double DEFENSE_PASS_HEIGHT = 200;
 	}
 	
 	interface Shooter{
@@ -55,19 +54,19 @@ public interface RobotMap {
 	}
 	
 	interface Servo {
-		final int WINCH_ENABLE = -1;
+		final int WINCH_ENABLE = 2;
 		final int WINCH_LOCK = -1;
 		final int SCISSOR_ONE = -1;
 		final int SCISSOR_TWO = -1;
-		final double WINCH_ENABLE_MAX = 1;
-		final double WINCH_ENABLE_MIN = 0;
+		final double WINCH_ENABLE_MAX = .54;
+		final double WINCH_ENABLE_MIN = .35;
 		final double WINCH_LOCK_MAX = 1;
 		final double WINCH_LOCK_MIN = 0;
 		final double SCISSOR_ONE_MAX = 1;
 		final double SCISSOR_ONE_MIN = 0;
 		final double SCISSOR_TWO_MAX = 1;
 		final double SCISSOR_TWO_MIN = 0;
-		final boolean WINCH_ENABLE_IS_UP_DEFAULT = false;
+		final boolean WINCH_ENABLE_IS_UP_DEFAULT = true;
 		final boolean WINCH_LOCK_IS_UP_DEFAULT = false;
 		final boolean SCISSOR_ONE_IS_UP_DEFAULT = false;
 		final boolean SCISSOR_TWO_IS_UP_DEFAULT = false;

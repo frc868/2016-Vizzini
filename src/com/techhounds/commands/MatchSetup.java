@@ -15,13 +15,13 @@ import com.techhounds.commands.shooter.SetShooterPower;
 public class MatchSetup extends CommandGroup {
     
     public  MatchSetup() {
-    	addParallel(new SetAnglerPosition(RobotMap.Collector.ANGLER_DEFAULT_POSITION));
+    	addParallel(new SetAnglerPosition(RobotMap.Collector.DEFENSE_PASS_HEIGHT));
     	addParallel(new SetCollectorPower());
     	addParallel(new SetShooterPower());
-    	addParallel(new SetScissorsOne(RobotMap.Servo.SCISSOR_ONE_IS_UP_DEFAULT));
-    	addParallel(new SetScissorsTwo(RobotMap.Servo.SCISSOR_TWO_IS_UP_DEFAULT));
+    	//addParallel(new SetScissorsOne(RobotMap.Servo.SCISSOR_ONE_IS_UP_DEFAULT));
+    	//addParallel(new SetScissorsTwo(RobotMap.Servo.SCISSOR_TWO_IS_UP_DEFAULT));
     	addParallel(new SetWinchEnable(RobotMap.Servo.WINCH_ENABLE_IS_UP_DEFAULT));
-    	addParallel(new SetWinchLock(RobotMap.Servo.WINCH_LOCK_IS_UP_DEFAULT));
+    	//addParallel(new SetWinchLock(RobotMap.Servo.WINCH_LOCK_IS_UP_DEFAULT));
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());

@@ -1,6 +1,7 @@
 
 package com.techhounds;
 
+import com.techhounds.commands.MatchSetup;
 import com.techhounds.commands.UpdateSmartDashboard;
 import com.techhounds.subsystems.AnglerSubsystem;
 import com.techhounds.subsystems.BeamBreakSubsystem;
@@ -43,7 +44,7 @@ public class Robot extends IterativeRobot {
     	initSubsystems();
     	OI.getInstance();
     	new UpdateSmartDashboard().start();
-    	
+    	new MatchSetup().start();
     	System.out.println("*** TECHHOUNDS IS READY TO ROBOT ***");
     	SmartDashboard.putNumber("HEY", 2);
     }
@@ -82,7 +83,7 @@ public class Robot extends IterativeRobot {
      */
     public void teleopInit() {
     	// TODO: Cancel Auton Command
-
+    	new MatchSetup().start();
     	System.out.println("*** TECHHOUNDS IS READY TO TELEOP ***");
     }
 
@@ -105,7 +106,7 @@ public class Robot extends IterativeRobot {
     	GyroSubsystem.getInstance();
     	//ServoSubsystem.getScissorOne();
     	//ServoSubsystem.getScissorTwo();
-    	//ServoSubsystem.getWinchEnable();
+    	ServoSubsystem.getWinchEnable();
     	//ServoSubsystem.getWinchLock();
     	ShooterSubsystem.getInstance();
     	VisionSubsystem.getInstance();

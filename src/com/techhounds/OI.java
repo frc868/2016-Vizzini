@@ -134,12 +134,12 @@ public class OI {
 	 * Gets the Smart Dashboard Ready with Commands (Act as Buttons)
 	 */
 	public void setupSmartDashboard() {
-		/*SmartDashboard.putData("Update Controllers", new UpdateController());
+		SmartDashboard.putData("Update Controllers", new UpdateController());
 		SmartDashboard.putData("Toggle Camera", new USBCameraCommand(true));
-		SmartDashboard.putData("Toggle_Scissors_1", new SetScissorsOne());
-		SmartDashboard.putData("Toggle_Scissors_2", new SetScissorsTwo());
+		//SmartDashboard.putData("Toggle_Scissors_1", new SetScissorsOne());
+		//SmartDashboard.putData("Toggle_Scissors_2", new SetScissorsTwo());
 		SmartDashboard.putData("Toggle_Winch_Enable", new SetWinchEnable());
-		SmartDashboard.putData("Toggle_Winch_Lock", new SetWinchLock());*/
+		//SmartDashboard.putData("Toggle_Winch_Lock", new SetWinchLock());
 	}
 	
 	/**
