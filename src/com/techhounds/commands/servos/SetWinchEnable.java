@@ -11,18 +11,28 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 public class SetWinchEnable extends Command {
 	
 	private ServoSubsystem servo;
+	
+	private boolean setMax;
 
     public SetWinchEnable() {
     	servo = ServoSubsystem.getWinchEnable();
     	requires(servo);
     	LiveWindow.addActuator("Winch_Enable", "Servo", servo.getServo());
+    	setMax = !servo.getIsMax();
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
+    }
+    
+    public SetWinchEnable(boolean setMax) {
+    	servo = ServoSubsystem.getWinchEnable();
+    	requires(servo);
+    	LiveWindow.addActuator("Winch_Enable", "Servo", servo.getServo());
+    	this.setMax = setMax;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	servo.set(servo.getIsMax());
+    	servo.set(setMax);
     }
 
     // Called repeatedly when this Command is scheduled to run

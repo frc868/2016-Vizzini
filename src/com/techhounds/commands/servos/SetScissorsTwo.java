@@ -11,18 +11,28 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 public class SetScissorsTwo extends Command {
 	
 	private ServoSubsystem servo;
+	
+	private boolean setMax;
 
     public SetScissorsTwo() {
     	servo = ServoSubsystem.getScissorTwo();
     	requires(servo);
     	LiveWindow.addActuator("Scissor_Two", "Servo", servo.getServo());
+    	setMax = !servo.getIsMax();
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }
-
+    
+    public SetScissorsTwo(boolean setMax) {
+    	servo = ServoSubsystem.getScissorTwo();
+    	requires(servo);
+    	LiveWindow.addActuator("Scissor_Two", "Servo", servo.getServo());
+    	this.setMax = setMax;
+    }
+    
     // Called just before this Command runs the first time
     protected void initialize() {
-    	servo.set(servo.getIsMax());
+    	servo.set(setMax);
     }
 
     // Called repeatedly when this Command is scheduled to run
