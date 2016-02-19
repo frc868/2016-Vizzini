@@ -1,7 +1,5 @@
 package com.techhounds;
 
-import edu.wpi.first.wpilibj.I2C;
-
 public interface RobotMap {
 	
 	interface OI_Constants {
@@ -68,8 +66,9 @@ public interface RobotMap {
 		final double SCISSOR_TWO_MIN = 0;
 	}
 	
-	interface Gyro {
-		final I2C.Port GYRO = I2C.Port.kMXP;
-		final I2C.Port GYRO_PRACT = null;//I2C.Port.kMXP;
+	interface LED {
+		// Two "option bits" to set LED mode on arduine connected to DIO ports
+		final static int DIO_MODE_0 = 8;
+		final static int DIO_MODE_1 = 9;
 	}
 }
