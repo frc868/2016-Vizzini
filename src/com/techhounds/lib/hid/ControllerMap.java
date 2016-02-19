@@ -91,6 +91,12 @@ public class ControllerMap {
 	public double getLeftPower(){
 		return Robot.rangeCheck(getAxis(Direction.LEFT_VERTICAL) - getAxis(Direction.RIGHT_HORIZONTAL));
 	}
+	public double getBackwardsRightPower(){
+		return Robot.rangeCheck(-getAxis(Direction.LEFT_VERTICAL) + getAxis(Direction.RIGHT_HORIZONTAL) );
+	}
+	public double getBackwardsLeftPower(){
+		return Robot.rangeCheck(-getAxis(Direction.LEFT_VERTICAL) - getAxis(Direction.RIGHT_HORIZONTAL));
+	}
 	public Type getType() {
 		return type;
 	}

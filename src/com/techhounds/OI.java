@@ -24,6 +24,7 @@ public class OI {
 	
 	private ControllerMap driver;
 	private ControllerMap operator;
+	private int collectorState = 0;
 	
 	// DRIVER & OPERATOR CONTROLLER CHOOSER
 	private SendableChooser driverChooser;
@@ -166,7 +167,7 @@ public class OI {
 		chooser.addObject("XBOX 360", ControllerMap.Type.XBOX_360);
 		chooser.addObject("Playstation 4", ControllerMap.Type.PS4);
 		return chooser;
-	}
+	} 
 	
 	/** 
 	 * Update Controllers
@@ -187,10 +188,18 @@ public class OI {
 	}
 	
 	public double getRight(){
-		return driver.getRightPower();
+		return driver.getBackwardsRightPower();
 	}
 	
 	public double getLeft(){
+		return driver.getBackwardsLeftPower();
+	}
+	
+	public double getRightForward(){
+		return driver.getRightPower();
+	}
+	
+	public double getLeftForward(){
 		return driver.getLeftPower();
 	}
 }
