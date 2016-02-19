@@ -24,6 +24,7 @@ public class OI {
 	
 	private ControllerMap driver;
 	private ControllerMap operator;
+	private int collectorState = 0;
 	
 	// DRIVER & OPERATOR CONTROLLER CHOOSER
 	private SendableChooser driverChooser;
@@ -192,5 +193,13 @@ public class OI {
 	
 	public double getLeft(){
 		return driver.getBackwardsLeftPower();
+	}
+	
+	public double getRightForward(){
+		return driver.getRightPower();
+	}
+	
+	public double getLeftForward(){
+		return driver.getLeftPower();
 	}
 }
