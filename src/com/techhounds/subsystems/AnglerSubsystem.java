@@ -22,6 +22,7 @@ public class AnglerSubsystem extends Subsystem {
 	private CANTalon angler;
 	private double P = 0.008, I = 0, D = 0.01;
 	private PIDController pid;
+	private double TOLERANCE = 5;
     
 	private AnglerSubsystem() {
 		angler = new CANTalon(RobotMap.Collector.COLLECTOR_ANGLER);
@@ -33,8 +34,8 @@ public class AnglerSubsystem extends Subsystem {
 		angler.configPotentiometerTurns(1);
 		angler.setFeedbackDevice(CANTalon.FeedbackDevice.AnalogPot);
 		
-		angler.setPID(P, I, D);
-		/*pid = new PIDController(P, I, D, new PIDSource() {
+		//angler.setPID(P, I, D);
+		pid = new PIDController(P, I, D, new PIDSource() {
 
 			@Override
 			public void setPIDSourceType(PIDSourceType pidSource) {
@@ -63,9 +64,9 @@ public class AnglerSubsystem extends Subsystem {
 		
 		pid.setOutputRange(-.35, .35);
 		pid.setInputRange(100, 500);
-		pid.setAbsoluteTolerance(5);
+		pid.setAbsoluteTolerance(TOLERANCE);
 		//pid.enable();
-		SmartDashboard.putData("Angler PID", pid);*/
+		SmartDashboard.putData("Angler PID", pid);
 	}
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
@@ -74,16 +75,23 @@ public class AnglerSubsystem extends Subsystem {
 		P = SmartDashboard.getNumber("Angler_P", P);
 		I = SmartDashboard.getNumber("Angler_I", I);
 		D = SmartDashboard.getNumber("Angler_D", D);
-		angler.setPID(P, I, D);
-		angler.setSetpoint(Robot.rangeCheck(position, 155, 500)); //0.575 is greatest position ever (only @ portcullis)
-		angler.enable();
+		pid.setPID(P, I, D);
+		pid.setSetpoint(Robot.rangeCheck(position, 155, 500)); //0.575 is greatest position ever (only @ portcullis)
+		pid.enable();
+	}
+	public double getSetPoint(){
+		return pid.getSetpoint();
+	}
+	public boolean onTarget(){
+		return pid.onTarget();
 	}
 	public void stopPower(){
-		angler.disableControl();
+		pid.disable();
+		angler.set(0);
 	}
 	
 	public void disableControl() {
-		angler.disableControl();
+		pid.disable();
 	}
 	
 	public void setPower(double pow){

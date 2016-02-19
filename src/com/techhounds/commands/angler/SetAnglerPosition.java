@@ -12,7 +12,7 @@ public class SetAnglerPosition extends Command {
 	
 	private AnglerSubsystem angle;
 	private double position;
-	private double TOLERANCE = 10;
+	
 
     public SetAnglerPosition(double position) {
     	angle = AnglerSubsystem.getInstance();
@@ -31,6 +31,9 @@ public class SetAnglerPosition extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	if(!angle.onTarget()){
+    		new SetAnglerPosition(position).start();
+    	}
     }
 
     // Make this return true when this Command no longer needs to run execute()
