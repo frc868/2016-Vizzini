@@ -166,7 +166,7 @@ public class OI {
 		chooser.addObject("XBOX 360", ControllerMap.Type.XBOX_360);
 		chooser.addObject("Playstation 4", ControllerMap.Type.PS4);
 		return chooser;
-	}
+	} 
 	
 	/** 
 	 * Update Controllers
