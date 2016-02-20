@@ -111,16 +111,6 @@ public class OI {
 			.whenPressed(new SetCollectorPower(RobotMap.Collector.outPower))
 			.whenReleased(new SetCollectorPower());
 		
-		
-		/*driver.getButton(angleUp)
-			.whenPressed(new SetAnglerPosition(RobotMap.Collector.COLLECTOR_HEIGHT))
-			//.whenPressed(new SetAnglerPower(.3))
-			.whenReleased(new SetAnglerPosition());
-
-		driver.getButton(angleDown)
-			.whenPressed(new SetAnglerPosition(RobotMap.Collector.COLLECTOR_MIN_HEIGHT));
-			//.whenPressed(new SetAnglerPower(-.3))*/
-		
 		driver.getButton(angleUp)
 			.whenPressed(new SetStateUp());
 		
@@ -167,6 +157,7 @@ public class OI {
 		SmartDashboard.putData("Drive Distance", new DriveDistance(109));
 		SmartDashboard.putNumber("Distance To Drive", 90);
 		SmartDashboard.putData(DriveSubsystem.getInstance());
+		SmartDashboard.putData("enable Camera", new USBCameraCommand(true));
 		//SmartDashboard.putData("Toggle_Winch_Lock", new SetWinchLock());
 	}
 	
