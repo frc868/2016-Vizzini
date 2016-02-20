@@ -22,11 +22,18 @@ public class SetStateUp extends Command {
     protected void initialize() {
     	angler.increaseState();
     	if(angler.getState() == 0) {
-    		new SetAnglerPosition(RobotMap.Collector.DEFENSE_PASS_HEIGHT);
-    	} else if(angler.getState() == 1) {
-    		new SetAnglerPosition(RobotMap.Collector.COLLECTOR_HEIGHT);
-    	} else if(angler.getState() == 2) {
+
+
     		new SetAnglerPosition(RobotMap.Collector.COLLECTOR_MIN_HEIGHT);
+
+    	} else if(angler.getState() == 1) {
+
+    		new SetAnglerPosition(RobotMap.Collector.DEFENSE_PASS_HEIGHT);
+
+    	} else if(angler.getState() == 2) {
+
+    		new SetAnglerPosition(RobotMap.Collector.COLLECTOR_MIN_HEIGHT);
+
     	} else {
     		System.out.println("OH NO, THERE IS AN ERROR WITH THE STATES!... CALEB!!!");
     	}

@@ -1,9 +1,8 @@
 package com.techhounds.commands.auton;
 
 import com.techhounds.commands.DriveDistance;
-import com.techhounds.commands.gyro.SetGyro;
+import com.techhounds.commands.gyro.RotateUsingGyro;
 import com.techhounds.commands.shooter.Fire;
-import com.techhounds.commands.shooter.SetShooterPower;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -222,34 +221,34 @@ public class AutonChooser {
 			} 
 			
 			if(defense != Defense.DO_NOTHING && defense != Defense.REACH_DEFENSE) {
-				addSequential(new SetGyro(0));
+				addSequential(new RotateUsingGyro(0));
 			}
 			
 			if(goal == Goal.DO_NOTHING) {
 				// TODO: Drive 1 foot
 				addSequential(new DriveDistance(1));
 			} else if(goal == Goal.LEFT) {
-				addSequential(new SetGyro(5));
+				addSequential(new RotateUsingGyro(5));
 				addSequential(new DriveDistance(2));
 				// TODO: Angle slightly then drive a distance
 			} else if(start == 4 & goal == Goal.LEFT) {
-				addSequential(new SetGyro(-5));
+				addSequential(new RotateUsingGyro(-5));
 				addSequential(new DriveDistance(2));
 				// TODO: Angle slightly then drive a distance
 			} else if(start == 4 && goal == Goal.MIDDLE) {
-				addSequential(new SetGyro(5));
+				addSequential(new RotateUsingGyro(5));
 				addSequential(new DriveDistance(.5));
 				// TODO: Angle slightly then drive a very short distance
 			} else if(start == 3) {
-				addSequential(new SetGyro(2));
+				addSequential(new RotateUsingGyro(2));
 				addSequential(new DriveDistance(1));
 				// TODO: Angle slightly the drive a short distance
 			} else if(start == 2) {
-				addSequential(new SetGyro(-1));
+				addSequential(new RotateUsingGyro(-1));
 				addSequential(new DriveDistance(1));
 				// TODO: Angle slightly then drive a short distance
 			} else if(start == 1) {
-				addSequential(new SetGyro(-5));
+				addSequential(new RotateUsingGyro(-5));
 				addSequential(new DriveDistance(2));
 				// TODO: Angle more than slightly then drive a short distance
 			}

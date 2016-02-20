@@ -5,7 +5,6 @@ import com.techhounds.commands.DriveDistance;
 import com.techhounds.commands.angler.SetAnglerPosition;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import edu.wpi.first.wpilibj.command.WaitCommand;
 
 /**
  *
@@ -14,17 +13,14 @@ public class CrossPortcullis extends CommandGroup {
 	
     public  CrossPortcullis() {
     	
-    	//This command assumes the robot is immediately before the Portcullis and is in default positions
+    	//This command assumes that the robot has it's first rear wheels on ramp and is in default collector position
     	
-    	addParallel(new SetAnglerPosition(RobotMap.Collector.COLLECTOR_MIN_HEIGHT));//Lowers Collector to ground where it can go under the Portcullis
-    	addSequential(new WaitCommand(1));//Waits this amount of time after Collector begins moving before initiating the next command
+    	addSequential(new SetAnglerPosition(RobotMap.Collector.COLLECTOR_MIN_HEIGHT));//Lowers collector to position below Portcullis
     	
-    	addParallel(new DriveDistance(1, .3));//Then drives forward this amount to have the Collector be exactly under the Portcullis
+    	addSequential(new DriveDistance(.5, .4));//drives forward exactly to where collector is in position below Portcullis
     	
-    	addSequential(new WaitCommand(3));//Waits until it is in the correct position, possible to remove this later?
-    	
-    	addParallel(new DriveDistance(3, .3));//Drives forward through the Portcullis
-    	addSequential(new SetAnglerPosition(RobotMap.Collector.COLLECTOR_HEIGHT));//At the same time raises the Collector up to open the Portcullis
+    	addParallel(new DriveDistance(3, .4));//drives forward through defense
+    	addSequential(new SetAnglerPosition(RobotMap.Collector.COLLECTOR_HEIGHT));//simultaneously raises collector up, opening the Portcullis
     	
         // Add Commands here:
         // e.g. addSequential(new Command1());
