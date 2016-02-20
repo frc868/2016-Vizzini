@@ -1,28 +1,26 @@
-package com.techhounds.commands.shooter;
+package com.techhounds.commands;
 
-import com.techhounds.subsystems.ShooterSubsystem;
+import com.techhounds.subsystems.DriveSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
  */
-public class SetShooterSpeed extends Command {
-
-	private double speed;
-	private ShooterSubsystem shooter;
+public class DriveEncodersReset extends Command {
 	
-    public SetShooterSpeed() {
-    	shooter = ShooterSubsystem.getInstance();
-    	requires(shooter);
-   
+	public DriveSubsystem drive;
+
+    public DriveEncodersReset() {
+    	drive = DriveSubsystem.getInstance();
+    	requires(drive);
+        // Use requires() here to declare subsystem dependencies
+        // eg. requires(chassis);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-     	this.speed = SmartDashboard.getNumber("Shooter Set Speed");
-    	shooter.setSpeed(speed);
+    	drive.encodersReset();
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -31,17 +29,16 @@ public class SetShooterSpeed extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return shooter.onTarget();
+        return true;
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	//Locks pid power, because PID is disabled in setPower
-    	shooter.setPower(shooter.getPower());
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+    	end();
     }
 }

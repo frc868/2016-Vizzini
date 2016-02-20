@@ -1,5 +1,7 @@
 package com.techhounds;
 
+import com.techhounds.commands.DriveDistance;
+import com.techhounds.commands.DriveEncodersReset;
 import com.techhounds.commands.ToggleDriveDirection;
 import com.techhounds.commands.USBCameraCommand;
 import com.techhounds.commands.UpdateController;
@@ -17,6 +19,7 @@ import com.techhounds.commands.shooter.SetShooterPower;
 import com.techhounds.commands.shooter.SetShooterSpeed;
 import com.techhounds.lib.hid.ControllerMap;
 import com.techhounds.lib.hid.DPadButton;
+import com.techhounds.subsystems.DriveSubsystem;
 import com.techhounds.subsystems.ShooterSubsystem;
 
 import edu.wpi.first.wpilibj.Joystick;
@@ -152,6 +155,7 @@ public class OI {
 	 * Gets the Smart Dashboard Ready with Commands (Act as Buttons)
 	 */
 	public void setupSmartDashboard() {
+		SmartDashboard.putData("Reset Drive Encoders", new DriveEncodersReset());
 		SmartDashboard.putData("Set Shooter Speed", new SetShooterSpeed());
 		SmartDashboard.putData("Update Controllers", new UpdateController());
 		SmartDashboard.putData("Toggle Camera", new USBCameraCommand(true));
@@ -160,6 +164,9 @@ public class OI {
 		SmartDashboard.putData("Toggle_Winch_Enable", new SetWinchEnable());
 		SmartDashboard.putNumber("Shooter Set Speed", 100);
 		SmartDashboard.putData("Shooter:", ShooterSubsystem.getInstance());
+		SmartDashboard.putData("Drive Distance", new DriveDistance());
+		SmartDashboard.putNumber("Distance To Drive", 90);
+		SmartDashboard.putData(DriveSubsystem.getInstance());
 		//SmartDashboard.putData("Toggle_Winch_Lock", new SetWinchLock());
 	}
 	

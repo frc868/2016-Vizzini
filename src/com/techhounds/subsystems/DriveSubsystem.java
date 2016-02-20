@@ -45,6 +45,9 @@ public class DriveSubsystem extends Subsystem{
 	
 	private final double percentTolerable = .1;
 	
+	private double MIN_TURN_POWER = .25;
+	private double MIN_STRAIT_POWER = .16;
+	
 	private BuiltInAccelerometer accelerometer;
 	private PowerDistributionPanel panel;
 	
@@ -162,6 +165,11 @@ public class DriveSubsystem extends Subsystem{
 		right.set(Robot.rangeCheck(speed));
 	}
 	
+	public void encodersReset(){
+		rightEncoder.reset();
+		leftEncoder.reset();
+	}
+	
 	public void setPower(double right, double left) {
 		this.left.set(left);
 		this.right.set(right);
@@ -236,6 +244,7 @@ public class DriveSubsystem extends Subsystem{
 		SmartDashboard.putNumber("Right Speed", getRightSpeed());
 		
 		SmartDashboard.putNumber("Rotation X", getRotationX());
+		SmartDashboard.putData("Drive Pid", drivePID);
 	
 	}
 
