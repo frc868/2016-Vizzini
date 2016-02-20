@@ -1,18 +1,31 @@
 package com.techhounds.commands.auton;
 
+import com.techhounds.RobotMap;
+import com.techhounds.commands.DriveDistance;
 import com.techhounds.commands.angler.SetAnglerPosition;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj.command.WaitCommand;
 
 /**
- *Does the angler go up as the position int increases or decreases?
+ *
  */
 public class CrossPortcullis extends CommandGroup {
     
-	private final double HEIGHT_BEFORE_DRIVING = 400;
+	private final double HEIGHT_BEFORE_DRIVING = 190;
     public  CrossPortcullis() {
-    	addSequential(new SetAnglerPosition(HEIGHT_BEFORE_DRIVING));
     	
+    	//This command assumes the robot is immediately before the Portcullis and is in default positions
+    	
+    	addParallel(new SetAnglerPosition(HEIGHT_BEFORE_DRIVING));//Lowers Collector to ground where it can go under the Portcullis
+    	addSequential(new WaitCommand(1));//Waits this amount of time after Collector begins moving before initiating the next command
+    	
+    	addParallel(new DriveDistance(1, .3));//Then drives forward this amount to have the Collector be exactly under the Portcullis
+    	
+    	addSequential(new WaitCommand(3));//Waits until it is in the correct position, possible to remove this later?
+    	
+    	addParallel(new DriveDistance(3, .3));//Drives forward through the Portcullis
+    	addSequential(new SetAnglerPosition(RobotMap.Collector.COLLECTOR_HEIGHT));//At the same time raises the Collector up to open the Portcullis
     	
         // Add Commands here:
         // e.g. addSequential(new Command1());
