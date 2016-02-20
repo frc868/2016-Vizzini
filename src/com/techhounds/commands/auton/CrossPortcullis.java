@@ -5,7 +5,7 @@ import com.techhounds.commands.angler.SetAnglerPosition;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
- *
+ *Does the angler go up as the position int increases or decreases?
  */
 public class CrossPortcullis extends CommandGroup {
     

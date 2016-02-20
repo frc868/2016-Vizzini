@@ -19,7 +19,7 @@ public class ShooterSubsystem extends Subsystem{
 	private static ShooterSubsystem instance;
 	private CANTalon shooter;
 	private Counter count;
-	public final double P = 0, I = 0, D = 0;
+	public final double P = .5, I = 0, D = 0;
 	private PIDController controller;
 	
 	private ShooterSubsystem() {
@@ -52,14 +52,22 @@ public class ShooterSubsystem extends Subsystem{
 			}
     		
     	});
-    	controller.setAbsoluteTolerance(2);
-    	controller.setOutputRange(0, 1);
+    	controller.setAbsoluteTolerance(5);
+    	controller.setOutputRange(0, .4);
     	
     	LiveWindow.addActuator("shooter", "motor", shooter);
     	LiveWindow.addSensor("shooter", "counter", count);
     	LiveWindow.addSensor("shooter", "input", countIn);
     	
     	SmartDashboard.putData("Shooter PID", controller);
+	}
+	
+	public void setSpeed(double setPoint){
+		controller.setSetpoint(setPoint);
+		controller.enable();
+	}
+	public boolean onTarget(){
+		return controller.onTarget();
 	}
 	
 	public void setPower(double power){

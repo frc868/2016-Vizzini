@@ -14,8 +14,10 @@ import com.techhounds.commands.servos.SetWinchEnable;
 import com.techhounds.commands.servos.SetWinchLock;
 import com.techhounds.commands.shooter.Fire;
 import com.techhounds.commands.shooter.SetShooterPower;
+import com.techhounds.commands.shooter.SetShooterSpeed;
 import com.techhounds.lib.hid.ControllerMap;
 import com.techhounds.lib.hid.DPadButton;
+import com.techhounds.subsystems.ShooterSubsystem;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -150,11 +152,14 @@ public class OI {
 	 * Gets the Smart Dashboard Ready with Commands (Act as Buttons)
 	 */
 	public void setupSmartDashboard() {
+		SmartDashboard.putData("Set Shooter Speed", new SetShooterSpeed());
 		SmartDashboard.putData("Update Controllers", new UpdateController());
 		SmartDashboard.putData("Toggle Camera", new USBCameraCommand(true));
 		//SmartDashboard.putData("Toggle_Scissors_1", new SetScissorsOne());
 		//SmartDashboard.putData("Toggle_Scissors_2", new SetScissorsTwo());
 		SmartDashboard.putData("Toggle_Winch_Enable", new SetWinchEnable());
+		SmartDashboard.putNumber("Shooter Set Speed", 100);
+		SmartDashboard.putData("Shooter:", ShooterSubsystem.getInstance());
 		//SmartDashboard.putData("Toggle_Winch_Lock", new SetWinchLock());
 	}
 	
