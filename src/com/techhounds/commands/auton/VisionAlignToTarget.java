@@ -12,6 +12,7 @@ public class VisionAlignToTarget extends CommandGroup {
     
 	private double offAngle = 0;
 	private NetworkTable netTable;
+	private double maxAngle = 0.5;
 	
     public  VisionAlignToTarget() {
     	
@@ -25,6 +26,7 @@ public class VisionAlignToTarget extends CommandGroup {
     		offAngle = 0;
     	}
     	
-    	addSequential(new SetGyro(offAngle));
+    	while(offAngle > maxAngle || offAngle < -maxAngle)
+    		addSequential(new SetGyro(offAngle));
     }
 }
