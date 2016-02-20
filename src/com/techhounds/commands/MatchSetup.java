@@ -17,7 +17,7 @@ public class MatchSetup extends CommandGroup {
     
     public  MatchSetup() {
     	DriveSubsystem.isForward = true;
-    	addParallel(new SetAnglerPosition(RobotMap.Collector.DEFENSE_PASS_HEIGHT));
+    	addParallel(new SetAnglerPosition(RobotMap.Collector.COLLECTOR_HEIGHT));
     	addParallel(new SetCollectorPower());
     	addParallel(new SetShooterPower());
     	//addParallel(new SetScissorsOne(RobotMap.Servo.SCISSOR_ONE_IS_UP_DEFAULT));

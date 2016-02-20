@@ -11,13 +11,12 @@ import edu.wpi.first.wpilibj.command.WaitCommand;
  *
  */
 public class CrossPortcullis extends CommandGroup {
-    
-	private final double HEIGHT_BEFORE_DRIVING = 190;
+	
     public  CrossPortcullis() {
     	
     	//This command assumes the robot is immediately before the Portcullis and is in default positions
     	
-    	addParallel(new SetAnglerPosition(HEIGHT_BEFORE_DRIVING));//Lowers Collector to ground where it can go under the Portcullis
+    	addParallel(new SetAnglerPosition(RobotMap.Collector.COLLECTOR_MIN_HEIGHT));//Lowers Collector to ground where it can go under the Portcullis
     	addSequential(new WaitCommand(1));//Waits this amount of time after Collector begins moving before initiating the next command
     	
     	addParallel(new DriveDistance(1, .3));//Then drives forward this amount to have the Collector be exactly under the Portcullis
