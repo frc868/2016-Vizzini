@@ -3,6 +3,7 @@ package com.techhounds.commands.auton;
 import com.techhounds.RobotMap;
 import com.techhounds.commands.DriveDistance;
 import com.techhounds.commands.angler.SetAnglerPosition;
+import com.techhounds.commands.gyro.RotateUsingGyro;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.WaitCommand;
@@ -14,16 +15,20 @@ public class CrossCDF extends CommandGroup {
     
     public  CrossCDF() {
     	
-    	//This command assumes that the robot has it's first rear wheels on ramp and is in default collector position
+    	//this command assumes the robot is facing forward in front of the defense
     	
-    	addSequential(new SetAnglerPosition(RobotMap.Collector.COLLECTOR_MIN_HEIGHT));//Lowers collector onto CDF to lower it
-    	addSequential(new WaitCommand(.2));//waits for CDF to stay in place
+    	addSequential(new RotateUsingGyro(180));//turns around
     	
-    	addParallel(new DriveDistance(3, .7));//drives over CDF
-    	addSequential(new WaitCommand(.5));//waits to raise collector until robot is on CDF
+    	addSequential(new DriveDistance(-1, .5));//drives up on to ramp to its position
     	
-    	addSequential(new SetAnglerPosition(RobotMap.Collector.COLLECTOR_HEIGHT));//raises collector to prevent damage to it
+    	addSequential(new SetAnglerPosition(RobotMap.Collector.COLLECTOR_MIN_HEIGHT));//lowers collector onto defense
     	
+    	addSequential(new WaitCommand(1));//waits until defense is lowered
+    	
+    	addParallel(new DriveDistance(-3, .7));//drives over defense and waits a moment before...
+    	addSequential(new WaitCommand(.2));
+    	
+    	addSequential(new SetAnglerPosition(RobotMap.Collector.COLLECTOR_HEIGHT));//...raising collector to prevent damage to it
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());

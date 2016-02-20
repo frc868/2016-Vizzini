@@ -3,6 +3,7 @@ package com.techhounds.commands.auton;
 import com.techhounds.RobotMap;
 import com.techhounds.commands.DriveDistance;
 import com.techhounds.commands.angler.SetAnglerPosition;
+import com.techhounds.commands.gyro.RotateUsingGyro;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
@@ -13,14 +14,18 @@ public class CrossPortcullis extends CommandGroup {
 	
     public  CrossPortcullis() {
     	
-    	//This command assumes that the robot has it's first rear wheels on ramp and is in default collector position
+    	//this command assumes the robot is facing forward in front of the defense
     	
-    	addSequential(new SetAnglerPosition(RobotMap.Collector.COLLECTOR_MIN_HEIGHT));//Lowers collector to position below Portcullis
+    	addSequential(new RotateUsingGyro(180));//turns around
     	
-    	addSequential(new DriveDistance(.5, .4));//drives forward exactly to where collector is in position below Portcullis
+    	addSequential(new DriveDistance(-1, .5));//drives up on to ramp to its position
     	
-    	addParallel(new DriveDistance(3, .4));//drives forward through defense
-    	addSequential(new SetAnglerPosition(RobotMap.Collector.COLLECTOR_HEIGHT));//simultaneously raises collector up, opening the Portcullis
+    	addSequential(new SetAnglerPosition(RobotMap.Collector.COLLECTOR_MIN_HEIGHT));//Lowers collector to position on ground
+    	
+    	addSequential(new DriveDistance(-1, .3));//drives to position collector under portcullis
+    	
+    	addParallel(new DriveDistance(-3, .5));//drives through portcullis while raising collector
+    	addSequential(new SetAnglerPosition(RobotMap.Collector.COLLECTOR_HEIGHT));
     	
         // Add Commands here:
         // e.g. addSequential(new Command1());
