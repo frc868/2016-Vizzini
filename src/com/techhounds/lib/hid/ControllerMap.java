@@ -13,7 +13,6 @@ public class ControllerMap {
 	
 	private Joystick joystick;
 	private Type type;
-	public static boolean driverToggle = true;
 	
 	private int [] buttonPorts;
 	

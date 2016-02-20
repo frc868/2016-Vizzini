@@ -8,11 +8,11 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class DriveWithPowerBackwards extends Command {
-
-	DriveSubsystem drive;
+public class DriveWithPower extends Command {
 	
-    public DriveWithPowerBackwards() {
+	DriveSubsystem drive;
+
+    public DriveWithPower() {
     	drive = DriveSubsystem.getInstance();
     	requires(drive);
         // Use requires() here to declare subsystem dependencies
@@ -25,7 +25,11 @@ public class DriveWithPowerBackwards extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	drive.setPower(OI.getInstance().getRightBackward(), OI.getInstance().getLeftBackward());
+    	if(DriveSubsystem.isForward){
+    		drive.setPower(OI.getInstance().getRightForward(), OI.getInstance().getLeftForward());
+    	}else{
+        	drive.setPower(OI.getInstance().getRightBackward(), OI.getInstance().getLeftBackward());
+    	}
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -35,7 +39,6 @@ public class DriveWithPowerBackwards extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	
     }
 
     // Called when another command which requires one or more of the same

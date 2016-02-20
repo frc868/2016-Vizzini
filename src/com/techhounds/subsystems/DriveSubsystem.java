@@ -2,7 +2,7 @@ package com.techhounds.subsystems;
 
 import com.techhounds.Robot;
 import com.techhounds.RobotMap;
-import com.techhounds.commands.DriveWithPowerForwards;
+import com.techhounds.commands.DriveWithPower;
 
 import edu.wpi.first.wpilibj.BuiltInAccelerometer;
 import edu.wpi.first.wpilibj.Encoder;
@@ -26,6 +26,7 @@ public class DriveSubsystem extends Subsystem{
 	private Spark left;
 	private Spark right;
 	private boolean rotating;
+	public static boolean isForward = true;
 	
 	private PIDController gyroPID;
 	private PIDController drivePID;
@@ -239,7 +240,7 @@ public class DriveSubsystem extends Subsystem{
 	}
 
 	protected void initDefaultCommand() {
-		setDefaultCommand(new DriveWithPowerForwards());
+		setDefaultCommand(new DriveWithPower());
 		// TODO: Add Default command for DriveWithGamepad()
 	}
 }

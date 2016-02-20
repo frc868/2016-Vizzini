@@ -1,6 +1,5 @@
 package com.techhounds.commands;
 
-import com.techhounds.OI;
 import com.techhounds.subsystems.DriveSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -8,29 +7,29 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class DriveWithPowerForwards extends Command {
-	
-	DriveSubsystem drive;
+public class ToggleDriveDirection extends Command {
 
-    public DriveWithPowerForwards() {
-    	drive = DriveSubsystem.getInstance();
-    	requires(drive);
+    public ToggleDriveDirection() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	if(DriveSubsystem.isForward){
+    		DriveSubsystem.isForward = false;
+    	}else{
+    		DriveSubsystem.isForward = true;
+    	}
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	drive.setPower(OI.getInstance().getRightForward(), OI.getInstance().getLeftForward());
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return true;
     }
 
     // Called once after isFinished returns true

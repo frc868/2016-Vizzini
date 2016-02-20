@@ -1,7 +1,6 @@
 package com.techhounds;
 
-import com.techhounds.commands.DriveWithPowerBackwards;
-import com.techhounds.commands.DriveWithPowerForwards;
+import com.techhounds.commands.ToggleDriveDirection;
 import com.techhounds.commands.USBCameraCommand;
 import com.techhounds.commands.UpdateController;
 import com.techhounds.commands.angler.SetAnglerPosition;
@@ -143,15 +142,8 @@ public class OI {
 		
 		driver.getButton(collectDefenses)
 			.whenPressed(new SetAnglerPosition(RobotMap.Collector.DEFENSE_PASS_HEIGHT));
-		if(ControllerMap.driverToggle){
-			driver.getButton(toggleDrive)
-				.whenPressed(new DriveWithPowerForwards());
-			ControllerMap.driverToggle = false;
-		}else{
-			driver.getButton(toggleDrive)
-				.whenPressed(new DriveWithPowerBackwards());
-			ControllerMap.driverToggle = true;
-		}
+		driver.getButton(toggleDrive)
+			.whenPressed(new ToggleDriveDirection());
 	}
 
 	/**
