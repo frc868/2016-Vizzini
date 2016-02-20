@@ -45,8 +45,8 @@ public class DriveSubsystem extends Subsystem{
 	
 	private final double percentTolerable = .1;
 	
-	private double MIN_TURN_POWER = .2;
-	private double MIN_STRAING_POWER = .1;
+	private double MIN_TURN_POWER = .25;
+	private double MIN_STRAIT_POWER = .16;
 	
 	private BuiltInAccelerometer accelerometer;
 	private PowerDistributionPanel panel;
