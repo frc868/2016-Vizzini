@@ -26,9 +26,10 @@ public class DriveWithPower extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	if(DriveSubsystem.isForward){
-    		drive.setPower(OI.getInstance().getRightForward(), OI.getInstance().getLeftForward());
+    		drive.setPower(OI.getInstance().getRightBackward(), OI.getInstance().getLeftBackward());
     	}else{
-        	drive.setPower(OI.getInstance().getRightBackward(), OI.getInstance().getLeftBackward());
+    		drive.setPower(OI.getInstance().getRightForward(), OI.getInstance().getLeftForward());
+        	
     	}
     }
 
