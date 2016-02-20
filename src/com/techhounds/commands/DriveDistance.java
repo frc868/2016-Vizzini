@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DriveDistance extends Command implements PIDSource, PIDOutput {
 
@@ -16,6 +17,10 @@ public class DriveDistance extends Command implements PIDSource, PIDOutput {
 
 	public DriveDistance(double dist) {
 		this(dist, 1);
+	}
+	
+	public DriveDistance(){
+		this(0);
 	}
 	
 	public DriveDistance(double dist, double max) {
@@ -28,6 +33,7 @@ public class DriveDistance extends Command implements PIDSource, PIDOutput {
 	
 	@Override
 	protected void initialize() {
+		targetDist = SmartDashboard.getNumber("Distance To Drive");
 		double curDist = drive.getAvgDistance();
 		pid.setSetpoint(targetDist + curDist);
 		pid.enable();
