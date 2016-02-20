@@ -1,6 +1,10 @@
 package com.techhounds.commands.auton;
 
+import com.techhounds.RobotMap;
 import com.techhounds.commands.DriveDistance;
+import com.techhounds.commands.angler.SetAnglerPosition;
+import com.techhounds.commands.angler.SetStateDown;
+import com.techhounds.commands.angler.SetStateUp;
 import com.techhounds.commands.gyro.RotateUsingGyro;
 import com.techhounds.commands.shooter.Fire;
 
@@ -204,21 +208,39 @@ public class AutonChooser {
 			
 //			addSequential(new ResetGyro());
 			
-			if(defense == Defense.LOW_BAR) {
-				// TODO: Drive moderately fast
-			} else if(defense == Defense.MOAT || defense == Defense.RAMPARTS) {
-				// TODO: Drive as fast as possible
-			} else if(defense == Defense.ROCK_WALL || defense == Defense.ROUGH_TERRAIN) {
-				// TODO: Drive moderately fast
-			}else if(defense == Defense.PORTCULLIS) {
-				// TODO: Drive moderately fast, lift collector and drive through
-			} else if(defense == Defense.CHEVAL_DE_FRISE) {
-				// TODO: Drive moderately fast, stop, collector down and drive slightly fast
-			} else if(defense == Defense.REACH_DEFENSE) {
-				addSequential(new DriveDistance(2, .5));
-			} else {
-				addSequential(new WaitCommand(0));
-			} 
+			switch(defense) {
+				case LOW_BAR:
+					addSequential(new SetAnglerPosition(
+							RobotMap.Collector.DEFENSE_PASS_HEIGHT));
+					addSequential(new DriveDistance(2, .5));
+					break;
+				
+				case MOAT:
+				case RAMPARTS:
+					addSequential(new DriveDistance(2, 1));
+					break;
+				
+				case ROCK_WALL:
+				case ROUGH_TERRAIN:
+					addSequential(new DriveDistance(2, .5));
+					break;
+				
+				case PORTCULLIS:
+					addSequential(new CrossPortcullis());
+					break;
+				
+				case CHEVAL_DE_FRISE:
+					addSequential(new CrossCDF());
+					break;
+				
+				case REACH_DEFENSE:
+					addSequential(new DriveDistance(2, .5));
+					break;
+				
+				default:
+					addSequential(new WaitCommand(0));
+					break;
+			}
 			
 			if(defense != Defense.DO_NOTHING && defense != Defense.REACH_DEFENSE) {
 				addSequential(new RotateUsingGyro(0));
