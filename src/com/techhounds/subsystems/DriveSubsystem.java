@@ -165,6 +165,11 @@ public class DriveSubsystem extends Subsystem{
 		right.set(Robot.rangeCheck(speed));
 	}
 	
+	public void encodersReset(){
+		rightEncoder.reset();
+		leftEncoder.reset();
+	}
+	
 	public void setPower(double right, double left) {
 		this.left.set(left);
 		this.right.set(right);

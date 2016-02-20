@@ -1,6 +1,7 @@
 package com.techhounds;
 
 import com.techhounds.commands.DriveDistance;
+import com.techhounds.commands.DriveEncodersReset;
 import com.techhounds.commands.ToggleDriveDirection;
 import com.techhounds.commands.USBCameraCommand;
 import com.techhounds.commands.UpdateController;
@@ -154,6 +155,7 @@ public class OI {
 	 * Gets the Smart Dashboard Ready with Commands (Act as Buttons)
 	 */
 	public void setupSmartDashboard() {
+		SmartDashboard.putData("Reset Drive Encoders", new DriveEncodersReset());
 		SmartDashboard.putData("Set Shooter Speed", new SetShooterSpeed());
 		SmartDashboard.putData("Update Controllers", new UpdateController());
 		SmartDashboard.putData("Toggle Camera", new USBCameraCommand(true));
