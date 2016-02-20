@@ -3,8 +3,8 @@ package com.techhounds.commands.auton;
 import com.techhounds.commands.DriveDistance;
 import com.techhounds.commands.gyro.ResetGyro;
 import com.techhounds.commands.gyro.SetGyro;
-import com.techhounds.commands.shooter.VisionAim;
-import com.techhounds.commands.shooter.VisionShoot;
+import com.techhounds.commands.shooter.Fire;
+import com.techhounds.commands.shooter.SetShooterPower;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -256,16 +256,18 @@ public class AutonChooser {
 			}
 			
 			if(goal != Goal.DO_NOTHING) {
-				addSequential(new VisionAim());
+				//addSequential(new VisionAim());
 			}
 			
-			if(shoot == 2) {
-				addSequential(new VisionShoot());
+			if(shoot == 0) {
+				addSequential(new VisionAlignToTarget());
+				addSequential(new VisionSetShooterPower());
+				addSequential(new Fire());
 				// TODO: Get distance and shoot
 			} else if(shoot == 1) {
 				addSequential(new VisionDriveDistance());
 				// TODO: Determine distance and drive it and feed out
-			} else if(shoot == 0) {
+			} else if(shoot == 2) {
 				addSequential(new WaitCommand(0));
 			} else {
 				addSequential(new WaitCommand(0));
