@@ -1,7 +1,6 @@
 package com.techhounds.commands.auton;
 
 import com.techhounds.commands.DriveDistance;
-import com.techhounds.commands.gyro.ResetGyro;
 import com.techhounds.commands.gyro.SetGyro;
 import com.techhounds.commands.shooter.Fire;
 import com.techhounds.commands.shooter.SetShooterPower;
@@ -204,7 +203,7 @@ public class AutonChooser {
 			int shoot = getShoot();
 			int post = getPost();
 			
-			addSequential(new ResetGyro());
+//			addSequential(new ResetGyro());
 			
 			if(defense == Defense.LOW_BAR) {
 				// TODO: Drive moderately fast
