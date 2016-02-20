@@ -34,14 +34,11 @@ public class SetAnglerPosition extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if(!angle.onTarget()){
-    		//new SetAnglerPosition(position).start();
-    	}
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	return false;
+    	return angle.onTarget();
     }
 
     // Called once after isFinished returns true
