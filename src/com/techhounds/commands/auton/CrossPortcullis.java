@@ -13,14 +13,14 @@ public class CrossPortcullis extends CommandGroup {
 	
     public  CrossPortcullis() {
     	
-    	//This command assumes that the robot has it's first rear wheels on ramp and is in default collector position
+    	//This command assumes the robot's first rear wheels are on the ramp, and collector is set to default position
     	
-    	addSequential(new SetAnglerPosition(RobotMap.Collector.COLLECTOR_MIN_HEIGHT));//Lowers collector to position below Portcullis
+    	addSequential(new SetAnglerPosition(RobotMap.Collector.COLLECTOR_MIN_HEIGHT));//Lowers collector to position on ground
     	
-    	addSequential(new DriveDistance(.5, .4));//drives forward exactly to where collector is in position below Portcullis
+    	addSequential(new DriveDistance(1, .3));//drives to position collector under portcullis
     	
-    	addParallel(new DriveDistance(3, .4));//drives forward through defense
-    	addSequential(new SetAnglerPosition(RobotMap.Collector.COLLECTOR_HEIGHT));//simultaneously raises collector up, opening the Portcullis
+    	addParallel(new DriveDistance(3, .3));//drives through portcullis
+    	addSequential(new SetAnglerPosition(RobotMap.Collector.COLLECTOR_HEIGHT));//simultaneously raises collector to open portcullis
     	
         // Add Commands here:
         // e.g. addSequential(new Command1());

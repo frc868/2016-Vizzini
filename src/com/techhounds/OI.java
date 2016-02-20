@@ -104,21 +104,21 @@ public class OI {
 	public void setupController() {
 		
 		driver.getButton(startCollector)
-			.whenPressed(new SetCollectorPower(.5))
-			.whenReleased(new SetCollectorPower(0));
+			.whenPressed(new SetCollectorPower(RobotMap.Collector.inPower))
+			.whenReleased(new SetCollectorPower());
 		
 		driver.getButton(stopCollector)
-			.whenPressed(new SetCollectorPower(-.5))
-			.whenReleased(new SetCollectorPower(0));
+			.whenPressed(new SetCollectorPower(RobotMap.Collector.outPower))
+			.whenReleased(new SetCollectorPower());
 		
 		
 		/*driver.getButton(angleUp)
-			.whenPressed(new SetAnglerPosition(100.0))
+			.whenPressed(new SetAnglerPosition(RobotMap.Collector.COLLECTOR_HEIGHT))
 			//.whenPressed(new SetAnglerPower(.3))
 			.whenReleased(new SetAnglerPosition());
 
 		driver.getButton(angleDown)
-			.whenPressed(new SetAnglerPosition(518.0));
+			.whenPressed(new SetAnglerPosition(RobotMap.Collector.COLLECTOR_MIN_HEIGHT));
 			//.whenPressed(new SetAnglerPower(-.3))*/
 		
 		driver.getButton(angleUp)
