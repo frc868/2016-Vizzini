@@ -1,6 +1,6 @@
 package com.techhounds.commands.auton;
 
-import com.techhounds.commands.gyro.SetGyro;
+import com.techhounds.commands.gyro.RotateUsingGyro;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
@@ -27,6 +27,6 @@ public class VisionAlignToTarget extends CommandGroup {
     	}
     	
     	while(offAngle > maxAngle || offAngle < -maxAngle)
-    		addSequential(new SetGyro(offAngle));
+    		addSequential(new RotateUsingGyro(offAngle));
     }
 }

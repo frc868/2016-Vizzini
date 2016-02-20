@@ -1,37 +1,28 @@
 package com.techhounds.commands.auton;
 
-import edu.wpi.first.wpilibj.command.Command;
+import com.techhounds.commands.DriveDistance;
 
-public class VisionDriveDistance extends Command {
+import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj.networktables.NetworkTable;
 
-	@Override
-	protected void initialize() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	protected void execute() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	protected boolean isFinished() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	protected void end() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	protected void interrupted() {
-		// TODO Auto-generated method stub
-		
-	}
-
+/**
+ *
+ */
+public class VisionDriveDistance extends CommandGroup {
+    
+	private double targetDistance = 0;
+	private NetworkTable netTable;
+	
+    public  VisionDriveDistance() {
+        
+    	NetworkTable.setServerMode();
+    	NetworkTable.initialize();
+    	netTable = NetworkTable.getTable("SmartDashboard");
+    	
+    	if(netTable != null) {
+    		targetDistance = netTable.getNumber("DistanceToTarget", 0);
+    	}
+    	
+    	addSequential(new DriveDistance(targetDistance));
+    }
 }
