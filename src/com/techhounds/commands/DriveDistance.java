@@ -26,9 +26,10 @@ public class DriveDistance extends Command implements PIDSource, PIDOutput {
 	public DriveDistance(double dist, double max) {
 		drive = DriveSubsystem.getInstance();
 		requires(drive);
-		pid = new PIDController(0,  0, 0, this, this);
+		pid = new PIDController(.5,  0, 0, this, this);
 		pid.setOutputRange(-max, max);
 		this.targetDist = dist;
+		SmartDashboard.putData("Drive distance pid", pid);
 	}
 	
 	@Override
@@ -41,6 +42,7 @@ public class DriveDistance extends Command implements PIDSource, PIDOutput {
 
 	@Override
 	protected void execute() {
+		SmartDashboard.putNumber("Drive Error", pid.getError());
 		// TODO Auto-generated method stub
 		
 	}
@@ -84,7 +86,7 @@ public class DriveDistance extends Command implements PIDSource, PIDOutput {
 
 	@Override
 	public double pidGet() {
-		return drive.getAvgDistance();
+		return drive.countsToDist(drive.getAvgDistance());
 	}
 
 }

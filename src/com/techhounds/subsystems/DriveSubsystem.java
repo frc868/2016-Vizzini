@@ -157,8 +157,8 @@ public class DriveSubsystem extends Subsystem{
 		return gyro.getRotation();
 	}
 
-	public void setLeftPower(double speed) {
-		left.set(Robot.rangeCheck(speed));
+	public void setLeftPower(double power) {
+		left.set(Robot.rangeCheck(power));
 	}
 
 	public void setRightPower(double speed) {
@@ -208,7 +208,7 @@ public class DriveSubsystem extends Subsystem{
 	}
 	
 	public double getLeftDistance() {
-		return leftEncoder.getDistance();
+		return -leftEncoder.getDistance();
 	}
 	
 	public double getRightDistance() {
@@ -222,6 +222,12 @@ public class DriveSubsystem extends Subsystem{
 	public double getPIDError() {
 		return gyroPID.getError();
 	}
+	
+	public double countsToDist(double counts){
+		return counts * .0393686;
+	}
+	
+	
 	
 	public void updateSmartDashboard() {
 		SmartDashboard.putNumber("Driver Left Power", getLeftPower());
@@ -244,7 +250,7 @@ public class DriveSubsystem extends Subsystem{
 		SmartDashboard.putNumber("Right Speed", getRightSpeed());
 		
 		SmartDashboard.putNumber("Rotation X", getRotationX());
-		SmartDashboard.putData("Drive Pid", drivePID);
+		
 	
 	}
 
