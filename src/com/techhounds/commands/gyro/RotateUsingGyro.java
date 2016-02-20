@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class RotateUsingGyro extends Command implements PIDSource, PIDOutput {
 	
-	private static double p, i, d;
+	private static double p = .5, i = 0, d = 0;
 	private DriveSubsystem drive;
 	private GyroSubsystem gyro;
 	private PIDController pid;
