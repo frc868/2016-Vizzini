@@ -208,19 +208,18 @@ public class AutonChooser {
 			
 			switch(defense) {
 				case LOW_BAR:
-					addSequential(new SetAnglerPosition(
-							RobotMap.Collector.COLLECTING));
-					addSequential(new DriveDistance(2, .5));
+					addSequential(new SetAnglerPosition(RobotMap.Collector.COLLECTING));
+					addSequential(new CrossDefense());
 					break;
 				
 				case MOAT:
 				case RAMPARTS:
-					addSequential(new DriveDistance(2, 1));
+					addSequential(new CrossDefense());
 					break;
 				
 				case ROCK_WALL:
 				case ROUGH_TERRAIN:
-					addSequential(new DriveDistance(2, .5));
+					addSequential(new CrossDefense(.5, true));
 					break;
 				
 				case PORTCULLIS:
@@ -232,7 +231,7 @@ public class AutonChooser {
 					break;
 				
 				case REACH_DEFENSE:
-					addSequential(new DriveDistance(2, .5));
+					addSequential(new DriveDistance(60, .5));
 					break;
 				
 				default:

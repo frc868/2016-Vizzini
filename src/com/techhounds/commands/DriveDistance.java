@@ -1,5 +1,6 @@
 package com.techhounds.commands;
 
+import com.techhounds.RobotMap;
 import com.techhounds.subsystems.DriveSubsystem;
 
 import edu.wpi.first.wpilibj.PIDController;
@@ -82,7 +83,7 @@ public class DriveDistance extends Command implements PIDSource, PIDOutput {
 			output = lastPower - .1;
 		}
 		
-		if(output < .2 && output > -.2)
+		if(output < RobotMap.DriveTrain.MIN_STRAIGHT_POWER && output > -RobotMap.DriveTrain.MIN_STRAIGHT_POWER)
 			output = output > 0 ? .2 : -.2;
 		lastPower = output;
 		drive.setLeftPower(output);
