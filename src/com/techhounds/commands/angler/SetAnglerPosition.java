@@ -26,6 +26,7 @@ public class SetAnglerPosition extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	//position = SmartDashboard.getNumber("Angler Set Height");
     	if(position == null)
     		angle.setPosition(angle.getPosition());
     	else
