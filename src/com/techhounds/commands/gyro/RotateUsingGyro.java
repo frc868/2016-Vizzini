@@ -15,32 +15,47 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class RotateUsingGyro extends Command implements PIDSource, PIDOutput {
 	
-	private static double p = .5, i = 0, d = 0;
+	private static double p = .05, i = 0, d = .08;
 	private DriveSubsystem drive;
 	private GyroSubsystem gyro;
 	private PIDController pid;
+	private double angle;
+	public static final boolean DEBUG = false;
+	//min turn power can be less here, as robot should already be moving
+	private double MIN_TURN_POWER = .13;
+	private double MIN_STRAIT_POWER = .16;
 	
     public RotateUsingGyro(double angle) {
     	gyro = GyroSubsystem.getInstance();
     	drive = DriveSubsystem.getInstance();
     	requires(drive);
     	pid = new PIDController(p, i, d, this, this);
-    	SmartDashboard.putData("Gyro PID", pid);
+    	this.angle = angle;
+    	if(DEBUG){
+    		SmartDashboard.putData("Gyro PID", pid);
+    	}
+    	pid.setOutputRange(-.5, .5);
+    	pid.setAbsoluteTolerance(1);
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	pid.setSetpoint(angle + pidGet());
+    	pid.enable();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	if(DEBUG){
+    		SmartDashboard.putNumber("GyroPID Error", pid.getError());
+    	}
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return pid.onTarget();
+        return Math.abs(pid.getError()) < 1;
     }
 
     // Called once after isFinished returns true
@@ -56,7 +71,19 @@ public class RotateUsingGyro extends Command implements PIDSource, PIDOutput {
 
 	@Override
 	public void pidWrite(double output) {
-		drive.rotateWithPower(output, -output);
+		if(Math.abs(output) < MIN_TURN_POWER){
+			if(pid.onTarget()){
+				output = 0;
+			}else if(output > 0){
+				output = MIN_TURN_POWER;
+			}else if(output < 0){
+				output = -MIN_TURN_POWER;
+			}
+		}
+		if(DEBUG){
+			SmartDashboard.putNumber("GyroPID Output", output);
+		}
+		drive.rotateWithPower(output);
 		// TODO Auto-generated method stub
 		
 	}
@@ -73,6 +100,9 @@ public class RotateUsingGyro extends Command implements PIDSource, PIDOutput {
 
 	@Override
 	public double pidGet() {
+		if(DEBUG){
+			SmartDashboard.putNumber("Gyro Rotation", gyro.getRotation());
+		}
 		// TODO Auto-generated method stub
 		return gyro.getRotation();
 	}

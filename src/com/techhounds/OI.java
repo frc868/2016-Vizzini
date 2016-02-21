@@ -10,6 +10,7 @@ import com.techhounds.commands.angler.SetAnglerPower;
 import com.techhounds.commands.angler.SetStateDown;
 import com.techhounds.commands.angler.SetStateUp;
 import com.techhounds.commands.collector.SetCollectorPower;
+import com.techhounds.commands.gyro.RotateUsingGyro;
 import com.techhounds.commands.servos.SetScissorsOne;
 import com.techhounds.commands.servos.SetScissorsTwo;
 import com.techhounds.commands.servos.SetWinchEnable;
@@ -145,6 +146,10 @@ public class OI {
 	 * Gets the Smart Dashboard Ready with Commands (Act as Buttons)
 	 */
 	public void setupSmartDashboard() {
+		if(RotateUsingGyro.DEBUG){//This will not show in the SD up unless we're debugging RotateUsingGyro
+			SmartDashboard.putData("Rotate 90 Degrees", new RotateUsingGyro(90));
+			SmartDashboard.putData("Rotate -90 Degrees", new RotateUsingGyro(-90));
+		}
 		SmartDashboard.putData("Reset Drive Encoders", new DriveEncodersReset());
 		SmartDashboard.putData("Set Shooter Speed", new SetShooterSpeed());
 		SmartDashboard.putData("Update Controllers", new UpdateController());

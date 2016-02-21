@@ -143,9 +143,9 @@ public class DriveSubsystem extends Subsystem{
 		right.set(Robot.rangeCheck(speed));
 	}
 	
-	public void rotateWithPower(double rightPower, double leftPower){
-		right.set(rightPower);
-		left.set(leftPower);
+	public void rotateWithPower(double power){
+		right.set(-power);
+		left.set(power);
 	}
 	
 	public void encodersReset(){
