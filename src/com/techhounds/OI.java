@@ -53,6 +53,7 @@ public class OI {
 //	final int collectAngler = 		ControllerMap.Key.LB;
 //	final int collectDefenses = 	ControllerMap.Key.LT;
 	final int toggleDrive =			ControllerMap.Key.START;
+	final int visionTarget = 		DPadButton.Direction.RIGHT;
 	
 	private OI() {
 	
@@ -129,7 +130,7 @@ public class OI {
 			.whenPressed(new SetShooterPower());
 		
 		driver.getButton(startShooter)
-			.whenPressed(new SetShooterPower(.5));
+			.whenPressed(new SetShooterSpeed(69));
 		
 		driver.getButton(fireShooter)
 			.whenPressed(new Fire());
@@ -142,6 +143,10 @@ public class OI {
 */		
 		driver.getButton(toggleDrive)
 			.whenPressed(new ToggleDriveDirection());
+	
+		driver.getButton(visionTarget)
+			.whenPressed(new VisionRotateToTarget());
+			
 	}
 
 	/**
@@ -154,7 +159,7 @@ public class OI {
 			SmartDashboard.putData("Rotate -90 Degrees", new RotateUsingGyro(-90));
 		}
 		SmartDashboard.putData("Reset Drive Encoders", new DriveEncodersReset());
-		SmartDashboard.putData("Set Shooter Speed", new SetShooterSpeed());
+		SmartDashboard.putData("Set Shooter Speed", new SetShooterSpeed(69));
 		SmartDashboard.putData("Update Controllers", new UpdateController());
 		SmartDashboard.putData("Toggle Camera", new USBCameraCommand(true));
 		//SmartDashboard.putData("Toggle_Scissors_1", new SetScissorsOne());

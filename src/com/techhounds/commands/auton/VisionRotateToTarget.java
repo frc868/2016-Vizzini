@@ -40,16 +40,16 @@ public class VisionRotateToTarget extends Command {
 				rotateCommand = null;
 				double anglesOffCenter = SmartDashboard.getNumber("OffCenterDegreesX", 0);
 				done = (Math.abs(anglesOffCenter)) < 1;
-				checkFrame = frame + 3;
+				checkFrame = frame + 40;
 				lastFrame = frame;
 				SmartDashboard.putBoolean("VISION done", done);
 				SmartDashboard.putNumber("VISION Off Center", anglesOffCenter);	
 			}
 		} else {
 			if(checkFrame < frame && lastFrame < frame) {
-				double angleOff = -SmartDashboard.getNumber("OffCenterDegreesX", 0);
+				double angleOff = -SmartDashboard.getNumber("OffCenterDegreesX", 0) * .75;
 				SmartDashboard.putNumber("VISION TARGET ANGLE", angleOff);
-				(rotateCommand = new RotateUsingGyro(angleOff)).start();
+				(rotateCommand = new RotateUsingGyro(angleOff, .25)).start();
 			}
 		}
 		
@@ -87,7 +87,7 @@ public class VisionRotateToTarget extends Command {
 
 	// Called once after isFinished returns true
 	protected void end() {
-		rotateCommand.cancel();
+		if(rotateCommand != null) rotateCommand.cancel();
 	}
 
 	// Called when another command which requires one or more of the same

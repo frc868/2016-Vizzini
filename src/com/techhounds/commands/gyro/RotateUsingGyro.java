@@ -20,7 +20,7 @@ public class RotateUsingGyro extends Command implements PIDSource, PIDOutput {
 	private GyroSubsystem gyro;
 	private PIDController pid;
 	private double angle;
-	public static final boolean DEBUG = false;
+	public static final boolean DEBUG = true;
 	//min turn power can be less here, as robot should already be moving
 	private double MIN_TURN_POWER = .13;
 	private double MIN_STRAIT_POWER = .16;

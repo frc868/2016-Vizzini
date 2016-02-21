@@ -24,7 +24,7 @@ public class ShooterSubsystem extends Subsystem {
 	public final double P = .01, I = 0, D = .2, F = .005;
 	private PIDController controller;
 	private double lastSpeed;
-	public boolean debuging = false;
+	public boolean debuging = true;
 
 	private ShooterSubsystem() {
 		shooter = new CANTalon(RobotMap.Shooter.SHOOTER_MOTOR);

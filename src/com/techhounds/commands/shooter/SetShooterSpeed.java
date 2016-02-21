@@ -12,8 +12,10 @@ public class SetShooterSpeed extends Command {
 
 	private double speed;
 	private ShooterSubsystem shooter;
+	private int cnt;
 	
-    public SetShooterSpeed() {
+    public SetShooterSpeed(double speed) {
+    	this.speed = speed;
     	shooter = ShooterSubsystem.getInstance();
     	requires(shooter);
    
@@ -21,8 +23,8 @@ public class SetShooterSpeed extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-     	this.speed = SmartDashboard.getNumber("Shooter Set Speed");
     	shooter.setSpeed(speed);
+    	cnt = 0;
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -31,13 +33,18 @@ public class SetShooterSpeed extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return shooter.onTarget();
+    	if(shooter.onTarget())
+    		cnt++;
+    	else
+    		cnt = 0;
+    	
+        return cnt >= 3;
     }
 
     // Called once after isFinished returns true
     protected void end() {
     	//Locks pid power, because PID is disabled in setPower
-    	shooter.setPower(shooter.getPower());
+    	//shooter.setPower(shooter.getPower());
     }
 
     // Called when another command which requires one or more of the same
