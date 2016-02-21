@@ -44,7 +44,6 @@ public class SetAnglerPosition extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	angle.stopPower();
     }
 
     // Called when another command which requires one or more of the same
