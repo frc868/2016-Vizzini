@@ -209,7 +209,7 @@ public class AutonChooser {
 			switch(defense) {
 				case LOW_BAR:
 					addSequential(new SetAnglerPosition(
-							RobotMap.Collector.DEFENSE_PASS_HEIGHT));
+							RobotMap.Collector.COLLECTING));
 					addSequential(new DriveDistance(2, .5));
 					break;
 				

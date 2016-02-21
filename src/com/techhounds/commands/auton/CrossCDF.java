@@ -21,14 +21,14 @@ public class CrossCDF extends CommandGroup {
     	
     	addSequential(new DriveDistance(-1, .5));//drives up on to ramp to its position
     	
-    	addSequential(new SetAnglerPosition(RobotMap.Collector.COLLECTOR_MIN_HEIGHT));//lowers collector onto defense
+    	addSequential(new SetAnglerPosition(RobotMap.Collector.COLLECTOR_DOWN));//lowers collector onto defense
     	
     	addSequential(new WaitCommand(1));//waits until defense is lowered
     	
     	addParallel(new DriveDistance(-3, .7));//drives over defense and waits a moment before...
     	addSequential(new WaitCommand(.2));
     	
-    	addSequential(new SetAnglerPosition(RobotMap.Collector.COLLECTOR_HEIGHT));//...raising collector to prevent damage to it
+    	addSequential(new SetAnglerPosition(RobotMap.Collector.COLLECTOR_UP));//...raising collector to prevent damage to it
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());

@@ -20,12 +20,12 @@ public class CrossPortcullis extends CommandGroup {
     	
     	addSequential(new DriveDistance(-1, .5));//drives up on to ramp to its position
     	
-    	addSequential(new SetAnglerPosition(RobotMap.Collector.COLLECTOR_MIN_HEIGHT));//Lowers collector to position on ground
+    	addSequential(new SetAnglerPosition(RobotMap.Collector.COLLECTOR_DOWN));//Lowers collector to position on ground
     	
     	addSequential(new DriveDistance(-1, .3));//drives to position collector under portcullis
     	
     	addParallel(new DriveDistance(-3, .5));//drives through portcullis while raising collector
-    	addSequential(new SetAnglerPosition(RobotMap.Collector.COLLECTOR_HEIGHT));
+    	addSequential(new SetAnglerPosition(RobotMap.Collector.COLLECTOR_UP));
     	
         // Add Commands here:
         // e.g. addSequential(new Command1());

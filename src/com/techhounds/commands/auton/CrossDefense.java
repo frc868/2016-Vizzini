@@ -27,9 +27,9 @@ public class CrossDefense extends CommandGroup {
     
     public  CrossDefense(double crossingSpeed, boolean anglerShouldBeDown) {
     	if(anglerShouldBeDown){
-    		addSequential(new SetAnglerPosition(RobotMap.Collector.COLLECTOR_HEIGHT));
+    		addSequential(new SetAnglerPosition(RobotMap.Collector.COLLECTOR_UP));
     	}else{
-    		addSequential(new SetAnglerPosition(RobotMap.Collector.DEFENSE_PASS_HEIGHT));
+    		addSequential(new SetAnglerPosition(RobotMap.Collector.COLLECTING));
     	}
     	addSequential(new DriveDistance(4, crossingSpeed));//Need to work on this using gyros to allow for accuracy in distance
     	

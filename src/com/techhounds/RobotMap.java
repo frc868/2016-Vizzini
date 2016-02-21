@@ -21,9 +21,9 @@ public interface RobotMap {
 		final double ANGLER_REVERSE_LIMIT = 1;
 		final int COLLECTOR_PDP = 11;
 		
-		final double COLLECTOR_HEIGHT = 47;
-		final double DEFENSE_PASS_HEIGHT = 315;
-		final double COLLECTOR_MIN_HEIGHT = 410;
+		final double COLLECTOR_UP = 47;
+		final double COLLECTING = 315;
+		final double COLLECTOR_DOWN = 410;
 	}
 	
 	interface Shooter{

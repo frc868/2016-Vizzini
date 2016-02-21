@@ -51,7 +51,7 @@ public class AnglerSubsystem extends Subsystem {
 
 			@Override
 			public double pidGet() {
-				return Robot.rangeCheck(angler.getAnalogInRaw(), RobotMap.Collector.COLLECTOR_HEIGHT, RobotMap.Collector.COLLECTOR_MIN_HEIGHT);
+				return Robot.rangeCheck(angler.getAnalogInRaw(), RobotMap.Collector.COLLECTOR_UP, RobotMap.Collector.COLLECTOR_DOWN);
 			}
 			
 		}, new PIDOutput() {
@@ -64,7 +64,7 @@ public class AnglerSubsystem extends Subsystem {
 		});
 		
 		pid.setOutputRange(-.35, .35);
-		pid.setInputRange(RobotMap.Collector.COLLECTOR_HEIGHT, RobotMap.Collector.COLLECTOR_MIN_HEIGHT);
+		pid.setInputRange(RobotMap.Collector.COLLECTOR_UP, RobotMap.Collector.COLLECTOR_DOWN);
 		pid.setAbsoluteTolerance(TOLERANCE);
 		//pid.enable();
 		SmartDashboard.putData("Angler PID", pid);
@@ -77,7 +77,7 @@ public class AnglerSubsystem extends Subsystem {
 		I = SmartDashboard.getNumber("Angler_I", I);
 		D = SmartDashboard.getNumber("Angler_D", D);
 		pid.setPID(P, I, D);
-		pid.setSetpoint(Robot.rangeCheck(position, RobotMap.Collector.COLLECTOR_HEIGHT, RobotMap.Collector.COLLECTOR_MIN_HEIGHT));
+		pid.setSetpoint(Robot.rangeCheck(position, RobotMap.Collector.COLLECTOR_UP, RobotMap.Collector.COLLECTOR_DOWN));
 		pid.enable();
 	}
 	public double getSetPoint(){
