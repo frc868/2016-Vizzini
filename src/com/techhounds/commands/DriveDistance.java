@@ -31,11 +31,14 @@ public class DriveDistance extends Command implements PIDSource, PIDOutput {
 		pid.setAbsoluteTolerance(1);
 		this.targetDist = dist;
 		SmartDashboard.putData("Drive distance pid", pid);
+		SmartDashboard.putNumber("Power to Drive", 0.3);
 	}
 	
 	@Override
 	protected void initialize() {
 		targetDist = SmartDashboard.getNumber("Distance To Drive");
+		double maxPower = SmartDashboard.getNumber("Power to Drive", 0.3);
+		pid.setOutputRange(-maxPower, maxPower);
 		double curDist = drive.countsToDist(drive.getAvgDistance());
 		lastPower = 0;
 		pid.setSetpoint(targetDist + curDist);
@@ -78,6 +81,9 @@ public class DriveDistance extends Command implements PIDSource, PIDOutput {
 		}else if(difference < -.1){
 			output = lastPower - .1;
 		}
+		
+		if(output < .2 && output > -.2)
+			output = output > 0 ? .2 : -.2;
 		lastPower = output;
 		drive.setLeftPower(output);
 		drive.setRightPower(output);

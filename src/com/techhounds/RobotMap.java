@@ -57,7 +57,7 @@ public interface RobotMap {
 		final int WINCH_LOCK = -1;
 		final int SCISSOR_ONE = -1;
 		final int SCISSOR_TWO = -1;
-		final double WINCH_ENABLE_MAX = .9;
+		final double WINCH_ENABLE_MAX = .98;
 		final double WINCH_ENABLE_MIN = .7;
 		final double WINCH_LOCK_MAX = 1;
 		final double WINCH_LOCK_MIN = 0;
