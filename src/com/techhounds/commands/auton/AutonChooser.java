@@ -278,7 +278,7 @@ public class AutonChooser {
 			}
 			
 			if(shoot == 0) {
-				addSequential(new VisionAlignToTarget());
+				addSequential(new VisionRotateToTarget());
 				addSequential(new VisionSetShooterPower());
 				addSequential(new Fire());
 				// TODO: Get distance and shoot
