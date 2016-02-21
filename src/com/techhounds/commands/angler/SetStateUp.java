@@ -32,7 +32,7 @@ public class SetStateUp extends Command {
 
     	} else if(angler.getState() == 2) {
 
-    		new SetAnglerPosition(RobotMap.Collector.COLLECTOR_DOWN).start();
+    		new SetAnglerPosition(RobotMap.Collector.COLLECTOR_UP).start();
 
     	} else {
     		System.out.println("OH NO, THERE IS AN ERROR WITH THE STATES!... CALEB!!!");
