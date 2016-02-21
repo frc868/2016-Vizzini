@@ -42,6 +42,11 @@ public class RotateUsingGyro extends Command implements PIDSource, PIDOutput {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }
+    
+    public RotateUsingGyro(double angle, double minTurnPower){
+    	this(angle);
+    	MIN_TURN_POWER = minTurnPower;
+    }
 
     // Called just before this Command runs the first time
     protected void initialize() {

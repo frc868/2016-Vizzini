@@ -45,6 +45,8 @@ public abstract class GyroSubsystem extends Subsystem {
 		ITG3200
 	}
 	
+	private double previousAngle = 0;
+	
 	/**
 	 * Set to type of gyro that is currently installed on the robot.
 	 */
@@ -95,6 +97,14 @@ public abstract class GyroSubsystem extends Subsystem {
 			LiveWindow.addSensor("Gyro", "Rotation", instance.gyrox);
 		}
 		return instance;
+	}
+	
+	public void storeCurrentAngle(){
+		previousAngle = getRotation();
+	}
+	
+	public double getStoredAngle(){
+		return previousAngle;
 	}
 
 	/**
