@@ -164,6 +164,8 @@ public class OI {
 		SmartDashboard.putNumber("Distance To Drive", 90);
 		SmartDashboard.putData(DriveSubsystem.getInstance());
 		SmartDashboard.putData("enable Camera", new USBCameraCommand(true));
+		SmartDashboard.putData("Set Angler Position", new SetAnglerPosition());
+		SmartDashboard.putNumber("Angler Set Height", 47);
 		//SmartDashboard.putData("Toggle_Winch_Lock", new SetWinchLock());
 	}
 	
