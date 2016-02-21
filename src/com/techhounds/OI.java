@@ -49,8 +49,8 @@ public class OI {
 	final int stopShooter = 		DPadButton.Direction.LEFT;
 	final int startShooter = 		ControllerMap.Key.X;
 	final int fireShooter = 		ControllerMap.Key.B;
-	final int collectAngler = 		ControllerMap.Key.LB;
-	final int collectDefenses = 	ControllerMap.Key.LT;
+//	final int collectAngler = 		ControllerMap.Key.LB;
+//	final int collectDefenses = 	ControllerMap.Key.LT;
 	final int toggleDrive =			ControllerMap.Key.START;
 	
 	private OI() {
@@ -132,12 +132,13 @@ public class OI {
 		
 		driver.getButton(fireShooter)
 			.whenPressed(new Fire());
-		
+/*		
 		driver.getButton(collectAngler)
-			.whenPressed(new SetAnglerPosition(RobotMap.Collector.COLLECTOR_HEIGHT));
+			.whenPressed(new SetStateUp());
 		
 		driver.getButton(collectDefenses)
-			.whenPressed(new SetAnglerPosition(RobotMap.Collector.DEFENSE_PASS_HEIGHT));
+			.whenPressed(new SetStateDown());
+*/		
 		driver.getButton(toggleDrive)
 			.whenPressed(new ToggleDriveDirection());
 	}

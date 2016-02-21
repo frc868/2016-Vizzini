@@ -24,7 +24,10 @@ public class RotateUsingGyro extends Command implements PIDSource, PIDOutput {
 	//min turn power can be less here, as robot should already be moving
 	private double MIN_TURN_POWER = .13;
 	private double MIN_STRAIT_POWER = .16;
-	
+	/**
+	 * Command to perform a relative rotation
+	 * @param angle, in degrees, positive for clockwise, negative for counter-clockwise.
+	 */
     public RotateUsingGyro(double angle) {
     	gyro = GyroSubsystem.getInstance();
     	drive = DriveSubsystem.getInstance();

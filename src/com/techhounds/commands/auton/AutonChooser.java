@@ -206,8 +206,6 @@ public class AutonChooser {
 			int shoot = getShoot();
 			int post = getPost();
 			
-//			addSequential(new ResetGyro());
-			
 			switch(defense) {
 				case LOW_BAR:
 					addSequential(new SetAnglerPosition(
