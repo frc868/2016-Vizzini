@@ -23,7 +23,7 @@ public class AnglerSubsystem extends Subsystem {
 	private double P = 0.008, I = 0, D = 0.01;
 	private PIDController pid;
 	private double TOLERANCE = 3;
-	private int state = 0;
+	private int state = 2;//defaults as maximum height
     
 	private AnglerSubsystem() {
 		angler = new CANTalon(RobotMap.Collector.COLLECTOR_ANGLER);
@@ -51,7 +51,7 @@ public class AnglerSubsystem extends Subsystem {
 
 			@Override
 			public double pidGet() {
-				return Robot.rangeCheck(angler.getAnalogInRaw(), 155, 500);
+				return Robot.rangeCheck(angler.getAnalogInRaw(), RobotMap.Collector.COLLECTOR_HEIGHT, RobotMap.Collector.COLLECTOR_MIN_HEIGHT);
 			}
 			
 		}, new PIDOutput() {
@@ -64,7 +64,7 @@ public class AnglerSubsystem extends Subsystem {
 		});
 		
 		pid.setOutputRange(-.35, .35);
-		pid.setInputRange(100, 500);
+		pid.setInputRange(RobotMap.Collector.COLLECTOR_HEIGHT, RobotMap.Collector.COLLECTOR_MIN_HEIGHT);
 		pid.setAbsoluteTolerance(TOLERANCE);
 		//pid.enable();
 		SmartDashboard.putData("Angler PID", pid);
@@ -77,7 +77,7 @@ public class AnglerSubsystem extends Subsystem {
 		I = SmartDashboard.getNumber("Angler_I", I);
 		D = SmartDashboard.getNumber("Angler_D", D);
 		pid.setPID(P, I, D);
-		pid.setSetpoint(Robot.rangeCheck(position, 155, 500)); //0.575 is greatest position ever (only @ portcullis)
+		pid.setSetpoint(Robot.rangeCheck(position, RobotMap.Collector.COLLECTOR_HEIGHT, RobotMap.Collector.COLLECTOR_MIN_HEIGHT));
 		pid.enable();
 	}
 	public double getSetPoint(){

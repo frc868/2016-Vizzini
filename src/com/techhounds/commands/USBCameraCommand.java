@@ -28,7 +28,7 @@ public class USBCameraCommand extends Command {
     	if(ucam == null){
     		ucam = new USBCamera("cam1");
     		//camera.startAutomaticCapture(ucam);
-    		
+    		ucam.startCapture();
     	}
     	
     	enabled = enb;

@@ -226,6 +226,7 @@ public class DriveSubsystem extends Subsystem{
 		SmartDashboard.putNumber("Right Distance", getRightDistance());
 		SmartDashboard.putNumber("Avg Distance", getAvgDistance());
 
+		SmartDashboard.putNumber("Actual Avg Distance", countsToDist(getAvgDistance()));
 		SmartDashboard.putNumber("Left Current", getLeftCurrent());
 		SmartDashboard.putNumber("Right Current", getRightCurrent());
 		

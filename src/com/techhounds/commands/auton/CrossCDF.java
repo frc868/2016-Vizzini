@@ -14,10 +14,14 @@ public class CrossCDF extends CommandGroup {
     
     public  CrossCDF() {
     	
+    	//This command assumes the robot's first rear wheels are on the ramp, and collector is set to default position
+    	
     	addSequential(new SetAnglerPosition(RobotMap.Collector.COLLECTOR_MIN_HEIGHT));
-    	addSequential(new WaitCommand(.2));
-    	addParallel(new DriveDistance(3, .7));
     	addSequential(new WaitCommand(1));
+    	
+    	addParallel(new DriveDistance(3, .7));
+    	addSequential(new WaitCommand(.2));
+    	
     	addSequential(new SetAnglerPosition(RobotMap.Collector.COLLECTOR_HEIGHT));
         // Add Commands here:
         // e.g. addSequential(new Command1());
