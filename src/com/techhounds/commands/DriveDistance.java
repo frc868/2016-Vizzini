@@ -84,7 +84,7 @@ public class DriveDistance extends Command implements PIDSource, PIDOutput {
 		}
 		
 		if(output < RobotMap.DriveTrain.MIN_STRAIGHT_POWER && output > -RobotMap.DriveTrain.MIN_STRAIGHT_POWER)
-			output = output > 0 ? .2 : -.2;
+			output = output > 0 ? RobotMap.DriveTrain.MIN_STRAIGHT_POWER : -RobotMap.DriveTrain.MIN_STRAIGHT_POWER;
 		lastPower = output;
 		drive.setLeftPower(output);
 		drive.setRightPower(output);
