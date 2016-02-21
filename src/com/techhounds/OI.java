@@ -9,6 +9,7 @@ import com.techhounds.commands.angler.SetAnglerPosition;
 import com.techhounds.commands.angler.SetAnglerPower;
 import com.techhounds.commands.angler.SetStateDown;
 import com.techhounds.commands.angler.SetStateUp;
+import com.techhounds.commands.auton.CrossDefense;
 import com.techhounds.commands.auton.VisionRotateToTarget;
 import com.techhounds.commands.collector.SetCollectorPower;
 import com.techhounds.commands.gyro.RotateUsingGyro;
@@ -153,6 +154,7 @@ public class OI {
 	 * Gets the Smart Dashboard Ready with Commands (Act as Buttons)
 	 */
 	public void setupSmartDashboard() {
+		SmartDashboard.putData("Cross Defense maintaining orientation", new CrossDefense());
 		SmartDashboard.putData("Vision Align To Target", new VisionRotateToTarget());
 		if(RotateUsingGyro.DEBUG){//This will not show in the SD up unless we're debugging RotateUsingGyro
 			SmartDashboard.putData("Rotate 90 Degrees", new RotateUsingGyro(90));

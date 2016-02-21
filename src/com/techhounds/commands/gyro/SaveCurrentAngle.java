@@ -7,13 +7,13 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class SetCurrentAngle extends Command {
+public class SaveCurrentAngle extends Command {
 	
 	//Use this command before going across a defense in auton
 	
 	private GyroSubsystem gyro;
 
-    public SetCurrentAngle() {
+    public SaveCurrentAngle() {
     	gyro = GyroSubsystem.getInstance();
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
