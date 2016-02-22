@@ -37,6 +37,7 @@ public class OI {
 	
 	private ControllerMap driver;
 	private ControllerMap operator;
+	private ControllerMap currentDriver;
 	private int collectorState = 0;
 	
 	// DRIVER & OPERATOR CONTROLLER CHOOSER
@@ -56,7 +57,8 @@ public class OI {
 //	final int collectAngler = 		ControllerMap.Key.LB;
 //	final int collectDefenses = 	ControllerMap.Key.LT;
 	final int toggleDrive =			ControllerMap.Key.START;
-	final int visionTarget = 		DPadButton.Direction.RIGHT;
+	final int visionTarget = 		ControllerMap.Key.RT;
+	
 	
 	final int opCollectIn = 		ControllerMap.Key.Y;
 	final int opCollectOut = 		ControllerMap.Key.B;
@@ -87,7 +89,7 @@ public class OI {
 			setupDriver();
 			setupOperator();
 		}
-
+		currentDriver = driver;
 		setupSmartDashboard();
 	}
 	
@@ -243,20 +245,27 @@ public class OI {
 		SmartDashboard.putString("Driver Type", driver.getType().toString());
 		SmartDashboard.putString("Operator Type", operator.getType().toString());
 	}
+	public void switchDriver(){
+		if(currentDriver.equals(driver)){
+			currentDriver = operator;
+		}else{
+			currentDriver = driver;
+		}
+	}
 	
 	public double getRightBackward(){
-		return driver.getBackwardsRightPower();
+		return currentDriver.getBackwardsRightPower();
 	}
 	
 	public double getLeftBackward(){
-		return driver.getBackwardsLeftPower();
+		return currentDriver.getBackwardsLeftPower();
 	}
 	
 	public double getRightForward(){
-		return driver.getForwardsRightPower();
+		return currentDriver.getForwardsRightPower();
 	}
 	
 	public double getLeftForward(){
-		return driver.getForwardsLeftPower();
+		return currentDriver.getForwardsLeftPower();
 	}
 }
