@@ -6,7 +6,9 @@ import com.techhounds.commands.angler.SetStateDown;
 import com.techhounds.commands.angler.SetStateUp;
 import com.techhounds.commands.collector.SetCollectorPower;
 import com.techhounds.commands.drive.DriveDistance;
+import com.techhounds.commands.gyro.RotateToPreviousAngle;
 import com.techhounds.commands.gyro.RotateUsingGyro;
+import com.techhounds.commands.gyro.SaveCurrentAngle;
 import com.techhounds.commands.shooter.Fire;
 import com.techhounds.commands.shooter.SetShooterSpeed;
 
@@ -47,11 +49,9 @@ public class AutonChooser {
 		DO_NOTHING
 	}
 	
-	private boolean direction;//added this in case when setting up the game, the robot is placed backwards to get through CDF/Portcullis
-	
 	private SendableChooser chooseStart;
 	private SendableChooser chooseDefense;
-	private SendableChooser chooseDirection;
+	private SendableChooser chooseDirection;//added this in case the robot is placed backwards to get through CDF/Portcullis faster in auton
 	private SendableChooser chooseGoal;
 	private SendableChooser chooseShoot;
 	private SendableChooser choosePost;
@@ -62,6 +62,10 @@ public class AutonChooser {
 	
 	private Defense getDefense() {
 		return ((Defense) chooseDefense.getSelected());
+	}
+	
+	private boolean getDirection() {
+		return((boolean) chooseDirection.getSelected());
 	}
 	
 	private int getShoot() {
@@ -95,8 +99,8 @@ public class AutonChooser {
 		chooseDefense.addObject("Reach Defense", Defense.REACH_DEFENSE);
 		chooseDefense.addDefault("Do Nothing", Defense.DO_NOTHING);
 		
-		chooseDirection.addDefault("Facing Forwards", direction = true);
-		chooseDirection.addObject("Facing Backwards", direction = false);
+		chooseDirection.addDefault("Facing Forwards", new Boolean(true));
+		chooseDirection.addObject("Facing Backwards", new Boolean(false));
 		
 		chooseGoal = new SendableChooser();
 		chooseGoal.addDefault("Left Goal", Goal.LEFT);
@@ -124,6 +128,7 @@ public class AutonChooser {
 	public boolean isValid(){
 		int start = getStart();
 		Defense defense = getDefense();
+		boolean direction = getDirection();
 		Goal goal = getGoal();
 		int shoot = getShoot();
 		int post = getPost();
@@ -210,6 +215,7 @@ public class AutonChooser {
 			
 			int start = getStart();
 			Defense defense = getDefense();
+			boolean direction = getDirection();
 			Goal goal = getGoal();
 			int shoot = getShoot();
 			int post = getPost();
@@ -249,15 +255,17 @@ public class AutonChooser {
 			} else if(start == 5 && goal == Goal.LEFT) {
 				addSequential(new DriveDistance(43));
 				addSequential(new RotateUsingGyro(60));
-				addParallel(new SetShooterSpeed(69));
+//				addParallel(new SetShooterSpeed(69));    already performed outside of if statement
 			} else if(start == 4 && goal == Goal.LEFT) {
 				addSequential(new RotateUsingGyro(-49.29));
+				addSequential(new SaveCurrentAngle());
 				addSequential(new DriveDistance(66.46));
-				addSequential(new RotateUsingGyro(109.29));
+				addSequential(new RotateToPreviousAngle(109.29));
 			} else if(start == 4 && goal == Goal.MIDDLE) {
 				addSequential(new RotateUsingGyro(90));
+				addSequential(new SaveCurrentAngle());
 				addSequential(new DriveDistance(88.94));
-				addSequential(new RotateUsingGyro(-90));
+				addSequential(new RotateToPreviousAngle(-90));
 			} else if(start == 3) {
 				addSequential(new RotateUsingGyro(15));
 				addSequential(new DriveDistance(12));
@@ -265,16 +273,19 @@ public class AutonChooser {
 				// You are basically close enough
 			} else if(start == 2 && goal == Goal.RIGHT) {
 				addSequential(new RotateUsingGyro(55.68));
+				addSequential(new SaveCurrentAngle());
 				addSequential(new DriveDistance(112.81));
-				addSequential(new RotateUsingGyro(115.68));
+				addSequential(new RotateToPreviousAngle(115.68));
 			} else if(start == 1 && goal == Goal.MIDDLE) {
 				addSequential(new RotateUsingGyro(-90));
+				addSequential(new SaveCurrentAngle());
 				addSequential(new DriveDistance(66.82));
-				addSequential(new RotateUsingGyro(90));
+				addSequential(new RotateToPreviousAngle(90));
 			} else if(start == 1 && goal == Goal.RIGHT) {
 				addSequential(new RotateUsingGyro(33.93));
+				addSequential(new SaveCurrentAngle());
 				addSequential(new DriveDistance(76.66));
-				addSequential(new RotateUsingGyro(-93.93));
+				addSequential(new RotateToPreviousAngle(-93.93));
 			}
 	
 			// Get ourselves ready to target
@@ -284,6 +295,7 @@ public class AutonChooser {
 				addParallel(new SetShooterSpeed(69));
 				addSequential(new WaitCommand(.2));
 				addSequential(new Fire());
+				addSequential(new WaitCommand(.2));
 			} else if(shoot == 1) {
 				if(goal == Goal.LEFT) {
 					addSequential(new DriveDistance(140));
