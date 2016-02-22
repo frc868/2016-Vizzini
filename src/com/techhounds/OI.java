@@ -1,8 +1,5 @@
 package com.techhounds;
 
-import com.techhounds.commands.DriveDistance;
-import com.techhounds.commands.DriveEncodersReset;
-import com.techhounds.commands.ToggleDriveDirection;
 import com.techhounds.commands.USBCameraCommand;
 import com.techhounds.commands.UpdateController;
 import com.techhounds.commands.angler.SetAnglerPosition;
@@ -12,6 +9,9 @@ import com.techhounds.commands.angler.SetStateUp;
 import com.techhounds.commands.auton.CrossDefense;
 import com.techhounds.commands.auton.VisionRotateToTarget;
 import com.techhounds.commands.collector.SetCollectorPower;
+import com.techhounds.commands.drive.DriveDistance;
+import com.techhounds.commands.drive.DriveEncodersReset;
+import com.techhounds.commands.drive.ToggleDriveDirection;
 import com.techhounds.commands.gyro.RotateUsingGyro;
 import com.techhounds.commands.servos.SetScissorsOne;
 import com.techhounds.commands.servos.SetScissorsTwo;
@@ -102,7 +102,7 @@ public class OI {
 	 * Gets the Driver Controller Ready with its Buttons
 	 */
 	public void setupDriver() {
-		
+		setupController();
 	}
 	
 	/**

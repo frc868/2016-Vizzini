@@ -1,8 +1,8 @@
 package com.techhounds.commands.auton;
 
 import com.techhounds.RobotMap;
-import com.techhounds.commands.DriveDistance;
 import com.techhounds.commands.angler.SetAnglerPosition;
+import com.techhounds.commands.drive.DriveDistance;
 import com.techhounds.commands.gyro.RotateUsingGyro;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;

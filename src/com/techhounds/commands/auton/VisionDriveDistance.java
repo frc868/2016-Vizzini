@@ -1,6 +1,6 @@
 package com.techhounds.commands.auton;
 
-import com.techhounds.commands.DriveDistance;
+import com.techhounds.commands.drive.DriveDistance;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;

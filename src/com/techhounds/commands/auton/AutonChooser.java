@@ -1,11 +1,11 @@
 package com.techhounds.commands.auton;
 
 import com.techhounds.RobotMap;
-import com.techhounds.commands.DriveDistance;
 import com.techhounds.commands.angler.SetAnglerPosition;
 import com.techhounds.commands.angler.SetStateDown;
 import com.techhounds.commands.angler.SetStateUp;
 import com.techhounds.commands.collector.SetCollectorPower;
+import com.techhounds.commands.drive.DriveDistance;
 import com.techhounds.commands.gyro.RotateUsingGyro;
 import com.techhounds.commands.shooter.Fire;
 import com.techhounds.commands.shooter.SetShooterSpeed;

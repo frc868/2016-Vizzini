@@ -1,6 +1,6 @@
 package com.techhounds.commands.auton;
 
-import com.techhounds.commands.DriveDistance;
+import com.techhounds.commands.drive.DriveDistance;
 import com.techhounds.commands.gyro.RotateToPreviousAngle;
 import com.techhounds.commands.gyro.SaveCurrentAngle;
 

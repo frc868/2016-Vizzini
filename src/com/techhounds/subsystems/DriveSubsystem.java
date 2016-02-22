@@ -2,7 +2,7 @@ package com.techhounds.subsystems;
 
 import com.techhounds.Robot;
 import com.techhounds.RobotMap;
-import com.techhounds.commands.DriveWithPower;
+import com.techhounds.commands.drive.DriveWithPower;
 
 import edu.wpi.first.wpilibj.BuiltInAccelerometer;
 import edu.wpi.first.wpilibj.Encoder;

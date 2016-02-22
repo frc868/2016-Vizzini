@@ -1,4 +1,4 @@
-package com.techhounds.commands;
+package com.techhounds.commands.drive;
 
 import com.techhounds.subsystems.DriveSubsystem;
 
