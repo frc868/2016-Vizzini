@@ -51,7 +51,6 @@ public class AutonChooser {
 	
 	private SendableChooser chooseStart;
 	private SendableChooser chooseDefense;
-	private SendableChooser chooseDirection;//added this in case the robot is placed backwards to get through CDF/Portcullis faster in auton
 	private SendableChooser chooseGoal;
 	private SendableChooser chooseShoot;
 	private SendableChooser choosePost;
@@ -62,10 +61,6 @@ public class AutonChooser {
 	
 	private Defense getDefense() {
 		return ((Defense) chooseDefense.getSelected());
-	}
-	
-	private boolean getDirection() {
-		return((boolean) chooseDirection.getSelected());
 	}
 	
 	private int getShoot() {
@@ -99,9 +94,6 @@ public class AutonChooser {
 		chooseDefense.addObject("Reach Defense", Defense.REACH_DEFENSE);
 		chooseDefense.addDefault("Do Nothing", Defense.DO_NOTHING);
 		
-		chooseDirection.addDefault("Facing Forwards", new Boolean(true));
-		chooseDirection.addObject("Facing Backwards", new Boolean(false));
-		
 		chooseGoal = new SendableChooser();
 		chooseGoal.addDefault("Left Goal", Goal.LEFT);
 		chooseGoal.addObject("Middle Goal", Goal.MIDDLE);
@@ -128,16 +120,10 @@ public class AutonChooser {
 	public boolean isValid(){
 		int start = getStart();
 		Defense defense = getDefense();
-		boolean direction = getDirection();
 		Goal goal = getGoal();
 		int shoot = getShoot();
 		int post = getPost();
 		
-		if(!direction){//if facing the wrong direction and not going through one of these two defenses, return false.
-			if(defense != Defense.PORTCULLIS && defense != Defense.CHEVAL_DE_FRISE){
-				return false;
-			}
-		}
 		if(start == 5) {
 			if(defense == Defense.LOW_BAR) {
 				if(goal == Goal.LEFT) {
@@ -220,7 +206,6 @@ public class AutonChooser {
 			
 			int start = getStart();
 			Defense defense = getDefense();
-			boolean direction = getDirection();
 			Goal goal = getGoal();
 			int shoot = getShoot();
 			int post = getPost();
@@ -239,10 +224,10 @@ public class AutonChooser {
 					addSequential(new CrossDefense(.5, true));
 					break;
 				case PORTCULLIS:
-					addSequential(new CrossPortcullis(direction));
+					addSequential(new CrossPortcullis());
 					break;
 				case CHEVAL_DE_FRISE:
-					addSequential(new CrossCDF(direction));
+					addSequential(new CrossCDF());
 					break;
 				default: // case Defense.DO_NOTHING && Defense.REACH_DEFENSE
 					addSequential(new DriveDistance(60, .5));
