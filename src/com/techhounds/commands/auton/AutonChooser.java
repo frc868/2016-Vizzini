@@ -5,8 +5,10 @@ import com.techhounds.commands.DriveDistance;
 import com.techhounds.commands.angler.SetAnglerPosition;
 import com.techhounds.commands.angler.SetStateDown;
 import com.techhounds.commands.angler.SetStateUp;
+import com.techhounds.commands.collector.SetCollectorPower;
 import com.techhounds.commands.gyro.RotateUsingGyro;
 import com.techhounds.commands.shooter.Fire;
+import com.techhounds.commands.shooter.SetShooterSpeed;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -226,64 +228,73 @@ public class AutonChooser {
 					addSequential(new CrossCDF());
 					break;
 				default: // case Defense.DO_NOTHING && Defense.REACH_DEFENSE
-					addSequential(new DriveDistance(60, .5));
+					addSequential(new DriveDistance(40, .5));
 					return; // If only Reaching Defense and Do Nothing
 			}
 			
 			// We have only made it here if not Reaching Defense and Do Nothing
-			addSequential(new RotateUsingGyro(0));
+			if(defense == Defense.CHEVAL_DE_FRISE || defense == Defense.PORTCULLIS)
+				addSequential(new RotateUsingGyro(180)); // Assuming Collector FIRST
+			else
+				addSequential(new RotateUsingGyro(0));
 			
 			if(goal == Goal.DO_NOTHING) {
-				// TODO: Drive 1 foot
-				addSequential(new DriveDistance(1));
-			} else if(goal == Goal.LEFT) {
-				addSequential(new RotateUsingGyro(5));
-				addSequential(new DriveDistance(2));
-				// TODO: Angle slightly then drive a distance
-			} else if(start == 4 & goal == Goal.LEFT) {
-				addSequential(new RotateUsingGyro(-5));
-				addSequential(new DriveDistance(2));
-				// TODO: Angle slightly then drive a distance
+				addSequential(new WaitCommand(0));
+			} else if(start == 5 && goal == Goal.LEFT) {
+				addSequential(new DriveDistance(43));
+				addSequential(new RotateUsingGyro(60));
+				addParallel(new SetShooterSpeed(69));
+			} else if(start == 4 && goal == Goal.LEFT) {
+				addSequential(new RotateUsingGyro(-49.29));
+				addSequential(new DriveDistance(66.46));
+				addSequential(new RotateUsingGyro(109.29));
 			} else if(start == 4 && goal == Goal.MIDDLE) {
-				addSequential(new RotateUsingGyro(5));
-				addSequential(new DriveDistance(.5));
-				// TODO: Angle slightly then drive a very short distance
+				addSequential(new RotateUsingGyro(90));
+				addSequential(new DriveDistance(88.94));
+				addSequential(new RotateUsingGyro(-90));
 			} else if(start == 3) {
-				addSequential(new RotateUsingGyro(2));
-				addSequential(new DriveDistance(1));
-				// TODO: Angle slightly the drive a short distance
-			} else if(start == 2) {
-				addSequential(new RotateUsingGyro(-1));
-				addSequential(new DriveDistance(1));
-				// TODO: Angle slightly then drive a short distance
-			} else if(start == 1) {
-				addSequential(new RotateUsingGyro(-5));
-				addSequential(new DriveDistance(2));
-				// TODO: Angle more than slightly then drive a short distance
+				addSequential(new RotateUsingGyro(15));
+				addSequential(new DriveDistance(12));
+			} else if(start == 2 && goal == Goal.MIDDLE) {
+				// You are basically close enough
+			} else if(start == 2 && goal == Goal.RIGHT) {
+				addSequential(new RotateUsingGyro(55.68));
+				addSequential(new DriveDistance(112.81));
+				addSequential(new RotateUsingGyro(115.68));
+			} else if(start == 1 && goal == Goal.MIDDLE) {
+				addSequential(new RotateUsingGyro(-90));
+				addSequential(new DriveDistance(66.82));
+				addSequential(new RotateUsingGyro(90));
+			} else if(start == 1 && goal == Goal.RIGHT) {
+				addSequential(new RotateUsingGyro(33.93));
+				addSequential(new DriveDistance(76.66));
+				addSequential(new RotateUsingGyro(-93.93));
 			}
-			
-			if(goal != Goal.DO_NOTHING) {
-				//addSequential(new VisionAim());
-			}
+	
+			// Get ourselves ready to target
+			addParallel(new VisionRotateToTarget());
 			
 			if(shoot == 0) {
-				addSequential(new VisionRotateToTarget());
-				addSequential(new VisionSetShooterPower());
+				addParallel(new SetShooterSpeed(69));
+				addSequential(new WaitCommand(.2));
 				addSequential(new Fire());
-				// TODO: Get distance and shoot
 			} else if(shoot == 1) {
-				addSequential(new VisionDriveDistance());
-				// TODO: Determine distance and drive it and feed out
-			} else if(shoot == 2) {
-				addSequential(new WaitCommand(0));
-			} else {
-				addSequential(new WaitCommand(0));
-			}
-			
-			if(post == 1) {
-				// TODO: Aim our robot towards the defense! (Use Gyro 180 or 0)
-			} else if(post == 0) {
-				addSequential(new WaitCommand(0));
+				if(goal == Goal.LEFT) {
+					addSequential(new DriveDistance(140));
+					addSequential(new RotateUsingGyro(180));
+				} else if(goal == Goal.RIGHT) {
+					addSequential(new DriveDistance(100));
+					addSequential(new RotateUsingGyro(180));
+				} else {
+					addSequential(new WaitCommand(1));
+				}
+				
+				if(goal == Goal.LEFT || goal == Goal.RIGHT) {
+					addSequential(new SetCollectorPower(-.8));
+					addSequential(new WaitCommand(.25));
+					addSequential(new SetCollectorPower());
+					addSequential(new DriveDistance(12));
+				}
 			} else {
 				addSequential(new WaitCommand(0));
 			}
