@@ -37,6 +37,7 @@ public class OI {
 	
 	private ControllerMap driver;
 	private ControllerMap operator;
+	private ControllerMap currentDriver;
 	private int collectorState = 0;
 	
 	// DRIVER & OPERATOR CONTROLLER CHOOSER
@@ -56,7 +57,8 @@ public class OI {
 //	final int collectAngler = 		ControllerMap.Key.LB;
 //	final int collectDefenses = 	ControllerMap.Key.LT;
 	final int toggleDrive =			ControllerMap.Key.START;
-	final int visionTarget = 		DPadButton.Direction.RIGHT;
+	final int visionTarget = 		ControllerMap.Key.RT;
+	
 	
 	final int opCollectIn = 		ControllerMap.Key.Y;
 	final int opCollectOut = 		ControllerMap.Key.B;
@@ -82,12 +84,12 @@ public class OI {
 	
 	private void setup() {
 		if(Robot.oneControllerMode) {
-			setupController();
+			setUpController(driver);
 		} else {
 			setupDriver();
 			setupOperator();
 		}
-
+		currentDriver = driver;
 		setupSmartDashboard();
 	}
 	
@@ -102,14 +104,17 @@ public class OI {
 	 * Gets the Driver Controller Ready with its Buttons
 	 */
 	public void setupDriver() {
-		setupController();
+		setUpController(driver);
 	}
 	
 	/**
 	 * Gets the Operator Controller Ready with its Buttons
 	 */
 	public void setupOperator() {
-		operator.getButton(opCollectIn).
+		setUpController(operator);
+		
+		
+		/*operator.getButton(opCollectIn).
 		whenPressed(new SetCollectorPower(RobotMap.Collector.inPower)).
 		whenReleased(new SetCollectorPower());
 		
@@ -124,53 +129,47 @@ public class OI {
 		operator.getButton(opShooterOff).whenPressed(new SetShooterSpeed(0));
 		
 		operator.getButton(opShooterUp).whenPressed(new IncrementShooterSpeed(1));
-		operator.getButton(opShooterDown).whenPressed(new IncrementShooterSpeed(-1));
+		operator.getButton(opShooterDown).whenPressed(new IncrementShooterSpeed(-1));*/
 	}
 	
 	/**
 	 * Setup Single Controller Control
 	 */
-	public void setupController() {
+	public void setUpController(ControllerMap controller) {
 		
-		driver.getButton(startCollector)
+		controller.getButton(startCollector)
 			.whenPressed(new SetCollectorPower(RobotMap.Collector.inPower))
 			.whenReleased(new SetCollectorPower());
 		
-		driver.getButton(stopCollector)
+		controller.getButton(stopCollector)
 			.whenPressed(new SetCollectorPower(RobotMap.Collector.outPower))
 			.whenReleased(new SetCollectorPower());
 		
-		driver.getButton(angleUp)
+		controller.getButton(angleUp)
 			.whenPressed(new SetStateUp());
 		
-		driver.getButton(angleDown)
+		controller.getButton(angleDown)
 			.whenPressed(new SetStateDown());
 
-		driver.getButton(upShooterSpeed)
-			.whenPressed(new SetShooterPower(.1, true));
+		controller.getButton(upShooterSpeed)
+			.whenPressed(new IncrementShooterSpeed(1));
 		
-		driver.getButton(downShooterSpeed)
-			.whenPressed(new SetShooterPower(-.1, true));
+		controller.getButton(downShooterSpeed)
+			.whenPressed(new IncrementShooterSpeed(1));
 		
-		driver.getButton(stopShooter)
+		controller.getButton(stopShooter)
 			.whenPressed(new SetShooterPower());
 		
-		driver.getButton(startShooter)
+		controller.getButton(startShooter)
 			.whenPressed(new SetShooterSpeed(69));
 		
-		driver.getButton(fireShooter)
+		controller.getButton(fireShooter)
 			.whenPressed(new Fire());
-/*		
-		driver.getButton(collectAngler)
-			.whenPressed(new SetStateUp());
-		
-		driver.getButton(collectDefenses)
-			.whenPressed(new SetStateDown());
-*/		
-		driver.getButton(toggleDrive)
+
+		controller.getButton(toggleDrive)
 			.whenPressed(new ToggleDriveDirection());
 	
-		driver.getButton(visionTarget)
+		controller.getButton(visionTarget)
 			.whenPressed(new VisionRotateToTarget());
 			
 	}
@@ -246,20 +245,27 @@ public class OI {
 		SmartDashboard.putString("Driver Type", driver.getType().toString());
 		SmartDashboard.putString("Operator Type", operator.getType().toString());
 	}
+	public void switchDriver(){
+		if(currentDriver.equals(driver)){
+			currentDriver = operator;
+		}else{
+			currentDriver = driver;
+		}
+	}
 	
 	public double getRightBackward(){
-		return driver.getBackwardsRightPower();
+		return currentDriver.getBackwardsRightPower();
 	}
 	
 	public double getLeftBackward(){
-		return driver.getBackwardsLeftPower();
+		return currentDriver.getBackwardsLeftPower();
 	}
 	
 	public double getRightForward(){
-		return driver.getForwardsRightPower();
+		return currentDriver.getForwardsRightPower();
 	}
 	
 	public double getLeftForward(){
-		return driver.getForwardsLeftPower();
+		return currentDriver.getForwardsLeftPower();
 	}
 }

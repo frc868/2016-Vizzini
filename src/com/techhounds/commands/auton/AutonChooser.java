@@ -51,7 +51,6 @@ public class AutonChooser {
 	
 	private SendableChooser chooseStart;
 	private SendableChooser chooseDefense;
-	private SendableChooser chooseDirection;//added this in case the robot is placed backwards to get through CDF/Portcullis faster in auton
 	private SendableChooser chooseGoal;
 	private SendableChooser chooseShoot;
 	private SendableChooser choosePost;
@@ -62,10 +61,6 @@ public class AutonChooser {
 	
 	private Defense getDefense() {
 		return ((Defense) chooseDefense.getSelected());
-	}
-	
-	private boolean getDirection() {
-		return((boolean) chooseDirection.getSelected());
 	}
 	
 	private int getShoot() {
@@ -99,9 +94,6 @@ public class AutonChooser {
 		chooseDefense.addObject("Reach Defense", Defense.REACH_DEFENSE);
 		chooseDefense.addDefault("Do Nothing", Defense.DO_NOTHING);
 		
-		chooseDirection.addDefault("Facing Forwards", new Boolean(true));
-		chooseDirection.addObject("Facing Backwards", new Boolean(false));
-		
 		chooseGoal = new SendableChooser();
 		chooseGoal.addDefault("Left Goal", Goal.LEFT);
 		chooseGoal.addObject("Middle Goal", Goal.MIDDLE);
@@ -128,16 +120,10 @@ public class AutonChooser {
 	public boolean isValid(){
 		int start = getStart();
 		Defense defense = getDefense();
-		boolean direction = getDirection();
 		Goal goal = getGoal();
 		int shoot = getShoot();
 		int post = getPost();
 		
-		if(!direction){//if facing the wrong direction and not going through one of these two defenses, return false.
-			if(defense != Defense.PORTCULLIS && defense != Defense.CHEVAL_DE_FRISE){
-				return false;
-			}
-		}
 		if(start == 5) {
 			if(defense == Defense.LOW_BAR) {
 				if(goal == Goal.LEFT) {
@@ -199,18 +185,13 @@ public class AutonChooser {
 	}
 	
 	public Command createAutonCommand() {
-		int start = getStart();
-		Defense defense = getDefense();
-		Goal goal = getGoal();
-		int shoot = getShoot();
-		int post = getPost();
 		
 		if(!isValid()) {
 			System.out.print("-- INVALID AUTON --");
 			return new AutonCommand();
 		} else {
 			// TODO: If Invalid Auton, just reach the defense so we get points
-			return new DriveDistance(2);
+			return new DriveDistance(RobotMap.Defenses.DEFENSE_DISTANCE, RobotMap.Defenses.TO_DEFENSE_SPEED);
 		}
 	}
 	
@@ -220,47 +201,45 @@ public class AutonChooser {
 			
 			int start = getStart();
 			Defense defense = getDefense();
-			boolean direction = getDirection();
 			Goal goal = getGoal();
 			int shoot = getShoot();
-			int post = getPost();
 			
-			switch(defense) {
+			switch(defense) {//first sequence, crosses the designated defense
 				case LOW_BAR:
 					addSequential(new SetAnglerPosition(RobotMap.Collector.COLLECTING));
-					addSequential(new CrossDefense());
+					addSequential(new CrossDefense(RobotMap.Defenses.LOW_BAR_DISTANCE, RobotMap.Defenses.LOW_BAR_SPEED));
 					break;
 				case MOAT:
+					addSequential(new CrossDefense(RobotMap.Defenses.MOAT_DISTANCE, RobotMap.Defenses.MOAT_SPEED));
+					break;
 				case RAMPARTS:
-					addSequential(new CrossDefense(.65, true));
+					addSequential(new CrossDefense(RobotMap.Defenses.RAMPARTS_DISTANCE, RobotMap.Defenses.RAMPARTS_SPEED));
 					break;
 				case ROCK_WALL:
+					addSequential(new CrossDefense(RobotMap.Defenses.ROCK_WALL_DISTANCE, RobotMap.Defenses.ROCK_WALL_SPEED));
+					break;
 				case ROUGH_TERRAIN:
-					addSequential(new CrossDefense(.5, true));
+					addSequential(new CrossDefense(RobotMap.Defenses.ROUGH_TERRAIN_DISTANCE, RobotMap.Defenses.ROUGH_TERRAIN_SPEED));
 					break;
 				case PORTCULLIS:
-					addSequential(new CrossPortcullis(direction));
+					addSequential(new CrossPortcullis());
 					break;
 				case CHEVAL_DE_FRISE:
-					addSequential(new CrossCDF(direction));
+					addSequential(new CrossCDF());
 					break;
 				default: // case Defense.DO_NOTHING && Defense.REACH_DEFENSE
-					addSequential(new DriveDistance(60, .5));
+					addSequential(new DriveDistance(RobotMap.Defenses.DEFENSE_DISTANCE, RobotMap.Defenses.TO_DEFENSE_SPEED));
 					return; // If only Reaching Defense and Do Nothing
 			}
 			
-			// We have only made it here if not Reaching Defense and Do Nothing
-			if(defense == Defense.CHEVAL_DE_FRISE || defense == Defense.PORTCULLIS)
-				addSequential(new RotateUsingGyro(180)); // Assuming Collector FIRST
-			else
-				addSequential(new RotateUsingGyro(0));
+			// We have only made it here if not Reaching Defense or Do Nothing
 			
+			//This group of if statements determines what to do after crossing a defense
 			if(goal == Goal.DO_NOTHING) {
 				addSequential(new WaitCommand(0));
 			} else if(start == 5 && goal == Goal.LEFT) {
 				addSequential(new DriveDistance(43));
 				addSequential(new RotateUsingGyro(60));
-//				addParallel(new SetShooterSpeed(69));    already performed outside of if statement
 			} else if(start == 4 && goal == Goal.LEFT) {
 				addSequential(new RotateUsingGyro(-49.29));
 				addSequential(new SaveCurrentAngle());
@@ -294,7 +273,7 @@ public class AutonChooser {
 			}
 	
 			
-			
+			//This group of if statements determines what to do after positioning toward the enemy castle
 			if(shoot == 0) {
 				addParallel(new VisionRotateToTarget());// Get ourselves ready to target
 				addParallel(new SetShooterSpeed(69));
