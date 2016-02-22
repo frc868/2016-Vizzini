@@ -4,6 +4,7 @@ import com.techhounds.Robot;
 import com.techhounds.RobotMap;
 
 import edu.wpi.first.wpilibj.CANTalon;
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -12,8 +13,12 @@ public class CollectorSubsystem extends Subsystem {
 
 	private static CollectorSubsystem instance;
 	private CANTalon motor;
+	private PowerDistributionPanel panel;
 	
 	private CollectorSubsystem() {
+		
+		panel = new PowerDistributionPanel();
+		
 		motor = new CANTalon(RobotMap.Collector.COLLECTOR_MOTOR);
 		motor.setInverted(getInverted());
 		motor.enableBrakeMode(true);
@@ -30,6 +35,10 @@ public class CollectorSubsystem extends Subsystem {
 	
 	public void stopPower(){
 		motor.set(0);
+	}
+	
+	public double getCurrent() {
+		return panel.getCurrent(RobotMap.Collector.COLLECTOR_PDP);
 	}
 	
 	public double getPower(){
@@ -60,6 +69,7 @@ public class CollectorSubsystem extends Subsystem {
 		SmartDashboard.putBoolean("Collector_Is_Going_Inward", getIsIn());
 		SmartDashboard.putBoolean("Collector_Is_Going_Outward", getIsOut());
 		SmartDashboard.putNumber("Collector_Power", getPower());
+		SmartDashboard.putNumber("Collector Current", getCurrent());
 	}
 	
 	public static CollectorSubsystem getInstance() {

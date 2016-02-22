@@ -1,19 +1,17 @@
 package com.techhounds.commands.auton;
 
-import com.techhounds.commands.DriveDistance;
+import com.techhounds.commands.shooter.SetShooterPower;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 
-/**
- *
- */
-public class VisionDriveDistance extends CommandGroup {
+public class VisionSetShooterPower extends CommandGroup {
     
 	private double targetDistance = 0;
+	private double shootPower = 0;
 	private NetworkTable netTable;
 	
-    public  VisionDriveDistance() {
+    public VisionSetShooterPower() {
         
     	NetworkTable.setServerMode();
     	NetworkTable.initialize();
@@ -21,8 +19,12 @@ public class VisionDriveDistance extends CommandGroup {
     	
     	if(netTable != null) {
     		targetDistance = netTable.getNumber("DistanceToTarget", 0);
-    	}
+    	} 
     	
-    	addSequential(new DriveDistance(targetDistance));
+    	//TODO convert from distance to power
+    	
+    	shootPower = targetDistance / 100000;
+    	
+    	addSequential(new SetShooterPower(shootPower));
     }
 }

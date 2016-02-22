@@ -1,11 +1,12 @@
 package com.techhounds.commands.auton;
 
-import com.techhounds.commands.Commando;
+import com.techhounds.RobotMap;
 import com.techhounds.commands.DriveDistance;
-import com.techhounds.commands.gyro.ResetGyro;
-import com.techhounds.commands.gyro.SetGyro;
-import com.techhounds.commands.shooter.VisionAim;
-import com.techhounds.commands.shooter.VisionShoot;
+import com.techhounds.commands.angler.SetAnglerPosition;
+import com.techhounds.commands.angler.SetStateDown;
+import com.techhounds.commands.angler.SetStateUp;
+import com.techhounds.commands.gyro.RotateUsingGyro;
+import com.techhounds.commands.shooter.Fire;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -191,7 +192,7 @@ public class AutonChooser {
 			return new AutonCommand();
 		} else {
 			// TODO: If Invalid Auton, just reach the defense so we get points
-			return new Commando();
+			return new DriveDistance(2);
 		}
 	}
 	
@@ -205,68 +206,85 @@ public class AutonChooser {
 			int shoot = getShoot();
 			int post = getPost();
 			
-			addSequential(new ResetGyro());
-			
-			if(defense == Defense.LOW_BAR) {
-				// TODO: Drive moderately fast
-			} else if(defense == Defense.MOAT || defense == Defense.RAMPARTS) {
-				// TODO: Drive as fast as possible
-			} else if(defense == Defense.ROCK_WALL || defense == Defense.ROUGH_TERRAIN) {
-				// TODO: Drive moderately fast
-			}else if(defense == Defense.PORTCULLIS) {
-				// TODO: Drive moderately fast, lift collector and drive through
-			} else if(defense == Defense.CHEVAL_DE_FRISE) {
-				// TODO: Drive moderately fast, stop, collector down and drive slightly fast
-			} else if(defense == Defense.REACH_DEFENSE) {
-				addSequential(new DriveDistance(2, .5));
-			} else {
-				addSequential(new WaitCommand(0));
-			} 
+			switch(defense) {
+				case LOW_BAR:
+					addSequential(new SetAnglerPosition(RobotMap.Collector.COLLECTING));
+					addSequential(new CrossDefense());
+					break;
+				
+				case MOAT:
+				case RAMPARTS:
+					addSequential(new CrossDefense());
+					break;
+				
+				case ROCK_WALL:
+				case ROUGH_TERRAIN:
+					addSequential(new CrossDefense(.5, true));
+					break;
+				
+				case PORTCULLIS:
+					addSequential(new CrossPortcullis());
+					break;
+				
+				case CHEVAL_DE_FRISE:
+					addSequential(new CrossCDF());
+					break;
+				
+				case REACH_DEFENSE:
+					addSequential(new DriveDistance(60, .5));
+					break;
+				
+				default:
+					addSequential(new WaitCommand(0));
+					break;
+			}
 			
 			if(defense != Defense.DO_NOTHING && defense != Defense.REACH_DEFENSE) {
-				addSequential(new SetGyro(0));
+				addSequential(new RotateUsingGyro(0));
 			}
 			
 			if(goal == Goal.DO_NOTHING) {
 				// TODO: Drive 1 foot
 				addSequential(new DriveDistance(1));
 			} else if(goal == Goal.LEFT) {
-				addSequential(new SetGyro(5));
+				addSequential(new RotateUsingGyro(5));
 				addSequential(new DriveDistance(2));
 				// TODO: Angle slightly then drive a distance
 			} else if(start == 4 & goal == Goal.LEFT) {
-				addSequential(new SetGyro(-5));
+				addSequential(new RotateUsingGyro(-5));
 				addSequential(new DriveDistance(2));
 				// TODO: Angle slightly then drive a distance
 			} else if(start == 4 && goal == Goal.MIDDLE) {
-				addSequential(new SetGyro(5));
+				addSequential(new RotateUsingGyro(5));
 				addSequential(new DriveDistance(.5));
 				// TODO: Angle slightly then drive a very short distance
 			} else if(start == 3) {
-				addSequential(new SetGyro(2));
+				addSequential(new RotateUsingGyro(2));
 				addSequential(new DriveDistance(1));
 				// TODO: Angle slightly the drive a short distance
 			} else if(start == 2) {
-				addSequential(new SetGyro(-1));
+				addSequential(new RotateUsingGyro(-1));
 				addSequential(new DriveDistance(1));
 				// TODO: Angle slightly then drive a short distance
 			} else if(start == 1) {
-				addSequential(new SetGyro(-5));
+				addSequential(new RotateUsingGyro(-5));
 				addSequential(new DriveDistance(2));
 				// TODO: Angle more than slightly then drive a short distance
 			}
 			
 			if(goal != Goal.DO_NOTHING) {
-				addSequential(new VisionAim());
+				//addSequential(new VisionAim());
 			}
 			
-			if(shoot == 2) {
-				addSequential(new VisionShoot());
+			if(shoot == 0) {
+				addSequential(new VisionRotateToTarget());
+				addSequential(new VisionSetShooterPower());
+				addSequential(new Fire());
 				// TODO: Get distance and shoot
 			} else if(shoot == 1) {
 				addSequential(new VisionDriveDistance());
 				// TODO: Determine distance and drive it and feed out
-			} else if(shoot == 0) {
+			} else if(shoot == 2) {
 				addSequential(new WaitCommand(0));
 			} else {
 				addSequential(new WaitCommand(0));
@@ -280,5 +298,9 @@ public class AutonChooser {
 				addSequential(new WaitCommand(0));
 			}
 		}
+	}
+
+	public void updateSmartDashboard() {
+		SmartDashboard.putBoolean("Valid Auton", isValid());
 	}
 }

@@ -84,7 +84,7 @@ public class DriveWithSpeed extends Command {
 
 		@Override
 		public double pidGet() {
-			return (isLeft ? OI.getInstance().getLeft() * Robot.powToSpeedConst : OI.getInstance().getRight()) * Robot.powToSpeedConst;
+			return (isLeft ? OI.getInstance().getLeftBackward() * Robot.powToSpeedConst : OI.getInstance().getRightBackward()) * Robot.powToSpeedConst;
 		}
 	}
 }

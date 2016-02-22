@@ -1,5 +1,6 @@
 package com.techhounds.commands.angler;
 
+import com.techhounds.RobotMap;
 import com.techhounds.subsystems.AnglerSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -7,25 +8,35 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class SetAnglerPower extends Command {
+public class SetStateUp extends Command {
 	
-	private AnglerSubsystem angler;
-	private double power;
+	private final AnglerSubsystem angler;
 
-    public SetAnglerPower(double power) {
-    	angler = AnglerSubsystem.getInstance();
-    	requires(angler);
-    	this.power = power;
-    }
-    
-    public SetAnglerPower(){
-    	this(0);
+    public SetStateUp() {
+        // Use requires() here to declare subsystem dependencies
+        
+        angler = AnglerSubsystem.getInstance();
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	angler.disableControl();
-    	angler.setPower(power);
+    	angler.increaseState();
+    	if(angler.getState() == 0) {
+
+
+    		new SetAnglerPosition(RobotMap.Collector.COLLECTOR_DOWN).start();
+
+    	} else if(angler.getState() == 1) {
+
+    		new SetAnglerPosition(RobotMap.Collector.COLLECTING).start();
+
+    	} else if(angler.getState() == 2) {
+
+    		new SetAnglerPosition(RobotMap.Collector.COLLECTOR_UP).start();
+
+    	} else {
+    		System.out.println("OH NO, THERE IS AN ERROR WITH THE STATES!... CALEB!!!");
+    	}
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -39,12 +50,10 @@ public class SetAnglerPower extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	end();
     }
 }

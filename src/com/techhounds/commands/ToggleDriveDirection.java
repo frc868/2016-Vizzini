@@ -1,51 +1,39 @@
-package com.techhounds.commands.shooter;
+package com.techhounds.commands;
 
-import com.techhounds.subsystems.ShooterSubsystem;
+import com.techhounds.subsystems.DriveSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class SetShooterPower extends Command {
-	
-	private ShooterSubsystem shoot;
-	private boolean change;
-	private double power;
-	
-    public SetShooterPower(double power) {
-    	this(power, false);
-    }
-    
-    public SetShooterPower(double power, boolean change) {
-    	shoot = ShooterSubsystem.getInstance();
-    	requires(shoot);
-    	this.power = power;
-    	this.change = change;
-    }
-    
-    public SetShooterPower(){
-    	this(0);
+public class ToggleDriveDirection extends Command {
+
+    public ToggleDriveDirection() {
+        // Use requires() here to declare subsystem dependencies
+        // eg. requires(chassis);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    //	shoot.setPower(!change ? power : shoot.getPower() + power);
+    	if(DriveSubsystem.isForward){
+    		DriveSubsystem.isForward = false;
+    	}else{
+    		DriveSubsystem.isForward = true;
+    	}
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	return true;
+        return true;
     }
-    
+
     // Called once after isFinished returns true
     protected void end() {
-    	
     }
 
     // Called when another command which requires one or more of the same

@@ -31,15 +31,16 @@
  * </p>
  */
 
-package com.techhounds.lib.gyro;
+package com.techhounds.lib.sensors;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
 
 import edu.wpi.first.wpilibj.I2C;
-import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.interfaces.Gyro;
+import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -51,12 +52,47 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * <ul>
  * <li>Make sure your ITG-3200 is connected to the I2C bus on the roboRIO and
  * mounted flat (so Z axis is used to track direction robot is facing).</li>
- * <li>Construct a single instance of the {@link GyroItg3200} class to be shared
+ * <li>Construct a single instance of the {@link ITG3200} class to be shared
  * throughout your Robot code.</li>
- * <li>Use the {@link #getRotationZ()} method create "trackers" that allow you
- * to keep track of how much your robot has rotated (direction your robot is
+ * <li>Use the {@link #createGyroZ()} methods to
+ * track your robots rotation (direction your robot is
  * facing).</li>
  * </ul>
+ * 
+ * <pre><code>
+ * ITG3200 sensor;
+ * GyroBase gyrox;
+ * GyroBase gyroy;
+ * GyroBase gyroz;
+ * 
+ * public void robotInit() {
+ * 	 sensor = new ITG3200(RobotMap.ITG3200_PORT,
+ *				          RobotMap.ITG3200_JUMPERED);
+ *
+ *   gyrox = sensor.createGyroX();
+ *   gyroy = sensor.createGyroY();
+ *   gyroz = sensor.createGyroZ();
+ *   
+ *	 // Add Gyro objects to LiveWindow test mode
+ * 	 String group = "ITG-3200";
+ *   LiveWindow.addSensor(group, "Gyro (x)", gyrox);
+ * 	 LiveWindow.addSensor(group, "Gyro (y)", gyroy);
+ *   LiveWindow.addSensor(group, "Gyro (z)", gyroz);
+ * }
+ * 
+ * public double getGyroAngleX() {
+ *   return gyrox.getAngle();
+ * }
+ * 
+ * public double getGyroAngleY() {
+ *   return gyroy.getAngle();
+ * }
+ * 
+ * public double getGyroAngleZ() {
+ *   return gyroz.getAngle();
+ * }
+ * </code></pre>
+ * 
  * <p>
  * Be aware of the following:
  * </p>
@@ -84,130 +120,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * 90 degrees.
  * </p>
  * <ul>
- * <li>In your command's initialize method, use the {@link #getRotationZ()} and
- * the {@link Rotation#zero()} method on the returned {@link Rotation} object to
- * track how much you have turned.</li>
- * <li>Use the {@link Rotation} object as a PID source and/or check the current
- * angle reported by the {@link Rotation} object in your isFinished() method.</li>
+ * <li>In your command's initialize method, use the {@link #createGyroZ()} to construct a {@link Gyro} instance where the current direction is treated as zero.</li>
+ * <li>Use the {@link Gyro} object as a PID source and/or check the current
+ * angle reported by the {@link Gyro#getAngle()} method in the Gyro object in your isFinished() method.</li>
  * </ul>
  */
-public final class GyroItg3200 {
+public final class ITG3200 {
 
-	/**
-	 * Object used to monitor robot rotation.
-	 * 
-	 * <ul>
-	 * <li>Use this class to track how much your robot has rotated.</li>
-	 * <li>Use the {@link GyroItg3200#getRotationZ()} to create an instance to
-	 * track how much your robot has rotated around the z-axis (direction robot
-	 * is facing - useful for making turns)..</li>
-	 * <li>Use the {@link GyroItg3200#getRotationX()} to create an instance to
-	 * track how much your robot has rotated around the x-axis (hopefully not
-	 * much unless you are tipping).</li>
-	 * <li>Use the {@link GyroItg3200#getRotationY()} to create an instance to
-	 * track how much your robot has rotated around the y-axis (hopefully not
-	 * much unless you are tipping).</li>
-	 * <li>Use the {@link GyroItg3200#getRo </ul>
-	 */
-	public final class Rotation implements RotationTracker {
-		/** Raw axis accumulator on gyro associated with this rotation tracker. */
-		private Accumulator m_axis;
-		/**
-		 * The degrees reported by the accumulator the last time this tracker
-		 * was zeroed.
-		 */
-		private double m_zeroDeg;
-		/**
-		 * The number of readings reported by the accumulator the last time this
-		 * tracker was zeroed.
-		 */
-		private int m_zeroCnt;
-
-		/**
-		 * Constructor is protected, instances are created through the
-		 * {@link GyroItg3200} methods.
-		 * 
-		 * @param axis
-		 *            An accumulator from the gyro for the axis to be tracked.
-		 */
-		private Rotation(Accumulator axis) {
-			m_axis = axis;
-			m_zeroDeg = 0;
-			m_zeroCnt = 0;
-		}
-
-		/**
-		 * Zero the tracker (sets the current heading/direction as the zero
-		 * point).
-		 */
-		public void zero() {
-			m_zeroDeg = m_axis.getDegrees();
-			m_zeroCnt = m_axis.getReadings();
-		}
-
-		/**
-		 * Get the number of degrees rotated since last zeroed.
-		 * 
-		 * @return A signed number of degrees [-INF, +INF].
-		 */
-		public double getAngle() {
-			return m_axis.getDegrees() - m_zeroDeg;
-		}
-
-		/**
-		 * Get the total number of times the raw values from the gyro have been
-		 * read since zeroed.
-		 * 
-		 * @return A diagnostic count that can be used to make sure the angle is
-		 *         still being updated.
-		 */
-		public int getReadings() {
-			return m_axis.getReadings() - m_zeroCnt;
-		}
-		
-		/**
-		 * Returns the last raw (integer) value read from the gyro for the axis.
-		 * 
-		 * @return An integer value from the ITG-3200 for the associated axis.
-		 */
-		public int getAngleRateRaw() {
-			return m_axis.getRaw();
-		}
-		
-		/**
-		 * Returns the current rotation rate in degrees/second from the last reading.
-		 * 
-		 * @return How quickly the system is rotating about the axis in degrees/second.
-		 */
-		public double getAngleRate() {
-			return getAngleRateRaw() * COUNT_TO_DEGSEC;
-		}
-
-		/**
-		 * Returns the angle value from {@link #getAngle()} so object can be used as a source to a PID controller.
-		 * 
-		 * @return See {@link #getAngle()}.
-		 *  
-		 * @see edu.wpi.first.wpilibj.PIDSource#pidGet()
-		 */
-		@Override
-		public double pidGet() {
-			return getAngle();
-		}
-
-		@Override
-		public void setPIDSourceType(PIDSourceType pidSource) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		@Override
-		public PIDSourceType getPIDSourceType() {
-			// TODO Auto-generated method stub
-			return null;
-		}
-	}
-	
 	//
 	// List of I2C registers which the ITG-3200 uses from the datasheet
 	//
@@ -325,9 +244,6 @@ public final class GyroItg3200 {
 	/** Flag used to signal background thread that the gyro should be reset. */
 	private boolean m_need_reset;
 
-	/** Flag used to signal background thread that it's time to stop. */
-	private boolean m_run_thread;
-
 	/** Accumulator for rotation around the x-axis. */
 	private Accumulator m_x;
 
@@ -358,15 +274,9 @@ public final class GyroItg3200 {
 	 *            This should be true if the ITG-3200 has the AD0 jumpered to
 	 *            logic level high and false if not.
 	 */
-	public GyroItg3200(I2C.Port port, boolean jumper) {
+	public ITG3200(I2C.Port port, boolean jumper) {
 		m_addr = (jumper ? itgAddressJumper : itgAddressNoJumper);
 		m_i2c = new I2C(port, m_addr);
-		m_thread = new Thread(new Runnable() {
-			@Override
-			public void run() {
-				accumulateData();
-			}
-		});
 		if (DEBUG) {
 			check();
 		}
@@ -379,36 +289,99 @@ public final class GyroItg3200 {
 	}
 
 	/**
-	 * Construct a {@link Rotation} object used to monitor rotation about the
-	 * Z-axis.
+	 * Returns a pseudo {@class Gyro} instance that you can use to monitor
+	 * rotation about the x-axis.
 	 * 
-	 * @return A rotation object that very useful for checking the direction
-	 *         your robot is facing.
+	 * <p>
+	 * NOTE: The {@class Gyro} returned has some limitations/features:
+	 * </p>
+	 * 
+	 * <ul>
+	 * <li>The {@link Gyro#calibrate()} method does nothing.</li>
+	 * <li>The {@link Gyro#reset()} method only resets that instance to zero
+	 * (any other Gyro objects created will be unchanged). This is typically
+	 * what you want.</li>
+	 * <li>The {@link Gyro#getRate()} method is implemented (you can use it).</li>
+	 * </ul>
+	 * 
+	 * @return A new {@class Gyro} object you can used for tracking rotation.
 	 */
-	public Rotation getRotationZ() {
-		return new Rotation(m_z);
+	public GyroAdapter createGyroX() {
+		return new GyroAdapter(m_x.getDegrees(), true) {
+			@Override
+			protected double getSensorValue() {
+				return m_x.getDegrees();
+			}
+
+			@Override
+			public double getRate() {
+				return m_x.getDegPerSec();
+			}
+		};
 	}
 
 	/**
-	 * Construct a {@link Rotation} object used to monitor rotation about the
-	 * X-axis.
+	 * Returns a pseudo {@class Gyro} instance that you can use to monitor
+	 * rotation about the y-axis.
 	 * 
-	 * @return A rotation object that is probably only useful for checking if
-	 *         your robot is starting to tip over.
+	 * <p>
+	 * NOTE: The {@class Gyro} returned has some limitations/features:
+	 * </p>
+	 * 
+	 * <ul>
+	 * <li>The {@link Gyro#calibrate()} method does nothing.</li>
+	 * <li>The {@link Gyro#reset()} method only resets that instance to zero
+	 * (any other Gyro objects created will be unchanged). This is typically
+	 * what you want.</li>
+	 * <li>The {@link Gyro#getRate()} method is implemented (you can use it).</li>
+	 * </ul>
+	 * 
+	 * @return A new {@class Gyro} object you can used for tracking rotation.
 	 */
-	public Rotation getRotationX() {
-		return new Rotation(m_x);
+	public GyroAdapter createGyroY() {
+		return new GyroAdapter(m_y.getDegrees(), true) {
+			@Override
+			protected double getSensorValue() {
+				return m_y.getDegrees();
+			}
+
+			@Override
+			public double getRate() {
+				return m_y.getDegPerSec();
+			}
+		};
 	}
 
 	/**
-	 * Construct a {@link Rotation} object used to monitor rotation about the
-	 * Y-axis.
+	 * Returns a pseudo {@class Gyro} instance that you can use to monitor
+	 * rotation about the z-axis.
 	 * 
-	 * @return A rotation object that is probably only useful for checking if
-	 *         your robot is starting to tip over.
+	 * <p>
+	 * NOTE: The {@class Gyro} returned has some limitations/features:
+	 * </p>
+	 * 
+	 * <ul>
+	 * <li>The {@link Gyro#calibrate()} method does nothing.</li>
+	 * <li>The {@link Gyro#reset()} method only resets that instance to zero
+	 * (any other Gyro objects created will be unchanged). This is typically
+	 * what you want.</li>
+	 * <li>The {@link Gyro#getRate()} method is implemented (you can use it).</li>
+	 * </ul>
+	 * 
+	 * @return A new {@class Gyro} object you can used for tracking rotation.
 	 */
-	public Rotation getRotationY() {
-		return new Rotation(m_y);
+	public GyroAdapter createGyroZ() {
+		return new GyroAdapter(m_z.getDegrees(), true) {
+			@Override
+			protected double getSensorValue() {
+				return m_z.getDegrees();
+			}
+
+			@Override
+			public double getRate() {
+				return m_z.getDegPerSec();
+			}
+		};
 	}
 
 	/**
@@ -417,18 +390,23 @@ public final class GyroItg3200 {
 	public String toString() {
 		return "Gyro[0x" + Integer.toHexString(m_addr & 0xff) + "]";
 	}
+
 	/**
 	 * Dumps information about the state of the Gyro to the smart dashboard.
 	 * 
-	 * @param tag Short name like "Gyro" to prefix each label with on the dashboard.
-	 * @param debug Pass true if you want a whole lot of details dumped onto the dashboard,
-	 * pass false if you just want the direction of each axis and the temperature.
+	 * @param tag
+	 *            Short name like "Gyro" to prefix each label with on the
+	 *            dashboard.
+	 * @param debug
+	 *            Pass true if you want a whole lot of details dumped onto the
+	 *            dashboard, pass false if you just want the direction of each
+	 *            axis and the temperature.
 	 */
 	public void updateDashboard(String tag, boolean debug) {
 		SmartDashboard.putNumber(tag + " x-axis degrees", m_x.getDegrees());
 		SmartDashboard.putNumber(tag + " y-axis degrees", m_y.getDegrees());
 		SmartDashboard.putNumber(tag + " z-axis degrees", m_z.getDegrees());
-		
+
 		if (debug) {
 			SmartDashboard.putNumber(tag + " x-axis raw", m_x.getRaw());
 			SmartDashboard.putNumber(tag + " y-axis raw", m_y.getRaw());
@@ -437,23 +415,50 @@ public final class GyroItg3200 {
 			SmartDashboard.putNumber(tag + " x-axis count", m_x.getReadings());
 			SmartDashboard.putNumber(tag + " y-axis count", m_y.getReadings());
 			SmartDashboard.putNumber(tag + " z-axis count", m_z.getReadings());
-			
-			SmartDashboard.putString(tag + " I2C Address", "0x" + Integer.toHexString(m_addr));
+
+			SmartDashboard.putString(tag + " I2C Address",
+					"0x" + Integer.toHexString(m_addr));
 		}
 	}
+
+	/**
+	 * Clears dashboard variables from network table.
+	 * 
+	 * @param tag
+	 *            Short name like "Gyro" to prefix each label with on the
+	 *            dashboard (what you passed to {@link #updateDashboard}.
+	 */
+	public void clearDashboard(String tag) {
+		NetworkTable sd = NetworkTable.getTable("SmartDashboard");
+		
+		sd.delete(tag + " x-axis degrees");
+		sd.delete(tag + " y-axis degrees");
+		sd.delete(tag + " z-axis degrees");
+
+		sd.delete(tag + " x-axis raw");
+		sd.delete(tag + " y-axis raw");
+		sd.delete(tag + " z-axis raw");
+
+		sd.delete(tag + " x-axis count");
+		sd.delete(tag + " y-axis count");
+		sd.delete(tag + " z-axis count");
+
+		sd.delete(tag + " I2C Address");
+	}
+
 	/**
 	 * Internal method that runs in the background thread to accumulate data
 	 * from the Gyro.
 	 */
 	private void accumulateData() {
-		m_run_thread = true;
 		int resetCnt = 0;
+		Thread thisThread = Thread.currentThread();
 
-		while (m_run_thread) {
+		while (thisThread.isInterrupted() == false) {
 			if (m_need_reset) {
 				// Set gyro to the proper mode
 				performResetSequence();
-				
+
 				// Reset accumulators and set the number of readings to take to
 				// compute bias values
 				resetCnt = MIN_READINGS_TO_SET_BIAS;
@@ -480,9 +485,7 @@ public final class GyroItg3200 {
 			}
 
 			// Short delay between each reading
-			if (m_run_thread) {
-				Timer.delay(.01);
-			}
+			Timer.delay(.01);
 		}
 	}
 
@@ -509,9 +512,18 @@ public final class GyroItg3200 {
 	 * </p>
 	 */
 	public void start() {
-		if (!m_thread.isAlive()) {
-			m_thread.start();
+
+		if (m_thread != null) {
+			stop();
 		}
+
+		m_thread = new Thread(new Runnable() {
+			@Override
+			public void run() {
+				accumulateData();
+			}
+		});
+		m_thread.start();
 	}
 
 	/**
@@ -527,7 +539,12 @@ public final class GyroItg3200 {
 	 * </p>
 	 */
 	public void stop() {
-		m_run_thread = false;
+		if (m_thread != null) {
+			try {
+				m_thread.interrupt();
+			} catch (Error ignore) { }
+			m_thread = null;
+		}
 	}
 
 	/**
@@ -540,11 +557,13 @@ public final class GyroItg3200 {
 		// Set the sample rate to 100 hz
 		m_i2c.write(SMPLRT_DIV, 9);
 	}
-	
+
 	/**
-	 * Enables the buffering of the next "n" data samples (which can then be saved for analysis).
+	 * Enables the buffering of the next "n" data samples (which can then be
+	 * saved for analysis).
 	 * 
-	 * @param samples Maximum number of samples to read.
+	 * @param samples
+	 *            Maximum number of samples to read.
 	 */
 	public void enableBuffer(int samples) {
 		double[] timeBuffer = new double[samples];
@@ -560,7 +579,7 @@ public final class GyroItg3200 {
 			m_sizeBuffer = samples;
 		}
 	}
-	
+
 	/**
 	 * Check to see if the buffer is full.
 	 * 
@@ -573,9 +592,10 @@ public final class GyroItg3200 {
 		}
 		return isFull;
 	}
-	
+
 	/**
-	 * Writes any raw buffered data to the file "/tmp/gyro-data.csv" for inspection via Excel.
+	 * Writes any raw buffered data to the file "/tmp/gyro-data.csv" for
+	 * inspection via Excel.
 	 */
 	public void saveBuffer() {
 		double[] timeBuffer;
@@ -584,7 +604,8 @@ public final class GyroItg3200 {
 		int[] zBuffer;
 		int size;
 
-		// Transfer buffer info to local variables and turn off buffering in a thread safe way.
+		// Transfer buffer info to local variables and turn off buffering in a
+		// thread safe way.
 		synchronized (this) {
 			timeBuffer = m_timeBuffer;
 			xBuffer = m_xBuffer;
@@ -594,13 +615,15 @@ public final class GyroItg3200 {
 			m_sizeBuffer = 0;
 			m_cntBuffer = 0;
 		}
-		
+
 		if (size > 0) {
 			try {
-				PrintStream out = new PrintStream(new File("/tmp/gryo-data.csv"));
+				PrintStream out = new PrintStream(
+						new File("/tmp/gryo-data.csv"));
 				out.println("\"FPGA Time\",\"x-axis\",\"y-axis\",\"z-axis\"");
 				for (int i = 0; i < size; i++) {
-					out.println(timeBuffer[i] + "," + xBuffer[i] + "," + yBuffer[i] + "," + zBuffer[i]);
+					out.println(timeBuffer[i] + "," + xBuffer[i] + ","
+							+ yBuffer[i] + "," + zBuffer[i]);
 				}
 				out.close();
 				SmartDashboard.putBoolean("Gyro Save OK", true);
@@ -626,14 +649,14 @@ public final class GyroItg3200 {
 			int x = (buffer[0] << 8) | (buffer[1] & 0xff);
 			int y = (buffer[2] << 8) | (buffer[3] & 0xff);
 			int z = (buffer[4] << 8) | (buffer[5] & 0xff);
-			
+
 			m_x.update(x, now);
 			m_y.update(y, now);
 			m_z.update(z, now);
-			
+
 			// If buffered enabled, then save values in a thread safe way
 			if (m_sizeBuffer > 0) {
-				synchronized(this) {
+				synchronized (this) {
 					int i = m_cntBuffer;
 					if (i < m_sizeBuffer) {
 						m_timeBuffer[i] = now;
@@ -704,10 +727,20 @@ public final class GyroItg3200 {
 		}
 
 		/**
-		 * @return The raw integer reading from the ITG-3200 associated with the axis.
+		 * @return The raw integer reading from the ITG-3200 associated with the
+		 *         axis.
 		 */
 		public int getRaw() {
 			return m_lastRaw;
+		}
+
+		/**
+		 * Returns the deg/sec value based on the last reading from the sensor.
+		 * 
+		 * @return Degrees/Second reported by the sensor.
+		 */
+		public double getDegPerSec() {
+			return (m_lastRaw - (m_bias2 / 2.0)) * COUNT_TO_DEGSEC;
 		}
 
 		/**

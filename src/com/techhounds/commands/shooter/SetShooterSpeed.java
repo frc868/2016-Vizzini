@@ -3,54 +3,52 @@ package com.techhounds.commands.shooter;
 import com.techhounds.subsystems.ShooterSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
  */
-public class SetShooterPower extends Command {
+public class SetShooterSpeed extends Command {
+
+	private double speed;
+	private ShooterSubsystem shooter;
+	private int cnt;
 	
-	private ShooterSubsystem shoot;
-	private boolean change;
-	private double power;
-	
-    public SetShooterPower(double power) {
-    	this(power, false);
-    }
-    
-    public SetShooterPower(double power, boolean change) {
-    	shoot = ShooterSubsystem.getInstance();
-    	requires(shoot);
-    	this.power = power;
-    	this.change = change;
-    }
-    
-    public SetShooterPower(){
-    	this(0);
+    public SetShooterSpeed(double speed) {
+    	this.speed = speed;
+    	shooter = ShooterSubsystem.getInstance();
+    	requires(shooter);
+   
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    //	shoot.setPower(!change ? power : shoot.getPower() + power);
+    	shooter.setSpeed(speed);
+    	cnt = 0;
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	return true;
+    	if(shooter.onTarget())
+    		cnt++;
+    	else
+    		cnt = 0;
+    	
+        return cnt >= 3;
     }
-    
+
     // Called once after isFinished returns true
     protected void end() {
-    	
+    	//Locks pid power, because PID is disabled in setPower
+    	//shooter.setPower(shooter.getPower());
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	end();
     }
 }

@@ -1,40 +1,35 @@
 package com.techhounds.commands;
 
-import edu.wpi.first.wpilibj.Timer;
+import com.techhounds.subsystems.DriveSubsystem;
+
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
  */
-public class Commando extends Command {
-
-private Timer timer;
+public class DriveEncodersReset extends Command {
 	
-    public Commando() {
-    	timer = new Timer();
+	public DriveSubsystem drive;
+
+    public DriveEncodersReset() {
+    	drive = DriveSubsystem.getInstance();
+    	requires(drive);
+        // Use requires() here to declare subsystem dependencies
+        // eg. requires(chassis);
     }
 
+    // Called just before this Command runs the first time
     protected void initialize() {
-    	timer.reset();
-    	timer.start();
+    	drive.encodersReset();
     }
 
-    int cnt = 0;
-    
+    // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	
-    	if(timer.get() >= 0.3) {
-    		SmartDashboard.putNumber("counted", cnt);
-    		cnt++;
-    		timer.reset();
-    	}
-    
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return true;
     }
 
     // Called once after isFinished returns true
@@ -44,5 +39,6 @@ private Timer timer;
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+    	end();
     }
 }
