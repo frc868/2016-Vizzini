@@ -133,6 +133,11 @@ public class AutonChooser {
 		int shoot = getShoot();
 		int post = getPost();
 		
+		if(!direction){//if facing the wrong direction and not going through one of these two defenses, return false.
+			if(defense != Defense.PORTCULLIS && defense != Defense.CHEVAL_DE_FRISE){
+				return false;
+			}
+		}
 		if(start == 5) {
 			if(defense == Defense.LOW_BAR) {
 				if(goal == Goal.LEFT) {
@@ -288,21 +293,24 @@ public class AutonChooser {
 				addSequential(new RotateToPreviousAngle(-93.93));
 			}
 	
-			// Get ourselves ready to target
-			addParallel(new VisionRotateToTarget());
+			
 			
 			if(shoot == 0) {
+				addParallel(new VisionRotateToTarget());// Get ourselves ready to target
 				addParallel(new SetShooterSpeed(69));
-				addSequential(new WaitCommand(.2));
+				addSequential(new WaitCommand(.3));
 				addSequential(new Fire());
 				addSequential(new WaitCommand(.2));
 			} else if(shoot == 1) {
+				addSequential(new VisionRotateToTarget());// Should be targeted before moving -so Sequential instead of Parallel
 				if(goal == Goal.LEFT) {
+					addSequential(new SaveCurrentAngle());
 					addSequential(new DriveDistance(140));
-					addSequential(new RotateUsingGyro(180));
+					addSequential(new RotateToPreviousAngle(180));
 				} else if(goal == Goal.RIGHT) {
+					addSequential(new SaveCurrentAngle());
 					addSequential(new DriveDistance(100));
-					addSequential(new RotateUsingGyro(180));
+					addSequential(new RotateToPreviousAngle(180));
 				} else {
 					addSequential(new WaitCommand(1));
 				}
