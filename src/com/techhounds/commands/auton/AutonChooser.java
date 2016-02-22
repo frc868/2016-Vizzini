@@ -6,7 +6,9 @@ import com.techhounds.commands.angler.SetStateDown;
 import com.techhounds.commands.angler.SetStateUp;
 import com.techhounds.commands.collector.SetCollectorPower;
 import com.techhounds.commands.drive.DriveDistance;
+import com.techhounds.commands.gyro.RotateToPreviousAngle;
 import com.techhounds.commands.gyro.RotateUsingGyro;
+import com.techhounds.commands.gyro.SaveCurrentAngle;
 import com.techhounds.commands.shooter.Fire;
 import com.techhounds.commands.shooter.SetShooterSpeed;
 
@@ -208,7 +210,7 @@ public class AutonChooser {
 			int shoot = getShoot();
 			int post = getPost();
 			
-			switch(defense) {
+			switch(defense) {//first sequence, crosses the designated defense
 				case LOW_BAR:
 					addSequential(new SetAnglerPosition(RobotMap.Collector.COLLECTING));
 					addSequential(new CrossDefense(143.5, .48));
@@ -230,30 +232,28 @@ public class AutonChooser {
 					addSequential(new CrossCDF());
 					break;
 				default: // case Defense.DO_NOTHING && Defense.REACH_DEFENSE
-					addSequential(new DriveDistance(40, .5));
+					addSequential(new DriveDistance(60, .5));
 					return; // If only Reaching Defense and Do Nothing
 			}
 			
-			// We have only made it here if not Reaching Defense and Do Nothing
-			if(defense == Defense.CHEVAL_DE_FRISE || defense == Defense.PORTCULLIS)
-				addSequential(new RotateUsingGyro(180)); // Assuming Collector FIRST
-			else
-				addSequential(new RotateUsingGyro(0));
+			// We have only made it here if not Reaching Defense or Do Nothing
 			
+			//This group of if statements determines what to do after crossing a defense
 			if(goal == Goal.DO_NOTHING) {
 				addSequential(new WaitCommand(0));
 			} else if(start == 5 && goal == Goal.LEFT) {
 				addSequential(new DriveDistance(43));
 				addSequential(new RotateUsingGyro(60));
-				addParallel(new SetShooterSpeed(69));
 			} else if(start == 4 && goal == Goal.LEFT) {
 				addSequential(new RotateUsingGyro(-49.29));
+				addSequential(new SaveCurrentAngle());
 				addSequential(new DriveDistance(66.46));
-				addSequential(new RotateUsingGyro(109.29));
+				addSequential(new RotateToPreviousAngle(109.29));
 			} else if(start == 4 && goal == Goal.MIDDLE) {
 				addSequential(new RotateUsingGyro(90));
+				addSequential(new SaveCurrentAngle());
 				addSequential(new DriveDistance(88.94));
-				addSequential(new RotateUsingGyro(-90));
+				addSequential(new RotateToPreviousAngle(-90));
 			} else if(start == 3) {
 				addSequential(new RotateUsingGyro(15));
 				addSequential(new DriveDistance(12));
@@ -261,32 +261,39 @@ public class AutonChooser {
 				// You are basically close enough
 			} else if(start == 2 && goal == Goal.RIGHT) {
 				addSequential(new RotateUsingGyro(55.68));
+				addSequential(new SaveCurrentAngle());
 				addSequential(new DriveDistance(112.81));
-				addSequential(new RotateUsingGyro(115.68));
+				addSequential(new RotateToPreviousAngle(115.68));
 			} else if(start == 1 && goal == Goal.MIDDLE) {
 				addSequential(new RotateUsingGyro(-90));
+				addSequential(new SaveCurrentAngle());
 				addSequential(new DriveDistance(66.82));
-				addSequential(new RotateUsingGyro(90));
+				addSequential(new RotateToPreviousAngle(90));
 			} else if(start == 1 && goal == Goal.RIGHT) {
 				addSequential(new RotateUsingGyro(33.93));
+				addSequential(new SaveCurrentAngle());
 				addSequential(new DriveDistance(76.66));
-				addSequential(new RotateUsingGyro(-93.93));
+				addSequential(new RotateToPreviousAngle(-93.93));
 			}
 	
-			// Get ourselves ready to target
-			addParallel(new VisionRotateToTarget());
 			
+			//This group of if statements determines what to do after positioning toward the enemy castle
 			if(shoot == 0) {
+				addParallel(new VisionRotateToTarget());// Get ourselves ready to target
 				addParallel(new SetShooterSpeed(69));
-				addSequential(new WaitCommand(.2));
+				addSequential(new WaitCommand(.3));
 				addSequential(new Fire());
+				addSequential(new WaitCommand(.2));
 			} else if(shoot == 1) {
+				addSequential(new VisionRotateToTarget());// Should be targeted before moving -so Sequential instead of Parallel
 				if(goal == Goal.LEFT) {
+					addSequential(new SaveCurrentAngle());
 					addSequential(new DriveDistance(140));
-					addSequential(new RotateUsingGyro(180));
+					addSequential(new RotateToPreviousAngle(180));
 				} else if(goal == Goal.RIGHT) {
+					addSequential(new SaveCurrentAngle());
 					addSequential(new DriveDistance(100));
-					addSequential(new RotateUsingGyro(180));
+					addSequential(new RotateToPreviousAngle(180));
 				} else {
 					addSequential(new WaitCommand(1));
 				}
