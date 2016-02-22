@@ -14,7 +14,7 @@ public class CrossDefense extends CommandGroup {
 	//This command assumes the robot is in front of the defense, and only needs to drive forward over the obstacle
 	
 	private static double defaultCrossingSpeed = .3;
-	private static double defaultDistance = 139.5;
+	private static double defaultDistance = 143.5;
 	
 	public CrossDefense(){
 		this(defaultDistance, defaultCrossingSpeed);
