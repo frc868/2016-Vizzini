@@ -211,9 +211,11 @@ public class AutonChooser {
 			switch(defense) {
 				case LOW_BAR:
 					addSequential(new SetAnglerPosition(RobotMap.Collector.COLLECTING));
-					addSequential(new CrossDefense());
+					addSequential(new CrossDefense(143.5, .48));
 					break;
 				case MOAT:
+					addSequential(new CrossDefense(160.0, .48));
+					break;
 				case RAMPARTS:
 					addSequential(new CrossDefense(.65, true));
 					break;
