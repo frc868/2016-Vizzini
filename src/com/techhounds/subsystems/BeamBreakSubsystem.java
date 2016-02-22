@@ -25,7 +25,7 @@ public class BeamBreakSubsystem extends Subsystem {
 		return !sensor.get();
 	}
 	public void updateSmartDashboard(){
-		SmartDashboard.putBoolean("Beam Break Sensor", ballPresent());
+		SmartDashboard.putBoolean("Ball Collected", ballPresent());
 	}
     public static BeamBreakSubsystem getInstance(){
     	if(instance == null){
