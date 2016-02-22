@@ -47,8 +47,11 @@ public class AutonChooser {
 		DO_NOTHING
 	}
 	
+	private boolean direction;//added this in case when setting up the game, the robot is placed backwards to get through CDF/Portcullis
+	
 	private SendableChooser chooseStart;
 	private SendableChooser chooseDefense;
+	private SendableChooser chooseDirection;
 	private SendableChooser chooseGoal;
 	private SendableChooser chooseShoot;
 	private SendableChooser choosePost;
@@ -91,6 +94,9 @@ public class AutonChooser {
 		chooseDefense.addObject("Low Bar", Defense.LOW_BAR);
 		chooseDefense.addObject("Reach Defense", Defense.REACH_DEFENSE);
 		chooseDefense.addDefault("Do Nothing", Defense.DO_NOTHING);
+		
+		chooseDirection.addDefault("Facing Forwards", direction = true);
+		chooseDirection.addObject("Facing Backwards", direction = false);
 		
 		chooseGoal = new SendableChooser();
 		chooseGoal.addDefault("Left Goal", Goal.LEFT);
@@ -222,13 +228,13 @@ public class AutonChooser {
 					addSequential(new CrossDefense(.5, true));
 					break;
 				case PORTCULLIS:
-					addSequential(new CrossPortcullis());
+					addSequential(new CrossPortcullis(direction));
 					break;
 				case CHEVAL_DE_FRISE:
-					addSequential(new CrossCDF());
+					addSequential(new CrossCDF(direction));
 					break;
 				default: // case Defense.DO_NOTHING && Defense.REACH_DEFENSE
-					addSequential(new DriveDistance(40, .5));
+					addSequential(new DriveDistance(60, .5));
 					return; // If only Reaching Defense and Do Nothing
 			}
 			
