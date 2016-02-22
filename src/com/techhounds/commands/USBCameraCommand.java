@@ -95,6 +95,7 @@ public class USBCameraCommand extends Command {
 			camera.setImage(frame);
 			double time = Timer.getFPGATimestamp() - start;
 			SmartDashboard.putNumber("Time: ", time);
+			frame.free();
 		}
 		SmartDashboard.putBoolean("cameraEnabled", enabled);
     	

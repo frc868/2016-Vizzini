@@ -20,6 +20,7 @@ public class MatchSetup extends CommandGroup {
     	addParallel(new SetAnglerPosition(RobotMap.Collector.COLLECTOR_UP));
     	addParallel(new SetCollectorPower());
     	addParallel(new SetShooterPower());
+    	addParallel(new USBCameraCommand(true));
     	//addParallel(new SetScissorsOne(RobotMap.Servo.SCISSOR_ONE_IS_UP_DEFAULT));
     	//addParallel(new SetScissorsTwo(RobotMap.Servo.SCISSOR_TWO_IS_UP_DEFAULT));
     	addParallel(new SetWinchEnable(RobotMap.Servo.WINCH_ENABLE_IS_UP_DEFAULT));
