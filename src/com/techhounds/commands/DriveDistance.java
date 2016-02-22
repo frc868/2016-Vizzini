@@ -16,6 +16,7 @@ public class DriveDistance extends Command implements PIDSource, PIDOutput {
 	private double targetDist;
 	private PIDController pid;
 	private double lastPower;
+	private double minPower;
 	public DriveDistance(double dist) {
 		this(dist, 1);
 	}
@@ -24,21 +25,27 @@ public class DriveDistance extends Command implements PIDSource, PIDOutput {
 		this(30, .4);
 	}
 	
-	public DriveDistance(double dist, double max) {
+	public DriveDistance(double dist, double max, double min) {
 		drive = DriveSubsystem.getInstance();
 		requires(drive);
 		pid = new PIDController(.02,  0, .005, this, this);
 		pid.setOutputRange(-max, max);
 		pid.setAbsoluteTolerance(1);
+		minPower = min;
 		this.targetDist = dist;
 		SmartDashboard.putData("Drive distance pid", pid);
 		SmartDashboard.putNumber("Power to Drive", 0.3);
+		SmartDashboard.putNumber("Min Power To Drive", min);
+	}
+	public DriveDistance(double dist, double max){
+		this(dist, max, RobotMap.DriveTrain.MIN_STRAIGHT_POWER);
 	}
 	
 	@Override
 	protected void initialize() {
 		targetDist = SmartDashboard.getNumber("Distance To Drive");
 		double maxPower = SmartDashboard.getNumber("Power to Drive", 0.3);
+		minPower = SmartDashboard.getNumber("Min Power To Drive", .2);
 		pid.setOutputRange(-maxPower, maxPower);
 		double curDist = drive.countsToDist(drive.getAvgDistance());
 		lastPower = 0;
@@ -63,6 +70,7 @@ public class DriveDistance extends Command implements PIDSource, PIDOutput {
 	@Override
 	protected void end() {
 		pid.disable();
+		drive.setPower(0,0);
 		// TODO Auto-generated method stub
 		
 	}
@@ -83,8 +91,8 @@ public class DriveDistance extends Command implements PIDSource, PIDOutput {
 			output = lastPower - .1;
 		}
 		
-		if(output < RobotMap.DriveTrain.MIN_STRAIGHT_POWER && output > -RobotMap.DriveTrain.MIN_STRAIGHT_POWER)
-			output = output > 0 ? RobotMap.DriveTrain.MIN_STRAIGHT_POWER : -RobotMap.DriveTrain.MIN_STRAIGHT_POWER;
+		if(output < minPower || output > minPower)
+			output = output > 0 ? minPower : -minPower;
 		lastPower = output;
 		drive.setLeftPower(output);
 		drive.setRightPower(output);
