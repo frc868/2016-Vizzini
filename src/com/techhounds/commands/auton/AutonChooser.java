@@ -1,12 +1,16 @@
 package com.techhounds.commands.auton;
 
 import com.techhounds.RobotMap;
-import com.techhounds.commands.DriveDistance;
 import com.techhounds.commands.angler.SetAnglerPosition;
 import com.techhounds.commands.angler.SetStateDown;
 import com.techhounds.commands.angler.SetStateUp;
+import com.techhounds.commands.collector.SetCollectorPower;
+import com.techhounds.commands.drive.DriveDistance;
+import com.techhounds.commands.gyro.RotateToPreviousAngle;
 import com.techhounds.commands.gyro.RotateUsingGyro;
+import com.techhounds.commands.gyro.SaveCurrentAngle;
 import com.techhounds.commands.shooter.Fire;
+import com.techhounds.commands.shooter.SetShooterSpeed;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -47,6 +51,7 @@ public class AutonChooser {
 	
 	private SendableChooser chooseStart;
 	private SendableChooser chooseDefense;
+	private SendableChooser chooseDirection;//added this in case the robot is placed backwards to get through CDF/Portcullis faster in auton
 	private SendableChooser chooseGoal;
 	private SendableChooser chooseShoot;
 	private SendableChooser choosePost;
@@ -57,6 +62,10 @@ public class AutonChooser {
 	
 	private Defense getDefense() {
 		return ((Defense) chooseDefense.getSelected());
+	}
+	
+	private boolean getDirection() {
+		return((boolean) chooseDirection.getSelected());
 	}
 	
 	private int getShoot() {
@@ -90,6 +99,9 @@ public class AutonChooser {
 		chooseDefense.addObject("Reach Defense", Defense.REACH_DEFENSE);
 		chooseDefense.addDefault("Do Nothing", Defense.DO_NOTHING);
 		
+		chooseDirection.addDefault("Facing Forwards", new Boolean(true));
+		chooseDirection.addObject("Facing Backwards", new Boolean(false));
+		
 		chooseGoal = new SendableChooser();
 		chooseGoal.addDefault("Left Goal", Goal.LEFT);
 		chooseGoal.addObject("Middle Goal", Goal.MIDDLE);
@@ -116,10 +128,16 @@ public class AutonChooser {
 	public boolean isValid(){
 		int start = getStart();
 		Defense defense = getDefense();
+		boolean direction = getDirection();
 		Goal goal = getGoal();
 		int shoot = getShoot();
 		int post = getPost();
 		
+		if(!direction){//if facing the wrong direction and not going through one of these two defenses, return false.
+			if(defense != Defense.PORTCULLIS && defense != Defense.CHEVAL_DE_FRISE){
+				return false;
+			}
+		}
 		if(start == 5) {
 			if(defense == Defense.LOW_BAR) {
 				if(goal == Goal.LEFT) {
@@ -202,6 +220,7 @@ public class AutonChooser {
 			
 			int start = getStart();
 			Defense defense = getDefense();
+			boolean direction = getDirection();
 			Goal goal = getGoal();
 			int shoot = getShoot();
 			int post = getPost();
@@ -211,89 +230,97 @@ public class AutonChooser {
 					addSequential(new SetAnglerPosition(RobotMap.Collector.COLLECTING));
 					addSequential(new CrossDefense());
 					break;
-				
 				case MOAT:
 				case RAMPARTS:
-					addSequential(new CrossDefense());
+					addSequential(new CrossDefense(.65, true));
 					break;
-				
 				case ROCK_WALL:
 				case ROUGH_TERRAIN:
 					addSequential(new CrossDefense(.5, true));
 					break;
-				
 				case PORTCULLIS:
-					addSequential(new CrossPortcullis());
+					addSequential(new CrossPortcullis(direction));
 					break;
-				
 				case CHEVAL_DE_FRISE:
-					addSequential(new CrossCDF());
+					addSequential(new CrossCDF(direction));
 					break;
-				
-				case REACH_DEFENSE:
+				default: // case Defense.DO_NOTHING && Defense.REACH_DEFENSE
 					addSequential(new DriveDistance(60, .5));
-					break;
-				
-				default:
-					addSequential(new WaitCommand(0));
-					break;
+					return; // If only Reaching Defense and Do Nothing
 			}
 			
-			if(defense != Defense.DO_NOTHING && defense != Defense.REACH_DEFENSE) {
+			// We have only made it here if not Reaching Defense and Do Nothing
+			if(defense == Defense.CHEVAL_DE_FRISE || defense == Defense.PORTCULLIS)
+				addSequential(new RotateUsingGyro(180)); // Assuming Collector FIRST
+			else
 				addSequential(new RotateUsingGyro(0));
-			}
 			
 			if(goal == Goal.DO_NOTHING) {
-				// TODO: Drive 1 foot
-				addSequential(new DriveDistance(1));
-			} else if(goal == Goal.LEFT) {
-				addSequential(new RotateUsingGyro(5));
-				addSequential(new DriveDistance(2));
-				// TODO: Angle slightly then drive a distance
-			} else if(start == 4 & goal == Goal.LEFT) {
-				addSequential(new RotateUsingGyro(-5));
-				addSequential(new DriveDistance(2));
-				// TODO: Angle slightly then drive a distance
+				addSequential(new WaitCommand(0));
+			} else if(start == 5 && goal == Goal.LEFT) {
+				addSequential(new DriveDistance(43));
+				addSequential(new RotateUsingGyro(60));
+//				addParallel(new SetShooterSpeed(69));    already performed outside of if statement
+			} else if(start == 4 && goal == Goal.LEFT) {
+				addSequential(new RotateUsingGyro(-49.29));
+				addSequential(new SaveCurrentAngle());
+				addSequential(new DriveDistance(66.46));
+				addSequential(new RotateToPreviousAngle(109.29));
 			} else if(start == 4 && goal == Goal.MIDDLE) {
-				addSequential(new RotateUsingGyro(5));
-				addSequential(new DriveDistance(.5));
-				// TODO: Angle slightly then drive a very short distance
+				addSequential(new RotateUsingGyro(90));
+				addSequential(new SaveCurrentAngle());
+				addSequential(new DriveDistance(88.94));
+				addSequential(new RotateToPreviousAngle(-90));
 			} else if(start == 3) {
-				addSequential(new RotateUsingGyro(2));
-				addSequential(new DriveDistance(1));
-				// TODO: Angle slightly the drive a short distance
-			} else if(start == 2) {
-				addSequential(new RotateUsingGyro(-1));
-				addSequential(new DriveDistance(1));
-				// TODO: Angle slightly then drive a short distance
-			} else if(start == 1) {
-				addSequential(new RotateUsingGyro(-5));
-				addSequential(new DriveDistance(2));
-				// TODO: Angle more than slightly then drive a short distance
+				addSequential(new RotateUsingGyro(15));
+				addSequential(new DriveDistance(12));
+			} else if(start == 2 && goal == Goal.MIDDLE) {
+				// You are basically close enough
+			} else if(start == 2 && goal == Goal.RIGHT) {
+				addSequential(new RotateUsingGyro(55.68));
+				addSequential(new SaveCurrentAngle());
+				addSequential(new DriveDistance(112.81));
+				addSequential(new RotateToPreviousAngle(115.68));
+			} else if(start == 1 && goal == Goal.MIDDLE) {
+				addSequential(new RotateUsingGyro(-90));
+				addSequential(new SaveCurrentAngle());
+				addSequential(new DriveDistance(66.82));
+				addSequential(new RotateToPreviousAngle(90));
+			} else if(start == 1 && goal == Goal.RIGHT) {
+				addSequential(new RotateUsingGyro(33.93));
+				addSequential(new SaveCurrentAngle());
+				addSequential(new DriveDistance(76.66));
+				addSequential(new RotateToPreviousAngle(-93.93));
 			}
+	
 			
-			if(goal != Goal.DO_NOTHING) {
-				//addSequential(new VisionAim());
-			}
 			
 			if(shoot == 0) {
-				addSequential(new VisionRotateToTarget());
-				addSequential(new VisionSetShooterPower());
+				addParallel(new VisionRotateToTarget());// Get ourselves ready to target
+				addParallel(new SetShooterSpeed(69));
+				addSequential(new WaitCommand(.3));
 				addSequential(new Fire());
-				// TODO: Get distance and shoot
+				addSequential(new WaitCommand(.2));
 			} else if(shoot == 1) {
-				addSequential(new VisionDriveDistance());
-				// TODO: Determine distance and drive it and feed out
-			} else if(shoot == 2) {
-				addSequential(new WaitCommand(0));
-			} else {
-				addSequential(new WaitCommand(0));
-			}
-			
-			if(post == 1) {
-				// TODO: Aim our robot towards the defense! (Use Gyro 180 or 0)
-			} else if(post == 0) {
-				addSequential(new WaitCommand(0));
+				addSequential(new VisionRotateToTarget());// Should be targeted before moving -so Sequential instead of Parallel
+				if(goal == Goal.LEFT) {
+					addSequential(new SaveCurrentAngle());
+					addSequential(new DriveDistance(140));
+					addSequential(new RotateToPreviousAngle(180));
+				} else if(goal == Goal.RIGHT) {
+					addSequential(new SaveCurrentAngle());
+					addSequential(new DriveDistance(100));
+					addSequential(new RotateToPreviousAngle(180));
+				} else {
+					addSequential(new WaitCommand(1));
+				}
+				
+				if(goal == Goal.LEFT || goal == Goal.RIGHT) {
+					addSequential(new SetCollectorPower(-.8));
+					addSequential(new WaitCommand(.25));
+					addSequential(new SetCollectorPower());
+					addSequential(new DriveDistance(12));
+				}
 			} else {
 				addSequential(new WaitCommand(0));
 			}

@@ -135,6 +135,9 @@ public class ShooterSubsystem extends Subsystem {
 
 	public void initDefaultCommand() {
 	}
+	public double getSetPoint(){
+		return controller.getSetpoint();
+	}
 
 	public static ShooterSubsystem getInstance() {
 		if (instance == null) {

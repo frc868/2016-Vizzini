@@ -1,9 +1,11 @@
 package com.techhounds.commands.auton;
 
 import com.techhounds.RobotMap;
-import com.techhounds.commands.DriveDistance;
 import com.techhounds.commands.angler.SetAnglerPosition;
+import com.techhounds.commands.drive.DriveDistance;
+import com.techhounds.commands.gyro.RotateToPreviousAngle;
 import com.techhounds.commands.gyro.RotateUsingGyro;
+import com.techhounds.commands.gyro.SaveCurrentAngle;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.WaitCommand;
@@ -13,22 +15,29 @@ import edu.wpi.first.wpilibj.command.WaitCommand;
  */
 public class CrossCDF extends CommandGroup {
     
-    public  CrossCDF() {
+    public  CrossCDF(boolean isFacingForward) {
     	
     	//this command assumes the robot is facing forward in front of the defense
+    	double direction = 1;
+    	addSequential(new SaveCurrentAngle());//saves angle
     	
-    	addSequential(new RotateUsingGyro(180));//turns around
+    	if(isFacingForward){
+    		addSequential(new RotateUsingGyro(180));//turns around
+    		direction = -1;
+    	}
     	
-    	addSequential(new DriveDistance(-1, .5));//drives up on to ramp to its position
+    	addSequential(new DriveDistance(direction * 90, .5));//drives up on to ramp to its position
     	
     	addSequential(new SetAnglerPosition(RobotMap.Collector.COLLECTOR_DOWN));//lowers collector onto defense
     	
-    	addSequential(new WaitCommand(1));//waits until defense is lowered
+    	addSequential(new WaitCommand(.2));//waits until defense is lowered
     	
-    	addParallel(new DriveDistance(-3, .7));//drives over defense and waits a moment before...
-    	addSequential(new WaitCommand(.2));
+    	addParallel(new DriveDistance(direction * 55, .7));//drives over defense and waits a moment before...
+    	addSequential(new WaitCommand(.1));
     	
     	addSequential(new SetAnglerPosition(RobotMap.Collector.COLLECTOR_UP));//...raising collector to prevent damage to it
+    	
+    	addSequential(new RotateToPreviousAngle());
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
@@ -45,5 +54,9 @@ public class CrossCDF extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
+    }
+    
+    public CrossCDF(){
+    	this(true);
     }
 }

@@ -1,8 +1,5 @@
 package com.techhounds;
 
-import com.techhounds.commands.DriveDistance;
-import com.techhounds.commands.DriveEncodersReset;
-import com.techhounds.commands.ToggleDriveDirection;
 import com.techhounds.commands.USBCameraCommand;
 import com.techhounds.commands.UpdateController;
 import com.techhounds.commands.angler.SetAnglerPosition;
@@ -12,14 +9,19 @@ import com.techhounds.commands.angler.SetStateUp;
 import com.techhounds.commands.auton.CrossDefense;
 import com.techhounds.commands.auton.VisionRotateToTarget;
 import com.techhounds.commands.collector.SetCollectorPower;
+import com.techhounds.commands.drive.DriveDistance;
+import com.techhounds.commands.drive.DriveEncodersReset;
+import com.techhounds.commands.drive.ToggleDriveDirection;
 import com.techhounds.commands.gyro.RotateUsingGyro;
 import com.techhounds.commands.servos.SetScissorsOne;
 import com.techhounds.commands.servos.SetScissorsTwo;
 import com.techhounds.commands.servos.SetWinchEnable;
 import com.techhounds.commands.servos.SetWinchLock;
 import com.techhounds.commands.shooter.Fire;
+import com.techhounds.commands.shooter.IncrementShooterSpeed;
 import com.techhounds.commands.shooter.SetShooterPower;
 import com.techhounds.commands.shooter.SetShooterSpeed;
+import com.techhounds.commands.shooter.SetShooterSpeedFromVision;
 import com.techhounds.lib.hid.ControllerMap;
 import com.techhounds.lib.hid.DPadButton;
 import com.techhounds.subsystems.DriveSubsystem;
@@ -55,6 +57,14 @@ public class OI {
 //	final int collectDefenses = 	ControllerMap.Key.LT;
 	final int toggleDrive =			ControllerMap.Key.START;
 	final int visionTarget = 		DPadButton.Direction.RIGHT;
+	
+	final int opCollectIn = 		ControllerMap.Key.Y;
+	final int opCollectOut = 		ControllerMap.Key.B;
+	final int opShooterOn = 		ControllerMap.Key.A;
+	final int opShooterOff = 		ControllerMap.Key.X;
+	final int opShooterUp = 		DPadButton.Direction.UP;
+	final int opShooterDown = 		DPadButton.Direction.DOWN;
+
 	
 	private OI() {
 	
@@ -92,14 +102,29 @@ public class OI {
 	 * Gets the Driver Controller Ready with its Buttons
 	 */
 	public void setupDriver() {
-		
+		setupController();
 	}
 	
 	/**
 	 * Gets the Operator Controller Ready with its Buttons
 	 */
 	public void setupOperator() {
-		// TODO: Add Operator Controls
+		operator.getButton(opCollectIn).
+		whenPressed(new SetCollectorPower(RobotMap.Collector.inPower)).
+		whenReleased(new SetCollectorPower());
+		
+		operator.getButton(opCollectOut).
+		whenPressed(new SetCollectorPower(RobotMap.Collector.outPower)).
+		whenReleased(new SetCollectorPower());
+		
+		operator.getButton(opShooterOn).whenPressed(new SetShooterSpeed(69)); 
+		//This will change to the line below when we implement the vision distance tracking to shooter speed
+		//operator.getButton(opShooterOn).whenPressed(new SetShooterSpeedFromVision());
+		
+		operator.getButton(opShooterOff).whenPressed(new SetShooterSpeed(0));
+		
+		operator.getButton(opShooterUp).whenPressed(new IncrementShooterSpeed(1));
+		operator.getButton(opShooterDown).whenPressed(new IncrementShooterSpeed(-1));
 	}
 	
 	/**

@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-# 2016-FRC-Robot
-
-=======
 # 2016-Vizzini
-2016 Robot Prototype w/ RoboRio, not based on Atif's 2016-FRC-Robot
-Woo java
->>>>>>> 85a11213497f743c0a3cc6133d69c25f9b93fcc2
+
+![alt tag](http://vignette2.wikia.nocookie.net/villains/images/2/21/Vezzini.jpg)![alt tag](https://briandolleman.files.wordpress.com/2011/04/wallace-shawn-vizzini-2.jpg)![alt tag](https://mcolaw.files.wordpress.com/2015/03/zzr0aiqj.jpg)![alt tag](http://static.onemansblog.com/wp-content/uploads/2011/01/The-princess-bride-Vizzini.jpg)

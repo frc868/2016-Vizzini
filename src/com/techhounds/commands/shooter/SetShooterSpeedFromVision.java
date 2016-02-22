@@ -1,41 +1,36 @@
-package com.techhounds.commands;
+package com.techhounds.commands.shooter;
 
-import com.techhounds.OI;
-import com.techhounds.subsystems.DriveSubsystem;
+import com.techhounds.subsystems.ShooterSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
  */
-public class DriveWithPower extends Command {
-	
-	DriveSubsystem drive;
+public class SetShooterSpeedFromVision extends Command {
 
-    public DriveWithPower() {
-    	drive = DriveSubsystem.getInstance();
-    	requires(drive);
+	ShooterSubsystem shooter;
+    public SetShooterSpeedFromVision() {
+    	shooter = ShooterSubsystem.getInstance();//Doesn't require, just calls a new setShooterSpeed
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	double setSpeed = SmartDashboard.getNumber("Vision_Shoot_Speed");
+    	new SetShooterSpeed(setSpeed).start();
+    	
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if(DriveSubsystem.isForward){
-    		drive.setPower(OI.getInstance().getRightBackward(), OI.getInstance().getLeftBackward());
-    	}else{
-    		drive.setPower(OI.getInstance().getRightForward(), OI.getInstance().getLeftForward());
-        	
-    	}
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return true;
     }
 
     // Called once after isFinished returns true
@@ -45,6 +40,5 @@ public class DriveWithPower extends Command {
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	end();
     }
 }
