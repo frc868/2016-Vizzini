@@ -185,18 +185,13 @@ public class AutonChooser {
 	}
 	
 	public Command createAutonCommand() {
-		int start = getStart();
-		Defense defense = getDefense();
-		Goal goal = getGoal();
-		int shoot = getShoot();
-		int post = getPost();
 		
 		if(!isValid()) {
 			System.out.print("-- INVALID AUTON --");
 			return new AutonCommand();
 		} else {
 			// TODO: If Invalid Auton, just reach the defense so we get points
-			return new DriveDistance(2);
+			return new DriveDistance(RobotMap.Defenses.DEFENSE_DISTANCE, RobotMap.Defenses.TO_DEFENSE_SPEED);
 		}
 	}
 	
@@ -208,22 +203,23 @@ public class AutonChooser {
 			Defense defense = getDefense();
 			Goal goal = getGoal();
 			int shoot = getShoot();
-			int post = getPost();
 			
 			switch(defense) {//first sequence, crosses the designated defense
 				case LOW_BAR:
 					addSequential(new SetAnglerPosition(RobotMap.Collector.COLLECTING));
-					addSequential(new CrossDefense(143.5, .48));
+					addSequential(new CrossDefense(RobotMap.Defenses.LOW_BAR_DISTANCE, RobotMap.Defenses.LOW_BAR_SPEED));
 					break;
 				case MOAT:
-					addSequential(new CrossDefense(160.0, .48));
+					addSequential(new CrossDefense(RobotMap.Defenses.MOAT_DISTANCE, RobotMap.Defenses.MOAT_SPEED));
 					break;
 				case RAMPARTS:
-					addSequential(new CrossDefense(.65, true));
+					addSequential(new CrossDefense(RobotMap.Defenses.RAMPARTS_DISTANCE, RobotMap.Defenses.RAMPARTS_SPEED));
 					break;
 				case ROCK_WALL:
+					addSequential(new CrossDefense(RobotMap.Defenses.ROCK_WALL_DISTANCE, RobotMap.Defenses.ROCK_WALL_SPEED));
+					break;
 				case ROUGH_TERRAIN:
-					addSequential(new CrossDefense(.5, true));
+					addSequential(new CrossDefense(RobotMap.Defenses.ROUGH_TERRAIN_DISTANCE, RobotMap.Defenses.ROUGH_TERRAIN_SPEED));
 					break;
 				case PORTCULLIS:
 					addSequential(new CrossPortcullis());
@@ -232,7 +228,7 @@ public class AutonChooser {
 					addSequential(new CrossCDF());
 					break;
 				default: // case Defense.DO_NOTHING && Defense.REACH_DEFENSE
-					addSequential(new DriveDistance(60, .5));
+					addSequential(new DriveDistance(RobotMap.Defenses.DEFENSE_DISTANCE, RobotMap.Defenses.TO_DEFENSE_SPEED));
 					return; // If only Reaching Defense and Do Nothing
 			}
 			

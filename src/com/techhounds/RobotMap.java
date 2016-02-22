@@ -75,6 +75,39 @@ public interface RobotMap {
 		
 	}
 	
+	interface Defenses {
+		//If a double has DONE after it, please don't change it, as that should be an accurate value for the variable.
+		
+		final double MOAT_SPEED					= .48;//DONE
+		final double LOW_BAR_SPEED 				= .4;//
+		final double PORTCULLIS_SPEED_1 		= .4;//before opening Portcullis
+		final double PORTCULLIS_SPEED_2 		= .3;//while opening Portcullis
+		final double PORTCULLIS_SPEED_3 		= .5;//after
+		final double CDF_SPEED_1 				= .4;//before lowering CDF
+		final double CDF_SPEED_2 				= .5;//after
+		final double RAMPARTS_SPEED 			= .65;//
+		final double ROCK_WALL_SPEED 			= .5;//
+		final double ROUGH_TERRAIN_SPEED 		= .5;//
+		final double TO_DEFENSE_SPEED			= .5;//
+		
+		//In inches, normal should be 139.5 in, defense = 47.5 in horizontal
+		final double MOAT_DISTANCE 				= 160;//DONE
+		final double LOW_BAR_DISTANCE 			= 143.5;//DONE
+		final double PORTCULLIS_DISTANCE_1 		= 60;//before opening Portcullis
+		final double PORTCULLIS_DISTANCE_2 		= 20;//while opening Portcullis
+		final double PORTCULLIS_DISTANCE_3 		= 60;//after
+		final double CDF_DISTANCE_1 			= 60;//before lowering CDF
+		final double CDF_DISTANCE_2				= 60;//after
+		final double RAMPARTS_DISTANCE 			= 60;//
+		final double ROCK_WALL_DISTANCE			= 60;//
+		final double ROUGH_TERRAIN_DISTANCE 	= 60;//
+		final double DEFENSE_DISTANCE			= 60;//Maybe?
+		
+		//possible wait times used in auton commands
+		final double CDF_WAIT_1					= .2;//
+		final double CDF_WAIT_2					= .1;//
+	}
+	
 	interface LED {
 		// Two "option bits" to set LED mode on arduine connected to DIO ports
 		final static int DIO_MODE_0 = 8;
