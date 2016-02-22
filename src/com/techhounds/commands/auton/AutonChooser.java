@@ -225,7 +225,7 @@ public class AutonChooser {
 			int shoot = getShoot();
 			int post = getPost();
 			
-			switch(defense) {
+			switch(defense) {//first sequence, crosses the designated defense
 				case LOW_BAR:
 					addSequential(new SetAnglerPosition(RobotMap.Collector.COLLECTING));
 					addSequential(new CrossDefense());
@@ -249,18 +249,14 @@ public class AutonChooser {
 					return; // If only Reaching Defense and Do Nothing
 			}
 			
-			// We have only made it here if not Reaching Defense and Do Nothing
-			if(defense == Defense.CHEVAL_DE_FRISE || defense == Defense.PORTCULLIS)
-				addSequential(new RotateUsingGyro(180)); // Assuming Collector FIRST
-			else
-				addSequential(new RotateUsingGyro(0));
+			// We have only made it here if not Reaching Defense or Do Nothing
 			
+			//This group of if statements determines what to do after crossing a defense
 			if(goal == Goal.DO_NOTHING) {
 				addSequential(new WaitCommand(0));
 			} else if(start == 5 && goal == Goal.LEFT) {
 				addSequential(new DriveDistance(43));
 				addSequential(new RotateUsingGyro(60));
-//				addParallel(new SetShooterSpeed(69));    already performed outside of if statement
 			} else if(start == 4 && goal == Goal.LEFT) {
 				addSequential(new RotateUsingGyro(-49.29));
 				addSequential(new SaveCurrentAngle());
@@ -294,7 +290,7 @@ public class AutonChooser {
 			}
 	
 			
-			
+			//This group of if statements determines what to do after positioning toward the enemy castle
 			if(shoot == 0) {
 				addParallel(new VisionRotateToTarget());// Get ourselves ready to target
 				addParallel(new SetShooterSpeed(69));
