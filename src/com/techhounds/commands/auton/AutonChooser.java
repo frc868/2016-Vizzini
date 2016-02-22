@@ -211,37 +211,27 @@ public class AutonChooser {
 					addSequential(new SetAnglerPosition(RobotMap.Collector.COLLECTING));
 					addSequential(new CrossDefense());
 					break;
-				
 				case MOAT:
 				case RAMPARTS:
-					addSequential(new CrossDefense());
+					addSequential(new CrossDefense(.65, true));
 					break;
-				
 				case ROCK_WALL:
 				case ROUGH_TERRAIN:
 					addSequential(new CrossDefense(.5, true));
 					break;
-				
 				case PORTCULLIS:
 					addSequential(new CrossPortcullis());
 					break;
-				
 				case CHEVAL_DE_FRISE:
 					addSequential(new CrossCDF());
 					break;
-				
-				case REACH_DEFENSE:
+				default: // case Defense.DO_NOTHING && Defense.REACH_DEFENSE
 					addSequential(new DriveDistance(60, .5));
-					break;
-				
-				default:
-					addSequential(new WaitCommand(0));
-					break;
+					return; // If only Reaching Defense and Do Nothing
 			}
 			
-			if(defense != Defense.DO_NOTHING && defense != Defense.REACH_DEFENSE) {
-				addSequential(new RotateUsingGyro(0));
-			}
+			// We have only made it here if not Reaching Defense and Do Nothing
+			addSequential(new RotateUsingGyro(0));
 			
 			if(goal == Goal.DO_NOTHING) {
 				// TODO: Drive 1 foot
