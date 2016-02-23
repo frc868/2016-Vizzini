@@ -56,10 +56,8 @@ public class OI {
 	final int stopShooter = 		DPadButton.Direction.LEFT;
 	final int startShooter = 		ControllerMap.Key.X;
 	final int fireShooter = 		ControllerMap.Key.B;
-//	final int collectAngler = 		ControllerMap.Key.LB;
-//	final int collectDefenses = 	ControllerMap.Key.LT;
 	final int toggleDrive =			ControllerMap.Key.START;
-	final int visionTarget = 		ControllerMap.Key.RT;
+	final int visionTarget = 		ControllerMap.Key.LT;
 	
 	
 	final int opCollectIn = 		ControllerMap.Key.Y;
@@ -157,7 +155,7 @@ public class OI {
 			.whenPressed(new IncrementShooterSpeed(1));
 		
 		controller.getButton(downShooterSpeed)
-			.whenPressed(new IncrementShooterSpeed(1));
+			.whenPressed(new IncrementShooterSpeed(-1));
 		
 		controller.getButton(stopShooter)
 			.whenPressed(new SetShooterPower());
