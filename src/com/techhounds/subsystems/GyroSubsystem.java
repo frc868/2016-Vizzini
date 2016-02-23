@@ -49,6 +49,7 @@ public abstract class GyroSubsystem extends Subsystem {
 	}
 	
 	private double previousAngle = 0;
+	private double previousTilt = 0;
 	
 	/**
 	 * Set to type of gyro that is currently installed on the robot.
@@ -100,6 +101,7 @@ public abstract class GyroSubsystem extends Subsystem {
 			instance.gyroy = instance.createTiltGyro();
 			instance.gyrox = instance.createRotationGyro();
 			LiveWindow.addSensor("Gyro", "Rotation", instance.gyrox);
+			LiveWindow.addSensor("Gyro", "Tilt", instance.gyroy);
 		}
 		return instance;
 	}
@@ -110,6 +112,14 @@ public abstract class GyroSubsystem extends Subsystem {
 	
 	public double getStoredAngle(){
 		return previousAngle;
+	}
+	
+	public void storeCurrentTilt(){
+		previousTilt = getTilt();
+	}
+	
+	public double getStoredTilt(){
+		return previousTilt;
 	}
 
 	/**
