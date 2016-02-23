@@ -77,35 +77,39 @@ public interface RobotMap {
 	
 	interface Defenses {
 		//If a double has DONE after it, please don't change it, as that should be an accurate value for the variable.
+		//In inches, objective should be to cross a defense and end with wheels just past it, around 125 in.
 		
 		final double MOAT_SPEED					= .48;//DONE
-		final double LOW_BAR_SPEED 				= .4;//
-		final double PORTCULLIS_SPEED_1 		= .4;//before opening Portcullis
-		final double PORTCULLIS_SPEED_2 		= .3;//while opening Portcullis
-		final double PORTCULLIS_SPEED_3 		= .5;//after
+		final double MOAT_DISTANCE 				= 148.5;//DONE
+		
+		final double LOW_BAR_SPEED 				= .4;//DONE
+		final double LOW_BAR_DISTANCE 			= 127.5;//DONE
+
+		final double RAMPARTS_SPEED 			= .65;//
+		final double RAMPARTS_DISTANCE 			= 139.5;//
+		
+		final double ROCK_WALL_SPEED 			= .5;//
+		final double ROCK_WALL_DISTANCE			= 143.5;//
+		
+		final double ROUGH_TERRAIN_SPEED 		= .5;//SET
+		final double ROUGH_TERRAIN_DISTANCE 	= 139.5;//
+		
+		final double PORTCULLIS_SPEED_1 		= .4;//Moving to Portcullis
+		final double PORTCULLIS_SPEED_2 		= .3;//after lowering collector
+		final double PORTCULLIS_SPEED_3 		= .5;//while opening Portcullis and after
+		final double PORTCULLIS_DISTANCE_1 		= 60;//Moving to Portcullis
+		final double PORTCULLIS_DISTANCE_2 		= 20;//after lowering collector
+		final double PORTCULLIS_DISTANCE_3 		= 60;//while opening Portcullis and after
+		
 		final double CDF_SPEED_1 				= .4;//before lowering CDF
 		final double CDF_SPEED_2 				= .5;//after
-		final double RAMPARTS_SPEED 			= .65;//
-		final double ROCK_WALL_SPEED 			= .5;//
-		final double ROUGH_TERRAIN_SPEED 		= .5;//
-		final double TO_DEFENSE_SPEED			= .5;//
-		
-		//In inches, normal should be 139.5 in, defense = 47.5 in horizontal
-		final double MOAT_DISTANCE 				= 148.5;//DONE
-		final double LOW_BAR_DISTANCE 			= 139.5 - 12;//DONE
-		final double PORTCULLIS_DISTANCE_1 		= 60;//before opening Portcullis
-		final double PORTCULLIS_DISTANCE_2 		= 20;//while opening Portcullis
-		final double PORTCULLIS_DISTANCE_3 		= 60;//after
 		final double CDF_DISTANCE_1 			= 60;//before lowering CDF
 		final double CDF_DISTANCE_2				= 60;//after
-		final double RAMPARTS_DISTANCE 			= 139.5;//SET
-		final double ROCK_WALL_DISTANCE			= 143.5;//SET
-		final double ROUGH_TERRAIN_DISTANCE 	= 139.5;//SET
-		final double DEFENSE_DISTANCE			= 45;//SET
+		final double CDF_WAIT_1					= .2;//after lowering collector
+		final double CDF_WAIT_2					= .1;//before raising collector
 		
-		//possible wait times used in auton commands
-		final double CDF_WAIT_1					= .2;//
-		final double CDF_WAIT_2					= .1;//
+		final double TO_DEFENSE_SPEED			= .5;//DONE
+		final double DEFENSE_DISTANCE			= 45;//DONE
 	}
 	
 	interface LED {
