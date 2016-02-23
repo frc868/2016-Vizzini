@@ -22,7 +22,7 @@ public interface RobotMap {
 		final int COLLECTOR_PDP = 11;
 		
 		final double COLLECTOR_UP = 47;
-		final double COLLECTING = 315;
+		final double COLLECTING = 290;
 		final double COLLECTOR_DOWN = 410;
 	}
 	
