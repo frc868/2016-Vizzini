@@ -186,9 +186,9 @@ public class AutonChooser {
 	}
 	
 	public Command createAutonCommand() {
-		
-		if(!isValid()) {
-			System.out.print("-- INVALID AUTON --");
+		SmartDashboard.putBoolean("Valid Auton", isValid());
+		if(isValid()) {
+			System.out.print("-- VALID AUTON --");
 			return new AutonCommand();
 		} else {
 			// TODO: If Invalid Auton, just reach the defense so we get points

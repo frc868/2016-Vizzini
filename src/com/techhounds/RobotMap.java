@@ -52,7 +52,7 @@ public interface RobotMap {
 		final int DRIVE_RIGHT_PDP_3 = 15;
 		
 		final double MIN_TURN_POWER = .25;
-		final double MIN_STRAIGHT_POWER = .18;
+		final double MIN_STRAIGHT_POWER = .15;
 	}
 	
 	interface Servo {
@@ -86,8 +86,8 @@ public interface RobotMap {
 		final double LOW_BAR_SPEED 				= .4;//DONE
 		final double LOW_BAR_DISTANCE 			= 127.5;//DONE
 
-		final double RAMPARTS_SPEED 			= .65;//
-		final double RAMPARTS_DISTANCE 			= 139.5;//
+		final double RAMPARTS_SPEED 			= .5;//DONE
+		final double RAMPARTS_DISTANCE 			= 139.5;//DONE
 		
 		final double ROCK_WALL_SPEED 			= .5;//
 		final double ROCK_WALL_DISTANCE			= 143.5;//
