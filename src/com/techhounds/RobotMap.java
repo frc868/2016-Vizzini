@@ -92,7 +92,7 @@ public interface RobotMap {
 		
 		//In inches, normal should be 139.5 in, defense = 47.5 in horizontal
 		final double MOAT_DISTANCE 				= 160;//DONE
-		final double LOW_BAR_DISTANCE 			= 143.5;//DONE
+		final double LOW_BAR_DISTANCE 			= 139.5;//DONE
 		final double PORTCULLIS_DISTANCE_1 		= 60;//before opening Portcullis
 		final double PORTCULLIS_DISTANCE_2 		= 20;//while opening Portcullis
 		final double PORTCULLIS_DISTANCE_3 		= 60;//after
@@ -101,7 +101,7 @@ public interface RobotMap {
 		final double RAMPARTS_DISTANCE 			= 60;//
 		final double ROCK_WALL_DISTANCE			= 60;//
 		final double ROUGH_TERRAIN_DISTANCE 	= 60;//
-		final double DEFENSE_DISTANCE			= 50;//Maybe?
+		final double DEFENSE_DISTANCE			= 45;//Maybe?
 		
 		//possible wait times used in auton commands
 		final double CDF_WAIT_1					= .2;//

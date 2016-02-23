@@ -208,8 +208,8 @@ public class AutonChooser {
 			
 			switch(defense) {//first sequence, crosses the designated defense
 				case LOW_BAR:
-					addSequential(new SetAnglerPosition(RobotMap.Collector.COLLECTING));
-					addSequential(new CrossDefense(RobotMap.Defenses.LOW_BAR_DISTANCE, RobotMap.Defenses.LOW_BAR_SPEED));
+					addParallel(new SetAnglerPosition(RobotMap.Collector.COLLECTING));
+					addParallel(new CrossDefense(RobotMap.Defenses.LOW_BAR_DISTANCE, RobotMap.Defenses.LOW_BAR_SPEED));
 					break;
 				case MOAT:
 					addSequential(new CrossDefense(RobotMap.Defenses.MOAT_DISTANCE, RobotMap.Defenses.MOAT_SPEED));

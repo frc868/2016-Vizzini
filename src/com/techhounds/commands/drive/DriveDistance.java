@@ -43,10 +43,7 @@ public class DriveDistance extends Command implements PIDSource, PIDOutput {
 	
 	@Override
 	protected void initialize() {
-		targetDist = SmartDashboard.getNumber("Distance To Drive");
-		double maxPower = SmartDashboard.getNumber("Power to Drive", 0.3);
 		minPower = SmartDashboard.getNumber("Min Power To Drive", .2);
-		pid.setOutputRange(-maxPower, maxPower);
 		double curDist = drive.countsToDist(drive.getAvgDistance());
 		lastPower = 0;
 		pid.setSetpoint(targetDist + curDist);
