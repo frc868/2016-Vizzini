@@ -4,6 +4,7 @@ package com.techhounds;
 import com.techhounds.commands.MatchSetup;
 import com.techhounds.commands.USBCameraCommand;
 import com.techhounds.commands.UpdateSmartDashboard;
+import com.techhounds.commands.auton.RetrieveAuton;
 import com.techhounds.subsystems.AnglerSubsystem;
 import com.techhounds.subsystems.BeamBreakSubsystem;
 import com.techhounds.subsystems.CollectorSubsystem;
@@ -69,6 +70,7 @@ public class Robot extends IterativeRobot {
 	 */
 	public void autonomousInit() {
 		// TODO: Get Selected Auton Command and Run It!
+		new RetrieveAuton().start();
     	System.out.println("*** TECHHOUNDS IS READY TO AUTON ***");
     }
 

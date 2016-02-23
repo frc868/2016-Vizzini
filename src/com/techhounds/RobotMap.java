@@ -78,6 +78,7 @@ public interface RobotMap {
 	interface Defenses {
 		//If a double has DONE after it, please don't change it, as that should be an accurate value for the variable.
 		//In inches, objective should be to cross a defense and end with wheels just past it, around 125 in.
+		//Standardized, back of robot is 74 in from front of defense.
 		
 		final double MOAT_SPEED					= .48;//DONE
 		final double MOAT_DISTANCE 				= 148.5;//DONE
