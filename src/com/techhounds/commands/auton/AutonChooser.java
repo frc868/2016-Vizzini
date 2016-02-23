@@ -106,7 +106,8 @@ public class AutonChooser {
 		chooseShoot.addDefault("Do Nothing", new Integer(2));
 		
 		choosePost = new SendableChooser();
-		choosePost.addObject("Get into Position", new Integer(1));
+		choosePost.addObject("Get into Position", new Integer(2));
+		choosePost.addObject("Angle toward defenses", new Integer(1));
 		choosePost.addObject("Do Nothing", new Integer(0));
 
 
@@ -203,6 +204,7 @@ public class AutonChooser {
 			Defense defense = getDefense();
 			Goal goal = getGoal();
 			int shoot = getShoot();
+			int post = getPost();
 			
 			switch(defense) {//first sequence, crosses the designated defense
 				case LOW_BAR:
@@ -303,9 +305,53 @@ public class AutonChooser {
 			} else {
 				addSequential(new WaitCommand(0));
 			}
+			
+			
+			//This group of if statements determines what to do after firing or not.
+			if(shoot == 2){
+				shoot = 0;
+			}//shooting at the high goal and nothing have the same position on the field
+			
+			if(goal == Goal.MIDDLE || goal == Goal.DO_NOTHING){
+				if(post != 0){//turns to defenses
+					addSequential(new RotateUsingGyro(-180));
+					if(post == 2 && goal != Goal.DO_NOTHING) {//was pretty much already at defenses
+						addSequential(new DriveDistance(8));
+					}
+				}
+			}else if(goal == Goal.LEFT) {
+				if(post == 1){//angle to defenses
+					addSequential(new RotateUsingGyro(120));
+				} else if(post == 2) {//back to defenses
+					if(shoot == 0) {
+						addSequential(new RotateUsingGyro(120));
+						addSequential(new DriveDistance(43));
+					} else {//at centerGoal
+						addSequential(new RotateUsingGyro(120));
+						addSequential(new DriveDistance(120));
+					}
+				}
+			} else {//Goal.RIGHT
+				if(post == 1){//angle to defenses
+					if(shoot == 0){//in secretPassage
+						addSequential(new RotateUsingGyro(-90));
+					} else {//at centerGoal
+						addSequential(new RotateUsingGyro(-120));
+					}
+				} else if(post == 2) {//back to defenses
+					if(shoot == 0) {
+						addSequential(new RotateUsingGyro(-90));
+						addSequential(new DriveDistance(60));
+						addSequential(new RotateUsingGyro(-30));
+					} else {//at centerGoal
+						addSequential(new RotateUsingGyro(-120));
+						addSequential(new DriveDistance(120));
+					}
+				}
+			}
 		}
 	}
-
+	
 	public void updateSmartDashboard() {
 		SmartDashboard.putBoolean("Valid Auton", isValid());
 	}
