@@ -52,7 +52,7 @@ public interface RobotMap {
 		final int DRIVE_RIGHT_PDP_3 = 15;
 		
 		final double MIN_TURN_POWER = .25;
-		final double MIN_STRAIGHT_POWER = .2;
+		final double MIN_STRAIGHT_POWER = .18;
 	}
 	
 	interface Servo {
