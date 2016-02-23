@@ -31,6 +31,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * at the same time!
  * </p>
  */
+
+// Please do note that the Y gyro may currently be inverted, if so please change the value to true on line 185.
+
 public abstract class GyroSubsystem extends Subsystem {
 	
 	// NOTE: Several of these constants could be relocated to RobotMap if you want to make them public
@@ -66,6 +69,7 @@ public abstract class GyroSubsystem extends Subsystem {
 
 	// Instance used to track the rotation throughout the entire match
 	private GyroBase gyrox;
+	private GyroBase gyroy;
 
 	/**
 	 * Private constructor to force {@link #getInstance()} usage.
@@ -93,6 +97,7 @@ public abstract class GyroSubsystem extends Subsystem {
 
 			// NOTE: This must be done here and not in the constructor to
 			// make use of overridden methods.
+			instance.gyroy = instance.createTiltGyro();
 			instance.gyrox = instance.createRotationGyro();
 			LiveWindow.addSensor("Gyro", "Rotation", instance.gyrox);
 		}
@@ -111,9 +116,9 @@ public abstract class GyroSubsystem extends Subsystem {
 	 * Update the dashboard with current heading of the robot (since boot).
 	 */
 	public void updateSmartDashboard() {
-		// SmartDashboard.putNumber("Tilt", getTilt());
+		SmartDashboard.putNumber("Tilt (Y)", getTilt());
 		// SmartDashboard.putNumber("Lean", getLean());
-		SmartDashboard.putNumber("Rotation", getRotation());
+		SmartDashboard.putNumber("Rotation (X)", getRotation());
 	}
 
 	/**
@@ -132,6 +137,10 @@ public abstract class GyroSubsystem extends Subsystem {
 	public final double getRotation() {
 		return gyrox.getAngle();
 	}
+	
+	public final double getTilt() {
+		return gyroy.getAngle();
+	}
 
 	/**
 	 * Returns a "nice" independent Gyro your can used in PID methods to track
@@ -140,6 +149,7 @@ public abstract class GyroSubsystem extends Subsystem {
 	 * @return A Gyro (initially 0) you can use to track relative rotation with.
 	 */
 	public abstract GyroBase createRotationGyro();
+	public abstract GyroBase createTiltGyro();
 
 	/**
 	 * Implementation using BNO055 sensor as the gyro source.
@@ -150,8 +160,11 @@ public abstract class GyroSubsystem extends Subsystem {
 		GyroBNO055() {
 			sensor = BNO055.getInstance(BNO055_PORT);
 		}
+		
+		public GyroBase createTiltGyro() {
+			return sensor.createGyroY();
+		}
 
-		@Override
 		public GyroBase createRotationGyro() {
 			return sensor.createGyroX();
 		}
@@ -166,8 +179,13 @@ public abstract class GyroSubsystem extends Subsystem {
 		public GyroITG3200() {
 			sensor = new ITG3200(ITG3200_PORT, ITG3200_ADDR_JUMPER);
 		}
+		
+		public GyroBase createTiltGyro() {
+			GyroAdapter gyro = sensor.createGyroY();
+			gyro.setInverted(false);
+			return gyro;
+		}
 
-		@Override
 		public GyroBase createRotationGyro() {
 			GyroAdapter gyro = sensor.createGyroX();
 			gyro.setInverted(true);
@@ -179,8 +197,11 @@ public abstract class GyroSubsystem extends Subsystem {
 	 * Fake implementation when no gyro is available.
 	 */
 	private static class GyroFake extends GyroSubsystem {
+		
+		public GyroBase createTiltGyro() {
+			return GyroAdapter.createFakeGyro();
+		}
 
-		@Override
 		public GyroBase createRotationGyro() {
 			return GyroAdapter.createFakeGyro();
 		}
