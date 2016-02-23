@@ -30,7 +30,7 @@ public class WaitForPreviousTilt extends Command {
     		WaitCommand wait = new WaitCommand(.03);
     		wait.start();
     		if(!wait.isRunning()){
-    			if(gyro.getTilt() <= tilt + .5 || gyro.getTilt() >= tilt - .5){
+    			if(gyro.getTilt() <= tilt + 2 && gyro.getTilt() >= tilt - 2){
     				end();
     			}
     		}

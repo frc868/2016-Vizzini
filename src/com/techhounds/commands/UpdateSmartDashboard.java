@@ -33,7 +33,7 @@ public class UpdateSmartDashboard extends Command {
     		AnglerSubsystem.getInstance().updateSmartDashboard();
     		DriveSubsystem.getInstance().updateSmartDashboard();
     		BeamBreakSubsystem.getInstance().updateSmartDashboard();
-    		
+    		GyroSubsystem.getInstance().updateSmartDashboard();
     		AutonChooser.getInstance().updateSmartDashboard();
 	    	timer.reset();
 		}

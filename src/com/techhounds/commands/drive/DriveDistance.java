@@ -17,6 +17,8 @@ public class DriveDistance extends Command implements PIDSource, PIDOutput {
 	private PIDController pid;
 	private double lastPower;
 	private double minPower;
+	private boolean pidOnTarget;
+	
 	public DriveDistance(double dist) {
 		this(dist, 1);
 	}
@@ -43,7 +45,7 @@ public class DriveDistance extends Command implements PIDSource, PIDOutput {
 	
 	@Override
 	protected void initialize() {
-		minPower = SmartDashboard.getNumber("Min Power To Drive", .2);
+		//minPower = SmartDashboard.getNumber("Min Power To Drive", .2);
 		double curDist = drive.countsToDist(drive.getAvgDistance());
 		lastPower = 0;
 		pid.setSetpoint(targetDist + curDist);
@@ -61,7 +63,7 @@ public class DriveDistance extends Command implements PIDSource, PIDOutput {
 	@Override
 	protected boolean isFinished() {
 		// TODO Auto-generated method stub
-		return pid.onTarget();
+		return pidOnTarget = pid.onTarget();
 	}
 
 	@Override
@@ -81,7 +83,7 @@ public class DriveDistance extends Command implements PIDSource, PIDOutput {
 
 	@Override
 	public void pidWrite(double output) {
-		/*double difference = output - lastPower;
+		double difference = output - lastPower;
 		if(difference > .1){
 			output = lastPower + .1;
 		}else if(difference < -.1){
@@ -90,8 +92,12 @@ public class DriveDistance extends Command implements PIDSource, PIDOutput {
 		
 		if(output < minPower && output > -minPower)
 			output = output > 0 ? minPower : -minPower;
+		
+		if(pidOnTarget)
+			output = 0;
+		
 		lastPower = output;
-		*/drive.setLeftPower(output);
+		drive.setLeftPower(output);
 		drive.setRightPower(output);
 		
 		// TODO Auto-generated method stub
