@@ -171,8 +171,9 @@ public class OI {
 		controller.getButton(toggleDrive)
 			.whenPressed(new ToggleDriveDirection());
 	
+		
 		controller.getButton(visionTarget)
-			.whenPressed(new VisionRotateToTarget());
+			.whileHeld(new VisionRotateToTarget());
 			
 	}
 
