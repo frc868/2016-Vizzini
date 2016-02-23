@@ -229,12 +229,14 @@ public class AutonChooser {
 				case CHEVAL_DE_FRISE:
 					addSequential(new CrossCDF());
 					break;
-				default: // case Defense.DO_NOTHING && Defense.REACH_DEFENSE
+				case DO_NOTHING:
+				case REACH_DEFENSE:
 					addSequential(new DriveDistance(RobotMap.Defenses.DEFENSE_DISTANCE, RobotMap.Defenses.TO_DEFENSE_SPEED));
 					return; // If only Reaching Defense and Do Nothing
 			}
 			
 			// We have only made it here if not Reaching Defense or Do Nothing
+			addSequential(new WaitCommand(.1));
 			
 			//This group of if statements determines what to do after crossing a defense
 			if(goal == Goal.DO_NOTHING) {

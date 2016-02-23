@@ -28,7 +28,7 @@ public class DriveDistance extends Command implements PIDSource, PIDOutput {
 	public DriveDistance(double dist, double max, double min) {
 		drive = DriveSubsystem.getInstance();
 		requires(drive);
-		pid = new PIDController(.02,  0, .005, this, this);
+		pid = new PIDController(.035,  0, .005, this, this);
 		pid.setOutputRange(-max, max);
 		pid.setAbsoluteTolerance(1);
 		minPower = min;
@@ -84,17 +84,17 @@ public class DriveDistance extends Command implements PIDSource, PIDOutput {
 
 	@Override
 	public void pidWrite(double output) {
-		double difference = output - lastPower;
+		/*double difference = output - lastPower;
 		if(difference > .1){
 			output = lastPower + .1;
 		}else if(difference < -.1){
 			output = lastPower - .1;
 		}
 		
-		if(output < minPower || output > minPower)
+		if(output < minPower && output > -minPower)
 			output = output > 0 ? minPower : -minPower;
 		lastPower = output;
-		drive.setLeftPower(output);
+		*/drive.setLeftPower(output);
 		drive.setRightPower(output);
 		
 		// TODO Auto-generated method stub

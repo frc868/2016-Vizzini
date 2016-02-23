@@ -6,7 +6,9 @@ import com.techhounds.commands.angler.SetAnglerPosition;
 import com.techhounds.commands.angler.SetAnglerPower;
 import com.techhounds.commands.angler.SetStateDown;
 import com.techhounds.commands.angler.SetStateUp;
+import com.techhounds.commands.auton.AutonChooser;
 import com.techhounds.commands.auton.CrossDefense;
+import com.techhounds.commands.auton.RetrieveAuton;
 import com.techhounds.commands.auton.VisionRotateToTarget;
 import com.techhounds.commands.collector.SetCollectorPower;
 import com.techhounds.commands.drive.DriveDistance;
@@ -186,20 +188,22 @@ public class OI {
 		}
 		SmartDashboard.putData("Reset Drive Encoders", new DriveEncodersReset());
 		SmartDashboard.putData("Set Shooter Speed", new SetShooterSpeed(69));
-		SmartDashboard.putData("Update Controllers", new UpdateController());
+		SmartDashboard.putData("Update The Controllers", new UpdateController());
 		SmartDashboard.putData("Toggle Camera", new USBCameraCommand(true));
 		//SmartDashboard.putData("Toggle_Scissors_1", new SetScissorsOne());
 		//SmartDashboard.putData("Toggle_Scissors_2", new SetScissorsTwo());
 		SmartDashboard.putData("Toggle_Winch_Enable", new SetWinchEnable());
 		SmartDashboard.putNumber("Shooter Set Speed", 100);
 		SmartDashboard.putData("Shooter:", ShooterSubsystem.getInstance());
-		SmartDashboard.putData("Drive Distance", new DriveDistance(109));
+		SmartDashboard.putData("Drive Distance", new DriveDistance(90));
 		SmartDashboard.putNumber("Distance To Drive", 90);
 		SmartDashboard.putData(DriveSubsystem.getInstance());
 		SmartDashboard.putData("enable Camera", new USBCameraCommand(true));
 		SmartDashboard.putData("Set Angler Position", new SetAnglerPosition());
 		SmartDashboard.putNumber("Angler Set Height", 47);
 		//SmartDashboard.putData("Toggle_Winch_Lock", new SetWinchLock());
+		
+		SmartDashboard.putData("Auton Command", new RetrieveAuton());
 	}
 	
 	/**
@@ -221,8 +225,8 @@ public class OI {
 	 */
 	private SendableChooser createControllerChooser() {
 		SendableChooser chooser = new SendableChooser();
-		chooser.addDefault("Logitech", ControllerMap.Type.LOGITECH);
-		chooser.addObject("XBOX ONE", ControllerMap.Type.XBOX_ONE);
+		chooser.addObject("Logitech", ControllerMap.Type.LOGITECH);
+		chooser.addDefault("XBOX ONE", ControllerMap.Type.XBOX_ONE);
 		chooser.addObject("XBOX 360", ControllerMap.Type.XBOX_360);
 		chooser.addObject("Playstation 4", ControllerMap.Type.PS4);
 		return chooser;

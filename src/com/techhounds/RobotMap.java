@@ -101,7 +101,7 @@ public interface RobotMap {
 		final double RAMPARTS_DISTANCE 			= 60;//
 		final double ROCK_WALL_DISTANCE			= 60;//
 		final double ROUGH_TERRAIN_DISTANCE 	= 60;//
-		final double DEFENSE_DISTANCE			= 60;//Maybe?
+		final double DEFENSE_DISTANCE			= 50;//Maybe?
 		
 		//possible wait times used in auton commands
 		final double CDF_WAIT_1					= .2;//

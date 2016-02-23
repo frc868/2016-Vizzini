@@ -2,6 +2,7 @@
 package com.techhounds;
 
 import com.techhounds.commands.MatchSetup;
+import com.techhounds.commands.USBCameraCommand;
 import com.techhounds.commands.UpdateSmartDashboard;
 import com.techhounds.subsystems.AnglerSubsystem;
 import com.techhounds.subsystems.BeamBreakSubsystem;
@@ -21,7 +22,7 @@ public class Robot extends IterativeRobot {
 	
 	public static double powToSpeedConst = 20;
 	
-	public static boolean oneControllerMode = true;
+	public static boolean oneControllerMode = false;
 	
 	public static boolean isFinal(){
 		return true;
@@ -84,6 +85,7 @@ public class Robot extends IterativeRobot {
     public void teleopInit() {
     	// TODO: Cancel Auton Command
     	new MatchSetup().start();
+    	new USBCameraCommand(true).start();
     	System.out.println("*** TECHHOUNDS IS READY TO TELEOP ***");
     }
 

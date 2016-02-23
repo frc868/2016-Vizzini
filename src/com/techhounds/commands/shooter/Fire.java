@@ -8,9 +8,10 @@ import edu.wpi.first.wpilibj.command.WaitCommand;
 public class Fire extends CommandGroup {
 
 	public Fire() {
-		addSequential(new SetCollectorPower(.8, true));
+		addSequential(new SetCollectorPower(.4, true));
 		addSequential(new WaitCommand(.5));
 		addSequential(new SetCollectorPower(0));
 		addSequential(new SetShooterPower());
+		
 	}
 }
