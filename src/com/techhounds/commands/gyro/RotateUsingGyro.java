@@ -22,7 +22,7 @@ public class RotateUsingGyro extends Command implements PIDSource, PIDOutput {
 	private double angle;
 	public static final boolean DEBUG = true;
 	//min turn power can be less here, as robot should already be moving
-	private double MIN_TURN_POWER = .13;
+	private double MIN_TURN_POWER = .4;
 	private double MIN_STRAIT_POWER = .16;
 	/**
 	 * Command to perform a relative rotation

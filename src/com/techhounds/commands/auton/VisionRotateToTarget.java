@@ -49,7 +49,7 @@ public class VisionRotateToTarget extends Command {
 			if(checkFrame < frame && lastFrame < frame) {
 				double angleOff = -SmartDashboard.getNumber("OffCenterDegreesX", 0) * .75;
 				SmartDashboard.putNumber("VISION TARGET ANGLE", angleOff);
-				(rotateCommand = new RotateUsingGyro(angleOff, .25)).start();
+				(rotateCommand = new RotateUsingGyro(angleOff, .35)).start();
 			}
 		}
 		
