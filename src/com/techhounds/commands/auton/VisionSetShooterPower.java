@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.networktables.NetworkTable;
 public class VisionSetShooterPower extends CommandGroup {
     
 	private double targetDistance = 0;
-	private double shootPower = 0;
+	private double defaultShootPower = 69;
 	private NetworkTable netTable;
 	
     public VisionSetShooterPower() {
@@ -23,8 +23,14 @@ public class VisionSetShooterPower extends CommandGroup {
     	
     	//TODO convert from distance to power
     	
-    	shootPower = targetDistance / 100000;
-    	
-    	addSequential(new SetShooterPower(shootPower));
+    	addSequential(new SetShooterPower(convertDistanceToPower(targetDistance)));
+    }
+    
+    public double convertDistanceToPower(double distance){
+    	if(distance == 0){
+    		return defaultShootPower;
+    	}else{
+    		return targetDistance;
+    	}
     }
 }

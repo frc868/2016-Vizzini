@@ -51,7 +51,7 @@ public interface RobotMap {
 		final int DRIVE_RIGHT_PDP_2 = 14;
 		final int DRIVE_RIGHT_PDP_3 = 15;
 		
-		final double MIN_TURN_POWER = .25;
+		final double MIN_TURN_POWER = .35;
 		final double MIN_STRAIGHT_POWER = .15;
 	}
 	
