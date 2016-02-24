@@ -119,7 +119,8 @@ public class AutonChooser {
 	}
 	
 	public boolean isValid(){
-		int start = getStart();
+		return true;
+		/*int start = getStart();
 		Defense defense = getDefense();
 		Goal goal = getGoal();
 		int shoot = getShoot();
@@ -182,7 +183,7 @@ public class AutonChooser {
 			}
 		} else {
 			return false;
-		}
+		}*/
 	}
 	
 	public Command createAutonCommand() {
