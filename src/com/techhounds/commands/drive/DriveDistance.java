@@ -18,19 +18,19 @@ public class DriveDistance extends Command implements PIDSource, PIDOutput {
 	private double lastPower;
 	private double minPower;
 	private boolean pidOnTarget;
-	
+
 	public DriveDistance(double dist) {
 		this(dist, 1);
 	}
-	
-	public DriveDistance(){
+
+	public DriveDistance() {
 		this(30, .4);
 	}
-	
+
 	public DriveDistance(double dist, double max, double min) {
 		drive = DriveSubsystem.getInstance();
 		requires(drive);
-		pid = new PIDController(.035,  0, .005, this, this);
+		pid = new PIDController(.035, 0, .005, this, this);
 		pid.setOutputRange(-max, max);
 		pid.setAbsoluteTolerance(1);
 		minPower = min;
@@ -39,25 +39,26 @@ public class DriveDistance extends Command implements PIDSource, PIDOutput {
 		SmartDashboard.putNumber("Power to Drive", 0.3);
 		SmartDashboard.putNumber("Min Power To Drive", min);
 	}
-	public DriveDistance(double dist, double max){
+
+	public DriveDistance(double dist, double max) {
 		this(dist, max, RobotMap.DriveTrain.MIN_STRAIGHT_POWER);
 	}
-	
+
 	@Override
 	protected void initialize() {
-		//minPower = SmartDashboard.getNumber("Min Power To Drive", .2);
+		// minPower = SmartDashboard.getNumber("Min Power To Drive", .2);
 		double curDist = drive.countsToDist(drive.getAvgDistance());
 		lastPower = 0;
 		pid.setSetpoint(targetDist + curDist);
 		pid.enable();
-		
+
 	}
 
 	@Override
 	protected void execute() {
 		SmartDashboard.putNumber("Drive Error", pid.getError());
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -69,39 +70,49 @@ public class DriveDistance extends Command implements PIDSource, PIDOutput {
 	@Override
 	protected void end() {
 		pid.disable();
-		drive.setPower(0,0);
+		drive.setPower(0, 0);
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	protected void interrupted() {
 		end();
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void pidWrite(double output) {
+		double pidOutput = output;
 		double difference = output - lastPower;
-		if(difference > .1){
+		if (difference > .1) {
 			output = lastPower + .1;
-		}else if(difference < -.1){
+		} else if (difference < -.1) {
 			output = lastPower - .1;
 		}
-		
-		if(output < minPower && output > -minPower)
-			output = output > 0 ? minPower : -minPower;
-		
-		if(pidOnTarget)
+
+		// if(output < minPower && output > -minPower)
+		// output = output > 0 ? minPower : -minPower;
+
+		// If PID wants us to move negative, make sure we are at least negative
+		// min power same for positive condition
+		if ((pidOutput < 0) && (output > -minPower)) {
+			output = -minPower;
+		} else if ((pidOutput > 0) && (output < minPower)) {
+			output = minPower;
+		}
+		output = output > 0 ? minPower : -minPower;
+
+		if (pidOnTarget)
 			output = 0;
-		
+
 		lastPower = output;
 		drive.setLeftPower(output);
 		drive.setRightPower(output);
-		
+
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
