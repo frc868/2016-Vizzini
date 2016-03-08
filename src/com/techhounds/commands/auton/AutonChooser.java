@@ -120,7 +120,8 @@ public class AutonChooser {
 	
 	public boolean isValid(){
 		return true;
-		/*int start = getStart();
+/*		
+		int start = getStart();
 		Defense defense = getDefense();
 		Goal goal = getGoal();
 		int shoot = getShoot();
@@ -130,60 +131,39 @@ public class AutonChooser {
 			if(defense == Defense.LOW_BAR) {
 				if(goal == Goal.LEFT) {
 					return true;
-				} else {
-					return false;
 				}
 			} else if(defense == Defense.REACH_DEFENSE || defense == Defense.DO_NOTHING) {
 				if(goal == Goal.DO_NOTHING && shoot == 2 && post == 0)
 					return true;
-				else
-					return false;
-			} else {
-				return false;
-			}
+			} 
 		} else if(start == 4) {
 			if(defense == Defense.REACH_DEFENSE || defense == Defense.DO_NOTHING) {
 				if(goal == Goal.DO_NOTHING && shoot == 2 && post == 0)
 					return true;
-				else 
-					return false;
 			} else if(defense != null && defense != Defense.LOW_BAR) {
 				if(goal == Goal.LEFT) {
 					return true;
 				} else if(goal == Goal.MIDDLE) {
-					if(shoot == 1) {
-						return false;
-					} else {
+					if(shoot != 1) {
 						return true;
 					}
-				} else {
-					return false;
-				}
-			} else {
-				return false;
+				} 
 			}
 		} else if(start == 3 || start == 2 || start == 1) {
 			if(defense == Defense.REACH_DEFENSE || defense == Defense.DO_NOTHING) {
 				if(goal == Goal.DO_NOTHING && shoot == 2 && post == 0)
 					return true;
-				else 
-					return false;
 			} else if(defense != null && defense != Defense.LOW_BAR) {
 				if(goal == Goal.MIDDLE) {
-					if(shoot == 1) {
-						return false;
-					} else {
+					if(shoot != 1) {
 						return true;
 					}
-				} else {
-					return false;
 				}
-			} else {
-				return false;
 			}
 		} else {
 			return false;
-		}*/
+		}
+*/		
 	}
 	
 	public Command createAutonCommand() {
@@ -212,24 +192,31 @@ public class AutonChooser {
 					addParallel(new SetAnglerPosition(RobotMap.Collector.COLLECTING));
 					addParallel(new CrossDefense(RobotMap.Defenses.LOW_BAR_DISTANCE, RobotMap.Defenses.LOW_BAR_SPEED));
 					break;
+					
 				case MOAT:
 					addSequential(new CrossDefense(RobotMap.Defenses.MOAT_DISTANCE, RobotMap.Defenses.MOAT_SPEED));
 					break;
+					
 				case RAMPARTS:
 					addSequential(new CrossDefense(RobotMap.Defenses.RAMPARTS_DISTANCE, RobotMap.Defenses.RAMPARTS_SPEED));
 					break;
+					
 				case ROCK_WALL:
 					addSequential(new CrossDefense(RobotMap.Defenses.ROCK_WALL_DISTANCE, RobotMap.Defenses.ROCK_WALL_SPEED));
 					break;
+					
 				case ROUGH_TERRAIN:
 					addSequential(new CrossDefense(RobotMap.Defenses.ROUGH_TERRAIN_DISTANCE, RobotMap.Defenses.ROUGH_TERRAIN_SPEED));
 					break;
+					
 				case PORTCULLIS:
 					addSequential(new CrossPortcullis());
 					break;
+					
 				case CHEVAL_DE_FRISE:
 					addSequential(new CrossCDF());
 					break;
+					
 				case DO_NOTHING:
 				case REACH_DEFENSE:
 					addSequential(new DriveDistance(RobotMap.Defenses.DEFENSE_DISTANCE, RobotMap.Defenses.TO_DEFENSE_SPEED));
