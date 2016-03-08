@@ -10,6 +10,7 @@ import com.techhounds.commands.auton.AutonChooser;
 import com.techhounds.commands.auton.CrossDefense;
 import com.techhounds.commands.auton.RetrieveAuton;
 import com.techhounds.commands.auton.VisionRotateToTarget;
+import com.techhounds.commands.collector.SetCollector;
 import com.techhounds.commands.collector.SetCollectorPower;
 import com.techhounds.commands.drive.DriveDistance;
 import com.techhounds.commands.drive.DriveEncodersReset;
@@ -138,11 +139,11 @@ public class OI {
 	public void setUpController(ControllerMap controller) {
 		
 		controller.getButton(startCollector)
-			.whenPressed(new SetCollectorPower(RobotMap.Collector.inPower))
+			.whenPressed(new SetCollector(RobotMap.Collector.inPower))
 			.whenReleased(new SetCollectorPower());
 		
 		controller.getButton(stopCollector)
-			.whenPressed(new SetCollectorPower(RobotMap.Collector.outPower))
+			.whenPressed(new SetCollector(RobotMap.Collector.outPower))
 			.whenReleased(new SetCollectorPower());
 		
 		controller.getButton(angleUp)
