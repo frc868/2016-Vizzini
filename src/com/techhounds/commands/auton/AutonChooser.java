@@ -251,7 +251,7 @@ public class AutonChooser {
 				addSequential(new RotateUsingGyro(55.68));
 				addSequential(new SaveCurrentAngle());
 				addSequential(new DriveDistance(112.81));
-				addSequential(new RotateToPreviousAngle(115.68));
+				addSequential(new RotateToPreviousAngle(-115.68));
 			} else if(start == 1 && goal == Goal.MIDDLE) {
 				addSequential(new RotateUsingGyro(-90));
 				addSequential(new SaveCurrentAngle());
@@ -311,13 +311,17 @@ public class AutonChooser {
 				}
 			}else if(goal == Goal.LEFT) {
 				if(post == 1){//angle to defenses
-					addSequential(new RotateUsingGyro(120));
+					if(shoot == 0){
+						addSequential(new RotateUsingGyro(120));
+					} else {//at centerGoal
+						addSequential(new RotateUsingGyro(-60));
+					}
 				} else if(post == 2) {//back to defenses
 					if(shoot == 0) {
 						addSequential(new RotateUsingGyro(120));
 						addSequential(new DriveDistance(43));
 					} else {//at centerGoal
-						addSequential(new RotateUsingGyro(120));
+						addSequential(new RotateUsingGyro(-60));
 						addSequential(new DriveDistance(120));
 					}
 				}
@@ -326,7 +330,7 @@ public class AutonChooser {
 					if(shoot == 0){//in secretPassage
 						addSequential(new RotateUsingGyro(-90));
 					} else {//at centerGoal
-						addSequential(new RotateUsingGyro(-120));
+						addSequential(new RotateUsingGyro(60));
 					}
 				} else if(post == 2) {//back to defenses
 					if(shoot == 0) {
@@ -334,7 +338,7 @@ public class AutonChooser {
 						addSequential(new DriveDistance(60));
 						addSequential(new RotateUsingGyro(-30));
 					} else {//at centerGoal
-						addSequential(new RotateUsingGyro(-120));
+						addSequential(new RotateUsingGyro(60));
 						addSequential(new DriveDistance(120));
 					}
 				}
