@@ -56,7 +56,7 @@ public class Robot extends IterativeRobot {
      * Runs once the instant the robot is disabled
      */
     public void disabledInit(){
-    	
+    	//new USBCameraCommand(true).start();
     }
 	
     /**

@@ -189,7 +189,6 @@ public class OI {
 		SmartDashboard.putData("Reset Drive Encoders", new DriveEncodersReset());
 		SmartDashboard.putData("Set Shooter Speed", new SetShooterSpeed(69));
 		SmartDashboard.putData("Update The Controllers", new UpdateController());
-		SmartDashboard.putData("Toggle Camera", new USBCameraCommand(true));
 		//SmartDashboard.putData("Toggle_Scissors_1", new SetScissorsOne());
 		//SmartDashboard.putData("Toggle_Scissors_2", new SetScissorsTwo());
 		SmartDashboard.putData("Toggle_Winch_Enable", new SetWinchEnable());
@@ -198,7 +197,10 @@ public class OI {
 		SmartDashboard.putData("Drive Distance", new DriveDistance(90));
 		SmartDashboard.putNumber("Distance To Drive", 90);
 		SmartDashboard.putData(DriveSubsystem.getInstance());
-		SmartDashboard.putData("enable Camera", new USBCameraCommand(true));
+
+		SmartDashboard.putData("Enable USB Camera", new USBCameraCommand(true));
+		SmartDashboard.putData("Disable USB Camera", new USBCameraCommand(false));
+
 		SmartDashboard.putData("Set Angler Position", new SetAnglerPosition());
 		SmartDashboard.putNumber("Angler Set Height", 47);
 		//SmartDashboard.putData("Toggle_Winch_Lock", new SetWinchLock());

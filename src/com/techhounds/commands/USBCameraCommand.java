@@ -1,10 +1,7 @@
 package com.techhounds.commands;
 
-import com.techhounds.OI;
-
 import com.ni.vision.NIVision;
 import com.ni.vision.NIVision.Image;
-import com.ni.vision.NIVision.ImageInfo;
 import com.ni.vision.NIVision.ImageType;
 
 import edu.wpi.first.wpilibj.CameraServer;
@@ -21,26 +18,33 @@ public class USBCameraCommand extends Command {
 	private boolean enabled;
 	private static USBCamera ucam;
 	
+	// Network Table key used to signal that the USB camera is active
+    private static final String USB_CAMERA_ENABLED_KEY = "usbCameraEnabled";
+	private static final boolean DEBUG = false;
+
+	
     public USBCameraCommand(boolean enb) {
         // Use requires() here to declare subsystem dependencies/
         // eg. requires(chassis);
+    	setRunWhenDisabled(true);
     	camera = CameraServer.getInstance();
     	if(ucam == null){
     		ucam = new USBCamera("cam1");
     		//camera.startAutomaticCapture(ucam);
-    		ucam.startCapture();
+    		//ucam.startCapture();
     	}
     	
     	enabled = enb;
  
     	
     }
+    
  
     // Called just before this Command runs the first time/
     @Override
     protected void initialize() {
-    	
-    	SmartDashboard.putBoolean("Camera Change To", enabled);
+		SmartDashboard.putBoolean(USB_CAMERA_ENABLED_KEY, enabled);
+
     	if(enabled){
     		ucam.startCapture();
     		//ucam2.stopCapture()
@@ -93,12 +97,12 @@ public class USBCameraCommand extends Command {
 			Image frame = NIVision.imaqCreateImage(ImageType.IMAGE_RGB, 0);
 			ucam.getImage(frame);
 			camera.setImage(frame);
-			double time = Timer.getFPGATimestamp() - start;
-			SmartDashboard.putNumber("Time: ", time);
+			if (DEBUG) {
+				double time = Timer.getFPGATimestamp() - start;
+				SmartDashboard.putNumber("Time: ", time);
+			}
 			frame.free();
-		}
-		SmartDashboard.putBoolean("cameraEnabled", enabled);
-    	
+		}    	
     }
 
     // Make this return true when this Command no longer needs to run execute()
