@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class AnglerSubsystem extends Subsystem {
 	
+	private boolean debugging = false;
 	private static AnglerSubsystem instance;
 	private CANTalon angler;
 	private double P = 0.008, I = 0, D = 0.01;
@@ -112,8 +113,10 @@ public class AnglerSubsystem extends Subsystem {
 		return pid.getError();
 	}
 	public void updateSmartDashboard(){
-		SmartDashboard.putNumber("Angler_Position", getPosition());
-		SmartDashboard.putNumber("Error: ", pid.getError());
+		if(debugging && !Robot.competing){
+			SmartDashboard.putNumber("Angler_Position", getPosition());
+			SmartDashboard.putNumber("Angler_Error: ", pid.getError());
+		}
 		//SmartDashboard.putNumber("Angler: ", angler.getPosition());
 	}
 	

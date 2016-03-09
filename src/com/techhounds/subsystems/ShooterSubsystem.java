@@ -123,7 +123,7 @@ public class ShooterSubsystem extends Subsystem {
 	}
 
 	public void updateSmartDashboard() {
-		if (debuging) {
+		if (debuging && !Robot.competing) {
 			SmartDashboard.putNumber("Shooter_Power", getPower());
 			SmartDashboard.putNumber("Shooter Speed", getSpeed());
 			SmartDashboard.putNumber("Shooter Distance", getDistance());

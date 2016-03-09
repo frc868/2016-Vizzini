@@ -16,6 +16,7 @@ public class ServoSubsystem extends Subsystem {
 	private double min, max;
 	private static ServoSubsystem instance_winch_enable, instance_winch_lock,
 		instance_scissor_one, instance_scissor_two;
+	public boolean debugging = false;
 	
 	public ServoSubsystem(int port){
 		this(port, 0, 1);

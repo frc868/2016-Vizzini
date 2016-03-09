@@ -17,6 +17,6 @@ public class SetCollector extends CommandGroup {
 			
 		}
 		
-		addSequential(new SetCollector(power));
+		addSequential(new SetCollectorPower(power));
 	}
 }

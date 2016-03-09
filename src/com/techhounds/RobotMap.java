@@ -13,7 +13,7 @@ public interface RobotMap {
 	
 	interface Collector{
 		final int COLLECTOR_MOTOR = 17;
-		final double inPower = .5, outPower = -.5;
+		final double inPower = 1, outPower = -1;
 		final boolean COLLECTOR_IS_INVERTED = false;
 		final int COLLECTOR_ANGLER = 23;
 		final int BEAM_BREAK_SENSOR = 5;

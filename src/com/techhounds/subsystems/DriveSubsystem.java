@@ -51,6 +51,7 @@ public class DriveSubsystem extends Subsystem{
 	private static DriveSubsystem instance;
 	private GyroSubsystem gyro;
 	
+	private boolean debugging;
 	private DriveSubsystem() {	
 		
 		accelerometer = new BuiltInAccelerometer();
@@ -210,27 +211,31 @@ public class DriveSubsystem extends Subsystem{
 	
 	
 	public void updateSmartDashboard() {
-		SmartDashboard.putNumber("Driver Left Power", getLeftPower());
-		SmartDashboard.putNumber("Driver Right Powers", getRightPower());
+		if(debugging && !Robot.competing){
+		
+			SmartDashboard.putNumber("Driver Left Power", getLeftPower());
+			SmartDashboard.putNumber("Driver Right Powers", getRightPower());
 		
 		//SmartDashboard.putNumber("Driver PID Error", getPIDError());
 
-		SmartDashboard.putNumber("Accelerometer X", getAccerometerX());
-		SmartDashboard.putNumber("Accelerometer Y", getAccerometerY());
-		SmartDashboard.putNumber("Accelerometer Z", getAccerometerZ());
+			SmartDashboard.putNumber("Accelerometer X", getAccerometerX());
+			SmartDashboard.putNumber("Accelerometer Y", getAccerometerY());
+			SmartDashboard.putNumber("Accelerometer Z", getAccerometerZ());
 		
-		SmartDashboard.putNumber("Left Distance", getLeftDistance());
-		SmartDashboard.putNumber("Right Distance", getRightDistance());
-		SmartDashboard.putNumber("Avg Distance", getAvgDistance());
+			SmartDashboard.putNumber("Left Distance", getLeftDistance());
+			SmartDashboard.putNumber("Right Distance", getRightDistance());
+			SmartDashboard.putNumber("Avg Distance", getAvgDistance());
 
-		SmartDashboard.putNumber("Actual Avg Distance", countsToDist(getAvgDistance()));
-		SmartDashboard.putNumber("Left Current", getLeftCurrent());
-		SmartDashboard.putNumber("Right Current", getRightCurrent());
+			SmartDashboard.putNumber("Actual Avg Distance", countsToDist(getAvgDistance()));
+			SmartDashboard.putNumber("Left Current", getLeftCurrent());
+			SmartDashboard.putNumber("Right Current", getRightCurrent());
 		
-		SmartDashboard.putNumber("Left Speed", getLeftSpeed());
-		SmartDashboard.putNumber("Right Speed", getRightSpeed());
+			SmartDashboard.putNumber("Left Speed", getLeftSpeed());
+			SmartDashboard.putNumber("Right Speed", getRightSpeed());
 		
-		SmartDashboard.putNumber("Rotation X", getRotationX());
+			SmartDashboard.putNumber("Rotation X", getRotationX());
+		
+		}
 		
 	
 	}

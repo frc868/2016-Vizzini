@@ -14,6 +14,7 @@ public class CollectorSubsystem extends Subsystem {
 	private static CollectorSubsystem instance;
 	private CANTalon motor;
 	private PowerDistributionPanel panel;
+	private boolean debugging;
 	
 	private CollectorSubsystem() {
 		
@@ -66,10 +67,12 @@ public class CollectorSubsystem extends Subsystem {
 	}
 	
 	public void updateSmartDashboard(){
-		SmartDashboard.putBoolean("Collector_Is_Going_Inward", getIsIn());
-		SmartDashboard.putBoolean("Collector_Is_Going_Outward", getIsOut());
-		SmartDashboard.putNumber("Collector_Power", getPower());
-		SmartDashboard.putNumber("Collector Current", getCurrent());
+		if(debugging && !Robot.competing){
+			SmartDashboard.putBoolean("Collector_Is_Going_Inward", getIsIn());
+			SmartDashboard.putBoolean("Collector_Is_Going_Outward", getIsOut());
+			SmartDashboard.putNumber("Collector_Power", getPower());
+			SmartDashboard.putNumber("Collector Current", getCurrent());
+		}
 	}
 	
 	public static CollectorSubsystem getInstance() {
