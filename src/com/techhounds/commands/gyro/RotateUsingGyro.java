@@ -79,7 +79,7 @@ public class RotateUsingGyro extends Command implements PIDSource, PIDOutput {
 
 	@Override
 	public void pidWrite(double output) {
-		if(Math.abs(output) < MIN_TURN_POWER){
+		/*if(Math.abs(output) < MIN_TURN_POWER){
 			if(pid.onTarget()){
 				output = 0;
 			}else if(output > 0){
@@ -87,7 +87,7 @@ public class RotateUsingGyro extends Command implements PIDSource, PIDOutput {
 			}else if(output < 0){
 				output = -MIN_TURN_POWER;
 			}
-		}
+		}*/
 		if(DEBUG){
 			SmartDashboard.putNumber("GyroPID Output", output);
 		}

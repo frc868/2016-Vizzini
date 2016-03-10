@@ -82,6 +82,7 @@ public class AutonChooser {
 		chooseStart.addObject("Position 3", new Integer(3));
 		chooseStart.addObject("Position 4", new Integer(2));
 		chooseStart.addObject("Secret Passage (5)", new Integer(1));
+		chooseStart.addObject("2 Ball Auton", new Integer(6));
 		
 		chooseDefense = new SendableChooser();
 		chooseDefense.addObject("A: Portcullis", Defense.PORTCULLIS);
@@ -187,10 +188,29 @@ public class AutonChooser {
 			int shoot = getShoot();
 			int post = getPost();
 			
+			if(start == 6) {
+				addSequential(new SetAnglerPosition(RobotMap.Collector.COLLECTING));
+				addSequential(new CrossDefense(RobotMap.Defenses.LOW_BAR_DISTANCE - 10, RobotMap.Defenses.LOW_BAR_SPEED));	
+				addSequential(new DriveDistance(43));
+				addSequential(new SaveCurrentAngle());
+				addSequential(new RotateUsingGyro(60));
+				addSequential(new WaitCommand(2));
+				addSequential(new RotateToPreviousAngle());
+				addSequential(new RotateUsingGyro(180));
+				addSequential(new DriveDistance(43));
+				addSequential(new SaveCurrentAngle());
+      			addSequential(new DriveDistance(RobotMap.Defenses.LOW_BAR_DISTANCE - 10, RobotMap.Defenses.LOW_BAR_SPEED, RobotMap.DriveTrain.MIN_STRAIGHT_POWER));
+				addSequential(new RotateToPreviousAngle());
+				addSequential(new SetAnglerPosition(RobotMap.Collector.COLLECTOR_UP));
+				addSequential(new RotateUsingGyro(180));
+				addSequential(new SetAnglerPosition(RobotMap.Collector.COLLECTING));
+				return;
+			}
+			
 			switch(defense) {//first sequence, crosses the designated defense
 				case LOW_BAR:
-					addParallel(new SetAnglerPosition(RobotMap.Collector.COLLECTING));
-					addParallel(new CrossDefense(RobotMap.Defenses.LOW_BAR_DISTANCE, RobotMap.Defenses.LOW_BAR_SPEED));
+					addSequential(new SetAnglerPosition(RobotMap.Collector.COLLECTING));
+					addSequential(new CrossDefense(RobotMap.Defenses.LOW_BAR_DISTANCE, RobotMap.Defenses.LOW_BAR_SPEED));
 					break;
 					
 				case MOAT:
