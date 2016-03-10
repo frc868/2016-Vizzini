@@ -194,7 +194,7 @@ public class OI {
 		SmartDashboard.putData("Toggle_Winch_Enable", new SetWinchEnable());
 		SmartDashboard.putNumber("Shooter Set Speed", 100);
 		SmartDashboard.putData("Shooter:", ShooterSubsystem.getInstance());
-		SmartDashboard.putData("Drive Distance", new DriveDistance(90));
+		SmartDashboard.putData("Drive Distance", new DriveDistance(45, 1, .35));
 		SmartDashboard.putNumber("Distance To Drive", 90);
 		SmartDashboard.putData(DriveSubsystem.getInstance());
 

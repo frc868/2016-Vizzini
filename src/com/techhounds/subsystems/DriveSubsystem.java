@@ -51,7 +51,7 @@ public class DriveSubsystem extends Subsystem{
 	private static DriveSubsystem instance;
 	private GyroSubsystem gyro;
 	
-	private boolean debugging;
+	private boolean debugging = true;
 	private DriveSubsystem() {	
 		
 		accelerometer = new BuiltInAccelerometer();

@@ -30,7 +30,7 @@ public class DriveDistance extends Command implements PIDSource, PIDOutput {
 	public DriveDistance(double dist, double max, double min) {
 		drive = DriveSubsystem.getInstance();
 		requires(drive);
-		pid = new PIDController(.035, 0, .005, this, this);
+		pid = new PIDController(.025, 0, .004, this, this);
 		pid.setOutputRange(-max, max);
 		pid.setAbsoluteTolerance(1);
 		minPower = min;
@@ -92,17 +92,18 @@ public class DriveDistance extends Command implements PIDSource, PIDOutput {
 			output = lastPower - .1;
 		}
 
-		// if(output < minPower && output > -minPower)
-		// output = output > 0 ? minPower : -minPower;
+		//if(output < minPower && output > -minPower)
+		//	output = output > 0 ? minPower : -minPower;
 
 		// If PID wants us to move negative, make sure we are at least negative
 		// min power same for positive condition
-		if ((pidOutput < 0) && (output > -minPower)) {
-			output = -minPower;
-		} else if ((pidOutput > 0) && (output < minPower)) {
-			output = minPower;
-		}
-		output = output > 0 ? minPower : -minPower;
+		//if ((pidOutput < 0) && (output > -minPower)) {
+		//	output = -minPower;
+		//} else if ((pidOutput > 0) && (output < minPower)) {
+		//	output = minPower;
+		//}
+		
+		//output = output > 0 ? minPower : -minPower;
 
 		if (pidOnTarget)
 			output = 0;
