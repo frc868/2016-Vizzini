@@ -139,11 +139,11 @@ public class OI {
 	public void setUpController(ControllerMap controller) {
 		
 		controller.getButton(startCollector)
-			.whenPressed(new SetCollector(RobotMap.Collector.inPower))
+			.whenPressed(new SetCollectorPower(RobotMap.Collector.inPower))
 			.whenReleased(new SetCollectorPower());
 		
 		controller.getButton(stopCollector)
-			.whenPressed(new SetCollector(RobotMap.Collector.outPower))
+			.whenPressed(new SetCollectorPower(RobotMap.Collector.outPower))
 			.whenReleased(new SetCollectorPower());
 		
 		controller.getButton(angleUp)

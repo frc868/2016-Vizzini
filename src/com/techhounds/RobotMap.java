@@ -13,7 +13,7 @@ public interface RobotMap {
 	
 	interface Collector{
 		final int COLLECTOR_MOTOR = 17;
-		final double inPower = 1, outPower = -1;
+		final double inPower = .6, outPower = -1;
 		final boolean COLLECTOR_IS_INVERTED = false;
 		final int COLLECTOR_ANGLER = 23;
 		final int BEAM_BREAK_SENSOR = 5;
@@ -21,9 +21,9 @@ public interface RobotMap {
 		final double ANGLER_REVERSE_LIMIT = 1;
 		final int COLLECTOR_PDP = 11;
 		
-		final double COLLECTOR_UP = 47;
-		final double COLLECTING = 290;
-		final double COLLECTOR_DOWN = 410;
+		final double COLLECTOR_UP = 382;
+		final double COLLECTING = 643;
+		final double COLLECTOR_DOWN = 732;
 	}
 	
 	interface Shooter{

@@ -10,13 +10,13 @@ public class SetCollector extends CommandGroup {
 	public SetCollector(double power) {
 		
 		if(power > 0) {
-			addSequential(new SetAnglerPosition(RobotMap.Collector.COLLECTING));
+			addParallel(new SetAnglerPosition(RobotMap.Collector.COLLECTING));
 		} else if(power < 0){
-			addSequential(new SetAnglerPosition(RobotMap.Collector.COLLECTING + 5));
+			addParallel(new SetAnglerPosition(RobotMap.Collector.COLLECTING + 5));
 		} else {
 			
 		}
 		
-		addSequential(new SetCollectorPower(power));
+		addParallel(new SetCollectorPower(power));
 	}
 }
