@@ -30,7 +30,12 @@ public class VisionSetShooterPower extends CommandGroup {
     	if(distance == 0){
     		return defaultShootPower;
     	}else{
-    		return targetDistance;
+    		return targetDistance();
     	}
+    }
+    
+    public double targetDistance() {
+    	double x = targetDistance;
+    	return ((.002462672556 * x * x) - (.505949214913 * x) + 93.1903623953);
     }
 }
