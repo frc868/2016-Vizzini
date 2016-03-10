@@ -77,11 +77,11 @@ public class AutonChooser {
 
 	public void setupDashboard() {
 		chooseStart = new SendableChooser();
-		chooseStart.addDefault("Low Bar (5)", new Integer(5));
-		chooseStart.addObject("Position 4", new Integer(4));
+		chooseStart.addDefault("Low Bar (1)", new Integer(5));
+		chooseStart.addObject("Position 2", new Integer(4));
 		chooseStart.addObject("Position 3", new Integer(3));
-		chooseStart.addObject("Position 2", new Integer(2));
-		chooseStart.addObject("Secret Passage (1)", new Integer(1));
+		chooseStart.addObject("Position 4", new Integer(2));
+		chooseStart.addObject("Secret Passage (5)", new Integer(1));
 		
 		chooseDefense = new SendableChooser();
 		chooseDefense.addObject("A: Portcullis", Defense.PORTCULLIS);
