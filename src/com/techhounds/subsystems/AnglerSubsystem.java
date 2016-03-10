@@ -148,5 +148,9 @@ public class AnglerSubsystem extends Subsystem {
     		state = 0;
     	}
     }
+    
+    public void defaultState() {
+    	state = 2;
+    }
 }
 

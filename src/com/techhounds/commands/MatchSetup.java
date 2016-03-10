@@ -8,6 +8,7 @@ import com.techhounds.commands.angler.SetAnglerPosition;
 import com.techhounds.commands.collector.SetCollectorPower;
 import com.techhounds.commands.servos.*;
 import com.techhounds.commands.shooter.SetShooterPower;
+import com.techhounds.subsystems.AnglerSubsystem;
 import com.techhounds.subsystems.DriveSubsystem;
 
 /**
@@ -18,6 +19,7 @@ public class MatchSetup extends CommandGroup {
     public  MatchSetup() {
     	DriveSubsystem.isForward = true;
     	addParallel(new SetAnglerPosition(RobotMap.Collector.COLLECTOR_UP));
+    	AnglerSubsystem.getInstance().defaultState();
     	addParallel(new SetCollectorPower());
     	addParallel(new SetShooterPower());
     	//addParallel(new SetScissorsOne(RobotMap.Servo.SCISSOR_ONE_IS_UP_DEFAULT));
