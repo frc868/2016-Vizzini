@@ -107,7 +107,7 @@ public class DriveSubsystem extends Subsystem{
 		gyroPID.setOutputRange(-1, 1);
 		
 		SmartDashboard.putData("Gyro PID", gyroPID);
-	
+		SmartDashboard.putData("DRIVE SUBSYSTEM", this);
 	}
 	
 	public static DriveSubsystem getInstance() {
@@ -211,10 +211,12 @@ public class DriveSubsystem extends Subsystem{
 	
 	
 	public void updateSmartDashboard() {
-		if(debugging && !Robot.competing){
+
 		
-			SmartDashboard.putNumber("Driver Left Power", getLeftPower());
-			SmartDashboard.putNumber("Driver Right Powers", getRightPower());
+		SmartDashboard.putNumber("Driver Left Power", getLeftPower());
+		SmartDashboard.putNumber("Driver Right Powers", getRightPower());
+		
+		if(debugging && !Robot.competing){
 		
 		//SmartDashboard.putNumber("Driver PID Error", getPIDError());
 
@@ -237,6 +239,7 @@ public class DriveSubsystem extends Subsystem{
 		
 		}
 		
+		SmartDashboard.putBoolean("DRIVING COLLECTOR FIRST", !isForward);
 	
 	}
 

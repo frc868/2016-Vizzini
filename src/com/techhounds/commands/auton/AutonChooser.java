@@ -11,6 +11,7 @@ import com.techhounds.commands.gyro.RotateUsingGyro;
 import com.techhounds.commands.gyro.SaveCurrentAngle;
 import com.techhounds.commands.shooter.Fire;
 import com.techhounds.commands.shooter.SetShooterSpeed;
+import com.techhounds.commands.shooter.WaitForShooterReady;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -77,9 +78,9 @@ public class AutonChooser {
 
 	public void setupDashboard() {
 		chooseStart = new SendableChooser();
-		chooseStart.addDefault("Low Bar (1)", new Integer(5));
+		chooseStart.addObject("Low Bar (1)", new Integer(5));
 		chooseStart.addObject("Position 2", new Integer(4));
-		chooseStart.addObject("Position 3", new Integer(3));
+		chooseStart.addDefault("Position 3", new Integer(3));
 		chooseStart.addObject("Position 4", new Integer(2));
 		chooseStart.addObject("Secret Passage (5)", new Integer(1));
 		chooseStart.addObject("2 Ball Auton", new Integer(6));
@@ -90,16 +91,16 @@ public class AutonChooser {
 		chooseDefense.addObject("B: Moat", Defense.MOAT);
 		chooseDefense.addObject("B: Ramparts", Defense.RAMPARTS);
 		chooseDefense.addObject("D: Rock Wall", Defense.ROCK_WALL);
-		chooseDefense.addObject("D: Rough Terrain", Defense.ROUGH_TERRAIN);
+		chooseDefense.addDefault("D: Rough Terrain", Defense.ROUGH_TERRAIN);
 		chooseDefense.addObject("Low Bar", Defense.LOW_BAR);
 		chooseDefense.addObject("Reach Defense", Defense.REACH_DEFENSE);
-		chooseDefense.addDefault("Do Nothing", Defense.DO_NOTHING);
+		chooseDefense.addObject("Do Nothing", Defense.DO_NOTHING);
 		
 		chooseGoal = new SendableChooser();
-		chooseGoal.addDefault("Left Goal", Goal.LEFT);
+		chooseGoal.addObject("Left Goal", Goal.LEFT);
 		chooseGoal.addObject("Middle Goal", Goal.MIDDLE);
 		chooseGoal.addObject("Right Goal", Goal.RIGHT);
-		chooseGoal.addObject("Do Nothing", Goal.DO_NOTHING);
+		chooseGoal.addDefault("Do Nothing", Goal.DO_NOTHING);
 		
 		chooseShoot = new SendableChooser();
 		chooseShoot.addObject("High Goal", new Integer(0));
@@ -209,8 +210,8 @@ public class AutonChooser {
 			
 			switch(defense) {//first sequence, crosses the designated defense
 				case LOW_BAR:
-					addSequential(new SetAnglerPosition(RobotMap.Collector.COLLECTING));
-					addSequential(new CrossDefense(RobotMap.Defenses.LOW_BAR_DISTANCE, RobotMap.Defenses.LOW_BAR_SPEED));
+					addParallel(new SetAnglerPosition(RobotMap.Collector.COLLECTING));
+					addParallel(new CrossDefense(RobotMap.Defenses.LOW_BAR_DISTANCE, RobotMap.Defenses.LOW_BAR_SPEED));
 					break;
 					
 				case MOAT:
@@ -263,7 +264,7 @@ public class AutonChooser {
 				addSequential(new DriveDistance(88.94));
 				addSequential(new RotateToPreviousAngle(-90));
 			} else if(start == 3) {
-				addSequential(new RotateUsingGyro(15));
+				//addSequential(new RotateUsingGyro(15));
 				addSequential(new DriveDistance(12));
 			} else if(start == 2 && goal == Goal.MIDDLE) {
 				// You are basically close enough
@@ -289,8 +290,10 @@ public class AutonChooser {
 			if(shoot == 0) {
 				addParallel(new VisionRotateToTarget());// Get ourselves ready to target
 				addParallel(new SetShooterSpeed(69));
-				addSequential(new WaitCommand(.3));
-				addSequential(new Fire());
+				addSequential(new WaitCommand(.1));
+				addSequential(new VisionRotateToTarget());
+				addParallel(new WaitForShooterReady(2));
+				addSequential(Fire.getInstance());
 				addSequential(new WaitCommand(.2));
 			} else if(shoot == 1) {
 				addSequential(new VisionRotateToTarget());// Should be targeted before moving -so Sequential instead of Parallel

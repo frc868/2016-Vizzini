@@ -22,7 +22,7 @@ public interface RobotMap {
 		final int COLLECTOR_PDP = 11;
 		
 		final double COLLECTOR_UP = 382;
-		final double COLLECTING = 643;
+		final double COLLECTING = 648;
 		final double COLLECTOR_DOWN = 732;
 	}
 	
@@ -30,7 +30,7 @@ public interface RobotMap {
 		final int SHOOTER_MOTOR = 13;
 		// Not sure if there will be a second shooter motor
 		final int SHOOTER_MOTOR_B = 21;
-		final boolean SHOOTER_IS_INVERTED = false;
+		final boolean SHOOTER_IS_INVERTED = true;
 		final int SHOOTER_SPEED_DIO = 4;
 	}
 	
@@ -51,7 +51,7 @@ public interface RobotMap {
 		final int DRIVE_RIGHT_PDP_2 = 14;
 		final int DRIVE_RIGHT_PDP_3 = 15;
 		
-		final double MIN_TURN_POWER = .35;
+		final double MIN_TURN_POWER = .45;
 		final double MIN_STRAIGHT_POWER = .2;
 	}
 	
@@ -84,7 +84,7 @@ public interface RobotMap {
 		final double MOAT_DISTANCE 				= 148.5;//DONE
 		
 		final double LOW_BAR_SPEED 				= .4;//DONE
-		final double LOW_BAR_DISTANCE 			= 127.5;//DONE
+		final double LOW_BAR_DISTANCE 			= 127.5 + 16;//DONE
 
 		final double RAMPARTS_SPEED 			= .5;//DONE
 		final double RAMPARTS_DISTANCE 			= 139.5;//DONE

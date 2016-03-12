@@ -15,11 +15,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class RotateUsingGyro extends Command implements PIDSource, PIDOutput {
 	
-	private static double p = .05, i = 0, d = .08;
+	private static double p = .1/*.05*/, i = 0, d = .12;//.08;
 	private DriveSubsystem drive;
 	private GyroSubsystem gyro;
 	private PIDController pid;
 	private double angle;
+	private Double timeOut;
 	public static final boolean DEBUG = true;
 	//min turn power can be less here, as robot should already be moving
 	private double MIN_TURN_POWER = .4;
@@ -37,19 +38,31 @@ public class RotateUsingGyro extends Command implements PIDSource, PIDOutput {
     	if(DEBUG){
     		SmartDashboard.putData("Gyro PID", pid);
     	}
-    	pid.setOutputRange(-.5, .5);
+    	pid.setOutputRange(-.7, .7);
     	pid.setAbsoluteTolerance(1);
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
+    }
+    
+    public RotateUsingGyro(double angle, double timeOut, double doesntMatter) {
+    	this(angle);
+    	this.timeOut = timeOut;
     }
     
     public RotateUsingGyro(double angle, double minTurnPower){
     	this(angle);
     	MIN_TURN_POWER = minTurnPower;
     }
+    
+    public RotateUsingGyro(double angle, double minTurnPower, double timeOut, double doesntMatter) {
+    	this(angle);
+    	MIN_TURN_POWER = minTurnPower;
+    	this.timeOut = timeOut;
+    }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	//angle = angle < 0 ? angle - .5 : angle + .5;
     	pid.setSetpoint(angle + pidGet());
     	pid.enable();
     }
@@ -63,6 +76,12 @@ public class RotateUsingGyro extends Command implements PIDSource, PIDOutput {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
+    	if(timeOut != null) {
+    		if(timeSinceInitialized() > timeOut) {
+    			return true;
+    		}
+    	}
+    	
         return Math.abs(pid.getError()) < 1;
     }
 

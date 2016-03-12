@@ -7,11 +7,24 @@ import edu.wpi.first.wpilibj.command.WaitCommand;
 
 public class Fire extends CommandGroup {
 
-	public Fire() {
+	private static Fire instance;
+	
+	private Fire() {
+		addSequential(new WaitForShooterReady());
 		addSequential(new SetCollectorPower(.6, true));
 		addSequential(new WaitCommand(.5));
-		addSequential(new SetCollectorPower(0));
+		addSequential(new SetCollectorPower(0, true));
 		addSequential(new SetShooterPower());
-		
+	}
+	
+	public static Fire getInstance() {
+		return instance == null ? instance = new Fire() : instance;
+	}
+	
+	@Override
+	public void cancel() {
+		super.cancel();
+		(new SetShooterPower()).start();
+		(new SetCollectorPower(0, true)).start();
 	}
 }

@@ -25,16 +25,17 @@ public class UpdateSmartDashboard extends Command {
     }
 
     protected void execute() {
-    	
     	if(timer.get() >= 0.3) {
-    		SmartDashboard.putData(AnglerSubsystem.getInstance());
+        	
+    		//SmartDashboard.putData(AnglerSubsystem.getInstance());
     		ShooterSubsystem.getInstance().updateSmartDashboard();
-    		CollectorSubsystem.getInstance().updateSmartDashboard();
-    		AnglerSubsystem.getInstance().updateSmartDashboard();
+    		//CollectorSubsystem.getInstance().updateSmartDashboard();
+    		//AnglerSubsystem.getInstance().updateSmartDashboard();
     		DriveSubsystem.getInstance().updateSmartDashboard();
     		BeamBreakSubsystem.getInstance().updateSmartDashboard();
+    		//AutonChooser.getInstance().updateSmartDashboard();
+    		
     		GyroSubsystem.getInstance().updateSmartDashboard();
-    		AutonChooser.getInstance().updateSmartDashboard();
 	    	timer.reset();
 		}
     }

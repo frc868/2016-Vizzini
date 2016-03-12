@@ -25,6 +25,7 @@ public class CrossPortcullis extends CommandGroup {
     	addSequential(new DriveDistance(RobotMap.Defenses.PORTCULLIS_DISTANCE_2, RobotMap.Defenses.PORTCULLIS_SPEED_2));//drives to position collector under portcullis
     	
     	addParallel(new SetAnglerPosition(RobotMap.Collector.COLLECTOR_UP));//drives through portcullis while raising collector
+    	
     	addSequential(new DriveDistance(RobotMap.Defenses.PORTCULLIS_DISTANCE_3, RobotMap.Defenses.PORTCULLIS_SPEED_3));
     	
     	addSequential(new RotateToPreviousAngle(180));

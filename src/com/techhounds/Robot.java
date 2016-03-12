@@ -21,10 +21,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Robot extends IterativeRobot {
 	
-	public static boolean competing = false;
+	public static boolean competing = true;
 	public static double powToSpeedConst = 20;
 	
 	public static boolean oneControllerMode = false;
+	public static boolean manualOverride = false;
 	
 	public static boolean isFinal(){
 		return true;

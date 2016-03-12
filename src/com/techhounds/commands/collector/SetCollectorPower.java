@@ -1,5 +1,6 @@
 package com.techhounds.commands.collector;
 
+import com.techhounds.Robot;
 import com.techhounds.subsystems.BeamBreakSubsystem;
 import com.techhounds.subsystems.CollectorSubsystem;
 
@@ -15,7 +16,6 @@ public class SetCollectorPower extends Command {
 	private boolean isShooting;
 	
 	private double power;
-
     public SetCollectorPower(double power) {
     	this(power, false);
     }
@@ -30,7 +30,6 @@ public class SetCollectorPower extends Command {
     	requires(collect);
     	this.power = -power;
     	this.isShooting = isShooting;
-    	
     }
 
     // Called just before this Command runs the first time
@@ -40,9 +39,13 @@ public class SetCollectorPower extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if(beam.ballPresent() && power < 0 && !isShooting){
-    		collect.setPower(0);
-    	}else{
+    	if(!Robot.manualOverride) {
+	    	if(beam.ballPresent() && power < 0 && !isShooting){
+	    		collect.setPower(0);
+	    	}else{
+	    		collect.setPower(power);
+	    	} 
+    	} else {
     		collect.setPower(power);
     	}
     }

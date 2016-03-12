@@ -26,6 +26,8 @@ public class USBCameraCommand extends Command {
     public USBCameraCommand(boolean enb) {
         // Use requires() here to declare subsystem dependencies/
         // eg. requires(chassis);
+    	
+    	/*
     	setRunWhenDisabled(true);
     	camera = CameraServer.getInstance();
     	if(ucam == null){
@@ -35,14 +37,33 @@ public class USBCameraCommand extends Command {
     	}
     	
     	enabled = enb;
- 
+ */
     	
     }
+    
+/*    public USBCameraCommand(){
+    	setRunWhenDisabled(true);
+    	if(camera == null){
+    		camera = CameraServer.getInstance();
+    	}
+    	if(ucam == null){
+    		ucam = new USBCamera("cam1");
+    	}
+    	enabled = !camera.isAutoCaptureStarted();
+    }    */
     
  
     // Called just before this Command runs the first time/
     @Override
     protected void initialize() {
+    	
+/*    	if(enabled){
+    		camera.startAutomaticCapture(ucam);
+    	}
+    	else{
+    		ucam.stopCapture();
+    	}     */
+    	/*
 		SmartDashboard.putBoolean(USB_CAMERA_ENABLED_KEY, enabled);
 
     	if(enabled){
@@ -56,6 +77,7 @@ public class USBCameraCommand extends Command {
         	
 
     	}
+    	*/
     	/*
     	SmartDashboard.putBoolean("Camera Enable", camera.isAutoCaptureStarted());
     	
@@ -92,6 +114,7 @@ public class USBCameraCommand extends Command {
     // Called repeatedly when this Command is scheduled to run
 	protected void execute() {
 		//SmartDashboard.putString("HERE", "EXECUTE")
+		/*
 		if(enabled){
 			double start = Timer.getFPGATimestamp();
 			Image frame = NIVision.imaqCreateImage(ImageType.IMAGE_RGB, 0);
@@ -102,12 +125,13 @@ public class USBCameraCommand extends Command {
 				SmartDashboard.putNumber("Time: ", time);
 			}
 			frame.free();
-		}    	
+		}   
+		*/ 	
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return true;
     }
 
     // Called once after isFinished returns true

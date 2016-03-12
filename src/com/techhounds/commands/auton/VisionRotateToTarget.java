@@ -49,9 +49,9 @@ public class VisionRotateToTarget extends Command {
 			}
 		} else {
 			if(checkFrame < frame && lastFrame < frame) {
-				double angleOff = -SmartDashboard.getNumber("OffCenterDegreesX", 0) * .75;
+				double angleOff = -SmartDashboard.getNumber("OffCenterDegreesX", 0);// * .75;
 				SmartDashboard.putNumber("VISION TARGET ANGLE", angleOff);
-				(rotateCommand = new RotateUsingGyro(angleOff, RobotMap.DriveTrain.MIN_TURN_POWER)).start();
+				(rotateCommand = new RotateUsingGyro(angleOff, RobotMap.DriveTrain.MIN_TURN_POWER, 2, 0)).start();
 			}
 		}
 		
@@ -84,7 +84,7 @@ public class VisionRotateToTarget extends Command {
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
-		return done || timeSinceInitialized() >= 3;
+		return done || timeSinceInitialized() >= 1.5;
 	}
 
 	// Called once after isFinished returns true

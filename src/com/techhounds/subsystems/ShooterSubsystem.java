@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.PIDSourceType;
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -25,11 +26,13 @@ public class ShooterSubsystem extends Subsystem {
 	private PIDController controller;
 	private double lastSpeed;
 	public boolean debuging = true;
-
+	private PowerDistributionPanel panel;
+	
 	private ShooterSubsystem() {
 		shooter = new CANTalon(RobotMap.Shooter.SHOOTER_MOTOR);
 		shooter.setInverted(getInverted());
-
+		
+		panel = new PowerDistributionPanel();
 		DigitalInput countIn = new DigitalInput(RobotMap.Shooter.SHOOTER_SPEED_DIO);
 		count = new Counter(countIn);
 		count.setSamplesToAverage(5);
@@ -73,7 +76,7 @@ public class ShooterSubsystem extends Subsystem {
 	}
 
 	public boolean onTarget() {
-		return controller.onTarget();
+		return Math.abs(controller.getError()) < 1;
 	}
 
 	public void setPower(double power) {
@@ -121,6 +124,10 @@ public class ShooterSubsystem extends Subsystem {
 	public double getPower() {
 		return shooter.get();
 	}
+	
+	public double getCurrent() {
+		return 0;//return panel.getCurrent(channel);
+	}
 
 	public void updateSmartDashboard() {
 		if (debuging && !Robot.competing) {
@@ -131,6 +138,10 @@ public class ShooterSubsystem extends Subsystem {
 			SmartDashboard.putNumber("Shooter Count", getCount());
 			SmartDashboard.putNumber("Shooter Period", count.getPeriod());
 		}
+		
+		SmartDashboard.putNumber("Shooter Speed", getSpeed());
+		SmartDashboard.putBoolean("Shooter PID OnTarget", onTarget());
+		SmartDashboard.putBoolean("Shooter PID Running", controller.isEnabled());
 	}
 
 	public void initDefaultCommand() {
