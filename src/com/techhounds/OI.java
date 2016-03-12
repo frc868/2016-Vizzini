@@ -10,6 +10,7 @@ import com.techhounds.commands.angler.SetStateUp;
 import com.techhounds.commands.auton.AutonChooser;
 import com.techhounds.commands.auton.CrossDefense;
 import com.techhounds.commands.auton.RetrieveAuton;
+import com.techhounds.commands.auton.StopVisionRotate;
 import com.techhounds.commands.auton.VisionRotateToTarget;
 import com.techhounds.commands.collector.SetCollector;
 import com.techhounds.commands.collector.SetCollectorPower;
@@ -178,7 +179,8 @@ public class OI {
 			.whenPressed(new ToggleManualOverride());
 		
 		controller.getButton(visionTarget)
-			.whileHeld(new VisionRotateToTarget());
+			.whenPressed(VisionRotateToTarget.getInstance())
+			.whenReleased(new StopVisionRotate());
 			
 	}
 
@@ -187,7 +189,7 @@ public class OI {
 	 */
 	public void setupSmartDashboard() {
 //		SmartDashboard.putData("Cross Defense maintaining orientation", new CrossDefense());
-		SmartDashboard.putData("Vision Align To Target", new VisionRotateToTarget());
+		SmartDashboard.putData("Vision Align To Target", VisionRotateToTarget.getInstance());
 //		if(RotateUsingGyro.DEBUG){//This will not show in the SD up unless we're debugging RotateUsingGyro
 			SmartDashboard.putData("Rotate 15 Degrees", new RotateUsingGyro(15));
 //			SmartDashboard.putData("Rotate -90 Degrees", new RotateUsingGyro(-90));

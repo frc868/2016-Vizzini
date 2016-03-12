@@ -18,11 +18,20 @@ public class VisionRotateToTarget extends Command {
 	private boolean done = false;
 	private double checkFrame;
 
-	public VisionRotateToTarget() {
+	private static VisionRotateToTarget instance;
+	
+	private VisionRotateToTarget() {
 		//drive = DriveSubsystem.getInstance();
 		//requires(drive);
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
+	}
+	
+	public static VisionRotateToTarget getInstance() {
+		if(instance == null){
+			instance = new VisionRotateToTarget();
+		}
+		return instance;
 	}
 
 	// Called just before this Command runs the first time
@@ -89,6 +98,11 @@ public class VisionRotateToTarget extends Command {
 
 	// Called once after isFinished returns true
 	protected void end() {
+		if(rotateCommand != null) rotateCommand.cancel();
+	}
+	
+	public void cancel() {
+		super.cancel();
 		if(rotateCommand != null) rotateCommand.cancel();
 	}
 

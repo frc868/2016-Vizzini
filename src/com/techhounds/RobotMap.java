@@ -22,7 +22,7 @@ public interface RobotMap {
 		final int COLLECTOR_PDP = 11;
 		
 		final double COLLECTOR_UP = 382;
-		final double COLLECTING = 648;
+		final double COLLECTING = 658;
 		final double COLLECTOR_DOWN = 732;
 	}
 	
@@ -81,7 +81,7 @@ public interface RobotMap {
 		//Standardized, back of robot is 74 in from front of defense.
 		
 		final double MOAT_SPEED					= .48;//DONE
-		final double MOAT_DISTANCE 				= 148.5;//DONE
+		final double MOAT_DISTANCE 				= 156;//DONE
 		
 		final double LOW_BAR_SPEED 				= .4;//DONE
 		final double LOW_BAR_DISTANCE 			= 127.5 + 16;//DONE
@@ -100,7 +100,7 @@ public interface RobotMap {
 		final double PORTCULLIS_SPEED_3 		= .5;//while opening Portcullis and after
 		final double PORTCULLIS_DISTANCE_1 		= 60;//Moving to Portcullis
 		final double PORTCULLIS_DISTANCE_2 		= 20;//after lowering collector
-		final double PORTCULLIS_DISTANCE_3 		= 60;//while opening Portcullis and after
+		final double PORTCULLIS_DISTANCE_3 		= 75;//while opening Portcullis and after
 		
 		final double CDF_SPEED_1 				= .4;//before lowering CDF
 		final double CDF_SPEED_2 				= .5;//after

@@ -288,15 +288,15 @@ public class AutonChooser {
 			
 			//This group of if statements determines what to do after positioning toward the enemy castle
 			if(shoot == 0) {
-				addParallel(new VisionRotateToTarget());// Get ourselves ready to target
+				addParallel(VisionRotateToTarget.getInstance());// Get ourselves ready to target
 				addParallel(new SetShooterSpeed(69));
 				addSequential(new WaitCommand(.1));
-				addSequential(new VisionRotateToTarget());
+				addSequential(VisionRotateToTarget.getInstance());
 				addParallel(new WaitForShooterReady(2));
 				addSequential(Fire.getInstance());
 				addSequential(new WaitCommand(.2));
 			} else if(shoot == 1) {
-				addSequential(new VisionRotateToTarget());// Should be targeted before moving -so Sequential instead of Parallel
+				addSequential(VisionRotateToTarget.getInstance());// Should be targeted before moving -so Sequential instead of Parallel
 				if(goal == Goal.LEFT) {
 					addSequential(new SaveCurrentAngle());
 					addSequential(new DriveDistance(140));
