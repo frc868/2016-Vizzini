@@ -248,9 +248,7 @@ public class AutonChooser {
 			addSequential(new WaitCommand(.1));
 			
 			//This group of if statements determines what to do after crossing a defense
-			if(goal == Goal.DO_NOTHING) {
-				addSequential(new WaitCommand(0));
-			} else if(start == 5 && goal == Goal.LEFT) {
+			if(start == 5) {
 				addSequential(new DriveDistance(43));
 				addSequential(new RotateUsingGyro(60));
 			} else if(start == 4 && goal == Goal.LEFT) {
@@ -279,10 +277,11 @@ public class AutonChooser {
 				addSequential(new DriveDistance(66.82));
 				addSequential(new RotateToPreviousAngle(90));
 			} else if(start == 1 && goal == Goal.RIGHT) {
-				addSequential(new RotateUsingGyro(33.93));
-				addSequential(new SaveCurrentAngle());
-				addSequential(new DriveDistance(76.66));
-				addSequential(new RotateToPreviousAngle(-93.93));
+				addSequential(new DriveDistance(70));
+				addSequential(new RotateUsingGyro(-30));
+				//addSequential(VisionRotateToTarget.getInstance());
+			} else {
+				addSequential(new WaitCommand(.1));
 			}
 	
 			
@@ -291,7 +290,7 @@ public class AutonChooser {
 				addParallel(VisionRotateToTarget.getInstance());// Get ourselves ready to target
 				addParallel(new SetShooterSpeed(69));
 				addSequential(new WaitCommand(.1));
-				addSequential(VisionRotateToTarget.getInstance());
+				addParallel(VisionRotateToTarget.getInstance());
 				addParallel(new WaitForShooterReady(2));
 				addSequential(Fire.getInstance());
 				addSequential(new WaitCommand(.2));
