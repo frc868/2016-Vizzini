@@ -30,6 +30,7 @@ import com.techhounds.commands.shooter.SetShooterSpeedFromVision;
 import com.techhounds.commands.shooter.StopFire;
 import com.techhounds.lib.hid.ControllerMap;
 import com.techhounds.lib.hid.DPadButton;
+import com.techhounds.lib.hid.ControllerMap.Direction;
 import com.techhounds.subsystems.DriveSubsystem;
 import com.techhounds.subsystems.ShooterSubsystem;
 
@@ -276,19 +277,23 @@ public class OI {
 		}
 	}
 	
-	public double getRightBackward(){
-		return currentDriver.getBackwardsRightPower();
-	}
-	
-	public double getLeftBackward(){
-		return currentDriver.getBackwardsLeftPower();
+	public double getSteer() {
+		if(currentDriver.getAxis(ControllerMap.Direction.RIGHT_HORIZONTAL) < .25 && currentDriver != operator)
+			return operator.getAxis(ControllerMap.Direction.RIGHT_HORIZONTAL) * .65;
+		else
+			return currentDriver.getAxis(ControllerMap.Direction.RIGHT_HORIZONTAL);
 	}
 	
 	public double getRightForward(){
-		return currentDriver.getForwardsRightPower();
+		return Robot.rangeCheck(currentDriver.getAxis(Direction.LEFT_VERTICAL) - getSteer());
 	}
-	
 	public double getLeftForward(){
-		return currentDriver.getForwardsLeftPower();
+		return Robot.rangeCheck(currentDriver.getAxis(Direction.LEFT_VERTICAL) + getSteer());
+	}
+	public double getRightBackward(){
+		return Robot.rangeCheck(-currentDriver.getAxis(Direction.LEFT_VERTICAL) - getSteer());
+	}
+	public double getLeftBackward(){
+		return Robot.rangeCheck(-currentDriver.getAxis(Direction.LEFT_VERTICAL) + getSteer());
 	}
 }
