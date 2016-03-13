@@ -81,7 +81,7 @@ public interface RobotMap {
 		//Standardized, back of robot is 74 in from front of defense.
 		
 		final double MOAT_SPEED					= .48;//DONE
-		final double MOAT_DISTANCE 				= 156;//DONE
+		final double MOAT_DISTANCE 				= 165;//DONE
 		
 		final double LOW_BAR_SPEED 				= .4;//DONE
 		final double LOW_BAR_DISTANCE 			= 127.5 + 16;//DONE

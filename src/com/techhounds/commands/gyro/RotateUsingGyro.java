@@ -38,7 +38,7 @@ public class RotateUsingGyro extends Command implements PIDSource, PIDOutput {
     	if(DEBUG){
     		SmartDashboard.putData("Gyro PID", pid);
     	}
-    	pid.setOutputRange(-.7, .7);
+    	pid.setOutputRange(-.65, .65);
     	pid.setAbsoluteTolerance(1);
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);

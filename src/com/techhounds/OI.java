@@ -61,7 +61,7 @@ public class OI {
 	final int startShooter = 		ControllerMap.Key.X;
 	final int fireShooter = 		ControllerMap.Key.B;
 	final int toggleDrive =			ControllerMap.Key.START;
-	final int visionTarget = 		ControllerMap.Key.LT;
+	final int visionTarget = 		ControllerMap.Key.LB;
 	
 	
 /*	final int opCollectIn = 		ControllerMap.Key.Y;

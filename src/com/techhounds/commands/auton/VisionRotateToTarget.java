@@ -20,7 +20,7 @@ public class VisionRotateToTarget extends Command {
 
 	private static VisionRotateToTarget instance;
 	
-	private VisionRotateToTarget() {
+	public VisionRotateToTarget() {
 		//drive = DriveSubsystem.getInstance();
 		//requires(drive);
 		// Use requires() here to declare subsystem dependencies
@@ -58,7 +58,7 @@ public class VisionRotateToTarget extends Command {
 			}
 		} else {
 			if(checkFrame < frame && lastFrame < frame) {
-				double angleOff = -SmartDashboard.getNumber("OffCenterDegreesX", 0);// * .75;
+				double angleOff = SmartDashboard.getNumber("OffCenterDegreesX", 0);// * .75;
 				SmartDashboard.putNumber("VISION TARGET ANGLE", angleOff);
 				(rotateCommand = new RotateUsingGyro(angleOff, RobotMap.DriveTrain.MIN_TURN_POWER, 2, 0)).start();
 			}

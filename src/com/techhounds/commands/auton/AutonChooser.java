@@ -1,6 +1,7 @@
 package com.techhounds.commands.auton;
 
 import com.techhounds.RobotMap;
+import com.techhounds.commands.Debug;
 import com.techhounds.commands.angler.SetAnglerPosition;
 import com.techhounds.commands.angler.SetStateDown;
 import com.techhounds.commands.angler.SetStateUp;
@@ -216,6 +217,7 @@ public class AutonChooser {
 					
 				case MOAT:
 					addSequential(new CrossDefense(RobotMap.Defenses.MOAT_DISTANCE, RobotMap.Defenses.MOAT_SPEED));
+					addSequential(new Debug("AUTON STATUS", "MOAT CROSSED"));
 					break;
 					
 				case RAMPARTS:
@@ -263,7 +265,9 @@ public class AutonChooser {
 				addSequential(new RotateToPreviousAngle(-90));
 			} else if(start == 3) {
 				//addSequential(new RotateUsingGyro(15));
+				addSequential(new WaitCommand(.1));
 				addSequential(new DriveDistance(12));
+				addSequential(new Debug("AUTON STATUS", "DROVE 12 INCH"));
 			} else if(start == 2 && goal == Goal.MIDDLE) {
 				// You are basically close enough
 			} else if(start == 2 && goal == Goal.RIGHT) {
@@ -287,12 +291,16 @@ public class AutonChooser {
 			
 			//This group of if statements determines what to do after positioning toward the enemy castle
 			if(shoot == 0) {
-				addParallel(VisionRotateToTarget.getInstance());// Get ourselves ready to target
+				addParallel(new VisionRotateToTarget());// Get ourselves ready to target
+				addParallel(new Debug("AUTON STATUS", "AIMING TOWARD TARGET"));
 				addParallel(new SetShooterSpeed(69));
 				addSequential(new WaitCommand(.1));
-				addParallel(VisionRotateToTarget.getInstance());
+				addSequential(new Debug("AUTON STATUS", "AIMED TOWARD TARGET"));
+				//addSequential(VisionRotateToTarget.getInstance());
 				addParallel(new WaitForShooterReady(2));
+				addSequential(new Debug("AUTON STATUS", "READY TO SHOOT"));
 				addSequential(Fire.getInstance());
+				addSequential(new Debug("AUTON STATUS", "SHOT!"));
 				addSequential(new WaitCommand(.2));
 			} else if(shoot == 1) {
 				addSequential(VisionRotateToTarget.getInstance());// Should be targeted before moving -so Sequential instead of Parallel
