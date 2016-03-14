@@ -81,26 +81,26 @@ public interface RobotMap {
 		//Standardized, back of robot is 74 in from front of defense.
 		
 		final double MOAT_SPEED					= .48;//DONE
-		final double MOAT_DISTANCE 				= 165;//DONE
+		final double MOAT_DISTANCE 				= 165 + 48;//DONE
 		
-		final double LOW_BAR_SPEED 				= .4;//DONE
-		final double LOW_BAR_DISTANCE 			= 127.5 + 16;//DONE
+		final double LOW_BAR_SPEED 				= .5;//DONE
+		final double LOW_BAR_DISTANCE 			= 127.5 + 16 + 24 + 36;//DONE
 
 		final double RAMPARTS_SPEED 			= .5;//DONE
-		final double RAMPARTS_DISTANCE 			= 139.5;//DONE
+		final double RAMPARTS_DISTANCE 			= 139.5 + 48;//DONE
 		
 		final double ROCK_WALL_SPEED 			= .5;//
-		final double ROCK_WALL_DISTANCE			= 143.5;//
+		final double ROCK_WALL_DISTANCE			= 143.5 + 48;//
 		
 		final double ROUGH_TERRAIN_SPEED 		= .5;//SET
-		final double ROUGH_TERRAIN_DISTANCE 	= 139.5;//
+		final double ROUGH_TERRAIN_DISTANCE 	= 139.5 + 48;//
 		
-		final double PORTCULLIS_SPEED_1 		= .4;//Moving to Portcullis
+		final double PORTCULLIS_SPEED_1 		= .5;//Moving to Portcullis
 		final double PORTCULLIS_SPEED_2 		= .3;//after lowering collector
-		final double PORTCULLIS_SPEED_3 		= .5;//while opening Portcullis and after
+		final double PORTCULLIS_SPEED_3 		= .75;//while opening Portcullis and after
 		final double PORTCULLIS_DISTANCE_1 		= 60;//Moving to Portcullis
 		final double PORTCULLIS_DISTANCE_2 		= 20;//after lowering collector
-		final double PORTCULLIS_DISTANCE_3 		= 75;//while opening Portcullis and after
+		final double PORTCULLIS_DISTANCE_3 		= 100;//while opening Portcullis and after
 		
 		final double CDF_SPEED_1 				= .4;//before lowering CDF
 		final double CDF_SPEED_2 				= .5;//after

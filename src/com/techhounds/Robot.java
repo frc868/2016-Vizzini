@@ -4,6 +4,7 @@ package com.techhounds;
 import com.techhounds.commands.MatchSetup;
 import com.techhounds.commands.USBCameraCommand;
 import com.techhounds.commands.UpdateSmartDashboard;
+import com.techhounds.commands.auton.AutonChooser;
 import com.techhounds.commands.auton.RetrieveAuton;
 import com.techhounds.subsystems.AnglerSubsystem;
 import com.techhounds.subsystems.BeamBreakSubsystem;
@@ -47,6 +48,7 @@ public class Robot extends IterativeRobot {
     	
     	initSubsystems();
     	OI.getInstance();
+    	AutonChooser.getInstance();
     	new UpdateSmartDashboard().start();
     	new MatchSetup().start();
     	System.out.println("*** TECHHOUNDS IS READY TO ROBOT ***");

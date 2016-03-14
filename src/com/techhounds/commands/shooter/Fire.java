@@ -1,5 +1,6 @@
 package com.techhounds.commands.shooter;
 
+import com.techhounds.commands.SetRumble;
 import com.techhounds.commands.collector.SetCollectorPower;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -13,6 +14,7 @@ public class Fire extends CommandGroup {
 		addSequential(new WaitForShooterReady());
 		addSequential(new SetCollectorPower(.6, true));
 		addSequential(new WaitCommand(.5));
+		addSequential(new SetRumble(true, false));
 		addSequential(new SetCollectorPower(0, true));
 		addSequential(new SetShooterPower());
 	}

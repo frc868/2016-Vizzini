@@ -18,6 +18,8 @@ public class DriveDistance extends Command implements PIDSource, PIDOutput {
 	private double lastPower;
 	private double minPower;
 	private boolean pidOnTarget;
+	
+	private Double timeOut;
 
 	public DriveDistance(double dist) {
 		this(dist, 1);
@@ -31,13 +33,18 @@ public class DriveDistance extends Command implements PIDSource, PIDOutput {
 		drive = DriveSubsystem.getInstance();
 		requires(drive);
 		pid = new PIDController(.025, 0, .004, this, this);
-		pid.setOutputRange(-max, max);
+		pid.setOutputRange(-Math.abs(max), Math.abs(max));
 		pid.setAbsoluteTolerance(1);
 		minPower = min;
 		this.targetDist = dist;
 		SmartDashboard.putData("Drive distance pid", pid);
 		SmartDashboard.putNumber("Power to Drive", 0.3);
 		SmartDashboard.putNumber("Min Power To Drive", min);
+	}
+	
+	public DriveDistance(double dist, double max, double min, double timeOut) {
+		this(dist, max, min);
+		this.timeOut = timeOut;
 	}
 
 	public DriveDistance(double dist, double max) {
@@ -63,7 +70,10 @@ public class DriveDistance extends Command implements PIDSource, PIDOutput {
 
 	@Override
 	protected boolean isFinished() {
-		// TODO Auto-generated method stub
+		if(timeOut != null)
+			if(timeSinceInitialized() > timeOut)
+				return true;
+		
 		return pidOnTarget = pid.onTarget();
 	}
 

@@ -10,6 +10,7 @@ import com.techhounds.commands.angler.SetStateUp;
 import com.techhounds.commands.auton.AutonChooser;
 import com.techhounds.commands.auton.CrossDefense;
 import com.techhounds.commands.auton.RetrieveAuton;
+import com.techhounds.commands.auton.RotateUsingVision;
 import com.techhounds.commands.auton.StopVisionRotate;
 import com.techhounds.commands.auton.VisionRotateToTarget;
 import com.techhounds.commands.collector.SetCollector;
@@ -24,6 +25,7 @@ import com.techhounds.commands.servos.SetWinchEnable;
 import com.techhounds.commands.servos.SetWinchLock;
 import com.techhounds.commands.shooter.Fire;
 import com.techhounds.commands.shooter.IncrementShooterSpeed;
+import com.techhounds.commands.shooter.PreFire;
 import com.techhounds.commands.shooter.SetShooterPower;
 import com.techhounds.commands.shooter.SetShooterSpeed;
 import com.techhounds.commands.shooter.SetShooterSpeedFromVision;
@@ -62,7 +64,7 @@ public class OI {
 	final int startShooter = 		ControllerMap.Key.X;
 	final int fireShooter = 		ControllerMap.Key.B;
 	final int toggleDrive =			ControllerMap.Key.START;
-	final int visionTarget = 		ControllerMap.Key.LB;
+	final int visionTarget = 		ControllerMap.Key.LT;
 	
 	
 /*	final int opCollectIn = 		ControllerMap.Key.Y;
@@ -166,23 +168,22 @@ public class OI {
 			.whenPressed(new SetShooterPower());
 		
 		controller.getButton(startShooter)
-			.whenPressed(new SetShooterSpeed(69));
+			.whenPressed(new PreFire());
 		
 		controller.getButton(fireShooter)
 			.whenPressed(Fire.getInstance())
 			.whenReleased(new StopFire());
 
-		if(controller == driver)
-		controller.getButton(toggleDrive)
-			.whenPressed(new ToggleDriveDirection());
-		else
-		controller.getButton(toggleDrive)
-			.whenPressed(new ToggleManualOverride());
+		if(controller == driver) {
+			controller.getButton(toggleDrive)
+				.whenPressed(new ToggleDriveDirection());
+		} else {
+			controller.getButton(toggleDrive)
+				.whenPressed(new ToggleManualOverride());
+		}
 		
 		controller.getButton(visionTarget)
-			.whenPressed(VisionRotateToTarget.getInstance())
-			.whenReleased(new StopVisionRotate());
-			
+			.whenPressed(new RotateUsingVision(4));
 	}
 
 	/**
@@ -190,7 +191,7 @@ public class OI {
 	 */
 	public void setupSmartDashboard() {
 //		SmartDashboard.putData("Cross Defense maintaining orientation", new CrossDefense());
-		SmartDashboard.putData("Vision Align To Target", VisionRotateToTarget.getInstance());
+		SmartDashboard.putData("Vision Align To Target", new RotateUsingVision(5));
 //		if(RotateUsingGyro.DEBUG){//This will not show in the SD up unless we're debugging RotateUsingGyro
 			SmartDashboard.putData("Rotate 15 Degrees", new RotateUsingGyro(15));
 //			SmartDashboard.putData("Rotate -90 Degrees", new RotateUsingGyro(-90));
@@ -278,8 +279,8 @@ public class OI {
 	}
 	
 	public double getSteer() {
-		if(currentDriver.getAxis(ControllerMap.Direction.RIGHT_HORIZONTAL) < .25 && currentDriver != operator)
-			return operator.getAxis(ControllerMap.Direction.RIGHT_HORIZONTAL) * .65;
+		if(Math.abs(currentDriver.getAxis(ControllerMap.Direction.RIGHT_HORIZONTAL)) < .25 && currentDriver != operator)
+			return operator.getAxis(ControllerMap.Direction.RIGHT_HORIZONTAL) * .5;
 		else
 			return currentDriver.getAxis(ControllerMap.Direction.RIGHT_HORIZONTAL);
 	}

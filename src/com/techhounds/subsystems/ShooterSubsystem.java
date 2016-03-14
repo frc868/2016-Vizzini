@@ -138,7 +138,8 @@ public class ShooterSubsystem extends Subsystem {
 			SmartDashboard.putNumber("Shooter Count", getCount());
 			SmartDashboard.putNumber("Shooter Period", count.getPeriod());
 		}
-		
+
+		SmartDashboard.putNumber("Shooter Count", getCount());
 		SmartDashboard.putNumber("Shooter Speed", getSpeed());
 		SmartDashboard.putBoolean("Shooter PID OnTarget", onTarget());
 		SmartDashboard.putBoolean("Shooter PID Running", controller.isEnabled());

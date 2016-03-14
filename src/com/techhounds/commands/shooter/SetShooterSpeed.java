@@ -1,5 +1,6 @@
 package com.techhounds.commands.shooter;
 
+import com.techhounds.commands.SetRumble;
 import com.techhounds.subsystems.ShooterSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;

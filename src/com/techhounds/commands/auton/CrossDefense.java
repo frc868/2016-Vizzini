@@ -37,4 +37,9 @@ public class CrossDefense extends CommandGroup {
 		 addSequential(new DriveDistance(distance, crossingMaxSpeed, crossingMinSpeed));
 		 addSequential(new RotateToPreviousAngle());
 	}
+	public CrossDefense(double distance, double crossingMaxSpeed, double crossingMinSpeed, double timeout){
+		addSequential(new SaveCurrentAngle());
+		addSequential(new DriveDistance(distance, crossingMaxSpeed, crossingMinSpeed, timeout));
+		addSequential(new RotateToPreviousAngle());
+	}
 }
