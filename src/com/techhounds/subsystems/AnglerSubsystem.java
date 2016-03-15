@@ -64,7 +64,7 @@ public class AnglerSubsystem extends Subsystem {
 			
 		});
 		
-		pid.setOutputRange(-.35, .35);
+		pid.setOutputRange(-.5, .5);
 		pid.setInputRange(RobotMap.Collector.COLLECTOR_UP, RobotMap.Collector.COLLECTOR_DOWN);
 		pid.setAbsoluteTolerance(TOLERANCE);
 		//pid.enable();

@@ -22,7 +22,8 @@ public class ShooterSubsystem extends Subsystem {
 	private static ShooterSubsystem instance;
 	private CANTalon shooter;
 	private Counter count;
-	public final double P = .01, I = 0, D = .2, F = .005;
+//	public final double P = .01, I = 0, D = .2, F = .005;
+	public final double P = 0, I = 0, D = 0, F = .05;
 	private PIDController controller;
 	private double lastSpeed;
 	public boolean debuging = true;
@@ -139,7 +140,6 @@ public class ShooterSubsystem extends Subsystem {
 			SmartDashboard.putNumber("Shooter Period", count.getPeriod());
 		}
 
-		SmartDashboard.putNumber("Shooter Count", getCount());
 		SmartDashboard.putNumber("Shooter Speed", getSpeed());
 		SmartDashboard.putBoolean("Shooter PID OnTarget", onTarget());
 		SmartDashboard.putBoolean("Shooter PID Running", controller.isEnabled());

@@ -54,6 +54,15 @@ public class AutonChooser {
 		RIGHT,
 		DO_NOTHING
 	}
+	public enum Shoot {
+		
+	}
+	public enum Post {
+		STRAIGHTEN,
+		READY_TO_CROSS,
+		FACE_DEFENSES,
+		NOTHING
+	}
 	
 	private SendableChooser chooseStart;
 	private SendableChooser chooseDefense;
@@ -302,8 +311,8 @@ public class AutonChooser {
 				// Face Defenses and Drive To The Point Ready to Cross them
 			} else if(post == 1) {
 				// Face Defenses
-				addSequential(new RotateToPreviousAngle());
-				addSequential(new RotateUsingGyro(180, 3, 0));
+				addSequential(new RotateToPreviousAngle(180));
+		//		addSequential(new RotateUsingGyro(180, 3, 0));
 			} else {
 				// Do Nothing
 			}
