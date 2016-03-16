@@ -238,15 +238,15 @@ public class OI {
 	private SendableChooser createControllerChooser(boolean driver) {
 		SendableChooser chooser = new SendableChooser();
 		
-		if(!driver)
-			chooser.addDefault("Logitech", ControllerMap.Type.LOGITECH);
-		else
+		//if(!driver)
+		//	chooser.addDefault("Logitech", ControllerMap.Type.LOGITECH);
+		//else
 			chooser.addObject("Logitech", ControllerMap.Type.LOGITECH);
 		
-		if(driver)
+		//if(driver)
 			chooser.addDefault("XBOX ONE", ControllerMap.Type.XBOX_ONE);
-		else
-			chooser.addObject("XBOX ONE", ControllerMap.Type.XBOX_ONE);
+		//else
+		//	chooser.addObject("XBOX ONE", ControllerMap.Type.XBOX_ONE);
 		
 		chooser.addObject("XBOX 360", ControllerMap.Type.XBOX_360);
 		chooser.addObject("Playstation 4", ControllerMap.Type.PS4);
