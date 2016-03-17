@@ -13,12 +13,20 @@ public class SetAnglerPosition extends Command {
 	
 	private AnglerSubsystem angle;
 	private Double position;
-	
+	private Double timeout;
 
     public SetAnglerPosition(Double position) {
     	angle = AnglerSubsystem.getInstance();
     	requires(angle);
     	this.position = position;
+    	this.timeout = null;
+    }
+    
+    public SetAnglerPosition(Double position, Double timeout) {
+    	angle = AnglerSubsystem.getInstance();
+    	requires(angle);
+    	this.position = position;
+    	this.timeout = timeout;
     }
     
     public SetAnglerPosition(){
@@ -40,6 +48,11 @@ public class SetAnglerPosition extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
+    	if(timeout != null) {
+    		if(timeout < timeSinceInitialized()) {
+    			return true;
+    		}
+    	}
     	return angle.onTarget();
     }
 

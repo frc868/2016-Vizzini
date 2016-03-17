@@ -2,7 +2,7 @@
 package com.techhounds;
 
 import com.techhounds.commands.MatchSetup;
-import com.techhounds.commands.USBCameraCommand;
+import com.techhounds.commands.CameraCommand;
 import com.techhounds.commands.UpdateSmartDashboard;
 import com.techhounds.commands.auton.AutonChooser;
 import com.techhounds.commands.auton.RetrieveAuton;
@@ -22,6 +22,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Robot extends IterativeRobot {
 	
+	private static final String GAME_STATE = "GameState";
 	public static boolean competing = true;
 	public static double powToSpeedConst = 20;
 	
@@ -45,6 +46,7 @@ public class Robot extends IterativeRobot {
     public void robotInit() {
     	// TODO: Initialize Subsystems and OI
     	// TODO: Start Smart Dashboard
+    	SmartDashboard.putString(GAME_STATE, "robotInit");
     	
     	initSubsystems();
     	OI.getInstance();
@@ -59,6 +61,7 @@ public class Robot extends IterativeRobot {
      * Runs once the instant the robot is disabled
      */
     public void disabledInit(){
+    	SmartDashboard.putString(GAME_STATE, "disabled");   	
     	//new USBCameraCommand(true).start();
     }
 	
@@ -73,6 +76,7 @@ public class Robot extends IterativeRobot {
 	 * Runs once the instant the robot is in autonomous mode
 	 */
 	public void autonomousInit() {
+    	SmartDashboard.putString(GAME_STATE, "auton");
 		// TODO: Get Selected Auton Command and Run It!
 		new RetrieveAuton().start();
     	System.out.println("*** TECHHOUNDS IS READY TO AUTON ***");
@@ -89,9 +93,10 @@ public class Robot extends IterativeRobot {
      * Runs once the instant that the robot is in teleop mode
      */
     public void teleopInit() {
+    	SmartDashboard.putString(GAME_STATE, "teleop");
     	// TODO: Cancel Auton Command
     	new MatchSetup().start();
-    	new USBCameraCommand(true).start();
+    	//new CameraCommand(true).start();
     	System.out.println("*** TECHHOUNDS IS READY TO TELEOP ***");
     }
 

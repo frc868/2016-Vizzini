@@ -13,17 +13,21 @@ import edu.wpi.first.wpilibj.vision.USBCamera;
 /**
  *
  */
-public class USBCameraCommand extends Command {
+public class CameraCommand extends Command {
 	private CameraServer camera;
-	private boolean enabled;
+	private static boolean shootCamEnabled;
+	private static boolean collectCamEnabled;
 	private static USBCamera ucam;
 	
 	// Network Table key used to signal that the USB camera is active
-    private static final String USB_CAMERA_ENABLED_KEY = "usbCameraEnabled";
+	static final String COLLECTOR_CAMERA_ENABLED_KEY = "CollectorCameraEnabled";
+	static final String SHOOTER_CAMERA_ENABLED_KEY = "ShooterCameraEnabled";
 	private static final boolean DEBUG = false;
 
 	
-    public USBCameraCommand(boolean enb) {
+    public CameraCommand(boolean enableShootCam, boolean enableCollectCam) {
+    	shootCamEnabled = enableShootCam;
+    	collectCamEnabled = enableCollectCam;
         // Use requires() here to declare subsystem dependencies/
         // eg. requires(chassis);
     	
@@ -39,6 +43,9 @@ public class USBCameraCommand extends Command {
     	enabled = enb;
  */
     	
+    }
+    public CameraCommand(){
+    	this(!shootCamEnabled, ! collectCamEnabled);
     }
     
 /*    public USBCameraCommand(){
@@ -56,7 +63,8 @@ public class USBCameraCommand extends Command {
     // Called just before this Command runs the first time/
     @Override
     protected void initialize() {
-    	
+    	SmartDashboard.putBoolean(COLLECTOR_CAMERA_ENABLED_KEY, collectCamEnabled);
+    	SmartDashboard.putBoolean(SHOOTER_CAMERA_ENABLED_KEY, shootCamEnabled);
 /*    	if(enabled){
     		camera.startAutomaticCapture(ucam);
     	}

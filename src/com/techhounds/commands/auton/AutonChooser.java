@@ -269,11 +269,12 @@ public class AutonChooser {
 			
 			if(start == 5) {
 				// LOW BAR AUTONOMOUS (LEFT)
-				addSequential(new SetAnglerPosition(RobotMap.Collector.COLLECTOR_UP));
-				addSequential(new RotateUsingGyro(45));
+				addSequential(new SetAnglerPosition(RobotMap.Collector.COLLECTOR_UP, 1.0));
+				addSequential(new RotateUsingGyro(60));
+				addSequential(new DriveDistance(48, 1, RobotMap.DriveTrain.MIN_STRAIGHT_POWER, .5));
 			} else if(start == 4) {
-				// BRING BACK TOO CLOSE (MIDDLE)
-				addSequential(new DriveDistance(-TEMP_BACK_DEFENSE, -RobotMap.Defenses.TO_DEFENSE_SPEED, -RobotMap.DriveTrain.MIN_STRAIGHT_POWER, 2));
+				addSequential(new DriveDistance(TEMP_BACK_DEFENSE, RobotMap.Defenses.TO_DEFENSE_SPEED, RobotMap.DriveTrain.MIN_STRAIGHT_POWER, 2));
+				addSequential(new RotateUsingGyro(60));
 			} else if(start == 3) {
 				// PERFECT
 			} else if(start == 2) {
@@ -286,13 +287,16 @@ public class AutonChooser {
 			addParallel(new RotateUsingVision(2));
 			
 			if(shoot == 0) {
-				addSequential(new SetShooterSpeed(69));
+				addSequential(new WaitCommand(1));
+				addParallel(new SetShooterSpeed(69));
 				addSequential(new RotateUsingVision());
-				addSequential(new WaitCommand(.2));
-				addSequential(new WaitForShooterReady(.5));
-				addSequential(new SetCollectorPower(.6, true));
-				addSequential(new WaitCommand(.5));
-				addSequential(new SetCollectorPower(0, true));
+				addSequential(new WaitCommand(1));
+				addSequential(new WaitForShooterReady(1));
+				addSequential(new RotateUsingVision());
+				addSequential(new WaitCommand(1.5));
+				addSequential(new SetCollectorPower(1, true));
+				addSequential(new WaitCommand(2));
+				addParallel(new SetCollectorPower(0, true));
 				addSequential(new SetShooterPower());
 			} else if(shoot == 1) {
 				// Align Target, then Drive to Goal

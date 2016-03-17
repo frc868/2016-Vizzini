@@ -1,7 +1,7 @@
 package com.techhounds;
 
 import com.techhounds.commands.ToggleManualOverride;
-import com.techhounds.commands.USBCameraCommand;
+import com.techhounds.commands.CameraCommand;
 import com.techhounds.commands.UpdateController;
 import com.techhounds.commands.angler.SetAnglerPosition;
 import com.techhounds.commands.angler.SetAnglerPower;
@@ -193,7 +193,7 @@ public class OI {
 //		SmartDashboard.putData("Cross Defense maintaining orientation", new CrossDefense());
 		SmartDashboard.putData("Vision Align To Target", new RotateUsingVision(5));
 //		if(RotateUsingGyro.DEBUG){//This will not show in the SD up unless we're debugging RotateUsingGyro
-			SmartDashboard.putData("Rotate 15 Degrees", new RotateUsingGyro(15));
+			SmartDashboard.putData("Rotate 60 Degrees", new RotateUsingGyro(60));
 //			SmartDashboard.putData("Rotate -90 Degrees", new RotateUsingGyro(-90));
 //		}
 //		SmartDashboard.putData("Reset Drive Encoders", new DriveEncodersReset());
@@ -209,7 +209,9 @@ public class OI {
 //		SmartDashboard.putData(DriveSubsystem.getInstance());
 
 //		SmartDashboard.putData("Enable USB Camera", new USBCameraCommand(true));
-		SmartDashboard.putData("Disable USB Camera", new USBCameraCommand(false));
+		SmartDashboard.putData("Disable Collect Camera", new CameraCommand(true, false));
+		SmartDashboard.putData("Enable Collect Cam", new CameraCommand(false, true));
+		SmartDashboard.putData("Enable Both Cameras", new CameraCommand(true, true));
 
 //		SmartDashboard.putData("Set Angler Position", new SetAnglerPosition());
 //		SmartDashboard.putNumber("Angler Set Height", 47);

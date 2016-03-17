@@ -11,7 +11,7 @@ public class PreFire extends CommandGroup {
 
 	public PreFire() {
 
-		addParallel(new SetCollectorPower(-.2, true));
+		addParallel(new SetCollectorPower(-.4, true));
 		addSequential(new WaitForBeanBreak(false));
 		//addSequential(new WaitCommand(1));
 		//addParallel(new SetCollectorPower(.4, true));

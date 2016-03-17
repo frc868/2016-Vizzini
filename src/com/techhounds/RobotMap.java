@@ -13,7 +13,7 @@ public interface RobotMap {
 	
 	interface Collector{
 		final int COLLECTOR_MOTOR = 17;
-		final double inPower = .6, outPower = -1;
+		final double inPower = .8, outPower = -1;
 		final boolean COLLECTOR_IS_INVERTED = false;
 		final int COLLECTOR_ANGLER = 23;
 		final int BEAM_BREAK_SENSOR = 5;
@@ -22,7 +22,7 @@ public interface RobotMap {
 		final int COLLECTOR_PDP = 11;
 		
 		final double COLLECTOR_UP = 382;
-		final double COLLECTING = 658;
+		final double COLLECTING = 643;
 		final double COLLECTOR_DOWN = 732;
 	}
 	
@@ -52,11 +52,11 @@ public interface RobotMap {
 		final int DRIVE_RIGHT_PDP_3 = 15;
 		
 		final double MIN_TURN_POWER = .45;
-		final double MIN_STRAIGHT_POWER = .2;
+		final double MIN_STRAIGHT_POWER = .35;
 	}
 	
 	interface Servo {
-		final int WINCH_ENABLE = 2;
+		final int WINCH_ENABLE = 3;
 		final int WINCH_LOCK = -1;
 		final int SCISSOR_ONE = -1;
 		final int SCISSOR_TWO = -1;
@@ -83,7 +83,7 @@ public interface RobotMap {
 		final double MOAT_SPEED					= .48;//DONE
 		final double MOAT_DISTANCE 				= 165 + 48;//DONE
 		
-		final double LOW_BAR_SPEED 				= .5;//DONE
+		final double LOW_BAR_SPEED 				= .7;//DONE
 		final double LOW_BAR_DISTANCE 			= 127.5 + 16 + 24 + 36;//DONE
 
 		final double RAMPARTS_SPEED 			= .5;//DONE
