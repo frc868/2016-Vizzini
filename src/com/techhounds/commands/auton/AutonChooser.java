@@ -196,22 +196,24 @@ public class AutonChooser {
 				GyroSubsystem gyro = GyroSubsystem.getInstance();
 				
 				CommandGroup twoBall = new CommandGroup();
-				twoBall.addParallel(new SetShooterSpeed(69));
-				twoBall.addParallel(new SaveCurrentAngle());
-				twoBall.addSequential(new DriveDistance(6, 1, RobotMap.DriveTrain.MIN_STRAIGHT_POWER, .5));
-				twoBall.addSequential(new RotateUsingVision());
-				twoBall.addSequential(new SetCollectorPower(1, true));
+				twoBall.addParallel(new SetShooterSpeed(69)); // GET SHOOTER READY
+				twoBall.addParallel(new SaveCurrentAngle());  // SAVE CURRENT ANGLE
+				twoBall.addSequential(new DriveDistance(6, 1, RobotMap.DriveTrain.MIN_STRAIGHT_POWER, .5)); //DRIVE 6 IN
+				twoBall.addParallel(new RotateUsingVision()); // ROTATE
+				twoBall.addSequential(new WaitForShooterReady(1)); // CHECK SHOOTER READY
+				twoBall.addSequential(new SetCollectorPower(1, true)); // FIRE
 				twoBall.addSequential(new WaitCommand(.75));
-				twoBall.addSequential(new SetCollectorPower(0, true));
-				twoBall.addSequential(new RotateUsingGyro(gyro.getStoredAngle() - gyro.getRotation() - 110, 4, 0));
+				twoBall.addSequential(new SetCollectorPower(0, true)); // STOP FIRE
+				twoBall.addSequential(new RotateUsingGyro(gyro.getStoredAngle() - gyro.getRotation() - 110, 4, 0)); // ROTATE
 				twoBall.addParallel(new SetAnglerPosition(RobotMap.Collector.COLLECTING)); // SET DOWN
-				twoBall.addParallel(new SetCollectorPower(RobotMap.Collector.inPower, true)); // COLLECTING
-				twoBall.addSequential(new DriveDistance(-100.763 + 2.6294, -1, .6, 3));
-				twoBall.addParallel(new DriveDistance(-85, -RobotMap.Defenses.LOW_BAR_SPEED, -RobotMap.Defenses.LOW_BAR_SPEED + .1, 3));
-				twoBall.addSequential(new WaitForBeanBreak(true)); // UNTIL WE GOT A BALL
+				twoBall.addParallel(new SetCollectorPower(.85, true)); // COLLECTING
+				twoBall.addParallel(new SetShooterPower()); // TURN OFF SHOOTER
+				twoBall.addSequential(new DriveDistance(-100.763 + 2.6294, -1, .6, 3)); // DRIVE TO DEFENSE
+				twoBall.addSequential(new DriveBackAndCheckForBall());
 				twoBall.addParallel(new AutonCommand(5, Defense.LOW_BAR, Goal.LEFT, 0, 0)); // AUTON COMMAND
 				twoBall.addParallel(new SetCollectorPower(-.2, true)); // POSITION BALL
 				twoBall.addSequential(new WaitForBeanBreak(false)); // UNTIL BALL IN GOOD POSITION
+	
 				return twoBall;
 			} else if(getStart() == 6) {
 				// TWO BALL AUTON --> SPECIAL SETUP
