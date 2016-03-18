@@ -17,6 +17,7 @@ import com.techhounds.commands.shooter.PreFire;
 import com.techhounds.commands.shooter.SetShooterPower;
 import com.techhounds.commands.shooter.SetShooterSpeed;
 import com.techhounds.commands.shooter.WaitForShooterReady;
+import com.techhounds.subsystems.GyroSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -98,6 +99,7 @@ public class AutonChooser {
 		chooseStart.addObject("Position 4", new Integer(2));
 		chooseStart.addObject("Secret Passage (5)", new Integer(1));
 		chooseStart.addObject("Two Ball Autonomous (POS 1)", new Integer(6));
+		chooseStart.addObject("Two Ball Autonomous (Spy Box)", new Integer(7));
 		
 		chooseDefense = new SendableChooser();
 		chooseDefense.addObject("A: Portcullis", Defense.PORTCULLIS);
@@ -189,7 +191,29 @@ public class AutonChooser {
 		if(isValid()) {
 			System.out.print("-- VALID AUTON --");
 			
-			if(getStart() == 6) {
+			if(getStart() == 7) {
+				
+				GyroSubsystem gyro = GyroSubsystem.getInstance();
+				
+				CommandGroup twoBall = new CommandGroup();
+				twoBall.addParallel(new SetShooterSpeed(69));
+				twoBall.addParallel(new SaveCurrentAngle());
+				twoBall.addSequential(new DriveDistance(6, 1, RobotMap.DriveTrain.MIN_STRAIGHT_POWER, .5));
+				twoBall.addSequential(new RotateUsingVision());
+				twoBall.addSequential(new SetCollectorPower(1, true));
+				twoBall.addSequential(new WaitCommand(.75));
+				twoBall.addSequential(new SetCollectorPower(0, true));
+				twoBall.addSequential(new RotateUsingGyro(gyro.getStoredAngle() - gyro.getRotation() - 110, 4, 0));
+				twoBall.addParallel(new SetAnglerPosition(RobotMap.Collector.COLLECTING)); // SET DOWN
+				twoBall.addParallel(new SetCollectorPower(RobotMap.Collector.inPower, true)); // COLLECTING
+				twoBall.addSequential(new DriveDistance(-100.763 + 2.6294, -1, .6, 3));
+				twoBall.addParallel(new DriveDistance(-85, -RobotMap.Defenses.LOW_BAR_SPEED, -RobotMap.Defenses.LOW_BAR_SPEED + .1, 3));
+				twoBall.addSequential(new WaitForBeanBreak(true)); // UNTIL WE GOT A BALL
+				twoBall.addParallel(new AutonCommand(5, Defense.LOW_BAR, Goal.LEFT, 0, 0)); // AUTON COMMAND
+				twoBall.addParallel(new SetCollectorPower(-.2, true)); // POSITION BALL
+				twoBall.addSequential(new WaitForBeanBreak(false)); // UNTIL BALL IN GOOD POSITION
+				return twoBall;
+			} else if(getStart() == 6) {
 				// TWO BALL AUTON --> SPECIAL SETUP
 				
 				CommandGroup twoBall = new CommandGroup();
@@ -227,6 +251,10 @@ public class AutonChooser {
 			
 			// Save Initial Angle
 			addSequential(new SaveCurrentAngle());
+			
+			if(shoot == 0) {
+				addParallel(new SetShooterSpeed(69));
+			}
 			
 			// We will add the Defense that will be crossing
 			switch(defense) {
@@ -288,7 +316,7 @@ public class AutonChooser {
 			
 			if(shoot == 0) {
 				addSequential(new WaitCommand(1));
-				addParallel(new SetShooterSpeed(69));
+				//addParallel(new SetShooterSpeed(69));
 				addSequential(new RotateUsingVision());
 				addSequential(new WaitCommand(1));
 				addSequential(new WaitForShooterReady(1));
