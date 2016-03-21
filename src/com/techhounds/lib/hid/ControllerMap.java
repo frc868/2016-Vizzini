@@ -82,7 +82,7 @@ public class ControllerMap {
 				else
 					buttons.replace(buttonID, new JoystickButton(joystick, buttonPorts[buttonID]));
 
-				SmartDashboard.putNumber("Button Selected " + buttonID, buttonPorts[buttonID]);
+			//	SmartDashboard.putNumber("Button Selected " + buttonID, buttonPorts[buttonID]);
 			}
 		}
 	}
@@ -117,8 +117,8 @@ public class ControllerMap {
 				buttons.put(buttonID, new JoystickButton(joystick, buttonPorts[buttonID]));
 		}
 		
-		if(!DPadButton.isDPADButton(buttonID))
-			SmartDashboard.putNumber("Button Selected " + buttonID, buttonPorts[buttonID]);
+		//if(!DPadButton.isDPADButton(buttonID))
+		//	SmartDashboard.putNumber("Button Selected " + buttonID, buttonPorts[buttonID]);
 		
 		return buttons.get(buttonID);
 	}

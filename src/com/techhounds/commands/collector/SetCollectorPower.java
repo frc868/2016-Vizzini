@@ -14,6 +14,7 @@ public class SetCollectorPower extends Command {
 	private CollectorSubsystem collect;
 	private BeamBreakSubsystem beam;
 	private boolean isShooting;
+	private boolean timeOut = false;
 	
 	private double power;
     public SetCollectorPower(double power) {
@@ -22,6 +23,9 @@ public class SetCollectorPower extends Command {
     
     public SetCollectorPower(){
     	this(0);
+    }
+    public SetCollectorPower(double power, double timeOut){
+    	
     }
     public SetCollectorPower(double power, boolean isShooting){
      	collect = CollectorSubsystem.getInstance();

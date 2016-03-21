@@ -18,7 +18,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class AnglerSubsystem extends Subsystem {
 	
-	private boolean debugging = true;
+	private boolean debugging = false;
 	private static AnglerSubsystem instance;
 	private CANTalon angler;
 	private double P = 0.008, I = 0, D = 0.01;

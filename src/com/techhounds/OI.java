@@ -2,6 +2,8 @@ package com.techhounds;
 
 import com.techhounds.commands.ToggleManualOverride;
 import com.techhounds.commands.CameraCommand;
+import com.techhounds.commands.EmergencyRelease;
+import com.techhounds.commands.EndEmergencyRelease;
 import com.techhounds.commands.UpdateController;
 import com.techhounds.commands.angler.SetAnglerPosition;
 import com.techhounds.commands.angler.SetAnglerPower;
@@ -65,7 +67,7 @@ public class OI {
 	final int fireShooter = 		ControllerMap.Key.B;
 	final int toggleDrive =			ControllerMap.Key.START;
 	final int visionTarget = 		ControllerMap.Key.LT;
-	
+	final int emergencyRelease= 	DPadButton.Direction.RIGHT;
 	
 /*	final int opCollectIn = 		ControllerMap.Key.Y;
 	final int opCollectOut = 		ControllerMap.Key.B;
@@ -144,6 +146,9 @@ public class OI {
 	 */
 	public void setUpController(ControllerMap controller) {
 		
+		controller.getButton(emergencyRelease).
+			whenPressed(new EmergencyRelease()).
+			whenReleased(new EndEmergencyRelease());
 		controller.getButton(startCollector)
 			.whenPressed(new SetCollectorPower(RobotMap.Collector.inPower))
 			.whenReleased(new SetCollectorPower());
@@ -199,6 +204,7 @@ public class OI {
 //		SmartDashboard.putData("Reset Drive Encoders", new DriveEncodersReset());
 //		SmartDashboard.putData("Set Shooter Speed", new SetShooterSpeed(69));
 		SmartDashboard.putData("Update The Controllers", new UpdateController());
+		//SmartDashboard.putData("Shooter PID", ShooterSubsystem.getInstance().getController());
 		//SmartDashboard.putData("Toggle_Scissors_1", new SetScissorsOne());
 		//SmartDashboard.putData("Toggle_Scissors_2", new SetScissorsTwo());
 //		SmartDashboard.putData("Toggle_Winch_Enable", new SetWinchEnable());

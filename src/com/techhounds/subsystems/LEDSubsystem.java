@@ -1,6 +1,7 @@
 package com.techhounds.subsystems;
 
 import com.techhounds.RobotMap;
+import com.techhounds.commands.SetLEDMode;
 
 import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -29,6 +30,7 @@ public class LEDSubsystem extends Subsystem {
 	}
 
     public void initDefaultCommand() {
+    	setDefaultCommand(new SetLEDMode());
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
     }

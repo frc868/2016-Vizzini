@@ -4,6 +4,7 @@ import com.techhounds.RobotMap;
 import com.techhounds.commands.angler.SetAnglerPosition;
 import com.techhounds.commands.drive.DriveDistance;
 import com.techhounds.commands.gyro.RotateToPreviousAngle;
+import com.techhounds.commands.gyro.RotateUsingGyro;
 import com.techhounds.commands.gyro.SaveCurrentAngle;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -21,11 +22,10 @@ public class CrossPortcullis extends CommandGroup {
     	
     	addParallel(new DriveDistance(-RobotMap.Defenses.PORTCULLIS_DISTANCE_1, -RobotMap.Defenses.PORTCULLIS_SPEED_1, -RobotMap.DriveTrain.MIN_STRAIGHT_POWER, 3));//drives up on to ramp to its position
     	addSequential(new SetAnglerPosition(RobotMap.Collector.COLLECTOR_DOWN));//Lowers collector to position on ground
-    	addSequential(new WaitCommand(4));
+    	addSequential(new WaitCommand(.75));
     	addParallel(new SetAnglerPosition(RobotMap.Collector.COLLECTOR_UP));//drives through portcullis while raising collector
     	addSequential(new DriveDistance(-RobotMap.Defenses.PORTCULLIS_DISTANCE_3, -RobotMap.Defenses.PORTCULLIS_SPEED_3, -RobotMap.DriveTrain.MIN_STRAIGHT_POWER));
-    	
-    	addSequential(new RotateToPreviousAngle(180));
+    	addSequential(new RotateUsingGyro(180), 2.5);
     	
         // Add Commands here:
         // e.g. addSequential(new Command1());

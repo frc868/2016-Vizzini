@@ -81,12 +81,12 @@ public interface RobotMap {
 		//Standardized, back of robot is 74 in from front of defense.
 		
 		final double MOAT_SPEED					= .48;//DONE
-		final double MOAT_DISTANCE 				= 165 + 48;//DONE
+		final double MOAT_DISTANCE 				= 165 + 48 + 45;//DONE
 		
 		final double LOW_BAR_SPEED 				= .7;//DONE
 		final double LOW_BAR_DISTANCE 			= 127.5 + 16 + 24 + 36;//DONE
 
-		final double RAMPARTS_SPEED 			= .5;//DONE
+		final double RAMPARTS_SPEED 			= .8;//DONE
 		final double RAMPARTS_DISTANCE 			= 139.5 + 48;//DONE
 		
 		final double ROCK_WALL_SPEED 			= .5;//
@@ -100,14 +100,12 @@ public interface RobotMap {
 		final double PORTCULLIS_SPEED_3 		= .75;//while opening Portcullis and after
 		final double PORTCULLIS_DISTANCE_1 		= 60;//Moving to Portcullis
 		final double PORTCULLIS_DISTANCE_2 		= 20;//after lowering collector
-		final double PORTCULLIS_DISTANCE_3 		= 100;//while opening Portcullis and after
+		final double PORTCULLIS_DISTANCE_3 		= 130;//while opening Portcullis and after
 		
-		final double CDF_SPEED_1 				= .4;//before lowering CDF
-		final double CDF_SPEED_2 				= .5;//after
-		final double CDF_DISTANCE_1 			= 60;//before lowering CDF
-		final double CDF_DISTANCE_2				= 60;//after
-		final double CDF_WAIT_1					= .2;//after lowering collector
-		final double CDF_WAIT_2					= .1;//before raising collector
+		final double CDF_SPEED_1 				= .6;//before lowering CDF
+		final double CDF_SPEED_2 				= 1;//after
+		final double CDF_DISTANCE_1 			= 46;//before lowering CDF
+		final double CDF_DISTANCE_2				= 130;//after
 		
 		final double TO_DEFENSE_SPEED			= .5;//DONE
 		final double DEFENSE_DISTANCE			= 45;//DONE
@@ -115,7 +113,10 @@ public interface RobotMap {
 	
 	interface LED {
 		// Two "option bits" to set LED mode on arduine connected to DIO ports
-		final static int DIO_MODE_0 = 8;
-		final static int DIO_MODE_1 = 9;
+		final static int DIO_MODE_0 = 11;
+		final static int DIO_MODE_1 = 13;
+		
+		final static int DIO_COLLECTED = 17;
+		final static int DIO_DIRECTION = 15;
 	}
 }

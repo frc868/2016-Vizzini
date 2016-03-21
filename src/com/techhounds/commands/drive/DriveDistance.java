@@ -37,9 +37,9 @@ public class DriveDistance extends Command implements PIDSource, PIDOutput {
 		pid.setAbsoluteTolerance(1);
 		minPower = min;
 		this.targetDist = dist;
-		SmartDashboard.putData("Drive distance pid", pid);
-		SmartDashboard.putNumber("Power to Drive", 0.3);
-		SmartDashboard.putNumber("Min Power To Drive", min);
+		//SmartDashboard.putData("Drive distance pid", pid);
+		//SmartDashboard.putNumber("Power to Drive", 0.3);
+		//SmartDashboard.putNumber("Min Power To Drive", min);
 	}
 	
 	public DriveDistance(double dist, double max, double min, double timeOut) {

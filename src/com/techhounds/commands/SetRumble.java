@@ -6,28 +6,14 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class SetRumble extends Command {
 	
-	private boolean driver, on;
-	
-	public SetRumble(boolean driver, boolean on) {
-		this.driver = driver;
-		this.on = on;
+	public SetRumble() {
+		
 	}
-
+	
 	@Override
 	protected void initialize() {
-		if(driver) {
-			if(on) {
-				OI.getInstance().getDriver().startRumble();
-			} else {
-				OI.getInstance().getDriver().stopRumble();
-			}
-		} else {
-			if(on) {
-				OI.getInstance().getOperator().startRumble();
-			} else {
-				OI.getInstance().getOperator().stopRumble();
-			}
-		}
+		OI.getInstance().getDriver().startRumble();
+		OI.getInstance().getOperator().startRumble();
 	}
 
 	@Override
@@ -38,13 +24,13 @@ public class SetRumble extends Command {
 
 	@Override
 	protected boolean isFinished() {
-		// TODO Auto-generated method stub
-		return true;
+		return timeSinceInitialized() > 5;
 	}
 
 	@Override
 	protected void end() {
-		// TODO Auto-generated method stub
+		OI.getInstance().getOperator().stopRumble();
+		OI.getInstance().getDriver().stopRumble();
 	}
 
 	@Override

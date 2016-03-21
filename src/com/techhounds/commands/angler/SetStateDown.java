@@ -1,7 +1,9 @@
 package com.techhounds.commands.angler;
 
 import com.techhounds.RobotMap;
+import com.techhounds.commands.collector.SetCollectorPower;
 import com.techhounds.subsystems.AnglerSubsystem;
+import com.techhounds.subsystems.BeamBreakSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -25,7 +27,9 @@ public class SetStateDown extends Command {
     		new SetAnglerPosition(RobotMap.Collector.COLLECTOR_DOWN).start();
     	} else if(angler.getState() == 1) {
 
-
+    		//if(BeamBreakSubsystem.getInstance().ballPresent()){
+    		//	new SetCollectorPower(RobotMap.Collector.outPower, .1).start();
+    		//}
     		new SetAnglerPosition(RobotMap.Collector.COLLECTING).start();
 
     	} else if(angler.getState() == 2) {

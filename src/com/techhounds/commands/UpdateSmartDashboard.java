@@ -1,5 +1,6 @@
 package com.techhounds.commands;
 
+import com.techhounds.OI;
 import com.techhounds.commands.auton.AutonChooser;
 import com.techhounds.subsystems.*;
 
@@ -33,7 +34,7 @@ public class UpdateSmartDashboard extends Command {
     		DriveSubsystem.getInstance().updateSmartDashboard();
     		BeamBreakSubsystem.getInstance().updateSmartDashboard();
     		//AutonChooser.getInstance().updateSmartDashboard();
-    		
+    		OI.getInstance().updateDashboard();
     		GyroSubsystem.getInstance().updateSmartDashboard();
 	    	timer.reset();
 		}

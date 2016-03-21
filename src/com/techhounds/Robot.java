@@ -11,6 +11,7 @@ import com.techhounds.subsystems.BeamBreakSubsystem;
 import com.techhounds.subsystems.CollectorSubsystem;
 import com.techhounds.subsystems.DriveSubsystem;
 import com.techhounds.subsystems.GyroSubsystem;
+import com.techhounds.subsystems.LEDSubsystem;
 import com.techhounds.subsystems.ServoSubsystem;
 import com.techhounds.subsystems.ShooterSubsystem;
 import com.techhounds.subsystems.VisionSubsystem;
@@ -123,5 +124,6 @@ public class Robot extends IterativeRobot {
     	//ServoSubsystem.getWinchLock();
     	ShooterSubsystem.getInstance();
     	VisionSubsystem.getInstance();
+    	LEDSubsystem.getInstance();
     }
 }

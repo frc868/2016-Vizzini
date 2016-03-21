@@ -15,6 +15,7 @@ public class RotateToPreviousAngle extends Command {
 	
 	private GyroSubsystem gyro;
 	private double offset = 0;
+	private Command command;
 	
     public RotateToPreviousAngle() {
     	gyro = GyroSubsystem.getInstance();
@@ -29,7 +30,7 @@ public class RotateToPreviousAngle extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	new RotateUsingGyro(gyro.getStoredAngle() - gyro.getRotation() + offset, 4, 0).start();
+    	(command = new RotateUsingGyro(gyro.getStoredAngle() - gyro.getRotation() + offset, 4, 0)).start();
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -38,7 +39,7 @@ public class RotateToPreviousAngle extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return true;
+        return !command.isRunning();
     }
 
     // Called once after isFinished returns true

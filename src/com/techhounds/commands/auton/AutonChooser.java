@@ -213,7 +213,7 @@ public class AutonChooser {
 				twoBall.addParallel(new AutonCommand(5, Defense.LOW_BAR, Goal.LEFT, 0, 0)); // AUTON COMMAND
 				twoBall.addParallel(new SetCollectorPower(-.2, true)); // POSITION BALL
 				twoBall.addSequential(new WaitForBeanBreak(false)); // UNTIL BALL IN GOOD POSITION
-	
+				
 				return twoBall;
 			} else if(getStart() == 6) {
 				// TWO BALL AUTON --> SPECIAL SETUP
@@ -254,9 +254,7 @@ public class AutonChooser {
 			// Save Initial Angle
 			addSequential(new SaveCurrentAngle());
 			
-			if(shoot == 0) {
-				addParallel(new SetShooterSpeed(69));
-			}
+			
 			
 			// We will add the Defense that will be crossing
 			switch(defense) {
@@ -295,6 +293,9 @@ public class AutonChooser {
 					return;
 			}
 			
+			if(shoot == 0) {
+				addParallel(new SetShooterSpeed(69));
+			}
 			double TEMP_BACK_DEFENSE = 24;
 			
 			if(start == 5) {
@@ -312,18 +313,24 @@ public class AutonChooser {
 			} else if(start == 1) {
 				// BRING BACK TOO CLOSE (MIDDLE)
 				addSequential(new DriveDistance(-TEMP_BACK_DEFENSE, -RobotMap.Defenses.TO_DEFENSE_SPEED, -RobotMap.DriveTrain.MIN_STRAIGHT_POWER, 2));
+				addSequential(new RotateUsingGyro(-50), 1.25);
+				addSequential(new DriveDistance(60), 1.25);
+				addSequential(new RotateUsingGyro(35), 1);
 			}
 			
 			addParallel(new RotateUsingVision(2));
 			
 			if(shoot == 0) {
-				addSequential(new WaitCommand(1));
+				
+				addSequential(new DriveDistance(12, RobotMap.Defenses.TO_DEFENSE_SPEED), 1.25);
+				
 				//addParallel(new SetShooterSpeed(69));
 				addSequential(new RotateUsingVision());
-				addSequential(new WaitCommand(1));
+				addSequential(new WaitCommand(.5));
 				addSequential(new WaitForShooterReady(1));
-				addSequential(new RotateUsingVision());
-				addSequential(new WaitCommand(1.5));
+				//if(defense == Defense.RAMPARTS)
+					addSequential(new RotateUsingVision());
+				addSequential(new WaitCommand(.5));
 				addSequential(new SetCollectorPower(1, true));
 				addSequential(new WaitCommand(2));
 				addParallel(new SetCollectorPower(0, true));

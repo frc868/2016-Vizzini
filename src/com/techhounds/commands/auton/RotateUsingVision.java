@@ -18,8 +18,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class RotateUsingVision extends Command implements PIDSource, PIDOutput {
 	
 	private static double p = .1/*.05*/, i = 0, d = .12;//.08;
-	private DriveSubsystem drive;
-	private GyroSubsystem gyro;
+	protected DriveSubsystem drive;
+	protected GyroSubsystem gyro;
 	private PIDController pid;
 	private double angle;
 	private Double timeOut;

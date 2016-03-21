@@ -17,9 +17,9 @@ public class RotateUsingGyro extends Command implements PIDSource, PIDOutput {
 	
 	private static double p = .1/*.05*/, i = 0, d = .12;//.08;
 	private DriveSubsystem drive;
-	private GyroSubsystem gyro;
+	protected GyroSubsystem gyro;
 	private PIDController pid;
-	private double angle;
+	protected double angle;
 	private Double timeOut;
 	public static final boolean DEBUG = true;
 	//min turn power can be less here, as robot should already be moving
@@ -40,6 +40,7 @@ public class RotateUsingGyro extends Command implements PIDSource, PIDOutput {
     	}
     	pid.setOutputRange(-.65, .65);
     	pid.setAbsoluteTolerance(1);
+    	
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }

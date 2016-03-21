@@ -14,7 +14,7 @@ public class CollectorSubsystem extends Subsystem {
 	private static CollectorSubsystem instance;
 	private CANTalon motor;
 	private PowerDistributionPanel panel;
-	private boolean debugging;
+	private boolean debugging = false;
 	
 	private CollectorSubsystem() {
 		

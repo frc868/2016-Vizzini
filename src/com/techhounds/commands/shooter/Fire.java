@@ -14,7 +14,6 @@ public class Fire extends CommandGroup {
 		addSequential(new WaitForShooterReady());
 		addSequential(new SetCollectorPower(1, true));
 		addSequential(new WaitCommand(.5));
-		addSequential(new SetRumble(true, true));
 		addSequential(new SetCollectorPower(0, true));
 		addSequential(new SetShooterPower());
 	}
