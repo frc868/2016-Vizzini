@@ -44,6 +44,7 @@ public interface RobotMap {
 		final int ENC_RIGHT_B = 3;
 		final int ENC_LEFT_B = 1;
 		
+		
 		final int DRIVE_LEFT_PDP_1 = 0;
 		final int DRIVE_LEFT_PDP_2 = 1;
 		final int DRIVE_LEFT_PDP_3 = 2;
@@ -53,6 +54,11 @@ public interface RobotMap {
 		
 		final double MIN_TURN_POWER = .45;
 		final double MIN_STRAIGHT_POWER = .35;
+	}
+	
+	interface LightSensor{
+		final int LIGHT_SENSOR = -1;
+		
 	}
 	
 	interface Servo {
