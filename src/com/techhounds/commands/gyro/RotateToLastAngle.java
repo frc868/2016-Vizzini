@@ -2,6 +2,10 @@ package com.techhounds.commands.gyro;
 
 public class RotateToLastAngle extends RotateUsingGyro {
 
+	public RotateToLastAngle() {
+		super(0);
+	}
+	
 	public RotateToLastAngle(double angle) {
 		super(angle);
 		// TODO Auto-generated constructor stub

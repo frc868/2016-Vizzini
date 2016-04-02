@@ -8,9 +8,11 @@ public class WaitForShooterReady extends Command {
 
 	private ShooterSubsystem shooter;
 	private Double timeout;
+	private Integer useCount;
+	private double cnt;
 	
 	public WaitForShooterReady() {
-		this(0);
+		this(0.0);
 		this.timeout = null;
 	}
 	
@@ -19,10 +21,15 @@ public class WaitForShooterReady extends Command {
 		this.timeout = timeout;
 	}
 	
+	public WaitForShooterReady(int counts, boolean dosentmatter) {
+		this();
+		useCount = counts;
+	}
+	
 	@Override
 	protected void initialize() {
 		// TODO Auto-generated method stub
-		
+		cnt = 0;
 	}
 
 	@Override
@@ -38,7 +45,21 @@ public class WaitForShooterReady extends Command {
 		   		return true;
 		   }
 	   }
-	   return shooter.onTarget();
+	   
+	   if(useCount != null) {
+		   if(shooter.onTarget()) {
+			   cnt++;
+			   if(cnt >= 3) {
+				   return true;
+			   } else {
+				   return false;
+			   }
+		   } else {
+			   return false;
+		   }
+	   } else {
+		   return shooter.onTarget();
+	   }
 	}
 
 	@Override

@@ -9,9 +9,11 @@ import com.techhounds.commands.angler.SetStateUp;
 import com.techhounds.commands.collector.SetCollectorPower;
 import com.techhounds.commands.collector.WaitForBeanBreak;
 import com.techhounds.commands.drive.DriveDistance;
+import com.techhounds.commands.gyro.RotateToLastAngle;
 import com.techhounds.commands.gyro.RotateToPreviousAngle;
 import com.techhounds.commands.gyro.RotateUsingGyro;
 import com.techhounds.commands.gyro.SaveCurrentAngle;
+import com.techhounds.commands.shooter.AlignUsingVision;
 import com.techhounds.commands.shooter.Fire;
 import com.techhounds.commands.shooter.PreFire;
 import com.techhounds.commands.shooter.SetShooterPower;
@@ -98,7 +100,7 @@ public class AutonChooser {
 		chooseStart.addDefault("Position 3", new Integer(3));
 		chooseStart.addObject("Position 4", new Integer(2));
 		chooseStart.addObject("Secret Passage (5)", new Integer(1));
-		chooseStart.addObject("Two Ball Autonomous (POS 1)", new Integer(6));
+		chooseStart.addObject("Two Ball Autonomous Midline", new Integer(6));
 		chooseStart.addObject("Two Ball Autonomous (Spy Box)", new Integer(7));
 		
 		chooseDefense = new SendableChooser();
@@ -126,7 +128,7 @@ public class AutonChooser {
 		
 		choosePost = new SendableChooser();
 		choosePost.addObject("Straighten Out", new Integer(3));
-		choosePost.addObject("Get Ready To Cross Defenses", new Integer(2));
+		choosePost.addObject("Cross Defenses For Midline", new Integer(2));
 		choosePost.addObject("Face the Defenses", new Integer(1));
 		choosePost.addObject("Do Nothing", new Integer(0));
 
@@ -218,22 +220,22 @@ public class AutonChooser {
 			} else if(getStart() == 6) {
 				// TWO BALL AUTON --> SPECIAL SETUP
 				
-				CommandGroup twoBall = new CommandGroup();
-				twoBall.addParallel(new SetAnglerPosition(RobotMap.Collector.COLLECTING)); // SET DOWN
+/*				CommandGroup twoBall = new CommandGroup();
+/				twoBall.addParallel(new SetAnglerPosition(RobotMap.Collector.COLLECTING)); // SET DOWN
 				twoBall.addParallel(new SetCollectorPower(RobotMap.Collector.inPower, true)); // COLLECTING
 				twoBall.addSequential(new WaitForBeanBreak(true)); // UNTIL WE GOT A BALL
 				twoBall.addParallel(new AutonCommand(5, Defense.LOW_BAR, Goal.LEFT, 0, 3)); // AUTON COMMAND
 				twoBall.addParallel(new SetCollectorPower(-.2, true)); // POSITION BALL
 				twoBall.addSequential(new WaitForBeanBreak(false)); // UNTIL BALL IS IN GOOD POSITION
-/*DRIVE BACK*/	twoBall.addParallel(new DriveDistance(-RobotMap.Defenses.LOW_BAR_DISTANCE, -RobotMap.Defenses.LOW_BAR_SPEED, -RobotMap.DriveTrain.MIN_STRAIGHT_POWER, 5));
+/*DRIVE BACK	twoBall.addParallel(new DriveDistance(-RobotMap.Defenses.LOW_BAR_DISTANCE, -RobotMap.Defenses.LOW_BAR_SPEED, -RobotMap.DriveTrain.MIN_STRAIGHT_POWER, 5));
 				twoBall.addParallel(new SetAnglerPosition(RobotMap.Collector.COLLECTING)); // SET DOWN
 				twoBall.addParallel(new SetCollectorPower(RobotMap.Collector.inPower, true)); // COLLECTING
 				twoBall.addSequential(new WaitForBeanBreak(true)); // UNTIL WE GOT A BALL
 				twoBall.addParallel(new AutonCommand(5, Defense.LOW_BAR, Goal.LEFT, 0, 0)); // AUTON COMMAND
 				twoBall.addParallel(new SetCollectorPower(-.2, true)); // POSITION BALL
 				twoBall.addSequential(new WaitForBeanBreak(false)); // UNTIL BALL IN GOOD POSITION
-				
-				return twoBall;
+			*/	
+				return new TwoBallFromLine();
 			}
 			
 			return new AutonCommand();
@@ -253,9 +255,7 @@ public class AutonChooser {
 			
 			// Save Initial Angle
 			addSequential(new SaveCurrentAngle());
-			
-			
-			
+						
 			// We will add the Defense that will be crossing
 			switch(defense) {
 				case LOW_BAR:
@@ -268,7 +268,10 @@ public class AutonChooser {
 					break;
 					
 				case RAMPARTS:
-					addSequential(new DriveDistance(RobotMap.Defenses.RAMPARTS_DISTANCE, RobotMap.Defenses.RAMPARTS_SPEED, RobotMap.DriveTrain.MIN_STRAIGHT_POWER, 5));
+					addSequential(new SaveCurrentAngle());
+					addSequential(new WaitCommand(.1));
+					addSequential(new DriveDistance(-RobotMap.Defenses.RAMPARTS_DISTANCE, -RobotMap.Defenses.RAMPARTS_SPEED, -RobotMap.DriveTrain.MIN_STRAIGHT_POWER, 5));
+					addSequential(new RotateToLastAngle(210));
 					break;
 					
 				case ROCK_WALL:
@@ -293,44 +296,65 @@ public class AutonChooser {
 					return;
 			}
 			
+			addSequential(new SaveCurrentAngle());
+			
 			if(shoot == 0) {
 				addParallel(new SetShooterSpeed(69));
 			}
+
+			
 			double TEMP_BACK_DEFENSE = 24;
+			
+			addSequential(new Debug("AUTON", "" + 1));
 			
 			if(start == 5) {
 				// LOW BAR AUTONOMOUS (LEFT)
 				addSequential(new SetAnglerPosition(RobotMap.Collector.COLLECTOR_UP, 1.0));
-				addSequential(new RotateUsingGyro(60));
-				addSequential(new DriveDistance(48, 1, RobotMap.DriveTrain.MIN_STRAIGHT_POWER, .5));
+				addSequential(new RotateUsingGyro(65));
+				addSequential(new DriveDistance(36, RobotMap.Defenses.TO_DEFENSE_SPEED, RobotMap.DriveTrain.MIN_STRAIGHT_POWER, 2));
 			} else if(start == 4) {
+				addSequential(new RotateUsingGyro(-12.5));
 				addSequential(new DriveDistance(TEMP_BACK_DEFENSE, RobotMap.Defenses.TO_DEFENSE_SPEED, RobotMap.DriveTrain.MIN_STRAIGHT_POWER, 2));
 				addSequential(new RotateUsingGyro(60));
 			} else if(start == 3) {
 				// PERFECT
 			} else if(start == 2) {
 				// PERFECT
+				addSequential(new Debug("AUTON", "" + 2));
 			} else if(start == 1) {
 				// BRING BACK TOO CLOSE (MIDDLE)
 				addSequential(new DriveDistance(-TEMP_BACK_DEFENSE, -RobotMap.Defenses.TO_DEFENSE_SPEED, -RobotMap.DriveTrain.MIN_STRAIGHT_POWER, 2));
 				addSequential(new RotateUsingGyro(-50), 1.25);
 				addSequential(new DriveDistance(60), 1.25);
 				addSequential(new RotateUsingGyro(35), 1);
-			}
+			} // WHEN BALL IN NOTIFY USING LEDS
 			
-			addParallel(new RotateUsingVision(2));
-			
+			addSequential(new RotateUsingVision(2));
+
+			addSequential(new Debug("AUTON", "" + 3));
 			if(shoot == 0) {
 				
-				addSequential(new DriveDistance(12, RobotMap.Defenses.TO_DEFENSE_SPEED), 1.25);
-				
+				//addSequential(new DriveDistance(12, RobotMap.Defenses.TO_DEFENSE_SPEED), 1.25);
+				addSequential(new WaitCommand(.5));
+
+//				addSequential(new Debug("AUTON", "" + 4));
 				//addParallel(new SetShooterSpeed(69));
 				addSequential(new RotateUsingVision());
-				addSequential(new WaitCommand(.5));
+
+//				addSequential(new Debug("AUTON", "" + 5));
+				addSequential(new WaitCommand(1));
+
+//				addSequential(new Debug("AUTON", "" + 6));
+//				addParallel(new AlignUsingVision(2));
 				addSequential(new WaitForShooterReady(1));
+				
+
+//				addSequential(new Debug("AUTON", "" + 7));
 				//if(defense == Defense.RAMPARTS)
 					addSequential(new RotateUsingVision());
-				addSequential(new WaitCommand(.5));
+
+//					addSequential(new Debug("AUTON", "" + 8));
+				addSequential(new WaitCommand(1));
 				addSequential(new SetCollectorPower(1, true));
 				addSequential(new WaitCommand(2));
 				addParallel(new SetCollectorPower(0, true));
@@ -347,12 +371,58 @@ public class AutonChooser {
 			}
 			
 			if(post == 3) {
-				addSequential(new RotateToPreviousAngle());
+				addSequential(new RotateToLastAngle());
 			} else if(post == 2) {
-				// Face Defenses and Drive To The Point Ready to Cross them
+				addSequential(new RotateToLastAngle());
+				
+				//if(start == 4) {
+				//	addSequential(new DriveDistance(-24, -RobotMap.Defenses.LOW_BAR_SPEED, -RobotMap.DriveTrain.MIN_STRAIGHT_POWER, 2));
+				//}
+				
+				switch(defense) {
+					case LOW_BAR:
+						addParallel(new SetAnglerPosition(RobotMap.Collector.COLLECTING));
+						addSequential(new DriveDistance(-RobotMap.Defenses.LOW_BAR_DISTANCE + 12, 
+								-RobotMap.Defenses.LOW_BAR_SPEED, -RobotMap.DriveTrain.MIN_STRAIGHT_POWER, 5));
+						break;
+					
+					case MOAT:
+						addSequential(new DriveDistance(-RobotMap.Defenses.MOAT_DISTANCE + 18, 
+								-RobotMap.Defenses.MOAT_SPEED, -RobotMap.DriveTrain.MIN_STRAIGHT_POWER, 5));
+						break;
+						
+					case RAMPARTS:
+						addSequential(new DriveDistance(-RobotMap.Defenses.RAMPARTS_DISTANCE + 12, 
+								-RobotMap.Defenses.RAMPARTS_SPEED, -RobotMap.DriveTrain.MIN_STRAIGHT_POWER, 5));
+						break;
+						
+					case ROCK_WALL:
+						addSequential(new DriveDistance(-RobotMap.Defenses.ROCK_WALL_DISTANCE + 18, 
+								-RobotMap.Defenses.ROCK_WALL_SPEED, -RobotMap.DriveTrain.MIN_STRAIGHT_POWER, 5));
+						break;
+						
+					case ROUGH_TERRAIN:
+						addSequential(new DriveDistance(-RobotMap.Defenses.ROUGH_TERRAIN_DISTANCE + 18, 
+								-RobotMap.Defenses.ROUGH_TERRAIN_SPEED, -RobotMap.DriveTrain.MIN_STRAIGHT_POWER, 5));
+						break;	
+					case PORTCULLIS:
+						addParallel(new DriveDistance(-RobotMap.Defenses.PORTCULLIS_DISTANCE_3, -RobotMap.Defenses.PORTCULLIS_SPEED_1, -RobotMap.DriveTrain.MIN_STRAIGHT_POWER, 3));//drives up on to ramp to its position
+				    	addSequential(new SetAnglerPosition(RobotMap.Collector.COLLECTOR_DOWN));//Lowers collector to position on ground
+				    	addSequential(new WaitCommand(.75));
+				    	addParallel(new SetAnglerPosition(RobotMap.Collector.COLLECTOR_UP));//drives through portcullis while raising collector
+				    	addSequential(new DriveDistance(-RobotMap.Defenses.PORTCULLIS_DISTANCE_1, -RobotMap.Defenses.PORTCULLIS_SPEED_3, -RobotMap.DriveTrain.MIN_STRAIGHT_POWER));
+						break;
+					case CHEVAL_DE_FRISE:
+						//addSequential(new CrossCDF());
+						break;
+					case DO_NOTHING:
+					case REACH_DEFENSE:
+					default:
+						break;
+				}
 			} else if(post == 1) {
 				// Face Defenses
-				addSequential(new RotateToPreviousAngle(180));
+				addSequential(new RotateToLastAngle(180));
 		//		addSequential(new RotateUsingGyro(180, 3, 0));
 			} else {
 				// Do Nothing

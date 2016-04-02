@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.command.WaitCommand;
 
 public class PreFire extends CommandGroup {
 
-	public PreFire() {
+	public PreFire(double shooterSpeed) {
 
 		addParallel(new SetCollectorPower(-.4, true));
 		addSequential(new WaitForBeanBreak(false), .25);
@@ -20,7 +20,12 @@ public class PreFire extends CommandGroup {
 		//addParallel(new WaitForBeanBreak(true));
 		//addSequential(new WaitCommand(.01));
 		addSequential(new SetCollectorPower(0, true));
-		addSequential(new SetShooterSpeed(69));
+		addSequential(new SetShooterSpeed(shooterSpeed));
+		addSequential(new WaitForShooterReady(3, true));
 		addSequential(new CreateRumble());
 	}
+	
+	public PreFire() {
+		this(69);
 	}
+}

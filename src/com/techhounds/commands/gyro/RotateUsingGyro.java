@@ -29,6 +29,8 @@ public class RotateUsingGyro extends Command implements PIDSource, PIDOutput {
 	 * Command to perform a relative rotation
 	 * @param angle, in degrees, positive for clockwise, negative for counter-clockwise.
 	 */
+	
+	
     public RotateUsingGyro(double angle) {
     	gyro = GyroSubsystem.getInstance();
     	drive = DriveSubsystem.getInstance();
@@ -50,10 +52,12 @@ public class RotateUsingGyro extends Command implements PIDSource, PIDOutput {
     	this.timeOut = timeOut;
     }
     
-    public RotateUsingGyro(double angle, double minTurnPower){
-    	this(angle);
-    	MIN_TURN_POWER = minTurnPower;
-    }
+    /*this used to change the min power, if stuff breaks, change it back*/
+    
+    public RotateUsingGyro(double angle, double maxPower){
+		this(angle);
+		pid.setOutputRange(-maxPower, maxPower);
+	}
     
     public RotateUsingGyro(double angle, double minTurnPower, double timeOut, double doesntMatter) {
     	this(angle);

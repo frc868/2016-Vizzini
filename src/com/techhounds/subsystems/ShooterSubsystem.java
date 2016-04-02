@@ -27,7 +27,7 @@ public class ShooterSubsystem extends Subsystem {
 //	public final double P = 0, I = 0, D = 0, F = .006;
 	private PIDController controller;
 	private double lastSpeed;
-	public boolean debuging = false;
+	public boolean debuging = true;
 	private PowerDistributionPanel panel;
 	
 	private ShooterSubsystem() {
@@ -144,7 +144,9 @@ public class ShooterSubsystem extends Subsystem {
 			SmartDashboard.putNumber("Shooter Error", controller.getError());
 			SmartDashboard.putNumber("Shooter Count", getCount());
 			SmartDashboard.putNumber("Shooter Period", count.getPeriod());
+			
 		}
+		SmartDashboard.putData("PID", controller);
 		SmartDashboard.putNumber("PID Output", getPower());
 		SmartDashboard.putNumber("Shooter Speed", getSpeed());
 		SmartDashboard.putBoolean("Shooter PID OnTarget", onTarget());

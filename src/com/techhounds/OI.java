@@ -13,6 +13,7 @@ import com.techhounds.commands.auton.AutonChooser;
 import com.techhounds.commands.auton.CrossDefense;
 import com.techhounds.commands.auton.RetrieveAuton;
 import com.techhounds.commands.auton.RotateUsingVision;
+import com.techhounds.commands.auton.RotateUsingVisionContinuous;
 import com.techhounds.commands.auton.StopVisionRotate;
 import com.techhounds.commands.auton.VisionRotateToTarget;
 import com.techhounds.commands.collector.SetCollector;
@@ -32,6 +33,7 @@ import com.techhounds.commands.shooter.SetShooterPower;
 import com.techhounds.commands.shooter.SetShooterSpeed;
 import com.techhounds.commands.shooter.SetShooterSpeedFromVision;
 import com.techhounds.commands.shooter.StopFire;
+import com.techhounds.commands.shooter.ToggleAlignVision;
 import com.techhounds.lib.hid.ControllerMap;
 import com.techhounds.lib.hid.DPadButton;
 import com.techhounds.lib.hid.ControllerMap.Direction;
@@ -60,13 +62,14 @@ public class OI {
 	final int stopCollector = 		ControllerMap.Key.RB;
 	final int angleUp = 			ControllerMap.Key.Y;
 	final int angleDown = 			ControllerMap.Key.A;
-	final int upShooterSpeed = 		DPadButton.Direction.UP;
+	final int startShooterOuterworks = 	DPadButton.Direction.UP;
 	final int downShooterSpeed = 	DPadButton.Direction.DOWN;
 	final int stopShooter = 		DPadButton.Direction.LEFT;
 	final int startShooter = 		ControllerMap.Key.X;
 	final int fireShooter = 		ControllerMap.Key.B;
 	final int toggleDrive =			ControllerMap.Key.START;
 	final int visionTarget = 		ControllerMap.Key.LT;
+	final int newVisionTarget = 	ControllerMap.Key.LB;
 	final int emergencyRelease= 	DPadButton.Direction.RIGHT;
 	
 /*	final int opCollectIn = 		ControllerMap.Key.Y;
@@ -162,9 +165,6 @@ public class OI {
 		
 		controller.getButton(angleDown)
 			.whenPressed(new SetStateDown());
-
-		controller.getButton(upShooterSpeed)
-			.whenPressed(new IncrementShooterSpeed(1));
 		
 		controller.getButton(downShooterSpeed)
 			.whenPressed(new IncrementShooterSpeed(-1));
@@ -174,6 +174,9 @@ public class OI {
 		
 		controller.getButton(startShooter)
 			.whenPressed(new PreFire());
+
+		controller.getButton(startShooterOuterworks)
+			.whenPressed(new PreFire(70));
 		
 		controller.getButton(fireShooter)
 			.whenPressed(Fire.getInstance())
@@ -189,12 +192,21 @@ public class OI {
 		
 		controller.getButton(visionTarget)
 			.whenPressed(new RotateUsingVision(4));
+		
+	//	controller.getButton(newVisionTarget)
+	//		.whenPressed(new ToggleAlignVision(true))
+	//		.whenReleased(new ToggleAlignVision(false));
+	
+	//	controller.getButton(newVisionTarget)
+	//		.whenPressed(new RotateUsingVisionContinuous());
 	}
 
 	/**
 	 * Gets the Smart Dashboard Ready with Commands (Act as Buttons)
 	 */
 	public void setupSmartDashboard() {
+		
+		
 //		SmartDashboard.putData("Cross Defense maintaining orientation", new CrossDefense());
 		SmartDashboard.putData("Vision Align To Target", new RotateUsingVision(5));
 //		if(RotateUsingGyro.DEBUG){//This will not show in the SD up unless we're debugging RotateUsingGyro

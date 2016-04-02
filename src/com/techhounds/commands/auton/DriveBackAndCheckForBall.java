@@ -15,6 +15,10 @@ public class DriveBackAndCheckForBall extends CommandGroup {
 		addParallel(drive = new DriveDistance(-85, -RobotMap.Defenses.LOW_BAR_SPEED, -RobotMap.Defenses.LOW_BAR_SPEED + .1, 3));
 		addSequential(ballCheck = new WaitForBeanBreak(true));
 	}
+	public DriveBackAndCheckForBall(double stopDistance){
+		addParallel(drive = new DriveDistance(stopDistance, -RobotMap.Defenses.LOW_BAR_SPEED + .3, -RobotMap.Defenses.LOW_BAR_SPEED + .1, 3));
+		addSequential(ballCheck = new WaitForBeanBreak(true));
+	}
 
 	@Override
 	protected boolean isFinished() {

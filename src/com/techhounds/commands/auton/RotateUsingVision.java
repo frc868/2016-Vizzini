@@ -31,6 +31,9 @@ public class RotateUsingVision extends Command implements PIDSource, PIDOutput {
 	private boolean setRotation, readyToRotate;
 	private double lastFrame;
 	private double checkFrame;
+	private double setPoint;
+	
+	private boolean visionOnTarget = false;
 	/**
 	 * Command to perform a relative rotation
 	 * @param angle, in degrees, positive for clockwise, negative for counter-clockwise.
@@ -57,7 +60,7 @@ public class RotateUsingVision extends Command implements PIDSource, PIDOutput {
     protected void initialize() {
     	readyToRotate = false;
     	setRotation = false;
-
+    	visionOnTarget = false;
 		lastFrame = SmartDashboard.getNumber("FrameCount", -1);
     }
 
@@ -74,7 +77,12 @@ public class RotateUsingVision extends Command implements PIDSource, PIDOutput {
 			else if(angleOff > 0)
 				angleOff++;
 			
+			if(Math.abs(angleOff) < .75){
+				visionOnTarget = true;
+				return;
+			}
 			pid.setSetpoint(angleOff + pidGet());
+			setPoint = pid.getSetpoint();
 			pid.enable();
 			setRotation = true;
 		} else {
@@ -88,6 +96,9 @@ public class RotateUsingVision extends Command implements PIDSource, PIDOutput {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
+    	if(visionOnTarget){
+    		return true;
+    	}
     	
     	if(timeOut != null) {
     		if(timeSinceInitialized() > timeOut) {
@@ -148,5 +159,9 @@ public class RotateUsingVision extends Command implements PIDSource, PIDOutput {
 		}
 		// TODO Auto-generated method stub
 		return gyro.getRotation();
+	}
+	
+	public double getSetpoint() {
+		return setPoint;
 	}
 }

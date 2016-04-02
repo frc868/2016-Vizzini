@@ -2,6 +2,7 @@
 package com.techhounds;
 
 import com.techhounds.commands.MatchSetup;
+import com.techhounds.commands.SetFlashlight;
 import com.techhounds.commands.CameraCommand;
 import com.techhounds.commands.UpdateSmartDashboard;
 import com.techhounds.commands.auton.AutonChooser;
@@ -10,6 +11,7 @@ import com.techhounds.subsystems.AnglerSubsystem;
 import com.techhounds.subsystems.BeamBreakSubsystem;
 import com.techhounds.subsystems.CollectorSubsystem;
 import com.techhounds.subsystems.DriveSubsystem;
+import com.techhounds.subsystems.FlashlightSubsystem;
 import com.techhounds.subsystems.GyroSubsystem;
 import com.techhounds.subsystems.LEDSubsystem;
 import com.techhounds.subsystems.ServoSubsystem;
@@ -29,6 +31,7 @@ public class Robot extends IterativeRobot {
 	
 	public static boolean oneControllerMode = false;
 	public static boolean manualOverride = false;
+	
 	
 	public static boolean isFinal(){
 		return true;
@@ -62,6 +65,8 @@ public class Robot extends IterativeRobot {
      * Runs once the instant the robot is disabled
      */
     public void disabledInit(){
+    	DriveSubsystem.getInstance().closeWriter();
+    //	new SetFlashlight(false).start();
     	SmartDashboard.putString(GAME_STATE, "disabled");   	
     	//new USBCameraCommand(true).start();
     }
@@ -70,6 +75,7 @@ public class Robot extends IterativeRobot {
      * Runs when the robot is disabled
      */
 	public void disabledPeriodic() {
+		
 		Scheduler.getInstance().run();
 	}
 
@@ -97,6 +103,7 @@ public class Robot extends IterativeRobot {
     	SmartDashboard.putString(GAME_STATE, "teleop");
     	// TODO: Cancel Auton Command
     	new MatchSetup().start();
+    //	new SetFlashlight(true).start();
     	//new CameraCommand(true).start();
     	System.out.println("*** TECHHOUNDS IS READY TO TELEOP ***");
     }
@@ -125,5 +132,6 @@ public class Robot extends IterativeRobot {
     	ShooterSubsystem.getInstance();
     	VisionSubsystem.getInstance();
     	LEDSubsystem.getInstance();
+    	FlashlightSubsystem.getInstance();
     }
 }

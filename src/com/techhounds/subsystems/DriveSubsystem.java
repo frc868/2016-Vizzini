@@ -1,9 +1,16 @@
 package com.techhounds.subsystems;
 
+import java.io.BufferedWriter;
+import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+
 import com.techhounds.Robot;
 import com.techhounds.RobotMap;
 import com.techhounds.commands.drive.DriveWithPower;
 
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.BuiltInAccelerometer;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PIDController;
@@ -26,7 +33,7 @@ public class DriveSubsystem extends Subsystem{
 	private Spark left;
 	private Spark right;
 	private boolean rotating;
-	public static boolean isForward = true;
+	public static boolean isForward = false;
 	
 	private PIDController gyroPID;
 	private PIDController drivePID;
@@ -50,8 +57,14 @@ public class DriveSubsystem extends Subsystem{
 	
 	private static DriveSubsystem instance;
 	private GyroSubsystem gyro;
+	private AnalogInput lightSensor;
 	
 	private boolean debugging = false;
+	
+	File file;
+	BufferedWriter writer;
+	FileWriter fw;
+	
 	private DriveSubsystem() {	
 		
 		accelerometer = new BuiltInAccelerometer();
@@ -67,11 +80,23 @@ public class DriveSubsystem extends Subsystem{
 		rightEncoder = new Encoder(RobotMap.DriveTrain.ENC_RIGHT_A, RobotMap.DriveTrain.ENC_RIGHT_B);
 		leftEncoder = new Encoder(RobotMap.DriveTrain.ENC_LEFT_A, RobotMap.DriveTrain.ENC_LEFT_B);
 		
+		lightSensor = new AnalogInput(RobotMap.DriveTrain.LIGHT_SENSOR);
 		LiveWindow.addActuator("drive", "left motors", left);
 		LiveWindow.addActuator("drive", "right motors", right);
 		LiveWindow.addSensor("drive", "left encoder", leftEncoder);
 		LiveWindow.addSensor("drive", "right encoder", rightEncoder);
-
+		
+		try{
+			file = new File("/home/lvuser/Readings.txt");
+			if(!file.exists()){
+				file.createNewFile();
+			}
+				fw = new FileWriter(file);
+				
+		}catch(Exception winanas){
+			winanas.printStackTrace();
+		}
+		writer = new BufferedWriter(fw);
 		driver_p = 0.0001;
 		driver_i = 0;
 		driver_d = 0;
@@ -114,6 +139,10 @@ public class DriveSubsystem extends Subsystem{
 		if(instance == null) 
 			instance = new DriveSubsystem();
 		return instance;
+	}
+	
+	public int getLightReading(){
+		return lightSensor.getValue();
 	}
 
 	public double getAccerometerX() {
@@ -208,6 +237,15 @@ public class DriveSubsystem extends Subsystem{
 		return counts * .0393686;
 	}
 	
+	public void closeWriter(){
+		try{
+			writer.close();
+		}catch(Exception e){
+				e.printStackTrace();
+			
+		}
+	}
+	
 	
 	
 	public void updateSmartDashboard() {
@@ -215,6 +253,16 @@ public class DriveSubsystem extends Subsystem{
 		
 		SmartDashboard.putNumber("Driver Left Power", getLeftPower());
 		SmartDashboard.putNumber("Driver Right Powers", getRightPower());
+		double reading = getLightReading();
+		double time = System.currentTimeMillis();
+		
+		try {
+			writer.write("Time: " + time + "Reading: " + reading);
+			writer.newLine();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		if(debugging && !Robot.competing){
 		

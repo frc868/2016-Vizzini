@@ -11,9 +11,13 @@ public interface RobotMap {
 		final boolean IS_INVERTED = true;
 	}
 	
+	interface Flashlight {
+		final int FLASHLIGHT = 0;
+	}
+	
 	interface Collector{
 		final int COLLECTOR_MOTOR = 17;
-		final double inPower = .8, outPower = -1;
+		final double inPower = .6, outPower = -1;
 		final boolean COLLECTOR_IS_INVERTED = false;
 		final int COLLECTOR_ANGLER = 23;
 		final int BEAM_BREAK_SENSOR = 5;
@@ -43,7 +47,7 @@ public interface RobotMap {
 		final int ENC_LEFT_A = 0;
 		final int ENC_RIGHT_B = 3;
 		final int ENC_LEFT_B = 1;
-		
+		final int LIGHT_SENSOR = 0;
 		
 		final int DRIVE_LEFT_PDP_1 = 0;
 		final int DRIVE_LEFT_PDP_2 = 1;
@@ -90,9 +94,9 @@ public interface RobotMap {
 		final double MOAT_DISTANCE 				= 165 + 48 + 45;//DONE
 		
 		final double LOW_BAR_SPEED 				= .7;//DONE
-		final double LOW_BAR_DISTANCE 			= 127.5 + 16 + 24 + 36;//DONE
+		final double LOW_BAR_DISTANCE 			= 127.5 + 16 + 24 + 36 + 12;//DONE
 
-		final double RAMPARTS_SPEED 			= .8;//DONE
+		final double RAMPARTS_SPEED 			= .55;//DONE
 		final double RAMPARTS_DISTANCE 			= 139.5 + 48;//DONE
 		
 		final double ROCK_WALL_SPEED 			= .5;//
@@ -110,7 +114,7 @@ public interface RobotMap {
 		
 		final double CDF_SPEED_1 				= .6;//before lowering CDF
 		final double CDF_SPEED_2 				= 1;//after
-		final double CDF_DISTANCE_1 			= 46;//before lowering CDF
+		final double CDF_DISTANCE_1 			= 46 - 7;//before lowering CDF
 		final double CDF_DISTANCE_2				= 130;//after
 		
 		final double TO_DEFENSE_SPEED			= .5;//DONE
@@ -119,10 +123,10 @@ public interface RobotMap {
 	
 	interface LED {
 		// Two "option bits" to set LED mode on arduine connected to DIO ports
-		final static int DIO_MODE_0 = 11;
-		final static int DIO_MODE_1 = 13;
+		final static int DIO_MODE_0 = 10;
+		final static int DIO_MODE_1 = 11;
 		
-		final static int DIO_COLLECTED = 17;
-		final static int DIO_DIRECTION = 15;
+		final static int DIO_COLLECTOR = 13;
+		final static int DIO_DIRECTION = 17;
 	}
 }
