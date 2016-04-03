@@ -4,6 +4,7 @@ import com.techhounds.commands.ToggleManualOverride;
 import com.techhounds.commands.CameraCommand;
 import com.techhounds.commands.EmergencyRelease;
 import com.techhounds.commands.EndEmergencyRelease;
+import com.techhounds.commands.SetFlashlight;
 import com.techhounds.commands.UpdateController;
 import com.techhounds.commands.angler.SetAnglerPosition;
 import com.techhounds.commands.angler.SetAnglerPower;
@@ -166,8 +167,8 @@ public class OI {
 		controller.getButton(angleDown)
 			.whenPressed(new SetStateDown());
 		
-		controller.getButton(downShooterSpeed)
-			.whenPressed(new IncrementShooterSpeed(-1));
+		//controller.getButton(downShooterSpeed)
+		//	.whenPressed(new IncrementShooterSpeed(1));
 		
 		controller.getButton(stopShooter)
 			.whenPressed(new SetShooterPower());
@@ -193,9 +194,12 @@ public class OI {
 		controller.getButton(visionTarget)
 			.whenPressed(new RotateUsingVision(4));
 		
-	//	controller.getButton(newVisionTarget)
-	//		.whenPressed(new ToggleAlignVision(true))
-	//		.whenReleased(new ToggleAlignVision(false));
+		controller.getButton(downShooterSpeed)
+			.whenPressed(new SetFlashlight());
+		
+		controller.getButton(newVisionTarget)
+			.whenPressed(new ToggleAlignVision(true))
+			.whenReleased(new ToggleAlignVision(false));
 	
 	//	controller.getButton(newVisionTarget)
 	//		.whenPressed(new RotateUsingVisionContinuous());

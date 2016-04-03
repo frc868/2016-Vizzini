@@ -66,7 +66,7 @@ public class Robot extends IterativeRobot {
      */
     public void disabledInit(){
     	DriveSubsystem.getInstance().closeWriter();
-    //	new SetFlashlight(false).start();
+    	new SetFlashlight(false).start();
     	SmartDashboard.putString(GAME_STATE, "disabled");   	
     	//new USBCameraCommand(true).start();
     }
@@ -103,7 +103,7 @@ public class Robot extends IterativeRobot {
     	SmartDashboard.putString(GAME_STATE, "teleop");
     	// TODO: Cancel Auton Command
     	new MatchSetup().start();
-    //	new SetFlashlight(true).start();
+    	//new SetFlashlight(true).start();
     	//new CameraCommand(true).start();
     	System.out.println("*** TECHHOUNDS IS READY TO TELEOP ***");
     }

@@ -303,19 +303,19 @@ public class AutonChooser {
 			}
 
 			
-			double TEMP_BACK_DEFENSE = 24;
+			double TEMP_BACK_DEFENSE = 48;
 			
 			addSequential(new Debug("AUTON", "" + 1));
 			
 			if(start == 5) {
 				// LOW BAR AUTONOMOUS (LEFT)
 				addSequential(new SetAnglerPosition(RobotMap.Collector.COLLECTOR_UP, 1.0));
-				addSequential(new RotateUsingGyro(65));
-				addSequential(new DriveDistance(36, RobotMap.Defenses.TO_DEFENSE_SPEED, RobotMap.DriveTrain.MIN_STRAIGHT_POWER, 2));
+				addSequential(new RotateUsingGyro(65)); //44
+				addSequential(new DriveDistance(44, RobotMap.Defenses.TO_DEFENSE_SPEED, RobotMap.DriveTrain.MIN_STRAIGHT_POWER, 2));
 			} else if(start == 4) {
-				addSequential(new RotateUsingGyro(-12.5));
+				addSequential(new RotateUsingGyro(-20));
 				addSequential(new DriveDistance(TEMP_BACK_DEFENSE, RobotMap.Defenses.TO_DEFENSE_SPEED, RobotMap.DriveTrain.MIN_STRAIGHT_POWER, 2));
-				addSequential(new RotateUsingGyro(60));
+				addSequential(new RotateUsingGyro(65));
 			} else if(start == 3) {
 				// PERFECT
 			} else if(start == 2) {
@@ -329,20 +329,20 @@ public class AutonChooser {
 				addSequential(new RotateUsingGyro(35), 1);
 			} // WHEN BALL IN NOTIFY USING LEDS
 			
-			addSequential(new RotateUsingVision(2));
+//			addSequential(new RotateUsingVision(2));
 
 			addSequential(new Debug("AUTON", "" + 3));
 			if(shoot == 0) {
-				
+				addSequential(new RotateUsingVisionContinuous(3));
 				//addSequential(new DriveDistance(12, RobotMap.Defenses.TO_DEFENSE_SPEED), 1.25);
 				addSequential(new WaitCommand(.5));
 
 //				addSequential(new Debug("AUTON", "" + 4));
 				//addParallel(new SetShooterSpeed(69));
-				addSequential(new RotateUsingVision());
+//				addSequential(new RotateUsingVision());
 
 //				addSequential(new Debug("AUTON", "" + 5));
-				addSequential(new WaitCommand(1));
+//				addSequential(new WaitCommand(1));
 
 //				addSequential(new Debug("AUTON", "" + 6));
 //				addParallel(new AlignUsingVision(2));
@@ -351,7 +351,7 @@ public class AutonChooser {
 
 //				addSequential(new Debug("AUTON", "" + 7));
 				//if(defense == Defense.RAMPARTS)
-					addSequential(new RotateUsingVision());
+//					addSequential(new RotateUsingVision());
 
 //					addSequential(new Debug("AUTON", "" + 8));
 				addSequential(new WaitCommand(1));
