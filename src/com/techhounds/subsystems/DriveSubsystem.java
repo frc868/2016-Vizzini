@@ -141,10 +141,7 @@ public class DriveSubsystem extends Subsystem{
 		return instance;
 	}
 	
-	public int getLightReading(){
-		return lightSensor.getValue();
-	}
-
+	
 	public double getAccerometerX() {
 		return accelerometer.getX();
 	}
@@ -245,8 +242,12 @@ public class DriveSubsystem extends Subsystem{
 			
 		}
 	}
-	
-	
+	public int getLightReading(){
+		return lightSensor.getValue();
+	}
+	public boolean onDefense(){
+		return getLightReading() < RobotMap.DriveTrain.LIGHT_THRESHOLD;//Be aware that the greater than or less than may need to be switched
+	}
 	
 	public void updateSmartDashboard() {
 

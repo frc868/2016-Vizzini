@@ -58,6 +58,7 @@ public interface RobotMap {
 		
 		final double MIN_TURN_POWER = .45;
 		final double MIN_STRAIGHT_POWER = .35;
+		final int LIGHT_THRESHOLD = -1;
 	}
 	
 	interface LightSensor{

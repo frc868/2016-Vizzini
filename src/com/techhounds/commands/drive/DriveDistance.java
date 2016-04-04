@@ -18,11 +18,16 @@ public class DriveDistance extends Command implements PIDSource, PIDOutput {
 	private double lastPower;
 	private double minPower;
 	private boolean pidOnTarget;
+	private Boolean lightSensorReading;
 	
 	private Double timeOut;
 
 	public DriveDistance(double dist) {
 		this(dist, 1);
+	}
+	public DriveDistance(double dist, boolean waitForOnDefense){
+		this(dist);
+		lightSensorReading = waitForOnDefense;
 	}
 
 	public DriveDistance() {
@@ -70,10 +75,14 @@ public class DriveDistance extends Command implements PIDSource, PIDOutput {
 
 	@Override
 	protected boolean isFinished() {
-		if(timeOut != null)
-			if(timeSinceInitialized() > timeOut)
+		if(timeOut != null){
+			if(timeSinceInitialized() > timeOut){
 				return true;
-		
+			}
+		}
+		if(lightSensorReading != null){
+			return lightSensorReading == drive.onDefense();
+		}
 		return pidOnTarget = pid.onTarget();
 	}
 

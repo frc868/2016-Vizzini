@@ -33,6 +33,8 @@ public class DriveWithSpeed extends Command {
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
+		rightPID.setSetpoint(speed);
+		leftPID.setSetpoint(speed);//double check that these are nececarry with Mr. B, we've never tested This command before
 		rightPID.enable();
 		leftPID.enable();
 	}
