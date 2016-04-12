@@ -61,6 +61,10 @@ public interface RobotMap {
 		final int LIGHT_THRESHOLD = -1;
 	}
 	
+	interface Ultrasonic {
+		final int ULTRASONIC = -1;
+	}
+	
 	interface LightSensor{
 		final int LIGHT_SENSOR = -1;
 		
