@@ -214,7 +214,7 @@ public class OI {
 	public void setupSmartDashboard() {
 		
 		
-		SmartDashboard.putData("Drive Distance Maintain Angle", new DriveDistanceStraight());
+		SmartDashboard.putData("Drive 60 Maintain Angle", new DriveDistanceStraight(60, RobotMap.Defenses.LOW_BAR_SPEED, RobotMap.DriveTrain.MIN_STRAIGHT_POWER, 20));
 		SmartDashboard.putData("Vision Align To Target", new RotateUsingVision(5));
 //		if(RotateUsingGyro.DEBUG){//This will not show in the SD up unless we're debugging RotateUsingGyro
 			SmartDashboard.putData("Rotate 60 Degrees", new RotateUsingGyro(60));
