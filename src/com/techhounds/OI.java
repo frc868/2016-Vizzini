@@ -72,6 +72,8 @@ public class OI {
 	final int visionTarget = 		ControllerMap.Key.LT;
 	final int newVisionTarget = 	ControllerMap.Key.LB;
 	final int emergencyRelease= 	DPadButton.Direction.RIGHT;
+	//final int incrementShooterSpeed = DPadButton.Direction.UP;
+
 	
 /*	final int opCollectIn = 		ControllerMap.Key.Y;
 	final int opCollectOut = 		ControllerMap.Key.B;
@@ -177,7 +179,7 @@ public class OI {
 			.whenPressed(new PreFire());
 
 		controller.getButton(startShooterOuterworks)
-			.whenPressed(new PreFire(70));
+			.whenPressed(new PreFire(71));
 		
 		controller.getButton(fireShooter)
 			.whenPressed(Fire.getInstance())

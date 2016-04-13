@@ -37,7 +37,5 @@ public class DriveBackAndCheckForBall extends CommandGroup {
 	
 	@Override
 	public void end() {
-		drive.cancel();
-		ballCheck.cancel();
 	}
 }

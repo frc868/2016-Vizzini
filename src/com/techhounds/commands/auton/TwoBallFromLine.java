@@ -28,6 +28,7 @@ public class TwoBallFromLine extends CommandGroup {
     	addParallel(new SaveCurrentAngle());
     	addParallel(new SetAnglerPosition(RobotMap.Collector.COLLECTING));
     	addParallel(new SetCollectorPower(RobotMap.Collector.inPower));
+    	//addSequential(new WaitCommand(.2));
     	addSequential(new WaitForBeanBreak(true));
     	addParallel(new SetCollectorPower(0));
     	addParallel(new SetAnglerPosition(RobotMap.Collector.COLLECTOR_UP));
@@ -35,33 +36,35 @@ public class TwoBallFromLine extends CommandGroup {
     	// GET POSITION TO DRIVE LOW BAR
     	addSequential(new RotateUsingGyro(-40));
     	addSequential(new WaitCommand(.1));
-    	addSequential(new DriveDistance(45));
+    	addSequential(new DriveDistance(35));
     	addSequential(new WaitCommand(.1));
     	addParallel(new SetAnglerPosition(RobotMap.Collector.COLLECTING));
-    	addSequential(new RotateToLastAngle(-2));
+    	addSequential(new RotateToLastAngle(-1));
 
     	// DRIVE LOW BAR
     	addSequential(new WaitCommand(.1));
-    	addSequential(new DriveDistance(RobotMap.Defenses.LOW_BAR_DISTANCE - 24, RobotMap.Defenses.LOW_BAR_SPEED, RobotMap.DriveTrain.MIN_STRAIGHT_POWER, 5));
+    	addParallel(new SaveCurrentAngle());
+    	addSequential(new DriveDistance(RobotMap.Defenses.LOW_BAR_DISTANCE - 60, RobotMap.Defenses.LOW_BAR_SPEED, RobotMap.DriveTrain.MIN_STRAIGHT_POWER, 5));
     	// ^^ ALL GOOD
     	
     	rotateAlignShoot();
     	
 		// ROTATE BACK TO INITIAL ANGLE
-		addSequential(new RotateToLastAngle(5));
+		addSequential(new RotateToLastAngle());
 		addSequential(new WaitCommand(.1));
 		
 		// DRIVE BACK AND CHECK FOR BALL
 		addParallel(new SetCollectorPower(RobotMap.Collector.inPower));
 		addParallel(new SetAnglerPosition(RobotMap.Collector.COLLECTING));
-		addSequential(new DriveBackAndCheckForBall(-RobotMap.Defenses.LOW_BAR_DISTANCE + 18));
+		addSequential(new DriveBackAndCheckForBall(-RobotMap.Defenses.LOW_BAR_DISTANCE - 60));
 		
 		// STOP COLLCETOR
 		addSequential(new WaitCommand(.1));
 		addParallel(new SetCollectorPower(0, true));
 		
 		// DRIVE BACK
-		addSequential(new DriveDistance(RobotMap.Defenses.LOW_BAR_DISTANCE, RobotMap.Defenses.LOW_BAR_SPEED, RobotMap.DriveTrain.MIN_STRAIGHT_POWER, 5));
+		addParallel(new SaveCurrentAngle());
+		addSequential(new DriveDistance(RobotMap.Defenses.LOW_BAR_DISTANCE - 60, RobotMap.Defenses.LOW_BAR_SPEED, RobotMap.DriveTrain.MIN_STRAIGHT_POWER, 5));
 		
 		rotateAlignShoot();
     }
@@ -70,9 +73,9 @@ public class TwoBallFromLine extends CommandGroup {
     	
     	// SET SHOOTER AND ROTATE 60
     	addSequential(new SaveCurrentAngle());
-    	addSequential(new WaitCommand(.3));
+    	addSequential(new WaitCommand(.1));
     	
-    	addParallel(new SetShooterSpeed(69));
+    	addParallel(new SetShooterSpeed(71));
     	addParallel(new SetAnglerPosition(RobotMap.Collector.COLLECTOR_UP));
     	addSequential(new RotateUsingGyro(65));
     	// ALL GOOD ^^^
@@ -86,7 +89,7 @@ public class TwoBallFromLine extends CommandGroup {
 		addSequential(new WaitForBeanBreak(false), .75);
 		addParallel(new SetCollectorPower(0, true));
 		addParallel(new SetShooterPower());
-		addSequential(new WaitCommand(.3));
+		addSequential(new WaitCommand(.3)); // 3.45 sec total max
 	
     }
 }

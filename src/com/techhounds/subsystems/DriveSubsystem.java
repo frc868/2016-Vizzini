@@ -85,7 +85,7 @@ public class DriveSubsystem extends Subsystem{
 		LiveWindow.addActuator("drive", "right motors", right);
 		LiveWindow.addSensor("drive", "left encoder", leftEncoder);
 		LiveWindow.addSensor("drive", "right encoder", rightEncoder);
-		
+		/*
 		try{
 			file = new File("/home/lvuser/Readings.txt");
 			if(!file.exists()){
@@ -97,6 +97,7 @@ public class DriveSubsystem extends Subsystem{
 			winanas.printStackTrace();
 		}
 		writer = new BufferedWriter(fw);
+		*/
 		driver_p = 0.0001;
 		driver_i = 0;
 		driver_d = 0;
