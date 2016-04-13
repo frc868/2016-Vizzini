@@ -20,12 +20,17 @@ public class DriveDistanceStraight extends Command implements PIDSource, PIDOutp
 	private PIDController pid;
 	private double lastPower;
 	private double minPower;
-	private double initAngle;
+	private Double initAngle;
 	private boolean pidOnTarget;
 	private Boolean lightSensorReading;
 	
 	private Double timeOut;
 
+	public DriveDistanceStraight(double dist, double max, double min, double timeOut, double angle) {
+		this(dist, max, min, timeOut);
+		initAngle = angle;
+	}
+	
 	public DriveDistanceStraight(double dist) {
 		this(dist, 1);
 	}
@@ -64,7 +69,7 @@ public class DriveDistanceStraight extends Command implements PIDSource, PIDOutp
 	@Override
 	protected void initialize() {
 		// minPower = SmartDashboard.getNumber("Min Power To Drive", .2);
-		initAngle = gyro.getRotation();
+		initAngle = initAngle == null ? gyro.getRotation() : initAngle;
 		double curDist = drive.countsToDist(drive.getAvgDistance());
 		lastPower = 0;
 		pid.setSetpoint(targetDist + curDist);
@@ -136,14 +141,16 @@ public class DriveDistanceStraight extends Command implements PIDSource, PIDOutp
 		double currAngle = gyro.getRotation() - initAngle;
 		double offset;
 		
+		double MAX_OFFSET = .21;
+		
 		if(currAngle > 9.11346) {
-			offset = .21;
+			offset = MAX_OFFSET;
 		} else if(currAngle < -9.01606) {
-			offset = -.21;
+			offset = -MAX_OFFSET;
 		} else {
 			// A power between -.21 and .21
-			offset = -0.000136434109 * Math.pow(currAngle, 3) + 0.0000199335555 * Math.pow(currAngle, 2)
-				+ 0.03363132991 * (currAngle);
+			offset = MAX_OFFSET * ((-0.000136434109 * Math.pow(currAngle, 3) + 0.0000199335555 * Math.pow(currAngle, 2)
+				+ 0.03363132991 * (currAngle)) / .201608);
 		}
 		
 		lastPower = output;

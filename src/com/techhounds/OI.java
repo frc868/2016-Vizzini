@@ -20,6 +20,7 @@ import com.techhounds.commands.auton.VisionRotateToTarget;
 import com.techhounds.commands.collector.SetCollector;
 import com.techhounds.commands.collector.SetCollectorPower;
 import com.techhounds.commands.drive.DriveDistance;
+import com.techhounds.commands.drive.DriveDistanceStraight;
 import com.techhounds.commands.drive.DriveEncodersReset;
 import com.techhounds.commands.drive.ToggleDriveDirection;
 import com.techhounds.commands.gyro.RotateUsingGyro;
@@ -213,7 +214,7 @@ public class OI {
 	public void setupSmartDashboard() {
 		
 		
-//		SmartDashboard.putData("Cross Defense maintaining orientation", new CrossDefense());
+		SmartDashboard.putData("Drive Distance Maintain Angle", new DriveDistanceStraight());
 		SmartDashboard.putData("Vision Align To Target", new RotateUsingVision(5));
 //		if(RotateUsingGyro.DEBUG){//This will not show in the SD up unless we're debugging RotateUsingGyro
 			SmartDashboard.putData("Rotate 60 Degrees", new RotateUsingGyro(60));
