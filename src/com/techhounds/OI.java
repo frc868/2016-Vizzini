@@ -4,6 +4,8 @@ import com.techhounds.commands.ToggleManualOverride;
 import com.techhounds.commands.CameraCommand;
 import com.techhounds.commands.EmergencyRelease;
 import com.techhounds.commands.EndEmergencyRelease;
+import com.techhounds.commands.EndGame;
+import com.techhounds.commands.MatchSetup;
 import com.techhounds.commands.SetFlashlight;
 import com.techhounds.commands.UpdateController;
 import com.techhounds.commands.angler.SetAnglerPosition;
@@ -22,9 +24,11 @@ import com.techhounds.commands.collector.SetCollectorPower;
 import com.techhounds.commands.drive.DriveDistance;
 import com.techhounds.commands.drive.DriveDistanceStraight;
 import com.techhounds.commands.drive.DriveEncodersReset;
+import com.techhounds.commands.drive.LockWinch;
+import com.techhounds.commands.drive.RunWinch;
 import com.techhounds.commands.drive.ToggleDriveDirection;
 import com.techhounds.commands.gyro.RotateUsingGyro;
-import com.techhounds.commands.servos.SetScissorsOne;
+import com.techhounds.commands.servos.ReleaseClimber;
 import com.techhounds.commands.servos.SetScissorsTwo;
 import com.techhounds.commands.servos.SetWinchEnable;
 import com.techhounds.commands.servos.SetWinchLock;
@@ -64,15 +68,23 @@ public class OI {
 	final int stopCollector = 		ControllerMap.Key.RB;
 	final int angleUp = 			ControllerMap.Key.Y;
 	final int angleDown = 			ControllerMap.Key.A;
-	final int startShooterOuterworks = 	DPadButton.Direction.UP;
+	final int startShooterOuterworks = ControllerMap.Key.X;//DPadButton.Direction.UP;
 	final int downShooterSpeed = 	DPadButton.Direction.DOWN;
 	final int stopShooter = 		DPadButton.Direction.LEFT;
-	final int startShooter = 		ControllerMap.Key.X;
+	final int startShooter = 		DPadButton.Direction.UP;//ControllerMap.Key.X;
 	final int fireShooter = 		ControllerMap.Key.B;
 	final int toggleDrive =			ControllerMap.Key.START;
 	final int visionTarget = 		ControllerMap.Key.LT;
 	final int newVisionTarget = 	ControllerMap.Key.LB;
 	final int emergencyRelease= 	DPadButton.Direction.RIGHT;
+	final int toggleGameMode = 		ControllerMap.Key.BACK;
+	
+	final int runWinchForward = 	ControllerMap.Key.Y;
+	final int runWinchBackward = 	ControllerMap.Key.A;
+	final int lockWinch = 			ControllerMap.Key.B;
+	final int enableWinch = 		ControllerMap.Key.X;
+	final int disableWinch = 		ControllerMap.Key.LB;
+	final int unlockWinch = 		ControllerMap.Key.RB;
 	//final int incrementShooterSpeed = DPadButton.Direction.UP;
 
 	
@@ -152,6 +164,7 @@ public class OI {
 	 * Setup Single Controller Control
 	 */
 	public void setUpController(ControllerMap controller) {
+		controller.clearButtons();
 		
 		controller.getButton(emergencyRelease).
 			whenPressed(new EmergencyRelease()).
@@ -190,9 +203,10 @@ public class OI {
 			controller.getButton(toggleDrive)
 				.whenPressed(new ToggleDriveDirection());
 		} else {
-			controller.getButton(toggleDrive)
-				.whenPressed(new ToggleManualOverride());
+			
+				//.whenPressed(new ToggleManualOverride());
 		}
+		
 		
 		controller.getButton(visionTarget)
 			.whenPressed(new RotateUsingVision(4));
@@ -203,17 +217,31 @@ public class OI {
 		controller.getButton(newVisionTarget)
 			.whenPressed(new ToggleAlignVision(true))
 			.whenReleased(new ToggleAlignVision(false));
-	
+		if(controller == operator){
+		controller.getMultiButton(ControllerMap.Key.BACK, ControllerMap.Key.START)
+			.whenPressed(new EndGame());
+		}
 	//	controller.getButton(newVisionTarget)
 	//		.whenPressed(new RotateUsingVisionContinuous());
 	}
+	
+	public void initializeEndGame(ControllerMap controller){
+		controller.clearButtons();
+		controller.getButton(runWinchForward).whileHeld(new RunWinch("Winch Up Power", .5));
+		controller.getButton(enableWinch).whenPressed(new SetWinchEnable(RobotMap.Servo.WINCH_ENABLE_IS_UP_DEFAULT));
+		controller.getButton(disableWinch).whenPressed(new SetWinchEnable(!RobotMap.Servo.WINCH_ENABLE_IS_UP_DEFAULT));
+		controller.getButton(runWinchBackward).whileHeld(new RunWinch("Winch Down Power", -.5));
+		controller.getButton(lockWinch).whenPressed(new LockWinch(true));
+		controller.getButton(unlockWinch).whenPressed(new LockWinch(false));
+	}
+	
 
 	/**
 	 * Gets the Smart Dashboard Ready with Commands (Act as Buttons)
 	 */
 	public void setupSmartDashboard() {
 		
-		
+		SmartDashboard.putData("Match Set Up", new MatchSetup());
 		SmartDashboard.putData("Drive 60 Maintain Angle", new DriveDistanceStraight(60, RobotMap.Defenses.LOW_BAR_SPEED, RobotMap.DriveTrain.MIN_STRAIGHT_POWER, 20));
 		SmartDashboard.putData("Vision Align To Target", new RotateUsingVision(5));
 //		if(RotateUsingGyro.DEBUG){//This will not show in the SD up unless we're debugging RotateUsingGyro
@@ -241,8 +269,11 @@ public class OI {
 //		SmartDashboard.putData("Set Angler Position", new SetAnglerPosition());
 //		SmartDashboard.putNumber("Angler Set Height", 47);
 		//SmartDashboard.putData("Toggle_Winch_Lock", new SetWinchLock());
-		
+		SmartDashboard.putData("FLASHLIGHT ON", new SetFlashlight(true));
+		SmartDashboard.putData("FLASHLIGHT OFF", new SetFlashlight(false));
 		SmartDashboard.putData("Auton Command", new RetrieveAuton());
+		SmartDashboard.putData("Enable Winch", new SetWinchEnable(RobotMap.Servo.WINCH_LOCK_IS_UP_DEFAULT));
+		SmartDashboard.putData("Disable Winch", new SetWinchEnable(RobotMap.Servo.WINCH_ENABLE_IS_UP_DEFAULT));
 	}
 	
 	/**

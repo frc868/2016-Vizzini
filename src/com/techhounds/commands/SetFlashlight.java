@@ -10,6 +10,7 @@ public class SetFlashlight extends Command {
 	private FlashlightSubsystem flashlight;
 	
 	public SetFlashlight() {
+		setRunWhenDisabled(true);
 		flashlight = FlashlightSubsystem.getInstance();
 		this.on = null;
 	}

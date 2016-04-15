@@ -252,6 +252,8 @@ public class DriveSubsystem extends Subsystem{
 	
 	public void updateSmartDashboard() {
 
+		SmartDashboard.putNumber("Light Sensor Value", getLightReading());
+		SmartDashboard.putBoolean("Light Sensor On Defense", onDefense());
 		
 		SmartDashboard.putNumber("Driver Left Power", getLeftPower());
 		SmartDashboard.putNumber("Driver Right Powers", getRightPower());
@@ -259,11 +261,11 @@ public class DriveSubsystem extends Subsystem{
 		double time = System.currentTimeMillis();
 		
 		try {
-			writer.write("Time: " + time + "Reading: " + reading);
-			writer.newLine();
+			//writer.write("Time: " + time + "Reading: " + reading);
+			//writer.newLine();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 		
 		if(debugging && !Robot.competing){

@@ -19,7 +19,7 @@ public class PreFire extends CommandGroup {
 		//addParallel(new SetCollectorPower(.4, true));
 		//addParallel(new WaitForBeanBreak(true));
 		//addSequential(new WaitCommand(.01));
-		// THIS IS NEW addParallel(new SetCollectorPower(.4, false));
+		addParallel(new SetCollectorPower(.4, false));
 		addSequential(new WaitForBeanBreak(true),.25);
 		addSequential(new SetCollectorPower(0, true));
 		addSequential(new SetShooterSpeed(shooterSpeed));

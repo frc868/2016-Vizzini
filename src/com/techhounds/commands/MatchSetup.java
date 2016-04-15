@@ -1,11 +1,13 @@
 package com.techhounds.commands;
 
+import com.techhounds.OI;
 import com.techhounds.RobotMap;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 import com.techhounds.commands.angler.SetAnglerPosition;
 import com.techhounds.commands.collector.SetCollectorPower;
+import com.techhounds.commands.drive.LockWinch;
 import com.techhounds.commands.servos.*;
 import com.techhounds.commands.shooter.SetShooterPower;
 import com.techhounds.subsystems.AnglerSubsystem;
@@ -17,11 +19,15 @@ import com.techhounds.subsystems.DriveSubsystem;
 public class MatchSetup extends CommandGroup {
     
     public  MatchSetup() {
-    	DriveSubsystem.isForward = true;
+    	DriveSubsystem.isForward = false;
     	addParallel(new SetAnglerPosition(RobotMap.Collector.COLLECTOR_UP));
     	AnglerSubsystem.getInstance().defaultState();
     	addParallel(new SetCollectorPower());
     	addParallel(new SetShooterPower());
+    	addParallel(new ReleaseClimber(false));
+    	addParallel(new LockWinch(false));
+    	addParallel(new SwitchControllerToNormal());
+    	//addParallel(new UpdateController());
     	//addParallel(new SetScissorsOne(RobotMap.Servo.SCISSOR_ONE_IS_UP_DEFAULT));
     	//addParallel(new SetScissorsTwo(RobotMap.Servo.SCISSOR_TWO_IS_UP_DEFAULT));
     	addParallel(new SetWinchEnable(RobotMap.Servo.WINCH_ENABLE_IS_UP_DEFAULT));

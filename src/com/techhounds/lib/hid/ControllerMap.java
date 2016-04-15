@@ -1,5 +1,6 @@
 package com.techhounds.lib.hid;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.techhounds.Robot;
@@ -11,6 +12,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class ControllerMap {
 	
 	private HashMap<Integer, JoystickButton> buttons;
+	private ArrayList<MultiButton> multiButtons;
 	
 	private Joystick joystick;
 	private Type type;
@@ -48,6 +50,7 @@ public class ControllerMap {
 	public ControllerMap(Joystick joystick, Type type) {
 		this.joystick = joystick;
 		buttons = new HashMap<>();
+		multiButtons = new ArrayList<>();
 		setControllerType(type);
 	}
 	
@@ -85,7 +88,31 @@ public class ControllerMap {
 			//	SmartDashboard.putNumber("Button Selected " + buttonID, buttonPorts[buttonID]);
 			}
 		}
+		
+		for(MultiButton button : multiButtons)
+			button.setOff(true);
+		multiButtons.clear();
 	}
+	public void clearButtons(){
+		for(int button = 0; button < buttons.size(); button ++){
+			if(buttons.get(button) != null){
+				buttons.get(button).setOff(true);
+			}
+		}
+		
+		for(MultiButton button : multiButtons)
+			button.setOff(true);
+		
+		multiButtons.clear();
+		buttons.clear();
+	}
+	public void clearButton(int id){
+		if(buttons.get(id) != null){
+			buttons.remove(id).setOff(true);
+		}
+		
+	}
+	
 	public double getForwardsRightPower(){
 		return Robot.rangeCheck(getAxis(Direction.LEFT_VERTICAL) - getAxis(Direction.RIGHT_HORIZONTAL));
 	}
@@ -121,6 +148,12 @@ public class ControllerMap {
 		//	SmartDashboard.putNumber("Button Selected " + buttonID, buttonPorts[buttonID]);
 		
 		return buttons.get(buttonID);
+	}
+	
+	public Button getMultiButton(Integer... buttonID) {
+		MultiButton button = new MultiButton(this, buttonID);
+		multiButtons.add(button);
+		return button;
 	}
 	
 	private double checkDeadZone(double value) {

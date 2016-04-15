@@ -18,14 +18,15 @@ public class DriveDistance extends Command implements PIDSource, PIDOutput {
 	private double lastPower;
 	private double minPower;
 	private boolean pidOnTarget;
-	private Boolean lightSensorReading;
+	private Boolean [] lightSensorReading;
 	
 	private Double timeOut;
-
+	private int i;
+	
 	public DriveDistance(double dist) {
 		this(dist, 1);
 	}
-	public DriveDistance(double dist, boolean waitForOnDefense){
+	public DriveDistance(double dist, Boolean [] waitForOnDefense){
 		this(dist);
 		lightSensorReading = waitForOnDefense;
 	}
@@ -61,6 +62,7 @@ public class DriveDistance extends Command implements PIDSource, PIDOutput {
 		// minPower = SmartDashboard.getNumber("Min Power To Drive", .2);
 		double curDist = drive.countsToDist(drive.getAvgDistance());
 		lastPower = 0;
+		i = 0;
 		pid.setSetpoint(targetDist + curDist);
 		pid.enable();
 
@@ -80,9 +82,16 @@ public class DriveDistance extends Command implements PIDSource, PIDOutput {
 				return true;
 			}
 		}
+		
 		if(lightSensorReading != null){
-			return lightSensorReading == drive.onDefense();
+			if(lightSensorReading[i] == drive.onDefense()) {
+				i++;
+			}
+			
+			return i >= lightSensorReading.length;
+			
 		}
+		
 		return pidOnTarget = pid.onTarget();
 	}
 

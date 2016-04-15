@@ -1,33 +1,32 @@
-package com.techhounds.commands.servos;
+package com.techhounds.commands.drive;
 
+import com.techhounds.subsystems.DriveSubsystem;
 import com.techhounds.subsystems.ServoSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
  */
-public class SetScissorsOne extends Command {
-	
-	private ServoSubsystem scissorOne;
-	
-	private boolean setMax;
+public class LockWinch extends Command {
 
-    public SetScissorsOne() {
-    	this(ServoSubsystem.getScissorOne().getIsMax());
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
-    }
-    
-    public SetScissorsOne(boolean setMax){
-    	scissorOne = ServoSubsystem.getScissorOne();
-    	requires(scissorOne);
-    	this.setMax = setMax;
-    }
+	ServoSubsystem servo;
+	private Boolean toLock;
+	
+	public LockWinch() {
+		servo = ServoSubsystem.getWinchLock();
+		requires(servo);
+	}
+	
+	public LockWinch(boolean toLock) {
+		this();
+		this.toLock = toLock;
+	}
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	scissorOne.set(setMax);
+    	servo.set(toLock == null ? !ServoSubsystem.getWinchLock().getIsMax() : toLock);
     }
 
     // Called repeatedly when this Command is scheduled to run

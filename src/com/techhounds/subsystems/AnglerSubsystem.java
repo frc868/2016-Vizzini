@@ -113,10 +113,10 @@ public class AnglerSubsystem extends Subsystem {
 		return pid.getError();
 	}
 	public void updateSmartDashboard(){
-		if(debugging && !Robot.competing){
+//		if(debugging && !Robot.competing){
 			SmartDashboard.putNumber("Angler_Position", getPosition());
 			SmartDashboard.putNumber("Angler_Error: ", pid.getError());
-		}
+//		}
 		//SmartDashboard.putNumber("Angler: ", angler.getPosition());
 	}
 	

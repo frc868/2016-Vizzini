@@ -22,9 +22,10 @@ public class DriveDistanceStraight extends Command implements PIDSource, PIDOutp
 	private double minPower;
 	private Double initAngle;
 	private boolean pidOnTarget;
-	private Boolean lightSensorReading;
+	private Boolean [] lightSensorReading;
 	
 	private Double timeOut;
+	private int i;
 
 	public DriveDistanceStraight(double dist, double max, double min, double timeOut, double angle) {
 		this(dist, max, min, timeOut);
@@ -34,7 +35,7 @@ public class DriveDistanceStraight extends Command implements PIDSource, PIDOutp
 	public DriveDistanceStraight(double dist) {
 		this(dist, 1);
 	}
-	public DriveDistanceStraight(double dist, boolean waitForOnDefense){
+	public DriveDistanceStraight(double dist, Boolean [] waitForOnDefense){
 		this(dist);
 		lightSensorReading = waitForOnDefense;
 	}
@@ -72,6 +73,7 @@ public class DriveDistanceStraight extends Command implements PIDSource, PIDOutp
 		initAngle = initAngle == null ? gyro.getRotation() : initAngle;
 		double curDist = drive.countsToDist(drive.getAvgDistance());
 		lastPower = 0;
+		i = 0;
 		pid.setSetpoint(targetDist + curDist);
 		pid.enable();
 
@@ -91,9 +93,15 @@ public class DriveDistanceStraight extends Command implements PIDSource, PIDOutp
 				return true;
 			}
 		}
+		
 		if(lightSensorReading != null){
-			return lightSensorReading == drive.onDefense();
+			if(lightSensorReading[i] == drive.onDefense()) {
+				i++;
+			}
+			
+			return i >= lightSensorReading.length;
 		}
+
 		return pidOnTarget = pid.onTarget();
 	}
 
@@ -141,7 +149,7 @@ public class DriveDistanceStraight extends Command implements PIDSource, PIDOutp
 		double currAngle = gyro.getRotation() - initAngle;
 		double offset;
 		
-		double MAX_OFFSET = .21;
+		double MAX_OFFSET = .25;
 		
 		if(currAngle > 9.11346) {
 			offset = MAX_OFFSET;
@@ -152,6 +160,8 @@ public class DriveDistanceStraight extends Command implements PIDSource, PIDOutp
 			offset = MAX_OFFSET * ((-0.000136434109 * Math.pow(currAngle, 3) + 0.0000199335555 * Math.pow(currAngle, 2)
 				+ 0.03363132991 * (currAngle)) / .201608);
 		}
+		
+		offset *= Math.abs(output);
 		
 		lastPower = output;
 		drive.setPower(Robot.rangeCheck(output + offset), Robot.rangeCheck(output - offset));

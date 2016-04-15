@@ -128,7 +128,8 @@ public class Robot extends IterativeRobot {
     	//ServoSubsystem.getScissorOne();
     	//ServoSubsystem.getScissorTwo();
     	ServoSubsystem.getWinchEnable();
-    	//ServoSubsystem.getWinchLock();
+    	ServoSubsystem.getScissorOne();
+    	ServoSubsystem.getWinchLock();
     	ShooterSubsystem.getInstance();
     	VisionSubsystem.getInstance();
     	LEDSubsystem.getInstance();

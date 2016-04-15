@@ -1,5 +1,6 @@
 package com.techhounds.subsystems;
 
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -8,7 +9,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class LightSensorSubsystem extends Subsystem {
 	
-	private DigitalInput sensor;
+	private AnalogInput sensor;
 	private LightSensorSubsystem instance;
 	
 	private LightSensorSubsystem(){

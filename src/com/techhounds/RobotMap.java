@@ -25,9 +25,9 @@ public interface RobotMap {
 		final double ANGLER_REVERSE_LIMIT = 1;
 		final int COLLECTOR_PDP = 11;
 		
-		final double COLLECTOR_UP = 382;
-		final double COLLECTING = 643;
-		final double COLLECTOR_DOWN = 732;
+		final double COLLECTOR_UP = 382 + 96;
+		final double COLLECTING = 643 + 96;
+		final double COLLECTOR_DOWN = 732 + 96;
 	}
 	
 	interface Shooter{
@@ -58,7 +58,7 @@ public interface RobotMap {
 		
 		final double MIN_TURN_POWER = .45;
 		final double MIN_STRAIGHT_POWER = .35;
-		final int LIGHT_THRESHOLD = -1;
+		final int LIGHT_THRESHOLD = 280;
 	}
 	
 	interface Ultrasonic {
@@ -72,15 +72,15 @@ public interface RobotMap {
 	
 	interface Servo {
 		final int WINCH_ENABLE = 3;
-		final int WINCH_LOCK = -1;
-		final int SCISSOR_ONE = -1;
+		final int WINCH_LOCK = 2;
+		final int SCISSOR_ONE = 5;
 		final int SCISSOR_TWO = -1;
-		final double WINCH_ENABLE_MAX = .4;
+		final double WINCH_ENABLE_MAX = .5;
 		final double WINCH_ENABLE_MIN = .2;
 		final double WINCH_LOCK_MAX = 1;
 		final double WINCH_LOCK_MIN = 0;
-		final double SCISSOR_ONE_MAX = 1;
-		final double SCISSOR_ONE_MIN = 0;
+		final double SCISSOR_ONE_MAX = 0.9;
+		final double SCISSOR_ONE_MIN = 0.05;
 		final double SCISSOR_TWO_MAX = 1;
 		final double SCISSOR_TWO_MIN = 0;
 		final boolean WINCH_ENABLE_IS_UP_DEFAULT = true;
