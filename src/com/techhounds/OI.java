@@ -81,10 +81,10 @@ public class OI {
 	
 	final int runWinchForward = 	ControllerMap.Key.Y;
 	final int runWinchBackward = 	ControllerMap.Key.A;
-	final int lockWinch = 			ControllerMap.Key.B;
+	final int lockWinch = 			ControllerMap.Key.LT;
 	final int enableWinch = 		ControllerMap.Key.X;
-	final int disableWinch = 		ControllerMap.Key.LB;
-	final int unlockWinch = 		ControllerMap.Key.RB;
+	final int disableWinch = 		ControllerMap.Key.RB;
+	final int unlockWinch = 		ControllerMap.Key.LB;
 	//final int incrementShooterSpeed = DPadButton.Direction.UP;
 
 	
@@ -95,6 +95,7 @@ public class OI {
 	final int opShooterUp = 		DPadButton.Direction.UP;
 	final int opShooterDown = 		DPadButton.Direction.DOWN;
 */
+	
 	
 	private OI() {
 	
@@ -228,8 +229,8 @@ public class OI {
 	public void initializeEndGame(ControllerMap controller){
 		controller.clearButtons();
 		controller.getButton(runWinchForward).whileHeld(new RunWinch("Winch Up Power", .5));
-		controller.getButton(enableWinch).whenPressed(new SetWinchEnable(RobotMap.Servo.WINCH_ENABLE_IS_UP_DEFAULT));
-		controller.getButton(disableWinch).whenPressed(new SetWinchEnable(!RobotMap.Servo.WINCH_ENABLE_IS_UP_DEFAULT));
+		controller.getButton(enableWinch).whenPressed(new SetWinchEnable(!RobotMap.Servo.WINCH_ENABLE_IS_UP_DEFAULT));
+		controller.getButton(disableWinch).whenPressed(new SetWinchEnable(RobotMap.Servo.WINCH_ENABLE_IS_UP_DEFAULT));
 		controller.getButton(runWinchBackward).whileHeld(new RunWinch("Winch Down Power", -.5));
 		controller.getButton(lockWinch).whenPressed(new LockWinch(true));
 		controller.getButton(unlockWinch).whenPressed(new LockWinch(false));

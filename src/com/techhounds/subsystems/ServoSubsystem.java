@@ -27,9 +27,11 @@ public class ServoSubsystem extends Subsystem {
 		LiveWindow.addActuator("Servo_" + port, "Servo_" + port, servo);
 		this.min = min;
 		this.max = max;
+		
 	}
 	
 	public static ServoSubsystem getWinchEnable(){
+		
 		return instance_winch_enable == null ? instance_winch_enable = new ServoSubsystem(RobotMap.Servo.WINCH_ENABLE, RobotMap.Servo.WINCH_ENABLE_MIN, RobotMap.Servo.WINCH_ENABLE_MAX) : instance_winch_enable;
 	}
 	

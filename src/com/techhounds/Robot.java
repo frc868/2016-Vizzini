@@ -7,6 +7,8 @@ import com.techhounds.commands.CameraCommand;
 import com.techhounds.commands.UpdateSmartDashboard;
 import com.techhounds.commands.auton.AutonChooser;
 import com.techhounds.commands.auton.RetrieveAuton;
+import com.techhounds.commands.drive.LockWinch;
+import com.techhounds.commands.servos.SetWinchLock;
 import com.techhounds.subsystems.AnglerSubsystem;
 import com.techhounds.subsystems.BeamBreakSubsystem;
 import com.techhounds.subsystems.CollectorSubsystem;
@@ -59,6 +61,7 @@ public class Robot extends IterativeRobot {
     	new MatchSetup().start();
     	System.out.println("*** TECHHOUNDS IS READY TO ROBOT ***");
     	SmartDashboard.putNumber("HEY", 2);
+    	new SetWinchLock(false).start();
     }
 	
     /**
@@ -67,7 +70,7 @@ public class Robot extends IterativeRobot {
     public void disabledInit(){
     	DriveSubsystem.getInstance().closeWriter();
     	new SetFlashlight(false).start();
-    	SmartDashboard.putString(GAME_STATE, "disabled");   	
+       	SmartDashboard.putString(GAME_STATE, "disabled");   	
     	//new USBCameraCommand(true).start();
     }
 	

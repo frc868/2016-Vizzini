@@ -275,7 +275,7 @@ public class AutonChooser {
 					break;
 					
 				case ROCK_WALL:
-					addSequential(new DriveDistance(RobotMap.Defenses.ROCK_WALL_DISTANCE, RobotMap.Defenses.ROCK_WALL_SPEED, RobotMap.DriveTrain.MIN_STRAIGHT_POWER, 5));
+					addSequential(new DriveDistance(RobotMap.Defenses.ROCK_WALL_DISTANCE - 48, RobotMap.Defenses.ROCK_WALL_SPEED, RobotMap.DriveTrain.MIN_STRAIGHT_POWER, 5));
 					break;
 					
 				case ROUGH_TERRAIN:
@@ -299,7 +299,11 @@ public class AutonChooser {
 			addSequential(new SaveCurrentAngle());
 			
 			if(shoot == 0) {
+				if(defense == Defense.ROCK_WALL){
+					addParallel(new SetShooterSpeed(71));
+				}else{
 				addParallel(new SetShooterSpeed(69));
+				}
 			}
 
 			
@@ -354,7 +358,7 @@ public class AutonChooser {
 //					addSequential(new RotateUsingVision());
 
 //					addSequential(new Debug("AUTON", "" + 8));
-				addSequential(new WaitCommand(1));
+//				addSequential(new WaitCommand(1));
 				addSequential(new SetCollectorPower(1, true));
 				addSequential(new WaitCommand(2));
 				addParallel(new SetCollectorPower(0, true));
@@ -397,7 +401,7 @@ public class AutonChooser {
 						break;
 						
 					case ROCK_WALL:
-						addSequential(new DriveDistance(-RobotMap.Defenses.ROCK_WALL_DISTANCE + 18, 
+						addSequential(new DriveDistance(-RobotMap.Defenses.ROCK_WALL_DISTANCE + 96 , 
 								-RobotMap.Defenses.ROCK_WALL_SPEED, -RobotMap.DriveTrain.MIN_STRAIGHT_POWER, 5));
 						break;
 						

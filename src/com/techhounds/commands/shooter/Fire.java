@@ -11,9 +11,9 @@ public class Fire extends CommandGroup {
 	private static Fire instance;
 	
 	private Fire() {
-		addSequential(new WaitForShooterReady());
+		//addSequential(new WaitForShooterReady());
 		addSequential(new SetCollectorPower(1, true));
-		addSequential(new WaitCommand(.5));
+		addSequential(new WaitCommand(1));
 		addSequential(new SetCollectorPower(0, true));
 		addSequential(new SetShooterPower());
 	}

@@ -96,6 +96,8 @@ public class RotateUsingVision extends Command implements PIDSource, PIDOutput {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
+    	SmartDashboard.putBoolean("VISION PID ON TARGET", Math.abs(SmartDashboard.getNumber("OffCenterDegreesX", 0)) < .75);
+    	
     	if(visionOnTarget){
     		return true;
     	}

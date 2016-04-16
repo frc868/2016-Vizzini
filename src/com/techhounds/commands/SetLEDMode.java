@@ -44,7 +44,7 @@ public class SetLEDMode extends Command {
     		if(speed < 10 && setPoint > 10) {
     			led.set(false, true);
     		} else {
-    			if(shooter.getController().onTarget()) {
+    			if(shooter.onTarget()) {
     				led.set(true, true);
     			} else {
     				led.set(true, false);

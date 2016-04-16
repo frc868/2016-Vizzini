@@ -25,7 +25,7 @@ public class MatchSetup extends CommandGroup {
     	addParallel(new SetCollectorPower());
     	addParallel(new SetShooterPower());
     	addParallel(new ReleaseClimber(false));
-    	addParallel(new LockWinch(false));
+    	//addParallel(new LockWinch(false));
     	addParallel(new SwitchControllerToNormal());
     	//addParallel(new UpdateController());
     	//addParallel(new SetScissorsOne(RobotMap.Servo.SCISSOR_ONE_IS_UP_DEFAULT));

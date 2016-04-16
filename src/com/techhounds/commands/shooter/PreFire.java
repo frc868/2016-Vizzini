@@ -24,7 +24,7 @@ public class PreFire extends CommandGroup {
 		addSequential(new SetCollectorPower(0, true));
 		addSequential(new SetShooterSpeed(shooterSpeed));
 		addSequential(new WaitForShooterReady(3, true));
-		addSequential(new CreateRumble());
+		//addSequential(new CreateRumble());
 	}
 	
 	public PreFire() {

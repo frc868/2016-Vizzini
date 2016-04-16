@@ -20,6 +20,7 @@ public class SetWinchLock extends Command {
     }
     
     public SetWinchLock(boolean setMax) {
+    	this.setRunWhenDisabled(true);
     	winchLock = ServoSubsystem.getWinchLock();
     	requires(winchLock);
     	this.setMax = setMax;
