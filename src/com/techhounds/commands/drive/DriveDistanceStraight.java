@@ -21,15 +21,28 @@ public class DriveDistanceStraight extends Command implements PIDSource, PIDOutp
 	private double lastPower;
 	private double minPower;
 	private Double initAngle;
+	private boolean useSaveAngle;
+	
+	private double offsetAngle;
 	private boolean pidOnTarget;
 	private Boolean [] lightSensorReading;
 	
 	private Double timeOut;
 	private int i;
 
-	public DriveDistanceStraight(double dist, double max, double min, double timeOut, double angle) {
+	public DriveDistanceStraight(double dist, double max, double min, Double timeOut, double angle) {
 		this(dist, max, min, timeOut);
 		initAngle = angle;
+	}
+	
+	public DriveDistanceStraight(double dist, double max, double min, Double timeOut, boolean useSaveAngle) {
+		this(dist, max, min, timeOut, useSaveAngle, 0);
+	}
+	
+	public DriveDistanceStraight(double dist, double max, double min, Double timeOut, boolean useSaveAngle, double offsetAngle) {
+		this(dist, max, min, timeOut);
+		this.offsetAngle = offsetAngle;
+		this.useSaveAngle = useSaveAngle;
 	}
 	
 	public DriveDistanceStraight(double dist) {
@@ -58,7 +71,7 @@ public class DriveDistanceStraight extends Command implements PIDSource, PIDOutp
 		//SmartDashboard.putNumber("Min Power To Drive", min);
 	}
 	
-	public DriveDistanceStraight(double dist, double max, double min, double timeOut) {
+	public DriveDistanceStraight(double dist, double max, double min, Double timeOut) {
 		this(dist, max, min);
 		this.timeOut = timeOut;
 	}
@@ -70,7 +83,13 @@ public class DriveDistanceStraight extends Command implements PIDSource, PIDOutp
 	@Override
 	protected void initialize() {
 		// minPower = SmartDashboard.getNumber("Min Power To Drive", .2);
-		initAngle = initAngle == null ? gyro.getRotation() : initAngle;
+		
+		if(useSaveAngle) {
+			initAngle = gyro.getStoredAngle() + offsetAngle;
+		} else {
+			initAngle = initAngle == null ? gyro.getRotation() : initAngle;
+		}
+		
 		double curDist = drive.countsToDist(drive.getAvgDistance());
 		lastPower = 0;
 		i = 0;
