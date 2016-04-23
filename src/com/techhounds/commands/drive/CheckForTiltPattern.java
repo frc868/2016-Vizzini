@@ -61,7 +61,7 @@ public class CheckForTiltPattern extends Command {
 
 	@Override
 	protected boolean isFinished() {
-		double tilt = gyro.getTilt();
+		double tilt = gyro.getLean();//.getTilt();
 		
 		if(pattern[i] == Motion.TILT_BACK) {
 			if(tilt <= -Math.abs(angleThreshold))
