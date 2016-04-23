@@ -20,14 +20,17 @@ public class DriveWithSpeed extends Command {
 	private PIDController leftPID;
 	private PIDController rightPID;
 
+	private static final double LEFT_Kp = 0, LEFT_Ki = 0, LEFT_Kd = 0;
+	private static final double RIGHT_Kp = 0, RIGHT_Ki = 0, RIGHT_Kd = 0;
+
 	public DriveWithSpeed(double speed) {
 		this.speed = speed;
-
-		rightPID = new PIDController(0,0,0, new PID(false), new PID(false));
-		leftPID = new PIDController(0,0,0, new PID(true), new PID(true));
-
+	
 		drive = DriveSubsystem.getInstance();
 		requires(drive);
+	
+		leftPID = new PIDController(LEFT_Kp, LEFT_Ki, LEFT_Kd , new SpeedData(true), new SpeedData(true));
+		rightPID = new PIDController(RIGHT_Kp, RIGHT_Ki, RIGHT_Kd , new SpeedData(false), new SpeedData(false));
 	}
 
 
@@ -35,6 +38,7 @@ public class DriveWithSpeed extends Command {
 	protected void initialize() {
 		rightPID.setSetpoint(speed);
 		leftPID.setSetpoint(speed);//double check that these are nececarry with Mr. B, we've never tested This command before
+		
 		rightPID.enable();
 		leftPID.enable();
 	}
@@ -60,11 +64,11 @@ public class DriveWithSpeed extends Command {
 		end();
 	}
 
-	private class PID implements PIDSource, PIDOutput {
+	private class SpeedData implements PIDSource, PIDOutput {
 
 		private boolean isLeft;
 
-		public PID(boolean isLeft) {
+		public SpeedData(boolean isLeft) {
 			this.isLeft = isLeft;
 		}
 
@@ -86,7 +90,7 @@ public class DriveWithSpeed extends Command {
 
 		@Override
 		public double pidGet() {
-			return (isLeft ? OI.getInstance().getLeftBackward() * Robot.powToSpeedConst : OI.getInstance().getRightBackward()) * Robot.powToSpeedConst;
+			return isLeft ? drive.getLeftSpeed() : drive.getRightSpeed();
 		}
 	}
 }
