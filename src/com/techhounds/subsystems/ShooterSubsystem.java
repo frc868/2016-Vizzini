@@ -27,7 +27,10 @@ public class ShooterSubsystem extends Subsystem {
 	public final double P = .005, I = 0, D = .075, F = .005;
 //	public final double P = 0, I = 0, D = 0, F = .006;
 	private PIDController controller;
+	
 	private double lastSpeed;
+	private double pidLastSpeed;
+	
 	public boolean debuging = true;
 	private PowerDistributionPanel panel;
 	
@@ -43,8 +46,6 @@ public class ShooterSubsystem extends Subsystem {
 		count.setDistancePerPulse(1);
 
 		controller = new PIDController(P, I, D, F, new PIDSource() {
-
-			private double pidLastSpeed;
 			
 			public void setPIDSourceType(PIDSourceType pidSource) {
 				// TODO Auto-generated method stub
@@ -89,6 +90,7 @@ public class ShooterSubsystem extends Subsystem {
 	}
 
 	public void setSpeed(double setPoint) {
+		pidLastSpeed = 0;
 		controller.setSetpoint(setPoint);
 		controller.enable();
 	}
