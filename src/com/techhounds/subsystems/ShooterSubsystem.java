@@ -54,7 +54,25 @@ public class ShooterSubsystem extends Subsystem {
 			}
 
 			public double pidGet() {
-				return getSpeed();
+				
+				double speed = getSpeed();
+				
+				if (speed == Double.NaN || speed == Double.POSITIVE_INFINITY || speed == Double.NEGATIVE_INFINITY) {
+					speed = lastSpeed;
+				}
+				if (speed > MAX_SPEED) {
+					speed = lastSpeed;
+				}
+				
+				/* if (speed < lastSpeed) { 
+					double dropPercent = (lastSpeed - speed) / lastSpeed; 
+				 
+				 	if (dropPercent > MAX_SPEED_DROP_PERCENT) { 
+				  		speed = lastSpeed; 
+				  	} 
+				} */
+				
+				return lastSpeed = speed;
 			}
 
 		}, new PIDOutput() {
@@ -93,20 +111,7 @@ public class ShooterSubsystem extends Subsystem {
 	}
 
 	public double getSpeed() {
-		double speed = count.getRate();
-		if (speed == Double.NaN || speed == Double.POSITIVE_INFINITY || speed == Double.NEGATIVE_INFINITY) {
-			return lastSpeed;
-		}
-		if (speed > MAX_SPEED) {
-			speed = lastSpeed;
-		}
-		/*
-		 * if (speed < lastSpeed) { double dropPercent = (lastSpeed - speed) /
-		 * lastSpeed; if (dropPercent > MAX_SPEED_DROP_PERCENT) { speed =
-		 * lastSpeed; } }
-		 */
-		lastSpeed = speed;
-		return speed;
+		return count.getRate();
 	}
 
 	public double getDistance() {
