@@ -44,6 +44,8 @@ public class ShooterSubsystem extends Subsystem {
 
 		controller = new PIDController(P, I, D, F, new PIDSource() {
 
+			private double pidLastSpeed;
+			
 			public void setPIDSourceType(PIDSourceType pidSource) {
 				// TODO Auto-generated method stub
 			}
@@ -57,22 +59,16 @@ public class ShooterSubsystem extends Subsystem {
 				
 				double speed = getSpeed();
 				
-				if (speed == Double.NaN || speed == Double.POSITIVE_INFINITY || speed == Double.NEGATIVE_INFINITY) {
-					speed = lastSpeed;
-				}
-				if (speed > MAX_SPEED) {
-					speed = lastSpeed;
-				}
 				
-				/* if (speed < lastSpeed) { 
-					double dropPercent = (lastSpeed - speed) / lastSpeed; 
-				 
-				 	if (dropPercent > MAX_SPEED_DROP_PERCENT) { 
-				  		speed = lastSpeed; 
-				  	} 
-				} */
+				/* if (speed < pidLastSpeed) { 
+					double dropPercent = (pidLastSpeed - speed) / pidLastSpeed; 
+					
+					if (dropPercent > MAX_SPEED_DROP_PERCENT) { 
+						speed = pidLastSpeed; 
+					} 
+				}	*/ 
 				
-				return lastSpeed = speed;
+				return pidLastSpeed = speed;
 			}
 
 		}, new PIDOutput() {
@@ -111,7 +107,16 @@ public class ShooterSubsystem extends Subsystem {
 	}
 
 	public double getSpeed() {
-		return count.getRate();
+		double speed = count.getRate();
+		if (speed == Double.NaN || speed == Double.POSITIVE_INFINITY || speed == Double.NEGATIVE_INFINITY) {
+			speed = lastSpeed;
+		}
+		if (speed > MAX_SPEED) {
+			speed = lastSpeed;
+		}
+		
+		lastSpeed = speed;
+		return speed;
 	}
 
 	public double getDistance() {
