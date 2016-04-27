@@ -12,23 +12,23 @@ public class DriveUntilTiltPatternWithDistance extends CommandGroup {
 	public DriveUntilTiltPatternWithDistance(double distance, double maxPower, double minPower, double timeOut) {
 		
 		if(distance > 0) {
-			addParallel(tiltCommand = new CheckForTiltPattern(CheckForTiltPattern.DEFENSE_CROSS_FORWARD, 
-					CheckForTiltPattern.DEFENSE_CROSS_TIMEOUTS, 5));
+			addParallel(tiltCommand = new WaitForTiltPattern(WaitForTiltPattern.DEFENSE_CROSS_FORWARD, 
+					WaitForTiltPattern.DEFENSE_CROSS_TIMEOUTS, 5));
 		} else {
-			addParallel(tiltCommand = new CheckForTiltPattern(CheckForTiltPattern.DEFENSE_CROSS_BACKWARD, 
-					CheckForTiltPattern.DEFENSE_CROSS_TIMEOUTS, 5));
+			addParallel(tiltCommand = new WaitForTiltPattern(WaitForTiltPattern.DEFENSE_CROSS_BACKWARD, 
+					WaitForTiltPattern.DEFENSE_CROSS_TIMEOUTS, 5));
 		}
 		
 		addParallel(driveCommand = new DriveDistance(distance, maxPower, minPower, timeOut));
 	}
 	
-	public DriveUntilTiltPatternWithDistance(double distance, double maxPower, double minPower, double timeOut, CheckForTiltPattern.Motion [] motion, Double [] timeout) {
-		addParallel(tiltCommand = new CheckForTiltPattern(motion, timeout, 5));
+	public DriveUntilTiltPatternWithDistance(double distance, double maxPower, double minPower, double timeOut, WaitForTiltPattern.Motion [] motion, Double [] timeout) {
+		addParallel(tiltCommand = new WaitForTiltPattern(motion, timeout, 5));
 		addParallel(driveCommand = new DriveDistanceStraight(distance, maxPower, minPower, timeOut));
 	}
 	
-	public DriveUntilTiltPatternWithDistance(double distance, double maxPower, double minPower, double timeOut, CheckForTiltPattern.Motion [] motion, Double [] timeout, double angleThreshold) {
-		addParallel(tiltCommand = new CheckForTiltPattern(motion, timeout, angleThreshold));
+	public DriveUntilTiltPatternWithDistance(double distance, double maxPower, double minPower, double timeOut, WaitForTiltPattern.Motion [] motion, Double [] timeout, double angleThreshold) {
+		addParallel(tiltCommand = new WaitForTiltPattern(motion, timeout, angleThreshold));
 		addParallel(driveCommand = new DriveDistanceStraight(distance, maxPower, minPower, timeOut));
 	}
 	

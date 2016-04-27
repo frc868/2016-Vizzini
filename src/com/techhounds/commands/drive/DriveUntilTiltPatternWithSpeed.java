@@ -10,23 +10,23 @@ public class DriveUntilTiltPatternWithSpeed extends CommandGroup {
 	public DriveUntilTiltPatternWithSpeed(double speed) {
 		
 		if(speed > 0) {
-			addParallel(tiltCommand = new CheckForTiltPattern(CheckForTiltPattern.DEFENSE_CROSS_FORWARD, 
-					CheckForTiltPattern.DEFENSE_CROSS_TIMEOUTS, 5));
+			addParallel(tiltCommand = new WaitForTiltPattern(WaitForTiltPattern.DEFENSE_CROSS_FORWARD, 
+					WaitForTiltPattern.DEFENSE_CROSS_TIMEOUTS, 5));
 		} else {
-			addParallel(tiltCommand = new CheckForTiltPattern(CheckForTiltPattern.DEFENSE_CROSS_BACKWARD, 
-					CheckForTiltPattern.DEFENSE_CROSS_TIMEOUTS, 5));
+			addParallel(tiltCommand = new WaitForTiltPattern(WaitForTiltPattern.DEFENSE_CROSS_BACKWARD, 
+					WaitForTiltPattern.DEFENSE_CROSS_TIMEOUTS, 5));
 		}
 		
 		addParallel(new DriveWithSpeed(speed));
 	}
 	
-	public DriveUntilTiltPatternWithSpeed(double speed, CheckForTiltPattern.Motion [] motion, Double [] timeout) {
-		addParallel(tiltCommand = new CheckForTiltPattern(motion, timeout, 5));
+	public DriveUntilTiltPatternWithSpeed(double speed, WaitForTiltPattern.Motion [] motion, Double [] timeout) {
+		addParallel(tiltCommand = new WaitForTiltPattern(motion, timeout, 5));
 		addParallel(new DriveWithSpeed(speed));
 	}
 	
-	public DriveUntilTiltPatternWithSpeed(double speed, CheckForTiltPattern.Motion [] motion, Double [] timeout, double angleThreshold) {
-		addParallel(tiltCommand = new CheckForTiltPattern(motion, timeout, angleThreshold));
+	public DriveUntilTiltPatternWithSpeed(double speed, WaitForTiltPattern.Motion [] motion, Double [] timeout, double angleThreshold) {
+		addParallel(tiltCommand = new WaitForTiltPattern(motion, timeout, angleThreshold));
 		addParallel(new DriveWithSpeed(speed));
 	}
 	

@@ -4,7 +4,7 @@ import com.techhounds.subsystems.GyroSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class CheckForTiltPattern extends Command {
+public class WaitForTiltPattern extends Command {
 
 	private Motion [] pattern;
 	private Double [] timeout;
@@ -29,15 +29,15 @@ public class CheckForTiltPattern extends Command {
 			0.0, 0.125, 0.375, 0.5
 	};
 	
-	public CheckForTiltPattern(Motion [] pattern) {
+	public WaitForTiltPattern(Motion [] pattern) {
 		this(pattern, 5);
 	}
 	
-	public CheckForTiltPattern(Motion [] pattern, double angleThreshold) {
+	public WaitForTiltPattern(Motion [] pattern, double angleThreshold) {
 		this(pattern, null, angleThreshold);
 	}
 	
-	public CheckForTiltPattern(Motion [] pattern, Double [] timeout, double angleThreshold) {
+	public WaitForTiltPattern(Motion [] pattern, Double [] timeout, double angleThreshold) {
 		this.pattern = pattern;
 		
 		if(timeout != null && pattern.length != timeout.length) {
