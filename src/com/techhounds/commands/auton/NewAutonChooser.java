@@ -13,6 +13,7 @@ import com.techhounds.commands.drive.CheckForTiltPattern.Motion;
 import com.techhounds.commands.drive.DriveDistance;
 import com.techhounds.commands.drive.DriveDistanceStraight;
 import com.techhounds.commands.drive.DriveUntilTiltPatternWithPower;
+import com.techhounds.commands.gyro.ResetGyro;
 import com.techhounds.commands.gyro.RotateToLastAngle;
 import com.techhounds.commands.gyro.RotateToPreviousAngle;
 import com.techhounds.commands.gyro.RotateUsingGyro;
@@ -254,6 +255,8 @@ public class NewAutonChooser {
 			} else {
 				return;
 			}
+			
+			addSequential(new ResetGyro(ResetGyro.Direction.LEAN));
 			
 			if(post == 3) {
 				addSequential(new RotateToLastAngle());
