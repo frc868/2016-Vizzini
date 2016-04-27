@@ -71,7 +71,6 @@ public class NewAutonChooser {
 	
 	private SendableChooser chooseStart;
 	private SendableChooser chooseDefense;
-	private SendableChooser chooseGoal;
 	private SendableChooser chooseShoot;
 	private SendableChooser choosePost;
 	
@@ -126,7 +125,6 @@ public class NewAutonChooser {
 
 		SmartDashboard.putData("ChooseStart", chooseStart);
 		SmartDashboard.putData("ChooseDefense", chooseDefense);
-		SmartDashboard.putData("ChooseGoal", chooseGoal);
 		SmartDashboard.putData("ChooseShoot", chooseShoot);
 		SmartDashboard.putData("ChoosePost", choosePost);
 	}

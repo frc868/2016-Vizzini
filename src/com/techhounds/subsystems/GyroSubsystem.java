@@ -70,9 +70,9 @@ public abstract class GyroSubsystem extends Subsystem {
 	private static GyroSubsystem instance;
 
 	// Instance used to track the rotation throughout the entire match
-	private GyroBase gyrox;
-	private GyroBase gyroy;
-	private GyroBase gyroz;
+	public GyroBase gyrox;
+	public GyroBase gyroy;
+	public GyroBase gyroz;
 
 	/**
 	 * Private constructor to force {@link #getInstance()} usage.
