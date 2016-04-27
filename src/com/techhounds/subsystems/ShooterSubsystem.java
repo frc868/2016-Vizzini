@@ -27,6 +27,7 @@ public class ShooterSubsystem extends Subsystem {
 	public final double P = .005, I = 0, D = .075, F = .005;
 //	public final double P = 0, I = 0, D = 0, F = .006;
 	private PIDController controller;
+	private double speedThreshold;
 	
 	private double lastSpeed;
 	private double pidLastSpeed;
@@ -58,7 +59,7 @@ public class ShooterSubsystem extends Subsystem {
 
 			public double pidGet() {
 				
-				double speed = getSpeed();
+				double speed = getFilteredSpeed();
 				
 				
 				/* if (speed < pidLastSpeed) { 
@@ -92,6 +93,7 @@ public class ShooterSubsystem extends Subsystem {
 	public void setSpeed(double setPoint) {
 		pidLastSpeed = 0;
 		controller.setSetpoint(setPoint);
+		setThreshold(setPoint);
 		controller.enable();
 	}
 
@@ -107,6 +109,9 @@ public class ShooterSubsystem extends Subsystem {
 	public void stopPower() {
 		shooter.set(0);
 	}
+	public void setThreshold(double setPoint){
+		speedThreshold = setPoint * 1.3;
+	}
 
 	public double getSpeed() {
 		double speed = count.getRate();
@@ -119,6 +124,15 @@ public class ShooterSubsystem extends Subsystem {
 		
 		lastSpeed = speed;
 		return speed;
+	}
+	public double getFilteredSpeed(){
+		double speed = getSpeed();
+		if(speed > speedThreshold){
+			speed = lastSpeed;
+		}
+		lastSpeed = speed;
+		return speed;
+		
 	}
 
 	public double getDistance() {
