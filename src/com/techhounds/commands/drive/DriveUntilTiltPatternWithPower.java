@@ -15,15 +15,16 @@ public class DriveUntilTiltPatternWithPower extends CommandGroup {
 	
 	private double power;
 	private Double initAngle;
+	private Boolean useSaveAngle;
 	
 	public DriveUntilTiltPatternWithPower(double power) {
 		
 		if(power > 0) {
-			addParallel(tiltCommand = new WaitForTiltPattern(WaitForTiltPattern.DEFENSE_CROSS_FORWARD, 
-					WaitForTiltPattern.DEFENSE_CROSS_TIMEOUTS, 5));
+			addParallel(tiltCommand = new CheckForTiltPattern(CheckForTiltPattern.DEFENSE_CROSS_FORWARD, 
+					CheckForTiltPattern.DEFENSE_CROSS_TIMEOUTS, 5));
 		} else {
-			addParallel(tiltCommand = new WaitForTiltPattern(WaitForTiltPattern.DEFENSE_CROSS_BACKWARD, 
-					WaitForTiltPattern.DEFENSE_CROSS_TIMEOUTS, 5));
+			addParallel(tiltCommand = new CheckForTiltPattern(CheckForTiltPattern.DEFENSE_CROSS_BACKWARD, 
+					CheckForTiltPattern.DEFENSE_CROSS_TIMEOUTS, 5));
 		}
 		
 		requires(drive = DriveSubsystem.getInstance());
@@ -31,15 +32,43 @@ public class DriveUntilTiltPatternWithPower extends CommandGroup {
 		this.power = power;
 	}
 	
-	public DriveUntilTiltPatternWithPower(double power, WaitForTiltPattern.Motion [] motion, Double [] timeout) {
-		addParallel(tiltCommand = new WaitForTiltPattern(motion, timeout, 5));
+	public DriveUntilTiltPatternWithPower(double power, boolean useSaveAngle, double angleThreshold) {
+		
+		if(power > 0) {
+			addParallel(tiltCommand = new CheckForTiltPattern(CheckForTiltPattern.DEFENSE_CROSS_FORWARD, 
+					CheckForTiltPattern.DEFENSE_CROSS_TIMEOUTS, angleThreshold));
+		} else {
+			addParallel(tiltCommand = new CheckForTiltPattern(CheckForTiltPattern.DEFENSE_CROSS_BACKWARD, 
+					CheckForTiltPattern.DEFENSE_CROSS_TIMEOUTS, angleThreshold));
+		}
+		
+		requires(drive = DriveSubsystem.getInstance());
+		gyro = GyroSubsystem.getInstance();
+		this.power = power;
+		this.useSaveAngle = useSaveAngle;
+	}
+	
+	public DriveUntilTiltPatternWithPower(double power, boolean useSaveAngle) {
+		this(power, useSaveAngle, 5);
+	}
+
+	public DriveUntilTiltPatternWithPower(double power, CheckForTiltPattern.Motion [] motion, Double [] timeout) {
+		addParallel(tiltCommand = new CheckForTiltPattern(motion, timeout, 5));
 		requires(drive = DriveSubsystem.getInstance());		
 		gyro = GyroSubsystem.getInstance();
 		this.power = power;
 	}
 	
-	public DriveUntilTiltPatternWithPower(double power, WaitForTiltPattern.Motion [] motion, Double [] timeout, double angleThreshold) {
-		addParallel(tiltCommand = new WaitForTiltPattern(motion, timeout, angleThreshold));
+	public DriveUntilTiltPatternWithPower(double power, CheckForTiltPattern.Motion [] motion, Double [] timeout, boolean useSaveAngle) {
+		addParallel(tiltCommand = new CheckForTiltPattern(motion, timeout, 5));
+		requires(drive = DriveSubsystem.getInstance());		
+		gyro = GyroSubsystem.getInstance();
+		this.power = power;
+		this.useSaveAngle = useSaveAngle;
+	}
+	
+	public DriveUntilTiltPatternWithPower(double power, CheckForTiltPattern.Motion [] motion, Double [] timeout, double angleThreshold) {
+		addParallel(tiltCommand = new CheckForTiltPattern(motion, timeout, angleThreshold));
 		requires(drive = DriveSubsystem.getInstance());
 		gyro = GyroSubsystem.getInstance();
 		this.power = power;
@@ -52,7 +81,12 @@ public class DriveUntilTiltPatternWithPower extends CommandGroup {
 	@Override
 	public void initialize() {
 		super.initialize();
-		setInitAngle(gyro.getRotation());
+		
+		if(useSaveAngle != null && useSaveAngle) {
+			setInitAngle(gyro.getStoredAngle());
+		} else {
+			setInitAngle(gyro.getRotation());
+		}
 	}
 	
 	@Override
@@ -74,7 +108,7 @@ public class DriveUntilTiltPatternWithPower extends CommandGroup {
 				+ 0.03363132991 * (currAngle)) / .201608);
 		}
 		
-		offset *= Math.abs(power) * 2;
+		offset *= Math.abs(power);
 		drive.setPower(Robot.rangeCheck(power + offset), Robot.rangeCheck(power - offset));
 	}
 	
