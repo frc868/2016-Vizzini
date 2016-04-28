@@ -276,10 +276,7 @@ public class DriveSubsystem extends Subsystem{
 			SmartDashboard.putNumber("Accelerometer Y", getAccerometerY());
 			SmartDashboard.putNumber("Accelerometer Z", getAccerometerZ());
 		
-			SmartDashboard.putNumber("Left Distance", getLeftDistance());
-			SmartDashboard.putNumber("Right Distance", getRightDistance());
-			SmartDashboard.putNumber("Avg Distance", getAvgDistance());
-
+			
 			SmartDashboard.putNumber("Actual Avg Distance", countsToDist(getAvgDistance()));
 			SmartDashboard.putNumber("Left Current", getLeftCurrent());
 			SmartDashboard.putNumber("Right Current", getRightCurrent());
@@ -290,6 +287,10 @@ public class DriveSubsystem extends Subsystem{
 			SmartDashboard.putNumber("Rotation X", getRotationX());
 		
 		}
+		SmartDashboard.putNumber("Left Distance", getLeftDistance());
+		SmartDashboard.putNumber("Right Distance", getRightDistance());
+		SmartDashboard.putNumber("Avg Distance", getAvgDistance());
+
 		
 		SmartDashboard.putBoolean("DRIVING COLLECTOR FIRST", !isForward);
 	

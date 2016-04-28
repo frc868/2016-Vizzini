@@ -337,9 +337,9 @@ public class AutonChooser {
 
 			addSequential(new Debug("AUTON", "" + 3));
 			if(shoot == 0) {
-				addSequential(new RotateUsingVisionContinuous(3));
+				addSequential(new RotateUsingVisionContinuous(2.125)); // Used to be 3
 				//addSequential(new DriveDistance(12, RobotMap.Defenses.TO_DEFENSE_SPEED), 1.25);
-				addSequential(new WaitCommand(.5));
+				addParallel(new WaitCommand(.5));
 
 //				addSequential(new Debug("AUTON", "" + 4));
 				//addParallel(new SetShooterSpeed(69));
@@ -360,7 +360,7 @@ public class AutonChooser {
 //					addSequential(new Debug("AUTON", "" + 8));
 //				addSequential(new WaitCommand(1));
 				addSequential(new SetCollectorPower(1, true));
-				addSequential(new WaitCommand(2));
+				addSequential(new WaitCommand(0.625));
 				addParallel(new SetCollectorPower(0, true));
 				addSequential(new SetShooterPower());
 			} else if(shoot == 1) {
@@ -376,7 +376,7 @@ public class AutonChooser {
 			
 			if(post == 3) {
 				addSequential(new RotateToLastAngle());
-			} else if(post == 2) {
+			} else if(post == 2 || post == 4) {
 				addSequential(new RotateToLastAngle());
 				
 				//if(start == 4) {
@@ -423,6 +423,15 @@ public class AutonChooser {
 					case REACH_DEFENSE:
 					default:
 						break;
+						
+				}
+				
+				if(post == 4) {
+					addParallel(new SetCollectorPower(RobotMap.Collector.inPower));
+					addParallel(new SetAnglerPosition(RobotMap.Collector.COLLECTING));
+					addSequential(new DriveDistance(4));
+					addSequential(new WaitForBeanBreak(true));
+					//addSequential(new AutonCommand(getStart(), getDefense(), getGoal(), getShoot(), 2));
 				}
 			} else if(post == 1) {
 				// Face Defenses

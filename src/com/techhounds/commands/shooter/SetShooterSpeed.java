@@ -32,6 +32,7 @@ public class SetShooterSpeed extends Command {
     protected void execute() {
     }
 
+    private Long currTime;
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
     	if(shooter.onTarget())
@@ -40,6 +41,19 @@ public class SetShooterSpeed extends Command {
     		cnt = 0;
     	
         return cnt >= 3;
+        /*
+    	if(shooter.onTarget()) {
+    		if(currTime == null)
+    			currTime = System.currentTimeMillis();
+    		if(System.currentTimeMillis() - currTime > 1000) {
+    			SmartDashboard.putNumber("Time To Get To Speed", timeSinceInitialized());
+    			return true;
+    		}
+    	} else {
+    		currTime = null;
+    	}
+    	
+		return false;*/
     }
 
     // Called once after isFinished returns true

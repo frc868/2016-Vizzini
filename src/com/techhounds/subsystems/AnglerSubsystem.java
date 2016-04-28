@@ -49,7 +49,7 @@ public class AnglerSubsystem extends Subsystem {
 			public PIDSourceType getPIDSourceType() {
 				return PIDSourceType.kDisplacement;
 			}
-
+//.005 P + D
 			@Override
 			public double pidGet() {
 				return Robot.rangeCheck(angler.getAnalogInRaw(), RobotMap.Collector.COLLECTOR_UP, RobotMap.Collector.COLLECTOR_DOWN);
@@ -64,9 +64,10 @@ public class AnglerSubsystem extends Subsystem {
 			
 		});
 		
-		pid.setOutputRange(-.75, .75);
+		pid.setOutputRange(-.45, .45);
 		pid.setInputRange(RobotMap.Collector.COLLECTOR_UP, RobotMap.Collector.COLLECTOR_DOWN);
 		pid.setAbsoluteTolerance(TOLERANCE);
+		
 		//pid.enable();
 		SmartDashboard.putData("Angler PID", pid);
 	}
@@ -77,7 +78,7 @@ public class AnglerSubsystem extends Subsystem {
 		P = SmartDashboard.getNumber("Angler_P", P);
 		I = SmartDashboard.getNumber("Angler_I", I);
 		D = SmartDashboard.getNumber("Angler_D", D);
-		pid.setPID(P, I, D);
+		//pid.setPID(P, I, D);
 		pid.setSetpoint(Robot.rangeCheck(position, RobotMap.Collector.COLLECTOR_UP, RobotMap.Collector.COLLECTOR_DOWN));
 		pid.enable();
 	}
@@ -116,7 +117,9 @@ public class AnglerSubsystem extends Subsystem {
 //		if(debugging && !Robot.competing){
 			SmartDashboard.putNumber("Angler_Position", getPosition());
 			SmartDashboard.putNumber("Angler_Error: ", pid.getError());
+			SmartDashboard.putData("Angler Pid", pid);
 //		}
+			
 		//SmartDashboard.putNumber("Angler: ", angler.getPosition());
 	}
 	
