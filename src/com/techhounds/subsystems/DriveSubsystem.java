@@ -41,9 +41,9 @@ public class DriveSubsystem extends Subsystem{
 	private Encoder rightEncoder;
 	private Encoder leftEncoder;
 
-	private final double driver_p;
-	private final double driver_i;
-	private final double driver_d;
+	public static double driver_p;
+	public static double driver_i;
+	public static double driver_d;
 	
 	
 	private final double gyro_p;
@@ -127,7 +127,7 @@ public class DriveSubsystem extends Subsystem{
 
 			@Override
 			public void pidWrite(double output) {
-				setPower(output, -output);
+				setRightLeftPower(output, -output);
 			}
 		});
 		gyroPID.setOutputRange(-1, 1);
@@ -178,7 +178,7 @@ public class DriveSubsystem extends Subsystem{
 		leftEncoder.reset();
 	}
 	
-	public void setPower(double right, double left) {
+	public void setRightLeftPower(double right, double left) {
 		this.left.set(left);
 		this.right.set(right);
 	}
@@ -287,10 +287,13 @@ public class DriveSubsystem extends Subsystem{
 			SmartDashboard.putNumber("Rotation X", getRotationX());
 		
 		}
-		SmartDashboard.putNumber("Left Distance", getLeftDistance());
-		SmartDashboard.putNumber("Right Distance", getRightDistance());
-		SmartDashboard.putNumber("Avg Distance", getAvgDistance());
+		SmartDashboard.putNumber("Left Distance", countsToDist(getLeftDistance()));
+		SmartDashboard.putNumber("Right Distance", countsToDist(getRightDistance()));
+		SmartDashboard.putNumber("Avg Distance", countsToDist(getAvgDistance()));
 
+
+		SmartDashboard.putNumber("Left Speed", getLeftSpeed());
+		SmartDashboard.putNumber("Right Speed", getRightSpeed());
 		
 		SmartDashboard.putBoolean("DRIVING COLLECTOR FIRST", !isForward);
 	

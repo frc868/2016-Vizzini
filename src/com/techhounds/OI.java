@@ -24,10 +24,13 @@ import com.techhounds.commands.collector.SetCollectorPower;
 import com.techhounds.commands.drive.DriveDistance;
 import com.techhounds.commands.drive.DriveDistanceStraight;
 import com.techhounds.commands.drive.DriveEncodersReset;
+import com.techhounds.commands.drive.DriveUntilTiltPatternWithPower;
 import com.techhounds.commands.drive.LockWinch;
 import com.techhounds.commands.drive.RunWinch;
 import com.techhounds.commands.drive.ToggleDriveDirection;
+import com.techhounds.commands.gyro.ResetGyro;
 import com.techhounds.commands.gyro.RotateUsingGyro;
+import com.techhounds.commands.gyro.SaveCurrentAngle;
 import com.techhounds.commands.servos.ReleaseClimber;
 import com.techhounds.commands.servos.SetScissorsTwo;
 import com.techhounds.commands.servos.SetWinchEnable;
@@ -69,7 +72,7 @@ public class OI {
 	final int angleUp = 			ControllerMap.Key.Y;
 	final int angleDown = 			ControllerMap.Key.A;
 	final int startShooterOuterworks = ControllerMap.Key.X;//DPadButton.Direction.UP;
-	final int downShooterSpeed = 	DPadButton.Direction.DOWN;
+	final int toggleFlashLight = 	DPadButton.Direction.DOWN;
 	final int stopShooter = 		DPadButton.Direction.LEFT;
 	final int startShooter = 		DPadButton.Direction.UP;//ControllerMap.Key.X;
 	final int fireShooter = 		ControllerMap.Key.B;
@@ -212,7 +215,7 @@ public class OI {
 		controller.getButton(visionTarget)
 			.whenPressed(new RotateUsingVision(4));
 		
-		controller.getButton(downShooterSpeed)
+		controller.getButton(toggleFlashLight)
 			.whenPressed(new SetFlashlight());
 		
 		controller.getButton(newVisionTarget)
@@ -241,14 +244,22 @@ public class OI {
 	 * Gets the Smart Dashboard Ready with Commands (Act as Buttons)
 	 */
 	public void setupSmartDashboard() {
-		
+		SmartDashboard.putData("Run Selected Auton", new RetrieveAuton());
 		SmartDashboard.putData("Match Set Up", new MatchSetup());
-		SmartDashboard.putData("Drive 60 Maintain Angle", new DriveDistanceStraight(60, RobotMap.Defenses.LOW_BAR_SPEED, RobotMap.DriveTrain.MIN_STRAIGHT_POWER, 20.0));
+		SmartDashboard.putData("Drive Until Passed Defense", new DriveUntilTiltPatternWithPower(.55, true));
+		SmartDashboard.putData("Drive 24 Inches Straight", new DriveDistanceStraight(24, 1, 0.2, null, true));
+		SmartDashboard.putData("Reset Lean", new ResetGyro(ResetGyro.Direction.LEAN));
+		SmartDashboard.putData("Drive Until Passed Defense Back", new DriveUntilTiltPatternWithPower(-.55, true));
+		SmartDashboard.putData("Drive Thru Lowbar", new DriveDistanceStraight(RobotMap.Defenses.LOW_BAR_DISTANCE, RobotMap.Defenses.LOW_BAR_SPEED, RobotMap.DriveTrain.MIN_STRAIGHT_POWER, null, true));
+		SmartDashboard.putData("Drive Back Lowbar", new DriveDistanceStraight(-RobotMap.Defenses.LOW_BAR_DISTANCE, -RobotMap.Defenses.LOW_BAR_SPEED, -RobotMap.DriveTrain.MIN_STRAIGHT_POWER, null, true));
 		SmartDashboard.putData("Vision Align To Target", new RotateUsingVision(5));
 //		if(RotateUsingGyro.DEBUG){//This will not show in the SD up unless we're debugging RotateUsingGyro
 			SmartDashboard.putData("Rotate 60 Degrees", new RotateUsingGyro(60));
 //			SmartDashboard.putData("Rotate -90 Degrees", new RotateUsingGyro(-90));
 //		}
+		
+		SmartDashboard.putData("Save Angle", new SaveCurrentAngle());
+		SmartDashboard.putData("Drive Distance Straight", new DriveDistanceStraight(1000, 0.5, 0.2, null, true));
 //		SmartDashboard.putData("Reset Drive Encoders", new DriveEncodersReset());
 //		SmartDashboard.putData("Set Shooter Speed", new SetShooterSpeed(69));
 		SmartDashboard.putData("Update The Controllers", new UpdateController());

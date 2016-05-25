@@ -26,7 +26,7 @@ public class CheckForTiltPattern extends Command {
 	};
 	
 	public static final Double [] DEFENSE_CROSS_TIMEOUTS = new Double [] {
-			0.0, 0.125, 0.375, 0.5
+			0.0, 0.5, 0.5, 0.25
 	};
 	
 	public CheckForTiltPattern(Motion [] pattern) {

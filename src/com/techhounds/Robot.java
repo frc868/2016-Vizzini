@@ -109,6 +109,7 @@ public class Robot extends IterativeRobot {
     	//new SetFlashlight(true).start();
     	//new CameraCommand(true).start();
     	System.out.println("*** TECHHOUNDS IS READY TO TELEOP ***");
+    	
     }
 
     /**

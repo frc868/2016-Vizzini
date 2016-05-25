@@ -11,6 +11,10 @@ public class RotateToLastAngle extends RotateUsingGyro {
 		// TODO Auto-generated constructor stub
 	}
 	
+	public RotateToLastAngle(double angle, double maxPower, boolean doesntMatter) {
+		super(angle, maxPower, doesntMatter);
+	}
+	
 	@Override
 	public void initialize() {
 		angle = gyro.getStoredAngle() - gyro.getRotation() + angle;

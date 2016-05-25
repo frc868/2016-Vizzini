@@ -3,6 +3,7 @@ package com.techhounds.commands.auton;
 import com.techhounds.RobotMap;
 import com.techhounds.commands.collector.WaitForBeanBreak;
 import com.techhounds.commands.drive.DriveDistance;
+import com.techhounds.commands.drive.DriveDistanceStraight;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -16,7 +17,11 @@ public class DriveBackAndCheckForBall extends CommandGroup {
 		addSequential(ballCheck = new WaitForBeanBreak(true));
 	}
 	public DriveBackAndCheckForBall(double stopDistance){
-		addParallel(drive = new DriveDistance(stopDistance, -.6, -RobotMap.DriveTrain.MIN_STRAIGHT_POWER, 3));
+		addParallel(drive = new DriveDistanceStraight(stopDistance, -RobotMap.Defenses.LOW_BAR_SPEED + .1, -RobotMap.DriveTrain.MIN_STRAIGHT_POWER, 5.0, true, 0.25));
+		addSequential(ballCheck = new WaitForBeanBreak(true));
+	}
+	public DriveBackAndCheckForBall(double stopDistance, double maxSpeed){
+		addParallel(drive = new DriveDistanceStraight(stopDistance, maxSpeed, -RobotMap.DriveTrain.MIN_STRAIGHT_POWER, 5.0, true));
 		addSequential(ballCheck = new WaitForBeanBreak(true));
 	}
 

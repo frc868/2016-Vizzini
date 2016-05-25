@@ -21,9 +21,12 @@ public class AnglerSubsystem extends Subsystem {
 	private boolean debugging = false;
 	private static AnglerSubsystem instance;
 	private CANTalon angler;
-	private double P = 0.008, I = 0, D = 0.01;
+	private double /* P = 0.008, I = 0, D = 0.01; */ P = 0.005, I = 0, D = 0.005;
 	private PIDController pid;
-	private double TOLERANCE = 3;
+	//private double TOLERANCE = 3;
+	
+	private double TOLERANCE = 10;
+	
 	private int state = 2;//defaults as maximum height
     
 	private AnglerSubsystem() {
@@ -52,6 +55,7 @@ public class AnglerSubsystem extends Subsystem {
 //.005 P + D
 			@Override
 			public double pidGet() {
+				// Solution: return angler.getAnalogInRaw();
 				return Robot.rangeCheck(angler.getAnalogInRaw(), RobotMap.Collector.COLLECTOR_UP, RobotMap.Collector.COLLECTOR_DOWN);
 			}
 			
@@ -59,6 +63,10 @@ public class AnglerSubsystem extends Subsystem {
 
 			@Override
 			public void pidWrite(double output) {
+				
+				if(output < 0)
+					output -= .1;
+				
 				angler.set(output);
 			}
 			

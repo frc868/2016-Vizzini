@@ -167,6 +167,10 @@ public abstract class GyroSubsystem extends Subsystem {
 	public final double getLean() {
 		return gyroz.getAngle();
 	}
+	
+	public final double getRotationRadians() {
+		return Math.toRadians(getRotation());
+	}
 
 	/**
 	 * Returns a "nice" independent Gyro your can used in PID methods to track

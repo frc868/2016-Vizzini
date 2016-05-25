@@ -12,7 +12,7 @@ public class StopDrive extends Command {
 	}
 	@Override
 	protected void initialize() {
-		drive.setPower(0, 0);
+		drive.setRightLeftPower(0, 0);
 	}
 
 	@Override

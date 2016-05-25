@@ -12,16 +12,16 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DriveDistance extends Command implements PIDSource, PIDOutput {
 
-	private DriveSubsystem drive;
-	private double targetDist;
-	private PIDController pid;
-	private double lastPower;
-	private double minPower;
-	private boolean pidOnTarget;
-	private Boolean [] lightSensorReading;
+	protected DriveSubsystem drive;
+	protected double targetDist;
+	protected PIDController pid;
+	protected double lastPower;
+	protected double minPower;
+	protected boolean pidOnTarget;
+	protected Boolean [] lightSensorReading;
 	
-	private Double timeOut;
-	private int i;
+	protected Double timeOut;
+	protected int i;
 	
 	public DriveDistance(double dist) {
 		this(dist, 1);
@@ -98,7 +98,7 @@ public class DriveDistance extends Command implements PIDSource, PIDOutput {
 	@Override
 	protected void end() {
 		pid.disable();
-		drive.setPower(0, 0);
+		drive.setRightLeftPower(0, 0);
 		// TODO Auto-generated method stub
 
 	}

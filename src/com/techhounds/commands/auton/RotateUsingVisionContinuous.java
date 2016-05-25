@@ -80,7 +80,7 @@ public class RotateUsingVisionContinuous extends Command implements PIDSource, P
 				currTime = timeSinceInitialized();
 			}
 		while(true) {
-    		if(timeSinceInitialized() - currTime > .6) {
+    		if(timeSinceInitialized() - currTime > .8) {
 				setRotation = false;
 				currTime = null;
 				break;
