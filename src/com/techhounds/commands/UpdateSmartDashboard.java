@@ -26,7 +26,8 @@ public class UpdateSmartDashboard extends Command {
     }
 
     protected void execute() {
-    	if(timer.get() >= 0.3) {
+    	
+    	if(timer.get() >= 1/200.0) {
         	
     		ShooterSubsystem.getInstance().updateSmartDashboard();
     		//CollectorSubsystem.getInstance().updateSmartDashboard();
@@ -37,7 +38,8 @@ public class UpdateSmartDashboard extends Command {
     		OI.getInstance().updateDashboard();
     		GyroSubsystem.getInstance().updateSmartDashboard();
 	    	timer.reset();
-		}
+    	}
+    	
     }
 
     protected boolean isFinished() {

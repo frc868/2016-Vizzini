@@ -14,17 +14,37 @@ public class SetShooterSpeed extends Command {
 	private double speed;
 	private ShooterSubsystem shooter;
 	private int cnt;
+	private boolean useVision;
 	
     public SetShooterSpeed(double speed) {
     	this.speed = speed;
     	shooter = ShooterSubsystem.getInstance();
     	requires(shooter);
+    	this.useVision = false;
+   
+    }
+    
+    public SetShooterSpeed(boolean useVision) {
+    	this(69);
+    	this.useVision = useVision;
    
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	shooter.setSpeed(speed);
+    	
+    	if(useVision) {
+    		boolean outerworksShot = SmartDashboard.getBoolean("Outerworks Shot", false);
+    		
+    		if(outerworksShot) {
+    			shooter.setSpeed(71);
+    		} else {
+    			shooter.setSpeed(69);
+    		}
+    	} else {
+    		shooter.setSpeed(speed);
+    	}
+    	
     	cnt = 0;
     }
 
@@ -45,6 +65,7 @@ public class SetShooterSpeed extends Command {
     	if(shooter.onTarget()) {
     		if(currTime == null)
     			currTime = System.currentTimeMillis();
+    		
     		if(System.currentTimeMillis() - currTime > 1000) {
     			SmartDashboard.putNumber("Time To Get To Speed", timeSinceInitialized());
     			return true;
@@ -53,8 +74,8 @@ public class SetShooterSpeed extends Command {
     		currTime = null;
     	}
     	
-		return false;*/
-    }
+		return false;
+    */}
 
     // Called once after isFinished returns true
     protected void end() {

@@ -29,9 +29,9 @@ public class DriveWithPower extends Command {
     		// If Driver Turn is less than .25, then we will do magic ;)
     		// Driver has override over Operator for Turning
     		// 65% power for turning
-    		drive.setPower(OI.getInstance().getRightBackward(), OI.getInstance().getLeftBackward());
+    		drive.setRightLeftPower(OI.getInstance().getRightBackward(), OI.getInstance().getLeftBackward());
     	}else{
-    		drive.setPower(OI.getInstance().getRightForward(), OI.getInstance().getLeftForward());	
+    		drive.setRightLeftPower(OI.getInstance().getRightForward(), OI.getInstance().getLeftForward());	
     	}
     }
 

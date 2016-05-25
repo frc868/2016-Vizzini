@@ -26,8 +26,9 @@ public interface RobotMap {
 		final int COLLECTOR_PDP = 11;
 		
 		final double COLLECTOR_UP = 382 + 96;
-		final double COLLECTING = 643 + 96;
+		final double COLLECTING = 643 + 96 - 20;
 		final double COLLECTOR_DOWN = 732 + 96;
+		final double AUTON_COLLECTING = 670;
 	}
 	
 	interface Shooter{
@@ -59,6 +60,9 @@ public interface RobotMap {
 		final double MIN_TURN_POWER = .45;
 		final double MIN_STRAIGHT_POWER = .35;
 		final int LIGHT_THRESHOLD = 280;
+		
+		final double MAX_VELOCITY = 145;
+		final double MAX_ACCELERATION = 72.5;
 	}
 	
 	interface Ultrasonic {
@@ -95,17 +99,17 @@ public interface RobotMap {
 		//In inches, objective should be to cross a defense and end with wheels just past it, around 125 in.
 		//Standardized, back of robot is 74 in from front of defense.
 		
-		final double MOAT_SPEED					= .48;//DONE
-		final double MOAT_DISTANCE 				= 165 + 48 + 45;//DONE
+		final double MOAT_SPEED					= .6;//.48;//DONE
+		final double MOAT_DISTANCE 				= 165;// + 48; + 45;//DONE
 		
-		final double LOW_BAR_SPEED 				= .7;//DONE
+		final double LOW_BAR_SPEED 				= .8;//DONE
 		final double LOW_BAR_DISTANCE 			= 127.5 + 16 + 24 + 36 + 12;//DONE
 
 		final double RAMPARTS_SPEED 			= .55;//DONE
 		final double RAMPARTS_DISTANCE 			= 139.5 + 48;//DONE
 		
-		final double ROCK_WALL_SPEED 			= .5;//
-		final double ROCK_WALL_DISTANCE			= 143.5 + 48;//
+		final double ROCK_WALL_SPEED 			= .65;//
+		final double ROCK_WALL_DISTANCE			= 143.5 + 48 - 24;//
 		
 		final double ROUGH_TERRAIN_SPEED 		= .5;//SET
 		final double ROUGH_TERRAIN_DISTANCE 	= 139.5 + 48;//
@@ -119,7 +123,7 @@ public interface RobotMap {
 		
 		final double CDF_SPEED_1 				= .6;//before lowering CDF
 		final double CDF_SPEED_2 				= 1;//after
-		final double CDF_DISTANCE_1 			= 46 - 7;//before lowering CDF
+		final double CDF_DISTANCE_1 			= 46;//before lowering CDF
 		final double CDF_DISTANCE_2				= 130;//after
 		
 		final double TO_DEFENSE_SPEED			= .5;//DONE

@@ -63,7 +63,7 @@ public class DriveDistanceStraight extends Command implements PIDSource, PIDOutp
 		requires(drive);
 		pid = new PIDController(.025, 0, .004, this, this);
 		pid.setOutputRange(-Math.abs(max), Math.abs(max));
-		pid.setAbsoluteTolerance(1);
+		pid.setAbsoluteTolerance(2.5);
 		minPower = min;
 		this.targetDist = dist;
 		//SmartDashboard.putData("Drive distance pid", pid);
@@ -127,7 +127,7 @@ public class DriveDistanceStraight extends Command implements PIDSource, PIDOutp
 	@Override
 	protected void end() {
 		pid.disable();
-		drive.setPower(0, 0);
+		drive.setRightLeftPower(0, 0);
 		// TODO Auto-generated method stub
 
 	}
@@ -183,7 +183,8 @@ public class DriveDistanceStraight extends Command implements PIDSource, PIDOutp
 		offset *= Math.abs(output);
 		
 		lastPower = output;
-		drive.setPower(Robot.rangeCheck(output + offset), Robot.rangeCheck(output - offset));
+	
+		drive.setRightLeftPower(Robot.rangeCheck(output + offset), Robot.rangeCheck(output - offset));
 
 		// TODO Auto-generated method stub
 
