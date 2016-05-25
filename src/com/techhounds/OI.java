@@ -21,6 +21,7 @@ import com.techhounds.commands.auton.StopVisionRotate;
 import com.techhounds.commands.auton.VisionRotateToTarget;
 import com.techhounds.commands.collector.SetCollector;
 import com.techhounds.commands.collector.SetCollectorPower;
+import com.techhounds.commands.drive.AutoDriveTest;
 import com.techhounds.commands.drive.DriveDistance;
 import com.techhounds.commands.drive.DriveDistanceStraight;
 import com.techhounds.commands.drive.DriveEncodersReset;
@@ -275,6 +276,7 @@ public class OI {
 		SmartDashboard.putData("Auton Command", new RetrieveAuton());
 		SmartDashboard.putData("Enable Winch", new SetWinchEnable(RobotMap.Servo.WINCH_LOCK_IS_UP_DEFAULT));
 		SmartDashboard.putData("Disable Winch", new SetWinchEnable(RobotMap.Servo.WINCH_ENABLE_IS_UP_DEFAULT));
+		SmartDashboard.putData("Drive Curve", new AutoDriveTest());
 	}
 	
 	/**

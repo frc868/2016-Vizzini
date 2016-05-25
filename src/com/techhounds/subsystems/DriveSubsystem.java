@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import com.techhounds.PIDCalculator;
 import com.techhounds.Robot;
 import com.techhounds.RobotMap;
 import com.techhounds.commands.drive.DriveWithPower;
@@ -37,6 +38,9 @@ public class DriveSubsystem extends Subsystem{
 	
 	private PIDController gyroPID;
 	private PIDController drivePID;
+
+	private PIDCalculator gyroPIDCalc;
+	private PIDCalculator drivePIDCalc;
 	
 	private Encoder rightEncoder;
 	private Encoder leftEncoder;
@@ -98,13 +102,13 @@ public class DriveSubsystem extends Subsystem{
 		}
 		writer = new BufferedWriter(fw);
 		*/
-		driver_p = 0.0001;
+		driver_p = .025;
 		driver_i = 0;
-		driver_d = 0;
+		driver_d = .004;
 		
-		gyro_p = 0.0001;
+		gyro_p = 0.05;
 		gyro_i = 0;
-		gyro_d = 0;
+		gyro_d = 0.08;
 		
 		
 		
@@ -134,6 +138,9 @@ public class DriveSubsystem extends Subsystem{
 		
 		SmartDashboard.putData("Gyro PID", gyroPID);
 		SmartDashboard.putData("DRIVE SUBSYSTEM", this);
+		
+		gyroPIDCalc = new PIDCalculator(gyro_p, gyro_i, gyro_d);
+		drivePIDCalc = new PIDCalculator(driver_p, driver_i, driver_d);
 	}
 	
 	public static DriveSubsystem getInstance() {
@@ -179,8 +186,19 @@ public class DriveSubsystem extends Subsystem{
 	}
 	
 	public void setPower(double right, double left) {
-		this.left.set(left);
-		this.right.set(right);
+		this.left.set(Robot.rangeCheck(left));
+		this.right.set(Robot.rangeCheck(right));
+	}
+	
+	public void setPowerUsePIDCalc(double setPoint, double speed, double setAngle, double epsilon) {
+		double output = drivePIDCalc.calcPIDDrive(setPoint, countsToDist(getAvgDistance()), epsilon);
+    	double angle = gyroPIDCalc.calcPID(setAngle, -gyro.getRotation(), epsilon) * .5;
+    	
+    	SmartDashboard.putString("InputAngle", setPoint + " " + setAngle);
+    	SmartDashboard.putString("OutputAngle", output + " " + angle);
+    	setPower((output + angle) * 0.9, output * 0.9);
+    	//setPower((output) * speed, (output) * speed);
+    	//setPower((-output+angle)*speed,(output+angle)*speed);
 	}
 	
 	public double getLeftCurrent() {
@@ -289,7 +307,7 @@ public class DriveSubsystem extends Subsystem{
 		}
 		SmartDashboard.putNumber("Left Distance", getLeftDistance());
 		SmartDashboard.putNumber("Right Distance", getRightDistance());
-		SmartDashboard.putNumber("Avg Distance", getAvgDistance());
+		SmartDashboard.putNumber("Avg Distance", countsToDist(getAvgDistance()));
 
 		
 		SmartDashboard.putBoolean("DRIVING COLLECTOR FIRST", !isForward);
