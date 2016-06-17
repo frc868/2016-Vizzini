@@ -1,6 +1,6 @@
 package com.techhounds.frc2016.commands.shooter;
 
-import com.techhounds.frc2016.subsystems.ShooterSubsystem;
+import com.techhounds.frc2016.subsystems.Shooter;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -10,9 +10,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class SetShooterSpeedFromVision extends Command {
 
-	ShooterSubsystem shooter;
+	Shooter shooter;
     public SetShooterSpeedFromVision() {
-    	shooter = ShooterSubsystem.getInstance();//Doesn't require, just calls a new setShooterSpeed
+    	shooter = Shooter.getInstance();//Doesn't require, just calls a new setShooterSpeed
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }

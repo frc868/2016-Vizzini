@@ -28,7 +28,7 @@ public class UpdateSmartDashboard extends PeriodicCommand {
 	protected void doRun() {
 		HoundSubsystem.updateSubsystemsPeriodic();
 		OI.getInstance().updateDashboard();
-		GyroSubsystem.getInstance().updateSmartDashboard();
+		Gyro.getInstance().updateSmartDashboard();
 		
 	}
 

@@ -6,8 +6,8 @@ import com.techhounds.frc2016.commands.collector.SetCollectorPower;
 import com.techhounds.frc2016.commands.servos.ReleaseClimber;
 import com.techhounds.frc2016.commands.servos.SetWinchEnable;
 import com.techhounds.frc2016.commands.shooter.SetShooterPower;
-import com.techhounds.frc2016.subsystems.AnglerSubsystem;
-import com.techhounds.frc2016.subsystems.DriveSubsystem;
+import com.techhounds.frc2016.subsystems.Angler;
+import com.techhounds.frc2016.subsystems.Drive;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
@@ -29,8 +29,8 @@ public class MatchSetup extends CommandGroup {
     public void initialize() {
     	super.initialize();
 
-    	DriveSubsystem.isForward = false;
-    	AnglerSubsystem.getInstance().resetState();
+    	Drive.isForward = false;
+    	Angler.getInstance().resetState();
     	
     }
 }

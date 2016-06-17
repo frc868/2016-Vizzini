@@ -1,9 +1,9 @@
 package com.techhounds.frc2016.subsystems.controllers;
 
 import com.techhounds.frc2016.HardwareAdaptor;
-import com.techhounds.frc2016.subsystems.DriveSubsystem;
-import com.techhounds.frc2016.subsystems.DriveSubsystem.Controller;
-import com.techhounds.frc2016.subsystems.GyroSubsystem;
+import com.techhounds.frc2016.subsystems.Drive;
+import com.techhounds.frc2016.subsystems.Drive.Controller;
+import com.techhounds.frc2016.subsystems.Gyro;
 import com.techhounds.lib.util.DriveSignal;
 import com.techhounds.lib.util.HoundMath;
 import com.techhounds.lib.util.SynchronousPID;
@@ -18,8 +18,8 @@ public class DriveStraightController implements Controller {
 	private double initAngle;
 	private boolean firstCall = true;
 	
-	private DriveSubsystem drive = HardwareAdaptor.kDriveSubsystem;
-	private GyroSubsystem gyro = HardwareAdaptor.kGyroSubsystem;
+	private Drive drive = HardwareAdaptor.kDriveSubsystem;
+	private Gyro gyro = HardwareAdaptor.kGyroSubsystem;
 	
 	private SynchronousPID pidControl = new SynchronousPID(Kp, Ki, Kd);
 

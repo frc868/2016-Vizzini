@@ -1,6 +1,6 @@
 package com.techhounds.frc2016.commands.drive_legacy;
 
-import com.techhounds.frc2016.subsystems.DriveSubsystem;
+import com.techhounds.frc2016.subsystems.Drive;
 
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class DriveWithSpeed extends Command {
-	DriveSubsystem drive;
+	Drive drive;
 	double speed;
 
 	private PIDController leftPID;
@@ -24,7 +24,7 @@ public class DriveWithSpeed extends Command {
 	public DriveWithSpeed(double speed) {
 		this.speed = speed;
 	
-		drive = DriveSubsystem.getInstance();
+		drive = Drive.getInstance();
 		requires(drive);
 	
 		leftPID = new PIDController(LEFT_Kp, LEFT_Ki, LEFT_Kd , new SpeedData(true), new SpeedData(true));

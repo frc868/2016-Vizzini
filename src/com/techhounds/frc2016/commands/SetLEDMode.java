@@ -1,11 +1,11 @@
 package com.techhounds.frc2016.commands;
 
 import com.techhounds.frc2016.HardwareAdaptor;
-import com.techhounds.frc2016.subsystems.BeamBreakSubsystem;
-import com.techhounds.frc2016.subsystems.DriveSubsystem;
-import com.techhounds.frc2016.subsystems.LEDSubsystem;
-import com.techhounds.frc2016.subsystems.ShooterSubsystem;
-import com.techhounds.frc2016.subsystems.LEDSubsystem.LEDMode;
+import com.techhounds.frc2016.subsystems.BeamBreak;
+import com.techhounds.frc2016.subsystems.Drive;
+import com.techhounds.frc2016.subsystems.LED;
+import com.techhounds.frc2016.subsystems.Shooter;
+import com.techhounds.frc2016.subsystems.LED.LEDMode;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -14,17 +14,17 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class SetLEDMode extends Command {
 	
-	private LEDSubsystem led;
+	private LED led;
 	private LEDMode state;
-	private ShooterSubsystem shooter;
-	private BeamBreakSubsystem beam;
-	private DriveSubsystem drive;
+	private Shooter shooter;
+	private BeamBreak beam;
+	private Drive drive;
 
     public SetLEDMode() {
-        shooter = ShooterSubsystem.getInstance();
-        drive = DriveSubsystem.getInstance();
-        beam = BeamBreakSubsystem.getInstance();
-        requires(led = LEDSubsystem.getInstance());
+        shooter = Shooter.getInstance();
+        drive = Drive.getInstance();
+        beam = BeamBreak.getInstance();
+        requires(led = LED.getInstance());
     }
 
     // Called just before this Command runs the first time

@@ -4,15 +4,15 @@ import com.techhounds.lib.util.HoundSubsystem;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class VisionSubsystem extends HoundSubsystem{
+public class Vision extends HoundSubsystem{
 
-	private static VisionSubsystem instance;
+	private static Vision instance;
 	
-	private VisionSubsystem(){
+	private Vision(){
 	}
 	
-	public static VisionSubsystem getInstance() {
-		return instance == null ? instance = new VisionSubsystem() : instance;
+	public static Vision getInstance() {
+		return instance == null ? instance = new Vision() : instance;
 	}
 	
 	public double getDistanceFromBase(){

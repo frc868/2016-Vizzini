@@ -1,6 +1,6 @@
 package com.techhounds.frc2016.commands.drive_legacy;
 
-import com.techhounds.frc2016.subsystems.DriveSubsystem;
+import com.techhounds.frc2016.subsystems.Drive;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -9,10 +9,10 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class DriveEncodersReset extends Command {
 	
-	public DriveSubsystem drive;
+	public Drive drive;
 
     public DriveEncodersReset() {
-    	drive = DriveSubsystem.getInstance();
+    	drive = Drive.getInstance();
     	requires(drive);
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);

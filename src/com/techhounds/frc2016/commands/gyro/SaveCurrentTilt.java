@@ -1,6 +1,6 @@
 package com.techhounds.frc2016.commands.gyro;
 
-import com.techhounds.frc2016.subsystems.GyroSubsystem;
+import com.techhounds.frc2016.subsystems.Gyro;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -9,10 +9,10 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class SaveCurrentTilt extends Command {
 	
-	private GyroSubsystem gyro;
+	private Gyro gyro;
 
     public SaveCurrentTilt() {
-    	gyro = GyroSubsystem.getInstance();
+    	gyro = Gyro.getInstance();
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }

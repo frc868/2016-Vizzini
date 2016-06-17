@@ -2,7 +2,7 @@ package com.techhounds.frc2016.commands.angler;
 
 import com.techhounds.frc2016.HardwareAdaptor;
 import com.techhounds.frc2016.HardwareConstants;
-import com.techhounds.frc2016.subsystems.AnglerSubsystem;
+import com.techhounds.frc2016.subsystems.Angler;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class SetStateUp extends Command {
 	
-	private final AnglerSubsystem angler = HardwareAdaptor.kAnglerSubsystem;
+	private final Angler angler = HardwareAdaptor.kAnglerSubsystem;
 
     protected void initialize() {
     	angler.increaseState();

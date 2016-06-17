@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.DigitalOutput;
 /**
  *
  */
-public class LEDSubsystem extends HoundSubsystem {
+public class LED extends HoundSubsystem {
 
 	private DigitalOutput 
 		led_1 = HardwareAdaptor.kLED_1, 
@@ -20,9 +20,9 @@ public class LEDSubsystem extends HoundSubsystem {
 		FORWARDUP, REVERSEUP, FORWARDDOWN, REVERSEDOWN
 	}
 	
-	public static LEDSubsystem instance;
+	public static LED instance;
 	
-	private LEDSubsystem(){
+	private LED(){
 	}
 	
 	public void set(boolean state, boolean state2){
@@ -38,8 +38,8 @@ public class LEDSubsystem extends HoundSubsystem {
     	setDefaultCommand(new SetLEDMode());
     }
     
-    public static LEDSubsystem getInstance() {
-    	return instance == null ? instance = new LEDSubsystem() : instance;
+    public static LED getInstance() {
+    	return instance == null ? instance = new LED() : instance;
     }
 
 	@Override

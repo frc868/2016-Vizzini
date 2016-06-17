@@ -7,43 +7,43 @@ import com.techhounds.lib.util.HoundSubsystem;
 
 import edu.wpi.first.wpilibj.Servo;
 
-public class ServoSubsystem extends HoundSubsystem {
+public class Servos extends HoundSubsystem {
     
 	private Servo servo;
 	private double min, max;
 	
-	private static ServoSubsystem 
+	private static Servos 
 		instance_winch_dt_to_arm, 
 		instance_winch_lock,
 		instance_scissor_one;
 	
-	public ServoSubsystem(int port){
+	public Servos(int port){
 		this(port, 0, 1);
 	}
 	
-	public ServoSubsystem(int port, double min, double max) {
+	public Servos(int port, double min, double max) {
 		this(new ServoInfo(new Servo(port), min, max));
 	}
 	
-	public ServoSubsystem(ServoInfo servoInfo) {
+	public Servos(ServoInfo servoInfo) {
 		servo = servoInfo.servo;
 		min = servoInfo.min;
 		max = servoInfo.max;
 	}
 	
-	public static ServoSubsystem getWinchDT_TO_ARM(){
+	public static Servos getWinchDT_TO_ARM(){
 		return instance_winch_dt_to_arm == null ? instance_winch_dt_to_arm = 
-				new ServoSubsystem(HardwareAdaptor.kWinch_DT_TO_ARM) : instance_winch_dt_to_arm;
+				new Servos(HardwareAdaptor.kWinch_DT_TO_ARM) : instance_winch_dt_to_arm;
 	}
 	
-	public static ServoSubsystem getWinchLock(){
+	public static Servos getWinchLock(){
 		return instance_winch_lock == null ? instance_winch_lock = 
-				new ServoSubsystem(HardwareAdaptor.kWinch_Lock) : instance_winch_lock;
+				new Servos(HardwareAdaptor.kWinch_Lock) : instance_winch_lock;
 	}
 	
-	public static ServoSubsystem getScissorOne(){
+	public static Servos getScissorOne(){
 		return instance_scissor_one == null ? instance_scissor_one = 
-				new ServoSubsystem(HardwareAdaptor.kRelease) : instance_scissor_one;
+				new Servos(HardwareAdaptor.kRelease) : instance_scissor_one;
 	}
 	
 	public void setPosition(double position) {

@@ -2,7 +2,7 @@ package com.techhounds.frc2016.commands;
 
 import com.techhounds.frc2016.HardwareConstants;
 import com.techhounds.frc2016.commands.servos.ReleaseClimber;
-import com.techhounds.frc2016.subsystems.AnglerSubsystem;
+import com.techhounds.frc2016.subsystems.Angler;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
@@ -26,7 +26,7 @@ public class SetEndGame extends CommandGroup {
     @Override
     public void initialize() {
     	dontDoEndGame = false;
-    	if(AnglerSubsystem.getInstance().getRawPosition() != HardwareConstants.Angler.COLLECT) {
+    	if(Angler.getInstance().getRawPosition() != HardwareConstants.Angler.COLLECT) {
     		dontDoEndGame = true;
     		return;
     	}

@@ -1,7 +1,7 @@
 package com.techhounds.frc2016.commands.drive_legacy;
 
-import com.techhounds.frc2016.subsystems.DriveSubsystem;
-import com.techhounds.frc2016.subsystems.GyroSubsystem;
+import com.techhounds.frc2016.subsystems.Drive;
+import com.techhounds.frc2016.subsystems.Gyro;
 import com.techhounds.lib.util.HoundMath;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -10,8 +10,8 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class DriveUntilTiltPatternWithPower extends CommandGroup {
 
 	private Command tiltCommand;
-	private DriveSubsystem drive;
-	private GyroSubsystem gyro;
+	private Drive drive;
+	private Gyro gyro;
 	
 	private double power;
 	private Double initAngle;
@@ -27,8 +27,8 @@ public class DriveUntilTiltPatternWithPower extends CommandGroup {
 					CheckForTiltPattern.DEFENSE_CROSS_TIMEOUTS, 5));
 		}
 		
-		requires(drive = DriveSubsystem.getInstance());
-		gyro = GyroSubsystem.getInstance();
+		requires(drive = Drive.getInstance());
+		gyro = Gyro.getInstance();
 		this.power = power;
 	}
 	
@@ -42,8 +42,8 @@ public class DriveUntilTiltPatternWithPower extends CommandGroup {
 					CheckForTiltPattern.DEFENSE_CROSS_TIMEOUTS, angleThreshold));
 		}
 		
-		requires(drive = DriveSubsystem.getInstance());
-		gyro = GyroSubsystem.getInstance();
+		requires(drive = Drive.getInstance());
+		gyro = Gyro.getInstance();
 		this.power = power;
 		this.useSaveAngle = useSaveAngle;
 	}
@@ -54,23 +54,23 @@ public class DriveUntilTiltPatternWithPower extends CommandGroup {
 
 	public DriveUntilTiltPatternWithPower(double power, CheckForTiltPattern.Motion [] motion, Double [] timeout) {
 		addParallel(tiltCommand = new CheckForTiltPattern(motion, timeout, 5));
-		requires(drive = DriveSubsystem.getInstance());		
-		gyro = GyroSubsystem.getInstance();
+		requires(drive = Drive.getInstance());		
+		gyro = Gyro.getInstance();
 		this.power = power;
 	}
 	
 	public DriveUntilTiltPatternWithPower(double power, CheckForTiltPattern.Motion [] motion, Double [] timeout, boolean useSaveAngle) {
 		addParallel(tiltCommand = new CheckForTiltPattern(motion, timeout, 5));
-		requires(drive = DriveSubsystem.getInstance());		
-		gyro = GyroSubsystem.getInstance();
+		requires(drive = Drive.getInstance());		
+		gyro = Gyro.getInstance();
 		this.power = power;
 		this.useSaveAngle = useSaveAngle;
 	}
 	
 	public DriveUntilTiltPatternWithPower(double power, CheckForTiltPattern.Motion [] motion, Double [] timeout, double angleThreshold) {
 		addParallel(tiltCommand = new CheckForTiltPattern(motion, timeout, angleThreshold));
-		requires(drive = DriveSubsystem.getInstance());
-		gyro = GyroSubsystem.getInstance();
+		requires(drive = Drive.getInstance());
+		gyro = Gyro.getInstance();
 		this.power = power;
 	}
 	

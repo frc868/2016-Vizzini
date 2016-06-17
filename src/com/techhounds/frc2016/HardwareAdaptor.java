@@ -1,16 +1,16 @@
 package com.techhounds.frc2016;
 
 import com.techhounds.frc2016.commands.auton.AutonChooser;
-import com.techhounds.frc2016.subsystems.AnglerSubsystem;
-import com.techhounds.frc2016.subsystems.BeamBreakSubsystem;
-import com.techhounds.frc2016.subsystems.CollectorSubsystem;
-import com.techhounds.frc2016.subsystems.DriveSubsystem;
-import com.techhounds.frc2016.subsystems.FlashlightSubsystem;
-import com.techhounds.frc2016.subsystems.GyroSubsystem;
-import com.techhounds.frc2016.subsystems.LEDSubsystem;
-import com.techhounds.frc2016.subsystems.ServoSubsystem;
-import com.techhounds.frc2016.subsystems.ShooterSubsystem;
-import com.techhounds.frc2016.subsystems.VisionSubsystem;
+import com.techhounds.frc2016.subsystems.Angler;
+import com.techhounds.frc2016.subsystems.BeamBreak;
+import com.techhounds.frc2016.subsystems.Collector;
+import com.techhounds.frc2016.subsystems.Drive;
+import com.techhounds.frc2016.subsystems.Flashlight;
+import com.techhounds.frc2016.subsystems.Gyro;
+import com.techhounds.frc2016.subsystems.LED;
+import com.techhounds.frc2016.subsystems.Servos;
+import com.techhounds.frc2016.subsystems.Shooter;
+import com.techhounds.frc2016.subsystems.Vision;
 import com.techhounds.lib.util.HoundSpeedController;
 import com.techhounds.lib.util.HoundSubsystem;
 
@@ -82,18 +82,18 @@ public class HardwareAdaptor {
 		kLED_COLLECTOR = new DigitalOutput(HardwareMap.LED.DIO_COLLECTOR);
 	
 	// Subsystems
-	public static final AnglerSubsystem kAnglerSubsystem = AnglerSubsystem.getInstance();
-	public static final BeamBreakSubsystem kBeamBreakSubsystem = BeamBreakSubsystem.getInstance();
-	public static final CollectorSubsystem kCollectorSubsystem = CollectorSubsystem.getInstance();
-	public static final DriveSubsystem kDriveSubsystem = DriveSubsystem.getInstance();
-	public static final GyroSubsystem kGyroSubsystem = GyroSubsystem.getInstance();
-	public static final FlashlightSubsystem kFlashlightSubsystem = FlashlightSubsystem.getInstance();
-	public static final LEDSubsystem kLEDSubsystem = LEDSubsystem.getInstance();
-	public static final ServoSubsystem kServo_WINCH_ENB = ServoSubsystem.getWinchDT_TO_ARM();
-	public static final ServoSubsystem kServo_WINCH_LOC = ServoSubsystem.getWinchLock();
-	public static final ServoSubsystem kServo_RELEASE = ServoSubsystem.getScissorOne();
-	public static final ShooterSubsystem kShooterSubsystem = ShooterSubsystem.getInstance();
-	public static final VisionSubsystem kVisionSubsystem = VisionSubsystem.getInstance();
+	public static final Angler kAnglerSubsystem = Angler.getInstance();
+	public static final BeamBreak kBeamBreakSubsystem = BeamBreak.getInstance();
+	public static final Collector kCollectorSubsystem = Collector.getInstance();
+	public static final Drive kDriveSubsystem = Drive.getInstance();
+	public static final Gyro kGyroSubsystem = Gyro.getInstance();
+	public static final Flashlight kFlashlightSubsystem = Flashlight.getInstance();
+	public static final LED kLEDSubsystem = LED.getInstance();
+	public static final Servos kServo_WINCH_ENB = Servos.getWinchDT_TO_ARM();
+	public static final Servos kServo_WINCH_LOC = Servos.getWinchLock();
+	public static final Servos kServo_RELEASE = Servos.getScissorOne();
+	public static final Shooter kShooterSubsystem = Shooter.getInstance();
+	public static final Vision kVisionSubsystem = Vision.getInstance();
 	
 	// Power Distribution Panel
 	public static final PowerDistributionPanel kPDP = new PowerDistributionPanel();

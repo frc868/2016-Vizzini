@@ -1,7 +1,7 @@
 package com.techhounds.frc2016.commands.drive;
 
 import com.techhounds.frc2016.HardwareAdaptor;
-import com.techhounds.frc2016.subsystems.DriveSubsystem;
+import com.techhounds.frc2016.subsystems.Drive;
 import com.techhounds.frc2016.subsystems.controllers.DriveStraightController;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class DriveStraight extends Command {
 
 	private DriveStraightController m_controller = new DriveStraightController();
-	private DriveSubsystem drive;
+	private Drive drive;
 	
 	private double distance;
 	private static double DRIVE_STRAIGHT_TOL = 2.5;

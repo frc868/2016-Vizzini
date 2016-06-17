@@ -1,7 +1,7 @@
 package com.techhounds.frc2016.commands.drive;
 
 import com.techhounds.frc2016.HardwareAdaptor;
-import com.techhounds.frc2016.subsystems.DriveSubsystem;
+import com.techhounds.frc2016.subsystems.Drive;
 import com.techhounds.frc2016.subsystems.controllers.DriveStraightController;
 import com.techhounds.frc2016.subsystems.controllers.TurnInPlaceController;
 
@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class TurnInPlace extends Command {
 
 	private TurnInPlaceController m_controller = new TurnInPlaceController();
-	private DriveSubsystem drive;
+	private Drive drive;
 	
 	private double degrees;
 	private static double GYRO_TOL = 1.0;

@@ -8,17 +8,17 @@ import edu.wpi.first.wpilibj.Relay;
 /**
  *
  */
-public class FlashlightSubsystem extends HoundSubsystem {
+public class Flashlight extends HoundSubsystem {
    
 	private Relay flashlight = HardwareAdaptor.kFlashlight;
-	private static FlashlightSubsystem instance;
+	private static Flashlight instance;
 	
-	private FlashlightSubsystem(){
+	private Flashlight(){
 		flashlight.setDirection(Relay.Direction.kForward);
 	}
 	
-	public static FlashlightSubsystem getInstance()  {
-		return instance == null ? instance = new FlashlightSubsystem() : instance;
+	public static Flashlight getInstance()  {
+		return instance == null ? instance = new Flashlight() : instance;
 	}
 	
 	public void on(){

@@ -1,6 +1,6 @@
 package com.techhounds.frc2016.commands.drive_legacy;
 
-import com.techhounds.frc2016.subsystems.DriveSubsystem;
+import com.techhounds.frc2016.subsystems.Drive;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -11,10 +11,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class RunWinch extends Command {
 
     String label;
-    DriveSubsystem drive;
+    Drive drive;
 	public RunWinch(String label, double defaultValue) {
 		
-		drive = DriveSubsystem.getInstance();
+		drive = Drive.getInstance();
     	this.label = label;
     	SmartDashboard.putNumber(label, defaultValue);
     	requires(drive);

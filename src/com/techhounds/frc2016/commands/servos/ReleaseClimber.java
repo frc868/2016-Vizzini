@@ -1,6 +1,6 @@
 package com.techhounds.frc2016.commands.servos;
 
-import com.techhounds.frc2016.subsystems.ServoSubsystem;
+import com.techhounds.frc2016.subsystems.Servos;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -9,18 +9,18 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class ReleaseClimber extends Command {
 	
-	private ServoSubsystem scissorOne;
+	private Servos scissorOne;
 	
 	private boolean setMax;
 
     public ReleaseClimber() {
-    	this(ServoSubsystem.getScissorOne().getIsMax());
+    	this(Servos.getScissorOne().getIsMax());
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }
     
     public ReleaseClimber(boolean setMax){
-    	scissorOne = ServoSubsystem.getScissorOne();
+    	scissorOne = Servos.getScissorOne();
     	requires(scissorOne);
     	this.setMax = setMax;
     }

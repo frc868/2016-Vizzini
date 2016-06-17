@@ -1,8 +1,8 @@
 package com.techhounds.frc2016.commands.auton;
 
 import com.techhounds.frc2016.HardwareConstants;
-import com.techhounds.frc2016.subsystems.DriveSubsystem;
-import com.techhounds.frc2016.subsystems.GyroSubsystem;
+import com.techhounds.frc2016.subsystems.Drive;
+import com.techhounds.frc2016.subsystems.Gyro;
 
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
@@ -17,8 +17,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class RotateUsingVisionContinuous extends Command implements PIDSource, PIDOutput {
 
 	private static double p = .1/*.05*/, i = 0, d = .12;//.08;
-	protected DriveSubsystem drive;
-	protected GyroSubsystem gyro;
+	protected Drive drive;
+	protected Gyro gyro;
 	private PIDController pid;
 	private double angle;
 	private Double timeOut;
@@ -38,8 +38,8 @@ public class RotateUsingVisionContinuous extends Command implements PIDSource, P
 	 * @param angle, in degrees, positive for clockwise, negative for counter-clockwise.
 	 */
     public RotateUsingVisionContinuous() {
-    	gyro = GyroSubsystem.getInstance();
-    	drive = DriveSubsystem.getInstance();
+    	gyro = Gyro.getInstance();
+    	drive = Drive.getInstance();
     	requires(drive);
     	pid = new PIDController(p, i, d, this, this);
     	if(DEBUG){

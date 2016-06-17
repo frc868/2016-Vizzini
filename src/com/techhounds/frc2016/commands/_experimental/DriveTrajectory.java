@@ -1,8 +1,8 @@
 package com.techhounds.frc2016.commands._experimental;
 
 import com.techhounds.frc2016.ProfileGenerator;
-import com.techhounds.frc2016.subsystems.DriveSubsystem;
-import com.techhounds.frc2016.subsystems.GyroSubsystem;
+import com.techhounds.frc2016.subsystems.Drive;
+import com.techhounds.frc2016.subsystems.Gyro;
 import com.techhounds.lib.trajectory.Trajectory;
 import com.techhounds.lib.trajectory.TrajectoryFollower;
 import com.techhounds.lib.trajectory.TrajectoryPair;
@@ -11,8 +11,8 @@ import com.techhounds.lib.util.PeriodicCommand;
 
 public class DriveTrajectory extends PeriodicCommand {
 
-	private DriveSubsystem drive = DriveSubsystem.getInstance();//RobotAdaptor.kDriveSubsystem;
-	private GyroSubsystem gyro = GyroSubsystem.getInstance();//RobotAdaptor.kGyroSubsystem;
+	private Drive drive = Drive.getInstance();//RobotAdaptor.kDriveSubsystem;
+	private Gyro gyro = Gyro.getInstance();//RobotAdaptor.kGyroSubsystem;
 	
 	private TrajectoryFollower leftFollower, rightFollower;
 	
@@ -78,7 +78,7 @@ public class DriveTrajectory extends PeriodicCommand {
         rightFollower.setGains(Kp, Ki, Kd, Kv, Ka);
         
         drive.resetEncoders();
-        currHeading = GyroSubsystem.getInstance().getRotation();
+        currHeading = Gyro.getInstance().getRotation();
 	}
 
 	@Override

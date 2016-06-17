@@ -1,7 +1,7 @@
 package com.techhounds.frc2016.commands.shooter;
 
 import com.techhounds.frc2016.commands.SetRumble;
-import com.techhounds.frc2016.subsystems.ShooterSubsystem;
+import com.techhounds.frc2016.subsystems.Shooter;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -12,13 +12,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class SetShooterSpeed extends Command {
 
 	private double speed;
-	private ShooterSubsystem shooter;
+	private Shooter shooter;
 	private int cnt;
 	private boolean useVision;
 	
     public SetShooterSpeed(double speed) {
     	this.speed = speed;
-    	shooter = ShooterSubsystem.getInstance();
+    	shooter = Shooter.getInstance();
     	requires(shooter);
     	this.useVision = false;
    

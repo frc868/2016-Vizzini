@@ -9,12 +9,12 @@ import com.techhounds.lib.util.HoundSubsystem;
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class CollectorSubsystem extends HoundSubsystem {
+public class Collector extends HoundSubsystem {
 
-	private static CollectorSubsystem instance;
+	private static Collector instance;
 	private CANTalon motor = HardwareAdaptor.kMotor_Collector;
 	
-	private CollectorSubsystem() {
+	private Collector() {
 		motor.setInverted(getInverted());
 		motor.enableBrakeMode(true);
 	}
@@ -54,8 +54,8 @@ public class CollectorSubsystem extends HoundSubsystem {
 		SmartDashboard.putNumber("Collector Current", getCurrent());
 	}
 	
-	public static CollectorSubsystem getInstance() {
-		return instance == null ? instance = new CollectorSubsystem() : instance;
+	public static Collector getInstance() {
+		return instance == null ? instance = new Collector() : instance;
 	}
 
 	protected void initDefaultCommand() {

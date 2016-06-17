@@ -1,12 +1,12 @@
 package com.techhounds.frc2016.commands.shooter;
 
-import com.techhounds.frc2016.subsystems.ShooterSubsystem;
+import com.techhounds.frc2016.subsystems.Shooter;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 public class WaitForShooterReady extends Command {
 
-	private ShooterSubsystem shooter;
+	private Shooter shooter;
 	private Double timeout;
 	private Integer useCount;
 	private double cnt;
@@ -17,7 +17,7 @@ public class WaitForShooterReady extends Command {
 	}
 	
 	public WaitForShooterReady(double timeout) {
-		shooter = ShooterSubsystem.getInstance();
+		shooter = Shooter.getInstance();
 		this.timeout = timeout;
 	}
 	

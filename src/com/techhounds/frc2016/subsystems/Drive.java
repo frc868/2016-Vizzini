@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.BuiltInAccelerometer;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class DriveSubsystem extends HoundSubsystem implements Updateable {
+public class Drive extends HoundSubsystem implements Updateable {
 	
 	private HoundSpeedController leftMotor = HardwareAdaptor.kMotor_DriveLeft;
 	private HoundSpeedController rightMotor = HardwareAdaptor.kMotor_DriveRight;
@@ -39,9 +39,9 @@ public class DriveSubsystem extends HoundSubsystem implements Updateable {
 		//PERCENT_TOLERANCE = 0.1,
 		COUNTS_TO_DISTANCE = 0.0393686;
 	
-	private static DriveSubsystem instance;
+	private static Drive instance;
 	
-	private DriveSubsystem() {	
+	private Drive() {	
 		leftMotor.setInverted(HardwareConstants.Drive.LEFT_INVERTED);
 		rightMotor.setInverted(HardwareConstants.Drive.RIGHT_INVERTED);
 		
@@ -49,8 +49,8 @@ public class DriveSubsystem extends HoundSubsystem implements Updateable {
 		rightEncoder.setDistancePerPulse(COUNTS_TO_DISTANCE);
 	}
 	
-	public static DriveSubsystem getInstance() {
-		return instance == null ? instance = new DriveSubsystem() : instance;
+	public static Drive getInstance() {
+		return instance == null ? instance = new Drive() : instance;
 	}
 	
 	public double getAccerometerX() {

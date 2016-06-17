@@ -1,6 +1,6 @@
 package com.techhounds.frc2016.commands.servos;
 
-import com.techhounds.frc2016.subsystems.ServoSubsystem;
+import com.techhounds.frc2016.subsystems.Servos;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -9,19 +9,19 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class SetWinchLock extends Command {
 	
-	private ServoSubsystem winchLock;
+	private Servos winchLock;
 	
 	private boolean setMax;
 	
     public SetWinchLock() {
-    	this(!ServoSubsystem.getWinchLock().getIsMax());
+    	this(!Servos.getWinchLock().getIsMax());
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }
     
     public SetWinchLock(boolean setMax) {
     	this.setRunWhenDisabled(true);
-    	winchLock = ServoSubsystem.getWinchLock();
+    	winchLock = Servos.getWinchLock();
     	requires(winchLock);
     	this.setMax = setMax;
     }

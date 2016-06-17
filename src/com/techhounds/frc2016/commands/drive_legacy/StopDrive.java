@@ -1,14 +1,14 @@
 package com.techhounds.frc2016.commands.drive_legacy;
-import com.techhounds.frc2016.subsystems.DriveSubsystem;
+import com.techhounds.frc2016.subsystems.Drive;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 public class StopDrive extends Command {
 
-	private DriveSubsystem drive;
+	private Drive drive;
 	
 	public StopDrive() {
-		requires(drive = DriveSubsystem.getInstance());
+		requires(drive = Drive.getInstance());
 	}
 	@Override
 	protected void initialize() {

@@ -1,6 +1,6 @@
 package com.techhounds.frc2016.commands.gyro;
 
-import com.techhounds.frc2016.subsystems.GyroSubsystem;
+import com.techhounds.frc2016.subsystems.Gyro;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.WaitCommand;
@@ -13,12 +13,12 @@ public class RotateToPreviousAngle extends Command {
 	//This command will return the angle stored in the GyroSubsystem, defaults to zero, and an offset angle can be added,
 	//to simplify rotation commands
 	
-	private GyroSubsystem gyro;
+	private Gyro gyro;
 	private double offset = 0;
 	private Command command;
 	
     public RotateToPreviousAngle() {
-    	gyro = GyroSubsystem.getInstance();
+    	gyro = Gyro.getInstance();
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }

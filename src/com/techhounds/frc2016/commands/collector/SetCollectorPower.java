@@ -1,7 +1,7 @@
 package com.techhounds.frc2016.commands.collector;
 
-import com.techhounds.frc2016.subsystems.BeamBreakSubsystem;
-import com.techhounds.frc2016.subsystems.CollectorSubsystem;
+import com.techhounds.frc2016.subsystems.BeamBreak;
+import com.techhounds.frc2016.subsystems.Collector;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -10,8 +10,8 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class SetCollectorPower extends Command {
 	
-	private CollectorSubsystem collect;
-	private BeamBreakSubsystem beam;
+	private Collector collect;
+	private BeamBreak beam;
 	private boolean isShooting;
 	private boolean timeOut = false;
 	
@@ -27,8 +27,8 @@ public class SetCollectorPower extends Command {
     	
     }
     public SetCollectorPower(double power, boolean isShooting){
-     	collect = CollectorSubsystem.getInstance();
-    	beam = BeamBreakSubsystem.getInstance();
+     	collect = Collector.getInstance();
+    	beam = BeamBreak.getInstance();
     	
     	requires(collect);
     	this.power = -power;

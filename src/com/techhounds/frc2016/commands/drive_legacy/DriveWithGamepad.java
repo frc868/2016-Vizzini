@@ -5,7 +5,7 @@ import java.io.PrintWriter;
 
 import com.techhounds.frc2016.OI;
 import com.techhounds.frc2016.HardwareAdaptor;
-import com.techhounds.frc2016.subsystems.DriveSubsystem;
+import com.techhounds.frc2016.subsystems.Drive;
 import com.techhounds.lib.util.PeriodicCommand;
 
 import edu.wpi.first.wpilibj.Timer;
@@ -15,12 +15,12 @@ import edu.wpi.first.wpilibj.Timer;
  */
 public class DriveWithGamepad extends PeriodicCommand {
 	
-	DriveSubsystem drive;
+	Drive drive;
 	PrintWriter toFileLeft;
 	double initTime;
 
     public DriveWithGamepad() {
-    	requires(drive = DriveSubsystem.getInstance());
+    	requires(drive = Drive.getInstance());
     }
     
     protected void end() {
@@ -47,7 +47,7 @@ public class DriveWithGamepad extends PeriodicCommand {
 	@Override
 	protected void doRun() {
 
-    	if(DriveSubsystem.isForward){
+    	if(Drive.isForward){
     		// If Driver Turn is less than .25, then we will do magic ;)
     		// Driver has override over Operator for Turning
     		// 65% power for turning

@@ -1,6 +1,6 @@
 package com.techhounds.frc2016.commands.gyro;
 
-import com.techhounds.frc2016.subsystems.GyroSubsystem;
+import com.techhounds.frc2016.subsystems.Gyro;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -19,7 +19,7 @@ public class ResetGyro extends Command {
 	@Override
 	protected void initialize() {
 		
-		GyroSubsystem instance = GyroSubsystem.getInstance();
+		Gyro instance = Gyro.getInstance();
 		
 		if(direction == Direction.TILT)
 			instance.gyroy = instance.createTiltGyro();

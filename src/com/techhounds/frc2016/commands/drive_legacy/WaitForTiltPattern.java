@@ -1,6 +1,6 @@
 package com.techhounds.frc2016.commands.drive_legacy;
 
-import com.techhounds.frc2016.subsystems.GyroSubsystem;
+import com.techhounds.frc2016.subsystems.Gyro;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -9,7 +9,7 @@ public class WaitForTiltPattern extends Command {
 	private Motion [] pattern;
 	private Double [] timeout;
 	
-	private GyroSubsystem gyro;
+	private Gyro gyro;
 	private int i;
 	private double angleThreshold;
 	
@@ -46,7 +46,7 @@ public class WaitForTiltPattern extends Command {
 		
 		this.timeout = timeout;
 		this.angleThreshold = angleThreshold;
-		gyro = GyroSubsystem.getInstance();
+		gyro = Gyro.getInstance();
 	}
 	
 	@Override

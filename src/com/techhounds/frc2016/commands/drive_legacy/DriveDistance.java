@@ -1,7 +1,7 @@
 package com.techhounds.frc2016.commands.drive_legacy;
 
 import com.techhounds.frc2016.HardwareConstants;
-import com.techhounds.frc2016.subsystems.DriveSubsystem;
+import com.techhounds.frc2016.subsystems.Drive;
 
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DriveDistance extends Command implements PIDSource, PIDOutput {
 
-	protected DriveSubsystem drive;
+	protected Drive drive;
 	protected double targetDist;
 	protected PIDController pid;
 	protected double lastPower;
@@ -36,7 +36,7 @@ public class DriveDistance extends Command implements PIDSource, PIDOutput {
 	}
 
 	public DriveDistance(double dist, double max, double min) {
-		drive = DriveSubsystem.getInstance();
+		drive = Drive.getInstance();
 		requires(drive);
 		pid = new PIDController(.025, 0, .004, this, this);
 		pid.setOutputRange(-Math.abs(max), Math.abs(max));

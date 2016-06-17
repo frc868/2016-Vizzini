@@ -34,7 +34,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 // Please do note that the Y gyro may currently be inverted, if so please change the value to true on line 185.
 
-public abstract class GyroSubsystem extends HoundSubsystem {
+public abstract class Gyro extends HoundSubsystem {
 	
 	// NOTE: Several of these constants could be relocated to RobotMap if you want to make them public
 	// (I just grew tired of fighting conflicts).
@@ -67,7 +67,7 @@ public abstract class GyroSubsystem extends HoundSubsystem {
 	private static final boolean ITG3200_ADDR_JUMPER = false;
 	
 	// Single instance of the subsystem
-	private static GyroSubsystem instance;
+	private static Gyro instance;
 
 	// Instance used to track the rotation throughout the entire match
 	public GyroBase gyrox;
@@ -77,7 +77,7 @@ public abstract class GyroSubsystem extends HoundSubsystem {
 	/**
 	 * Private constructor to force {@link #getInstance()} usage.
 	 */
-	private GyroSubsystem() {
+	private Gyro() {
 	}
 	
 	public void updatePeriodic() {
@@ -89,7 +89,7 @@ public abstract class GyroSubsystem extends HoundSubsystem {
 	 * 
 	 * @return Reference to gyro subsystem implementation.
 	 */
-	public static GyroSubsystem getInstance() {
+	public static Gyro getInstance() {
 		if (instance == null) {
 			switch (GYRO_INSTALLED) {
 			case BNO055:
@@ -189,7 +189,7 @@ public abstract class GyroSubsystem extends HoundSubsystem {
 	/**
 	 * Implementation using BNO055 sensor as the gyro source.
 	 */
-	private static class GyroBNO055 extends GyroSubsystem {
+	private static class GyroBNO055 extends Gyro {
 		private BNO055 sensor;
 
 		GyroBNO055() {
@@ -212,7 +212,7 @@ public abstract class GyroSubsystem extends HoundSubsystem {
 	/**
 	 * Implementation using BNO055 sensor as the gyro source.
 	 */
-	private static class GyroITG3200 extends GyroSubsystem {
+	private static class GyroITG3200 extends Gyro {
 		private ITG3200 sensor;
 
 		public GyroITG3200() {
@@ -241,7 +241,7 @@ public abstract class GyroSubsystem extends HoundSubsystem {
 	/**
 	 * Fake implementation when no gyro is available.
 	 */
-	private static class GyroFake extends GyroSubsystem {
+	private static class GyroFake extends Gyro {
 		
 		public GyroBase createTiltGyro() {
 			return GyroAdapter.createFakeGyro();

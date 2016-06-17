@@ -1,8 +1,8 @@
 package com.techhounds.frc2016.commands.drive_legacy;
 
 import com.techhounds.frc2016.HardwareConstants;
-import com.techhounds.frc2016.subsystems.DriveSubsystem;
-import com.techhounds.frc2016.subsystems.GyroSubsystem;
+import com.techhounds.frc2016.subsystems.Drive;
+import com.techhounds.frc2016.subsystems.Gyro;
 import com.techhounds.lib.util.HoundMath;
 
 import edu.wpi.first.wpilibj.PIDController;
@@ -14,8 +14,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DriveDistanceStraight extends Command implements PIDSource, PIDOutput {
 
-	private DriveSubsystem drive;
-	private GyroSubsystem gyro;
+	private Drive drive;
+	private Gyro gyro;
 	private double targetDist;
 	private PIDController pid;
 	private double lastPower;
@@ -58,8 +58,8 @@ public class DriveDistanceStraight extends Command implements PIDSource, PIDOutp
 	}
 
 	public DriveDistanceStraight(double dist, double max, double min) {
-		drive = DriveSubsystem.getInstance();
-		gyro = GyroSubsystem.getInstance();
+		drive = Drive.getInstance();
+		gyro = Gyro.getInstance();
 		requires(drive);
 		pid = new PIDController(.025, 0, .004, this, this);
 		pid.setOutputRange(-Math.abs(max), Math.abs(max));

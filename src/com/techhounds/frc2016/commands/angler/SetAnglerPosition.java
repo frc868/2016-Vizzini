@@ -1,6 +1,6 @@
 package com.techhounds.frc2016.commands.angler;
 
-import com.techhounds.frc2016.subsystems.AnglerSubsystem;
+import com.techhounds.frc2016.subsystems.Angler;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -11,19 +11,19 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class SetAnglerPosition extends Command {
 	
-	private AnglerSubsystem angle;
+	private Angler angle;
 	private Double position;
 	private Double timeout;
 
     public SetAnglerPosition(Double position) {
-    	angle = AnglerSubsystem.getInstance();
+    	angle = Angler.getInstance();
     	requires(angle);
     	this.position = position;
     	this.timeout = null;
     }
     
     public SetAnglerPosition(Double position, Double timeout) {
-    	angle = AnglerSubsystem.getInstance();
+    	angle = Angler.getInstance();
     	requires(angle);
     	this.position = position;
     	this.timeout = timeout;

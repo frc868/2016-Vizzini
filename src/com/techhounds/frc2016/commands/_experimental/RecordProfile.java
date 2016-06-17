@@ -8,8 +8,8 @@ import java.util.Date;
 
 import com.techhounds.frc2016.ProfileGenerator;
 import com.techhounds.frc2016.HardwareAdaptor;
-import com.techhounds.frc2016.subsystems.DriveSubsystem;
-import com.techhounds.frc2016.subsystems.GyroSubsystem;
+import com.techhounds.frc2016.subsystems.Drive;
+import com.techhounds.frc2016.subsystems.Gyro;
 import com.techhounds.lib.trajectory.Trajectory;
 import com.techhounds.lib.util.HoundMath;
 import com.techhounds.lib.util.PeriodicCommand;
@@ -17,8 +17,8 @@ import com.techhounds.lib.util.PeriodicCommand;
 
 public class RecordProfile extends PeriodicCommand {
 	
-	private DriveSubsystem drive = DriveSubsystem.getInstance();
-	private GyroSubsystem gyro = GyroSubsystem.getInstance();
+	private Drive drive = Drive.getInstance();
+	private Gyro gyro = Gyro.getInstance();
 	
 	private double lastT, lastLeftVelocity, lastRightVelocity;
 	private double lastLeftAcc, lastRightAcc;

@@ -6,12 +6,12 @@ import com.techhounds.lib.util.HoundSubsystem;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class BeamBreakSubsystem extends HoundSubsystem {
+public class BeamBreak extends HoundSubsystem {
 	
 	private DigitalInput sensor = HardwareAdaptor.kDIO_BeamBreak;
-	private static BeamBreakSubsystem instance;
+	private static BeamBreak instance;
 	
-	private BeamBreakSubsystem(){
+	private BeamBreak(){
 	}
 	
 	public boolean ballPresent(){
@@ -22,8 +22,8 @@ public class BeamBreakSubsystem extends HoundSubsystem {
 		SmartDashboard.putBoolean("Ball Collected", ballPresent());
 	}
 	
-    public static BeamBreakSubsystem getInstance(){
-    	return instance == null ? new BeamBreakSubsystem() : instance;
+    public static BeamBreak getInstance(){
+    	return instance == null ? new BeamBreak() : instance;
     }
     
     public void initDefaultCommand() {

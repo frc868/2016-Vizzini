@@ -1,6 +1,6 @@
 package com.techhounds.frc2016.commands.gyro;
 
-import com.techhounds.frc2016.subsystems.GyroSubsystem;
+import com.techhounds.frc2016.subsystems.Gyro;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.WaitCommand;
@@ -10,11 +10,11 @@ import edu.wpi.first.wpilibj.command.WaitCommand;
  */
 public class WaitForPreviousTilt extends Command {
 	
-	private GyroSubsystem gyro;
+	private Gyro gyro;
 	private double tilt;
 
     public WaitForPreviousTilt() {
-    	gyro = GyroSubsystem.getInstance();
+    	gyro = Gyro.getInstance();
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }

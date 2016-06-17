@@ -1,7 +1,7 @@
 package com.techhounds.frc2016.commands.drive_legacy;
 
-import com.techhounds.frc2016.subsystems.DriveSubsystem;
-import com.techhounds.frc2016.subsystems.ServoSubsystem;
+import com.techhounds.frc2016.subsystems.Drive;
+import com.techhounds.frc2016.subsystems.Servos;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -11,11 +11,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class LockWinch extends Command {
 
-	ServoSubsystem servo;
+	Servos servo;
 	private Boolean toLock;
 	
 	public LockWinch() {
-		servo = ServoSubsystem.getWinchLock();
+		servo = Servos.getWinchLock();
 		requires(servo);
 	}
 	
@@ -26,7 +26,7 @@ public class LockWinch extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	servo.set(toLock == null ? !ServoSubsystem.getWinchLock().getIsMax() : toLock);
+    	servo.set(toLock == null ? !Servos.getWinchLock().getIsMax() : toLock);
     }
 
     // Called repeatedly when this Command is scheduled to run

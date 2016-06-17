@@ -1,23 +1,23 @@
 package com.techhounds.frc2016.commands;
 
-import com.techhounds.frc2016.subsystems.FlashlightSubsystem;
+import com.techhounds.frc2016.subsystems.Flashlight;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 public class SetFlashlight extends Command {
 
 	private Boolean on;
-	private FlashlightSubsystem flashlight;
+	private Flashlight flashlight;
 	
 	public SetFlashlight() {
 		setRunWhenDisabled(true);
-		flashlight = FlashlightSubsystem.getInstance();
+		flashlight = Flashlight.getInstance();
 		this.on = null;
 	}
 	
 	public SetFlashlight(boolean on) {
 		setRunWhenDisabled(true);
-		flashlight = FlashlightSubsystem.getInstance();
+		flashlight = Flashlight.getInstance();
 		this.on = on;
 	}
 	

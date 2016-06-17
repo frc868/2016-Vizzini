@@ -1,9 +1,9 @@
 package com.techhounds.frc2016.subsystems.controllers;
 
 import com.techhounds.frc2016.HardwareAdaptor;
-import com.techhounds.frc2016.subsystems.DriveSubsystem;
-import com.techhounds.frc2016.subsystems.DriveSubsystem.Controller;
-import com.techhounds.frc2016.subsystems.GyroSubsystem;
+import com.techhounds.frc2016.subsystems.Drive;
+import com.techhounds.frc2016.subsystems.Drive.Controller;
+import com.techhounds.frc2016.subsystems.Gyro;
 import com.techhounds.lib.util.DriveSignal;
 import com.techhounds.lib.util.HoundMath;
 import com.techhounds.lib.util.SynchronousPID;
@@ -15,7 +15,7 @@ public class TurnInPlaceController implements Controller {
 		Ki = 0, 
 		Kd = .08;
 	
-	private GyroSubsystem gyro = HardwareAdaptor.kGyroSubsystem;
+	private Gyro gyro = HardwareAdaptor.kGyroSubsystem;
 	
 	private SynchronousPID pidControl = new SynchronousPID(Kp, Ki, Kd);
 

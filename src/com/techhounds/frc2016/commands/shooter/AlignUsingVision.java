@@ -1,20 +1,20 @@
 package com.techhounds.frc2016.commands.shooter;
 
 import com.techhounds.frc2016.commands.auton.RotateUsingVision;
-import com.techhounds.frc2016.subsystems.GyroSubsystem;
+import com.techhounds.frc2016.subsystems.Gyro;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 public class AlignUsingVision extends Command {
 
 	public RotateUsingVision currentCommand;
-	private GyroSubsystem gyro;
+	private Gyro gyro;
 	private Double timeout;
 	private Double currTime;
 	private static AlignUsingVision instance;
 	
 	public AlignUsingVision() {
-		gyro = GyroSubsystem.getInstance();
+		gyro = Gyro.getInstance();
 	}
 	
 	public static AlignUsingVision getInstance() {

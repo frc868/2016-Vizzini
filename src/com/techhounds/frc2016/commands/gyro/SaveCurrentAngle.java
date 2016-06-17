@@ -1,6 +1,6 @@
 package com.techhounds.frc2016.commands.gyro;
 
-import com.techhounds.frc2016.subsystems.GyroSubsystem;
+import com.techhounds.frc2016.subsystems.Gyro;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -11,10 +11,10 @@ public class SaveCurrentAngle extends Command {
 	
 	//Use this command before going across a defense in auton
 	
-	private GyroSubsystem gyro;
+	private Gyro gyro;
 
     public SaveCurrentAngle() {
-    	gyro = GyroSubsystem.getInstance();
+    	gyro = Gyro.getInstance();
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }

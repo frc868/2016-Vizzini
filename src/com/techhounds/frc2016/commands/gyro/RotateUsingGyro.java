@@ -1,7 +1,7 @@
 package com.techhounds.frc2016.commands.gyro;
 
-import com.techhounds.frc2016.subsystems.DriveSubsystem;
-import com.techhounds.frc2016.subsystems.GyroSubsystem;
+import com.techhounds.frc2016.subsystems.Drive;
+import com.techhounds.frc2016.subsystems.Gyro;
 
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
@@ -17,8 +17,8 @@ public class RotateUsingGyro extends Command implements PIDSource, PIDOutput {
 	
 	//private static double p = .1/*.05*/, i = 0, d = .12;//.08;
 	private static double p = .05, i = 0, d = .08;
-	private DriveSubsystem drive;
-	protected GyroSubsystem gyro;
+	private Drive drive;
+	protected Gyro gyro;
 	private PIDController pid;
 	protected double angle;
 	private Double timeOut;
@@ -33,8 +33,8 @@ public class RotateUsingGyro extends Command implements PIDSource, PIDOutput {
 	
 	
     public RotateUsingGyro(double angle) {
-    	gyro = GyroSubsystem.getInstance();
-    	drive = DriveSubsystem.getInstance();
+    	gyro = Gyro.getInstance();
+    	drive = Drive.getInstance();
     	requires(drive);
     	pid = new PIDController(p, i, d, this, this);
     	this.angle = angle;

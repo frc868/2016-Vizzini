@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.Counter;
 import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class ShooterSubsystem extends HoundSubsystem implements Updateable {
+public class Shooter extends HoundSubsystem implements Updateable {
 
 	private CANTalon shooter = HardwareAdaptor.kMotor_Shooter;
 	private Counter counter = HardwareAdaptor.kDIO_Shooter;
@@ -38,14 +38,14 @@ public class ShooterSubsystem extends HoundSubsystem implements Updateable {
 		D = .075, 
 		F = .005;
 	
-	private static ShooterSubsystem instance;
+	private static Shooter instance;
 	
 //	public final double P = .02, I = 0, D = .75, F = .005;
 //	public final double P = 0, I = 0, D = 0, F = .006;
 
 	private double speedThreshold, lastSpeed, pidLastSpeed;
 	
-	private ShooterSubsystem() {
+	private Shooter() {
 		shooter.setInverted(getInverted());
 		shooter.enableBrakeMode(true);
 		
@@ -141,8 +141,8 @@ public class ShooterSubsystem extends HoundSubsystem implements Updateable {
 		return controller.getSetpoint();
 	}
 
-	public static ShooterSubsystem getInstance() {
-		return instance == null ? instance = new ShooterSubsystem() : instance;
+	public static Shooter getInstance() {
+		return instance == null ? instance = new Shooter() : instance;
 	}
 
 	@Override

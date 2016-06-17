@@ -1,6 +1,6 @@
 package com.techhounds.frc2016.commands.shooter;
 
-import com.techhounds.frc2016.subsystems.ShooterSubsystem;
+import com.techhounds.frc2016.subsystems.Shooter;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class SetShooterPower extends Command {
 	
-	private ShooterSubsystem shoot;
+	private Shooter shoot;
 	private boolean change;
 	private double power;
 	
@@ -18,7 +18,7 @@ public class SetShooterPower extends Command {
     }
     
     public SetShooterPower(double power, boolean change) {
-    	shoot = ShooterSubsystem.getInstance();
+    	shoot = Shooter.getInstance();
     	requires(shoot);
     	this.power = power;
     	this.change = change;

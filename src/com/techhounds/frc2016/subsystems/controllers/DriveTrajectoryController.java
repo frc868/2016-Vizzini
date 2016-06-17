@@ -1,9 +1,9 @@
 package com.techhounds.frc2016.subsystems.controllers;
 
 import com.techhounds.frc2016.HardwareAdaptor;
-import com.techhounds.frc2016.subsystems.DriveSubsystem;
-import com.techhounds.frc2016.subsystems.DriveSubsystem.Controller;
-import com.techhounds.frc2016.subsystems.GyroSubsystem;
+import com.techhounds.frc2016.subsystems.Drive;
+import com.techhounds.frc2016.subsystems.Drive.Controller;
+import com.techhounds.frc2016.subsystems.Gyro;
 import com.techhounds.lib.trajectory.Trajectory;
 import com.techhounds.lib.trajectory.TrajectoryFollower;
 import com.techhounds.lib.util.DriveSignal;
@@ -23,8 +23,8 @@ public class DriveTrajectoryController implements Controller {
 	private boolean firstCall = true;
 	private boolean isEnabled;
 	
-	private DriveSubsystem drive = HardwareAdaptor.kDriveSubsystem;
-	private GyroSubsystem gyro = HardwareAdaptor.kGyroSubsystem;
+	private Drive drive = HardwareAdaptor.kDriveSubsystem;
+	private Gyro gyro = HardwareAdaptor.kGyroSubsystem;
 	
 	private TrajectoryFollower leftFollower;
 	private TrajectoryFollower rightFollower;

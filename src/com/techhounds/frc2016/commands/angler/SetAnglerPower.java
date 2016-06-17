@@ -1,6 +1,6 @@
 package com.techhounds.frc2016.commands.angler;
 
-import com.techhounds.frc2016.subsystems.AnglerSubsystem;
+import com.techhounds.frc2016.subsystems.Angler;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -9,11 +9,11 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class SetAnglerPower extends Command {
 	
-	private AnglerSubsystem angler;
+	private Angler angler;
 	private double power;
 
     public SetAnglerPower(double power) {
-    	angler = AnglerSubsystem.getInstance();
+    	angler = Angler.getInstance();
     	requires(angler);
     	this.power = power;
     }

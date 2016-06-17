@@ -13,9 +13,9 @@ import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class AnglerSubsystem extends HoundSubsystem implements PIDSource, PIDOutput {
+public class Angler extends HoundSubsystem implements PIDSource, PIDOutput {
 	
-	private static AnglerSubsystem instance;
+	private static Angler instance;
 	
 	private CANTalon angler = HardwareAdaptor.kMotor_Angler;;
 	private PIDController pid = new PIDController(P, I, D, this, this, PERIOD);
@@ -31,7 +31,7 @@ public class AnglerSubsystem extends HoundSubsystem implements PIDSource, PIDOut
 	
 	private int state = 2;	//defaults as maximum height
     
-	private AnglerSubsystem() {
+	private Angler() {
 		
 		angler.setInverted(HardwareConstants.Angler.INVERTED);
 		angler.enableForwardSoftLimit(false);
@@ -92,8 +92,8 @@ public class AnglerSubsystem extends HoundSubsystem implements PIDSource, PIDOut
 		SmartDashboard.putNumber("Angler_Error: ", pid.getError());
 	}
 	
-	public static AnglerSubsystem getInstance(){
-		return instance == null ? instance = new AnglerSubsystem() : instance;
+	public static Angler getInstance(){
+		return instance == null ? instance = new Angler() : instance;
 	}
 
     public void initDefaultCommand() {

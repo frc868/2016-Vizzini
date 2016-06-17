@@ -1,6 +1,6 @@
 package com.techhounds.frc2016.commands.shooter;
 
-import com.techhounds.frc2016.subsystems.ShooterSubsystem;
+import com.techhounds.frc2016.subsystems.Shooter;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -8,10 +8,10 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class IncrementShooterSpeed extends Command {
-	ShooterSubsystem shooter;
+	Shooter shooter;
 	double increment;
     public IncrementShooterSpeed(double increment) {
-    	shooter = ShooterSubsystem.getInstance();//Doesn't need requires because it calls a new command
+    	shooter = Shooter.getInstance();//Doesn't need requires because it calls a new command
     	this.increment = increment;
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);

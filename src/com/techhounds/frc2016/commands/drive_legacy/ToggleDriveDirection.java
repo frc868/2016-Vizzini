@@ -1,6 +1,6 @@
 package com.techhounds.frc2016.commands.drive_legacy;
 
-import com.techhounds.frc2016.subsystems.DriveSubsystem;
+import com.techhounds.frc2016.subsystems.Drive;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -16,10 +16,10 @@ public class ToggleDriveDirection extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	if(DriveSubsystem.isForward){
-    		DriveSubsystem.isForward = false;
+    	if(Drive.isForward){
+    		Drive.isForward = false;
     	}else{
-    		DriveSubsystem.isForward = true;
+    		Drive.isForward = true;
     	}
     }
 
