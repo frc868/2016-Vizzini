@@ -6,6 +6,7 @@ import com.techhounds.frc2016.commands.SetFlashlight;
 import com.techhounds.frc2016.commands.UpdateSmartDashboard;
 import com.techhounds.frc2016.commands.auton.RetrieveAuton;
 import com.techhounds.frc2016.commands.servos.SetWinchLock;
+import com.techhounds.lib.util.HoundSubsystem;
 import com.techhounds.lib.util.Updater;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -17,6 +18,7 @@ public class Robot extends IterativeRobot {
 
 	public Updater controllers = new Updater(200.0);
 	public Updater slowControllers = new Updater(100.0);
+	public Updater dashboardControl = new Updater(50.0);
 	
 	private static final String GAME_STATE = "GameState";
 
@@ -38,6 +40,8 @@ public class Robot extends IterativeRobot {
 		controllers.addUpdateable(HardwareAdaptor.kShooterSubsystem);
 
 		slowControllers.addUpdateable(HardwareAdaptor.kDriveSubsystem);
+		
+		dashboardControl.addUpdateable(HardwareAdaptor.kDashboardUpdater);
 
 		System.out.println("*** TECHHOUNDS IS READY TO ROBOT ***");
 	}
@@ -45,9 +49,7 @@ public class Robot extends IterativeRobot {
 	// Runs once when Disabled
 	public void disabledInit() {
 
-		controllers.stop();
-		slowControllers.stop();
-
+		setControllers(false);
 		new SetFlashlight(false).start();
 
 		SmartDashboard.putString(GAME_STATE, "disabled");
@@ -59,9 +61,7 @@ public class Robot extends IterativeRobot {
 	public void autonomousInit() {
 		SmartDashboard.putString(GAME_STATE, "auton");
 
-		controllers.start();
-		slowControllers.start();
-
+		setControllers(true);
 		new RetrieveAuton().start();
 
 		System.out.println("*** TECHHOUNDS IS AUTON ***");
@@ -72,13 +72,24 @@ public class Robot extends IterativeRobot {
 	public void teleopInit() {
 		SmartDashboard.putString(GAME_STATE, "teleop");
 
-		controllers.start();
-		slowControllers.start();
-
+		setControllers(true);
 		new MatchSetup().start();
 
 		System.out.println("*** TECHHOUNDS IS TELEOP ***");
 	}
+	
+	public void setControllers(boolean state) {
+		if(state) {
+			controllers.start();
+			slowControllers.start();
+			dashboardControl.start();
+		} else {
+			controllers.stop();
+			slowControllers.stop();
+			dashboardControl.stop();
+		}
+	}
+	
 
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();

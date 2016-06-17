@@ -14,13 +14,13 @@ public class SetWinchEnable extends Command {
 	private boolean setMax;
 
     public SetWinchEnable() {
-    	this(!ServoSubsystem.getWinchEnable().getIsMax());
+    	this(!ServoSubsystem.getWinchDT_TO_ARM().getIsMax());
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }
     
     public SetWinchEnable(boolean setMax) {
-    	winchEnable = ServoSubsystem.getWinchEnable();
+    	winchEnable = ServoSubsystem.getWinchDT_TO_ARM();
     	requires(winchEnable);
     	this.setMax = setMax;
     }

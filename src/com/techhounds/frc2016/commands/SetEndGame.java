@@ -26,7 +26,7 @@ public class SetEndGame extends CommandGroup {
     @Override
     public void initialize() {
     	dontDoEndGame = false;
-    	if(AnglerSubsystem.getInstance().getRawPosition() != HardwareConstants.Angler.ANGLER_COLLECT) {
+    	if(AnglerSubsystem.getInstance().getRawPosition() != HardwareConstants.Angler.COLLECT) {
     		dontDoEndGame = true;
     		return;
     	}

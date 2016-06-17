@@ -1,8 +1,8 @@
 package com.techhounds.frc2016.subsystems;
 
 import com.techhounds.frc2016.HardwareAdaptor;
+import com.techhounds.frc2016.HardwareConstants;
 import com.techhounds.frc2016.HardwareMap;
-import com.techhounds.frc2016.RobotMap;
 import com.techhounds.lib.util.HoundMath;
 import com.techhounds.lib.util.HoundSubsystem;
 
@@ -44,7 +44,7 @@ public class CollectorSubsystem extends HoundSubsystem {
 	}
 	
 	public boolean getInverted(){
-		return RobotMap.Collector.COLLECTOR_IS_INVERTED;
+		return HardwareConstants.Collector.INVERTED;
 	}
 	
 	public void updatePeriodic(){

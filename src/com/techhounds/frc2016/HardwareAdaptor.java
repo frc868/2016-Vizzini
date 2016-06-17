@@ -12,6 +12,7 @@ import com.techhounds.frc2016.subsystems.ServoSubsystem;
 import com.techhounds.frc2016.subsystems.ShooterSubsystem;
 import com.techhounds.frc2016.subsystems.VisionSubsystem;
 import com.techhounds.lib.util.HoundSpeedController;
+import com.techhounds.lib.util.HoundSubsystem;
 
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.BuiltInAccelerometer;
@@ -88,7 +89,7 @@ public class HardwareAdaptor {
 	public static final GyroSubsystem kGyroSubsystem = GyroSubsystem.getInstance();
 	public static final FlashlightSubsystem kFlashlightSubsystem = FlashlightSubsystem.getInstance();
 	public static final LEDSubsystem kLEDSubsystem = LEDSubsystem.getInstance();
-	public static final ServoSubsystem kServo_WINCH_ENB = ServoSubsystem.getWinchEnable();
+	public static final ServoSubsystem kServo_WINCH_ENB = ServoSubsystem.getWinchDT_TO_ARM();
 	public static final ServoSubsystem kServo_WINCH_LOC = ServoSubsystem.getWinchLock();
 	public static final ServoSubsystem kServo_RELEASE = ServoSubsystem.getScissorOne();
 	public static final ShooterSubsystem kShooterSubsystem = ShooterSubsystem.getInstance();
@@ -107,6 +108,9 @@ public class HardwareAdaptor {
 	public static final OI kOperatorInterface = OI.getInstance();
 	// Autonomous Chooser
 	public static final AutonChooser kAutonChooser = AutonChooser.getInstance();
+	
+	// Dashboard Updater
+	public static final HoundSubsystem.DashboardUpdate kDashboardUpdater = new HoundSubsystem.DashboardUpdate();
 	
 	public static void addToLiveWindow() {
 		

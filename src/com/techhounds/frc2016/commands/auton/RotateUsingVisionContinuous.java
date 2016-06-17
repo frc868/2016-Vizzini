@@ -1,6 +1,6 @@
 package com.techhounds.frc2016.commands.auton;
 
-import com.techhounds.frc2016.RobotMap;
+import com.techhounds.frc2016.HardwareConstants;
 import com.techhounds.frc2016.subsystems.DriveSubsystem;
 import com.techhounds.frc2016.subsystems.GyroSubsystem;
 
@@ -47,7 +47,7 @@ public class RotateUsingVisionContinuous extends Command implements PIDSource, P
     	}
     	pid.setOutputRange(-.65, .65);
     	pid.setAbsoluteTolerance(1);
-    	MIN_TURN_POWER = RobotMap.DriveTrain.MIN_TURN_POWER;
+    	MIN_TURN_POWER = HardwareConstants.Drive.MIN_TURN_POWER;
     	
     }
     

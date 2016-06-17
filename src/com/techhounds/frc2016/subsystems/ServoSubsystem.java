@@ -1,7 +1,6 @@
 package com.techhounds.frc2016.subsystems;
 
 import com.techhounds.frc2016.HardwareAdaptor;
-import com.techhounds.frc2016.RobotMap;
 import com.techhounds.frc2016.ServoInfo;
 import com.techhounds.lib.util.HoundMath;
 import com.techhounds.lib.util.HoundSubsystem;
@@ -14,10 +13,9 @@ public class ServoSubsystem extends HoundSubsystem {
 	private double min, max;
 	
 	private static ServoSubsystem 
-		instance_winch_enable, 
+		instance_winch_dt_to_arm, 
 		instance_winch_lock,
-		instance_scissor_one, 
-		instance_scissor_two;
+		instance_scissor_one;
 	
 	public ServoSubsystem(int port){
 		this(port, 0, 1);
@@ -33,9 +31,9 @@ public class ServoSubsystem extends HoundSubsystem {
 		max = servoInfo.max;
 	}
 	
-	public static ServoSubsystem getWinchEnable(){
-		return instance_winch_enable == null ? instance_winch_enable = 
-				new ServoSubsystem(HardwareAdaptor.kWinch_DT_TO_ARM) : instance_winch_enable;
+	public static ServoSubsystem getWinchDT_TO_ARM(){
+		return instance_winch_dt_to_arm == null ? instance_winch_dt_to_arm = 
+				new ServoSubsystem(HardwareAdaptor.kWinch_DT_TO_ARM) : instance_winch_dt_to_arm;
 	}
 	
 	public static ServoSubsystem getWinchLock(){
@@ -48,17 +46,12 @@ public class ServoSubsystem extends HoundSubsystem {
 				new ServoSubsystem(HardwareAdaptor.kRelease) : instance_scissor_one;
 	}
 	
-	public static ServoSubsystem getScissorTwo(){
-		return instance_scissor_two == null ? instance_scissor_two = new ServoSubsystem(RobotMap.Servo.SCISSOR_TWO, RobotMap.Servo.SCISSOR_TWO_MIN, RobotMap.Servo.SCISSOR_TWO_MAX) : instance_scissor_two;
-	}
-	
 	public void setPosition(double position) {
 		servo.set(HoundMath.checkRange(position, min, max));
 	}
 	
 	public void set(boolean setMax) {
 		servo.set(HoundMath.checkRange(setMax ? max : min));
-		//if setMax servo is set to max, else set to min
 	}
 	
 	public double getPosition() {

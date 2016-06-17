@@ -1,6 +1,6 @@
 package com.techhounds.frc2016.commands.auton;
 
-import com.techhounds.frc2016.RobotMap;
+import com.techhounds.frc2016.HardwareConstants;
 import com.techhounds.frc2016.commands.drive_legacy.DriveDistance;
 import com.techhounds.frc2016.commands.gyro.RotateToPreviousAngle;
 import com.techhounds.frc2016.commands.gyro.SaveCurrentAngle;
@@ -30,7 +30,7 @@ public class CrossDefense extends CommandGroup {
 	}
 	
 	public CrossDefense(double distance, double crossingSpeed){
-		 this(distance, crossingSpeed, RobotMap.DriveTrain.MIN_STRAIGHT_POWER);
+		 this(distance, crossingSpeed, HardwareConstants.Drive.MIN_STRAIGHT_POWER);
     }
 	public CrossDefense(double distance, double crossingMaxSpeed, double crossingMinSpeed){
 		addSequential(new SaveCurrentAngle());

@@ -1,8 +1,7 @@
 package com.techhounds.frc2016.subsystems;
 
 import com.techhounds.frc2016.HardwareAdaptor;
-import com.techhounds.frc2016.RobotMap;
-import com.techhounds.frc2016.commands.drive_legacy.DriveWithGamepad;
+import com.techhounds.frc2016.HardwareConstants;
 import com.techhounds.lib.util.DriveSignal;
 import com.techhounds.lib.util.HoundMath;
 import com.techhounds.lib.util.HoundSpeedController;
@@ -43,8 +42,8 @@ public class DriveSubsystem extends HoundSubsystem implements Updateable {
 	private static DriveSubsystem instance;
 	
 	private DriveSubsystem() {	
-		leftMotor.setInverted(RobotMap.DriveTrain.DRIVE_LEFT_IS_INVERTED);
-		rightMotor.setInverted(RobotMap.DriveTrain.DRIVE_RIGHT_IS_INVERTED);
+		leftMotor.setInverted(HardwareConstants.Drive.LEFT_INVERTED);
+		rightMotor.setInverted(HardwareConstants.Drive.RIGHT_INVERTED);
 		
 		leftEncoder.setDistancePerPulse(COUNTS_TO_DISTANCE);
 		rightEncoder.setDistancePerPulse(COUNTS_TO_DISTANCE);
@@ -138,7 +137,7 @@ public class DriveSubsystem extends HoundSubsystem implements Updateable {
 	
 	public boolean onDefense(){
 		//Be aware that the greater than or less than may need to be switched
-		return getLightReading() < RobotMap.DriveTrain.LIGHT_THRESHOLD;
+		return getLightReading() < HardwareConstants.Drive.LIGHT_THRESHOLD;
 	}
 	
 	public static void setDriveForward(boolean forward) {

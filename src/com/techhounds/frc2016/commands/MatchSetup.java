@@ -18,7 +18,7 @@ public class MatchSetup extends CommandGroup {
     
     public  MatchSetup() {
     	
-    	addParallel(new SetAnglerPosition(HardwareConstants.Angler.ANGLER_UP));
+    	addParallel(new SetAnglerPosition(HardwareConstants.Angler.UP));
     	addParallel(new SetCollectorPower());
     	addParallel(new SetShooterPower());
     	addParallel(new ReleaseClimber(false));

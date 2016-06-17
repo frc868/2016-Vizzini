@@ -1,17 +1,15 @@
 package com.techhounds.frc2016.subsystems;
 
 import com.techhounds.frc2016.HardwareAdaptor;
-import com.techhounds.frc2016.RobotMap;
+import com.techhounds.frc2016.HardwareConstants;
 import com.techhounds.lib.util.HoundMath;
 import com.techhounds.lib.util.HoundSubsystem;
 import com.techhounds.lib.util.SynchronousPID;
+import com.techhounds.lib.util.SynchronousPIDWPI;
 import com.techhounds.lib.util.Updateable;
 
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.Counter;
-import edu.wpi.first.wpilibj.PIDController;
-import edu.wpi.first.wpilibj.PIDOutput;
-import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -20,7 +18,7 @@ public class ShooterSubsystem extends HoundSubsystem implements Updateable {
 	private CANTalon shooter = HardwareAdaptor.kMotor_Shooter;
 	private Counter counter = HardwareAdaptor.kDIO_Shooter;
 	
-	private SynchronousPID controller = new SynchronousPID(P, I, D);
+	private SynchronousPIDWPI controller = new SynchronousPIDWPI(P, I, D, PIDSourceType.kRate);
 	
 	//private PIDController controller = new PIDController(P, I, D, F, this, this, PERIOD);
 	// Legacy 
@@ -115,7 +113,7 @@ public class ShooterSubsystem extends HoundSubsystem implements Updateable {
 	}
 
 	public boolean getInverted() {
-		return RobotMap.Shooter.SHOOTER_IS_INVERTED;
+		return HardwareConstants.Shooter.INVERTED;
 	}
 
 	public double getPower() {
@@ -157,7 +155,7 @@ public class ShooterSubsystem extends HoundSubsystem implements Updateable {
 	}
 	
 	public boolean onTarget() {
-		return Math.abs(controller.getError()) < 1;
+		return isEnabled() ? Math.abs(controller.getError()) < 1 : true;
 	}
 
 	public boolean isEnabled() {

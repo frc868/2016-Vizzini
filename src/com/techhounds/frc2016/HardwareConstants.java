@@ -10,10 +10,10 @@ public class HardwareConstants {
 	public interface Angler {
 		final boolean INVERTED = true;
 		
-		final double ANGLER_UP = 382 + 96;
-		final double ANGLER_COLLECT = 643 + 96 - 20;
-		final double ANGLER_DOWN = 732 + 96;
-		final double ANGLER_AUTON_COLLECTING = 670;
+		final double UP = 382 + 96;
+		final double COLLECT = 643 + 96 - 20;
+		final double DOWN = 732 + 96;
+		final double AUTON_COLLECT = 670;
 	}
 	
 	public interface Shooter {

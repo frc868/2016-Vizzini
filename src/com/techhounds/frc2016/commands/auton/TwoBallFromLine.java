@@ -1,7 +1,7 @@
 package com.techhounds.frc2016.commands.auton;
 
 import com.techhounds.frc2016.ProfileGenerator;
-import com.techhounds.frc2016.RobotMap;
+import com.techhounds.frc2016.HardwareConstants;
 import com.techhounds.frc2016.commands._experimental.DriveTrajectory;
 import com.techhounds.frc2016.commands.angler.SetAnglerPosition;
 import com.techhounds.frc2016.commands.collector.SetCollectorPower;
@@ -39,19 +39,19 @@ public class TwoBallFromLine extends CommandGroup {
 
     	// GET BALL FROM MIDLINE
     	addParallel(new SaveCurrentAngle());
-    	addParallel(new SetAnglerPosition(RobotMap.Collector.COLLECTING));
+    	addParallel(new SetAnglerPosition(HardwareConstants.Angler.COLLECT));
     	addParallel(new SetCollectorPower(0.8));
     	addSequential(new WaitForBeanBreak(true), .95);
     	addParallel(new SetCollectorPower(0));
-    	addParallel(new SetAnglerPosition(RobotMap.Collector.COLLECTOR_UP));
+    	addParallel(new SetAnglerPosition(HardwareConstants.Angler.UP));
     	
     	addParallel(new DriveTrajectory(1, true));
     	addParallel(adjBall2, 0.75);
-    	addSequential(new SetAnglerPosition(RobotMap.Collector.COLLECTING), 0.75);
+    	addSequential(new SetAnglerPosition(HardwareConstants.Angler.COLLECT), 0.75);
     	/* Proposed New Low Bar
     	addSequential(new RotateUsingGyro(-20));
     	addSequential(new WaitCommand(.1);
-    	addParallel(new SetAnglerPosition(RobotMap.Collector.COLLECTING));
+    	addParallel(new SetAnglerPosition(HardwareConstants.Angler.COLLECT));
     	addSequential(new DriveDistance(50));
     	addSequential(new RotateToLastAngle());
     	*/
@@ -62,15 +62,15 @@ public class TwoBallFromLine extends CommandGroup {
 
     	addParallel(new SetShooterSpeed(74));
     	//addParallel(new SetShooterSpeeD(73);
-    	addSequential(new DriveDistanceStraight(95, 1, RobotMap.DriveTrain.MIN_STRAIGHT_POWER, 5.0, true));
+    	addSequential(new DriveDistanceStraight(95, 1, HardwareConstants.Drive.MIN_STRAIGHT_POWER, 5.0, true));
     	
     	
-    	//addSequential(new DriveDistanceStraight(RobotMap.Defenses.LOW_BAR_DISTANCE - 60 - 48, 1, RobotMap.DriveTrain.MIN_STRAIGHT_POWER, 5.0, true));
+    	//addSequential(new DriveDistanceStraight(HardwareConstants.Defenses.LOW_BAR_DISTANCE - 60 - 48, 1, HardwareConstants.Drive.MIN_STRAIGHT_POWER, 5.0, true));
     	
     	//
     	//Potential drive to edge of defense
     	//addParallel(new SetShooterSpeed(71));
-    	//addSequential(new DriveDistanceStraight(RobotMap.Defenses.LOW_BAR_DISTANCE - 120, RobotMap.Defenses.LOW_BAR_SPEED, RobotMap.DriveTrain.MIN_STRAIGHT_POWER, 5.0, true));
+    	//addSequential(new DriveDistanceStraight(HardwareConstants.Defenses.LOW_BAR_DISTANCE - 120, HardwareConstants.Defenses.LOW_BAR_SPEED, HardwareConstants.Drive.MIN_STRAIGHT_POWER, 5.0, true));
 
     	rotateAlignShoot();
     	
@@ -79,11 +79,11 @@ public class TwoBallFromLine extends CommandGroup {
 		
 		// DRIVE BACK AND CHECK FOR BALL`
 		addParallel(new SetCollectorPower(0.8));
-		addParallel(new SetAnglerPosition(RobotMap.Collector.COLLECTING + 10));
-		// addParallel(new SetAnglerPosition(RobotMap.Collector.AUTON_COLLECTING));
-		//addSequential(new DriveDistanceStraight(-RobotMap.Defenses.LOW_BAR_DISTANCE + 20, 
-		//		-RobotMap.Defenses.LOW_BAR_SPEED + .1, -RobotMap.DriveTrain.MIN_STRAIGHT_POWER, 5.0, true));
-		//addSequential(new DriveBackAndCheckForBall(-RobotMap.Defenses.LOW_BAR_DISTANCE + 20 + 30 + 24));
+		addParallel(new SetAnglerPosition(HardwareConstants.Angler.COLLECT + 10));
+		// addParallel(new SetAnglerPosition(HardwareConstants.Collector.AUTON_COLLECTING));
+		//addSequential(new DriveDistanceStraight(-HardwareConstants.Defenses.LOW_BAR_DISTANCE + 20, 
+		//		-HardwareConstants.Defenses.LOW_BAR_SPEED + .1, -HardwareConstants.Drive.MIN_STRAIGHT_POWER, 5.0, true));
+		//addSequential(new DriveBackAndCheckForBall(-HardwareConstants.Defenses.LOW_BAR_DISTANCE + 20 + 30 + 24));
 		addSequential(new DriveBackAndCheckForBall(-95-24));
     	
 		if(true)
@@ -95,7 +95,7 @@ public class TwoBallFromLine extends CommandGroup {
 		
 		// DRIVE BACK
 		addParallel(adjBall);
-		addSequential(new DriveDistanceStraight(RobotMap.Defenses.LOW_BAR_DISTANCE - 60 - 48 + 24, 0.85, RobotMap.DriveTrain.MIN_STRAIGHT_POWER, 5.0, true));
+		addSequential(new DriveDistanceStraight(HardwareConstants.Defenses.LOW_BAR_DISTANCE - 60 - 48 + 24, 0.85, HardwareConstants.Drive.MIN_STRAIGHT_POWER, 5.0, true));
 		
 		rotateAlignShoot();
     }
@@ -105,7 +105,7 @@ public class TwoBallFromLine extends CommandGroup {
     	// SET SHOOTER AND ROTATE 60
     	addSequential(new WaitCommand(.025));
     	
-    	addParallel(new SetAnglerPosition(RobotMap.Collector.COLLECTOR_UP));
+    	addParallel(new SetAnglerPosition(HardwareConstants.Angler.UP));
     	addSequential(new RotateUsingGyro(43));
     	// ALL GOOD ^^^
     	

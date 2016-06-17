@@ -23,4 +23,12 @@ public abstract class HoundSubsystem extends Subsystem {
 	}
 	
 	public abstract void updatePeriodic();
+	
+	public static class DashboardUpdate implements Updateable {
+
+		@Override
+		public void update() {
+			updateSubsystemsPeriodic();
+		}
+	}
 }

@@ -1,6 +1,6 @@
 package com.techhounds.frc2016.commands.drive_legacy;
 
-import com.techhounds.frc2016.RobotMap;
+import com.techhounds.frc2016.HardwareConstants;
 import com.techhounds.frc2016.subsystems.DriveSubsystem;
 import com.techhounds.frc2016.subsystems.GyroSubsystem;
 import com.techhounds.lib.util.HoundMath;
@@ -77,7 +77,7 @@ public class DriveDistanceStraight extends Command implements PIDSource, PIDOutp
 	}
 
 	public DriveDistanceStraight(double dist, double max) {
-		this(dist, max, RobotMap.DriveTrain.MIN_STRAIGHT_POWER);
+		this(dist, max, HardwareConstants.Drive.MIN_STRAIGHT_POWER);
 	}
 
 	@Override

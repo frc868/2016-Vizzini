@@ -1,6 +1,6 @@
 package com.techhounds.frc2016.commands.drive_legacy;
 
-import com.techhounds.frc2016.RobotMap;
+import com.techhounds.frc2016.HardwareConstants;
 import com.techhounds.frc2016.subsystems.DriveSubsystem;
 
 import edu.wpi.first.wpilibj.PIDController;
@@ -54,7 +54,7 @@ public class DriveDistance extends Command implements PIDSource, PIDOutput {
 	}
 
 	public DriveDistance(double dist, double max) {
-		this(dist, max, RobotMap.DriveTrain.MIN_STRAIGHT_POWER);
+		this(dist, max, HardwareConstants.Drive.MIN_STRAIGHT_POWER);
 	}
 
 	@Override

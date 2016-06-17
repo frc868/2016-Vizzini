@@ -1,7 +1,7 @@
 package com.techhounds.frc2016.subsystems;
 
 import com.techhounds.frc2016.HardwareAdaptor;
-import com.techhounds.frc2016.RobotMap;
+import com.techhounds.frc2016.HardwareConstants;
 import com.techhounds.lib.util.HoundMath;
 import com.techhounds.lib.util.HoundSubsystem;
 
@@ -18,7 +18,7 @@ public class AnglerSubsystem extends HoundSubsystem implements PIDSource, PIDOut
 	private static AnglerSubsystem instance;
 	
 	private CANTalon angler = HardwareAdaptor.kMotor_Angler;;
-	private PIDController pid = new PIDController(P, I, D, this, this, PERIOD);;
+	private PIDController pid = new PIDController(P, I, D, this, this, PERIOD);
 	
 	private static final double 
 		P = 0.004, 
@@ -33,7 +33,7 @@ public class AnglerSubsystem extends HoundSubsystem implements PIDSource, PIDOut
     
 	private AnglerSubsystem() {
 		
-		angler.setInverted(RobotMap.Angler.IS_INVERTED);
+		angler.setInverted(HardwareConstants.Angler.INVERTED);
 		angler.enableForwardSoftLimit(false);
 		angler.enableReverseSoftLimit(false);
 		angler.changeControlMode(TalonControlMode.PercentVbus);
@@ -41,7 +41,7 @@ public class AnglerSubsystem extends HoundSubsystem implements PIDSource, PIDOut
 		angler.setFeedbackDevice(CANTalon.FeedbackDevice.AnalogPot);
 		
 		pid.setOutputRange(-MIN_OUTPUT, MAX_OUTPUT);
-		pid.setInputRange(RobotMap.Collector.COLLECTOR_UP, RobotMap.Collector.COLLECTOR_DOWN);
+		pid.setInputRange(HardwareConstants.Angler.UP, HardwareConstants.Angler.DOWN);
 		pid.setAbsoluteTolerance(TOLERANCE);
 
 		SmartDashboard.putData("Angler PID", pid);
@@ -49,7 +49,7 @@ public class AnglerSubsystem extends HoundSubsystem implements PIDSource, PIDOut
 	
 	public void setPosition(double position) {
 		pid.setSetpoint(HoundMath.checkRange(position, 
-				RobotMap.Collector.COLLECTOR_UP, RobotMap.Collector.COLLECTOR_DOWN));
+				HardwareConstants.Angler.UP, HardwareConstants.Angler.DOWN));
 		pid.enable();
 	}
 	
@@ -139,8 +139,7 @@ public class AnglerSubsystem extends HoundSubsystem implements PIDSource, PIDOut
 	
 	@Override
 	public double pidGet() {
-		return HoundMath.checkRange(angler.getAnalogInRaw(), 
-				RobotMap.Collector.COLLECTOR_UP, RobotMap.Collector.COLLECTOR_DOWN);
+		return getRawPosition();
 	}
 }
 

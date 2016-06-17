@@ -1,9 +1,8 @@
 package com.techhounds.frc2016.commands.angler;
 
-import com.techhounds.frc2016.RobotMap;
-import com.techhounds.frc2016.commands.collector.SetCollectorPower;
+import com.techhounds.frc2016.HardwareAdaptor;
+import com.techhounds.frc2016.HardwareConstants;
 import com.techhounds.frc2016.subsystems.AnglerSubsystem;
-import com.techhounds.frc2016.subsystems.BeamBreakSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -12,49 +11,31 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class SetStateDown extends Command {
 	
-	private final AnglerSubsystem angler;
+	private final AnglerSubsystem angler = HardwareAdaptor.kAnglerSubsystem;
 
-    public SetStateDown() {
-        // Use requires() here to declare subsystem dependencies
-        
-        angler = AnglerSubsystem.getInstance();
-    }
-
-    // Called just before this Command runs the first time
     protected void initialize() {
     	angler.decreaseState();
     	if(angler.getState() == 0) {
-    		new SetAnglerPosition(RobotMap.Collector.COLLECTOR_DOWN).start();
+    		new SetAnglerPosition(HardwareConstants.Angler.DOWN).start();
     	} else if(angler.getState() == 1) {
-
-    		//if(BeamBreakSubsystem.getInstance().ballPresent()){
-    		//	new SetCollectorPower(RobotMap.Collector.outPower, .1).start();
-    		//}
-    		new SetAnglerPosition(RobotMap.Collector.COLLECTING).start();
-
+    		new SetAnglerPosition(HardwareConstants.Angler.COLLECT).start();
     	} else if(angler.getState() == 2) {
-    		new SetAnglerPosition(RobotMap.Collector.COLLECTOR_UP).start();
-
+    		new SetAnglerPosition(HardwareConstants.Angler.UP).start();
     	} else {
     		System.out.println("OH NO, THERE IS AN ERROR WITH THE STATES!... CALEB!!!");
     	}
     }
 
-    // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     }
-
-    // Make this return true when this Command no longer needs to run execute()
+    
     protected boolean isFinished() {
         return true;
     }
 
-    // Called once after isFinished returns true
     protected void end() {
     }
-
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
+    
     protected void interrupted() {
     }
 }

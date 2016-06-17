@@ -1,6 +1,6 @@
 package com.techhounds.frc2016.commands.auton;
 
-import com.techhounds.frc2016.RobotMap;
+import com.techhounds.frc2016.HardwareConstants;
 import com.techhounds.frc2016.commands.gyro.RotateUsingGyro;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -60,7 +60,7 @@ public class VisionRotateToTarget extends Command {
 			if(checkFrame < frame && lastFrame < frame) {
 				double angleOff = SmartDashboard.getNumber("OffCenterDegreesX", 0);// * .75;
 				SmartDashboard.putNumber("VISION TARGET ANGLE", angleOff);
-				(rotateCommand = new RotateUsingGyro(angleOff, RobotMap.DriveTrain.MIN_TURN_POWER, 2, 0)).start();
+				(rotateCommand = new RotateUsingGyro(angleOff, HardwareConstants.Drive.MIN_TURN_POWER, 2, 0)).start();
 			}
 		}
 		
