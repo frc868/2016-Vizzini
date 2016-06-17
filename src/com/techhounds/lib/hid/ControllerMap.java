@@ -3,11 +3,10 @@ package com.techhounds.lib.hid;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import com.techhounds.Robot;
+import com.techhounds.lib.util.HoundMath;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Joystick.RumbleType;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class ControllerMap {
 	
@@ -37,7 +36,7 @@ public class ControllerMap {
 		int LEFT_HORIZONTAL = 10,
 	  			RIGHT_HORIZONTAL = 11, LEFT_VERTICAL = 12, RIGHT_VERTICAL = 13;
 	}
-	
+	//										  A  B  X  Y  RB  RT LB  LT ST BA  LH RH LV RV
 	protected static final int[] logitech =	{ 2, 3, 1, 4, 6,  8, 5,  7, 10, 9, 0, 2, 1, 3};	
     protected static final int[] xbox360 = 	{ 1, 2, 3, 4, 6, -1, 5, -1,  8, 7, 0, 4, 1, 5};
     protected static final int[] ps4 =		{ 2, 3, 1, 4, 6,  8, 5,  7, 10, 9, 0, 2, 1, 5};
@@ -114,16 +113,16 @@ public class ControllerMap {
 	}
 	
 	public double getForwardsRightPower(){
-		return Robot.rangeCheck(getAxis(Direction.LEFT_VERTICAL) - getAxis(Direction.RIGHT_HORIZONTAL));
+		return HoundMath.checkRange(getAxis(Direction.LEFT_VERTICAL) - getAxis(Direction.RIGHT_HORIZONTAL));
 	}
 	public double getForwardsLeftPower(){
-		return Robot.rangeCheck(getAxis(Direction.LEFT_VERTICAL) + getAxis(Direction.RIGHT_HORIZONTAL));
+		return HoundMath.checkRange(getAxis(Direction.LEFT_VERTICAL) + getAxis(Direction.RIGHT_HORIZONTAL));
 	}
 	public double getBackwardsRightPower(){
-		return Robot.rangeCheck(-getAxis(Direction.LEFT_VERTICAL) - getAxis(Direction.RIGHT_HORIZONTAL) );
+		return HoundMath.checkRange(-getAxis(Direction.LEFT_VERTICAL) - getAxis(Direction.RIGHT_HORIZONTAL) );
 	}
 	public double getBackwardsLeftPower(){
-		return Robot.rangeCheck(-getAxis(Direction.LEFT_VERTICAL) + getAxis(Direction.RIGHT_HORIZONTAL));
+		return HoundMath.checkRange(-getAxis(Direction.LEFT_VERTICAL) + getAxis(Direction.RIGHT_HORIZONTAL));
 	}
 	public Type getType() {
 		return type;

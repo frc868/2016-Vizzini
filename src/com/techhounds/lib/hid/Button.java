@@ -45,7 +45,7 @@ public abstract class Button extends Trigger {
 		
 		CommandGroup commandGroup = new CommandGroup();
 		for(Command commands: command)
-			commandGroup.addSequential(commands);
+			commandGroup.addParallel(commands);
 		
 		return commandGroup;
 	}
