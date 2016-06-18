@@ -5,11 +5,12 @@ import com.techhounds.frc2016.HardwareConstants;
 import com.techhounds.frc2016.HardwareMap;
 import com.techhounds.lib.util.HoundMath;
 import com.techhounds.lib.util.HoundSubsystem;
+import com.techhounds.lib.util.Updateable;
 
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class Collector extends HoundSubsystem {
+public class Collector extends HoundSubsystem implements Updateable {
 
 	private static Collector instance;
 	private CANTalon motor = HardwareAdaptor.kMotor_Collector;
@@ -58,7 +59,8 @@ public class Collector extends HoundSubsystem {
 		return instance == null ? instance = new Collector() : instance;
 	}
 
-	protected void initDefaultCommand() {
+	@Override
+	public void update() {
 		
 	}
 }

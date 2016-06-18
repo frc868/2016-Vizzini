@@ -4,16 +4,11 @@ import java.util.Vector;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 
-public abstract class HoundSubsystem extends Subsystem {
+public abstract class HoundSubsystem {
 
 	private static Vector<HoundSubsystem> subsystems = new Vector<>();
 	
 	public HoundSubsystem() {
-		subsystems.add(this);
-	}
-	
-	public HoundSubsystem(String name) {
-		super(name);
 		subsystems.add(this);
 	}
 	

@@ -1,6 +1,6 @@
 package com.techhounds.frc2016;
 
-import com.techhounds.frc2016.commands.auton.AutonChooser;
+import com.techhounds.frc2016.HardwareConstants.OI;
 import com.techhounds.frc2016.subsystems.Angler;
 import com.techhounds.frc2016.subsystems.BeamBreak;
 import com.techhounds.frc2016.subsystems.Collector;
@@ -105,10 +105,8 @@ public class HardwareAdaptor {
 	public static final ProfileGenerator kProfileGenerator = ProfileGenerator.getInstance();
 	
 	// Operator Interface
-	public static final OI kOperatorInterface = OI.getInstance();
-	// Autonomous Chooser
-	public static final AutonChooser kAutonChooser = AutonChooser.getInstance();
-	
+	public static final OperatorInterface kOperatorInterface = new OperatorInterface();
+
 	// Dashboard Updater
 	public static final HoundSubsystem.DashboardUpdate kDashboardUpdater = new HoundSubsystem.DashboardUpdate();
 	

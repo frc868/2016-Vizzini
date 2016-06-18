@@ -17,7 +17,7 @@ public class TurnInPlace extends Command {
 	
 	public TurnInPlace(double degrees) {
 		this.degrees = degrees;
-		requires(drive = HardwareAdaptor.kDriveSubsystem);
+		//requires(drive = HardwareAdaptor.kDriveSubsystem);
 	}
 	
 	public TurnInPlace(double degrees, double maxPower) {

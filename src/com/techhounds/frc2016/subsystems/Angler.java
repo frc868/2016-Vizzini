@@ -40,7 +40,7 @@ public class Angler extends HoundSubsystem implements PIDSource, PIDOutput {
 		angler.configPotentiometerTurns(1);
 		angler.setFeedbackDevice(CANTalon.FeedbackDevice.AnalogPot);
 		
-		pid.setOutputRange(-MIN_OUTPUT, MAX_OUTPUT);
+		pid.setOutputRange(MIN_OUTPUT, MAX_OUTPUT);
 		pid.setInputRange(HardwareConstants.Angler.UP, HardwareConstants.Angler.DOWN);
 		pid.setAbsoluteTolerance(TOLERANCE);
 
@@ -96,24 +96,18 @@ public class Angler extends HoundSubsystem implements PIDSource, PIDOutput {
 		return instance == null ? instance = new Angler() : instance;
 	}
 
-    public void initDefaultCommand() {
-    	
-    }
-    
     public int getState() {
     	return state;
     }
     
     public void increaseState() {
     	state++;
-    	if(state >= 2)
-    		state = 2;
+    	state = state >= 2 ? 2 : state;
     }
     
     public void decreaseState() {
     	state--;
-    	if(state <= 0)
-    		state = 0;
+    	state = state <= 0 ? 0 : state;
     }
     
     public void resetState() {
@@ -126,7 +120,7 @@ public class Angler extends HoundSubsystem implements PIDSource, PIDOutput {
 		if(output < 0)
 			output -= .1;
 		
-		angler.set(-output);
+		angler.set(output);
 	}
 	
 	@Override

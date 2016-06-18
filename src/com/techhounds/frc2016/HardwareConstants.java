@@ -35,7 +35,10 @@ public class HardwareConstants {
 	public interface Collector {
 		final boolean INVERTED = false;
 
-		final double inPower = .6, outPower = -1;
+		final double 
+			inPower = 0.6, 
+			outPower = -1.0,
+			shooterPower = 1.0;
 	}
 	
 	public interface Servo {

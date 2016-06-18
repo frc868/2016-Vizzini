@@ -61,10 +61,6 @@ public class Servos extends HoundSubsystem {
 	public boolean getIsMax() {
 		return getPosition() >= max;
 	}
-	
-    public void initDefaultCommand() {
-    	
-    }
 
 	@Override
 	public void updatePeriodic() {

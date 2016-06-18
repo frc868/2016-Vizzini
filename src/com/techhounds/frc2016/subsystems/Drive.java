@@ -174,10 +174,6 @@ public class Drive extends HoundSubsystem implements Updateable {
 		void disable();
 	}
 
-	protected void initDefaultCommand() {
-		// setDefaultCommand(new DriveWithGamepad());
-	}
-
 	public void driveJoysticks() {
 		if(isForward){
     		setPower(HardwareAdaptor.kOperatorInterface.getRightBackward(), 

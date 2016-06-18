@@ -1,24 +1,27 @@
 
 package com.techhounds.frc2016;
 
-import com.techhounds.frc2016.commands.MatchSetup;
-import com.techhounds.frc2016.commands.SetFlashlight;
-import com.techhounds.frc2016.commands.UpdateSmartDashboard;
-import com.techhounds.frc2016.commands.auton.RetrieveAuton;
-import com.techhounds.frc2016.commands.servos.SetWinchLock;
-import com.techhounds.lib.util.HoundSubsystem;
+import com.techhounds.frc2016.OperatorInterface.Commands;
+import com.techhounds.frc2016.behavior.BehaviorManager;
 import com.techhounds.lib.util.Updater;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Robot extends IterativeRobot {
 
-	public Updater controllers = new Updater(200.0);
-	public Updater slowControllers = new Updater(100.0);
-	public Updater dashboardControl = new Updater(50.0);
+	public Updater m_controllers = new Updater(200.0);	   // CANTalon
+	public Updater m_slowControllers = new Updater(100.0); // Sparks
+	public Updater m_logger = new Updater(50.0);
+	
+	public BehaviorManager m_behaviorManager = new BehaviorManager();
+	
+	public OperatorInterface.Commands [] m_matchSetup = new OperatorInterface.Commands[] {
+			Commands.ANGLER_TO_UP,
+			Commands.COLLECT_STOP,
+			Commands.SHOOTER_STOP
+	};
 	
 	private static final String GAME_STATE = "GameState";
 
@@ -32,37 +35,43 @@ public class Robot extends IterativeRobot {
 	public void robotInit() {
 
 		SmartDashboard.putString(GAME_STATE, "robotInit");
-
-		new UpdateSmartDashboard().start();
-		new MatchSetup().start();
-		new SetWinchLock(false).start();
-
-		controllers.addUpdateable(HardwareAdaptor.kShooterSubsystem);
-
-		slowControllers.addUpdateable(HardwareAdaptor.kDriveSubsystem);
 		
-		dashboardControl.addUpdateable(HardwareAdaptor.kDashboardUpdater);
+		// Setup our Updaters / Controllers
+		m_controllers.addUpdateable(HardwareAdaptor.kShooterSubsystem::update);
+		m_controllers.addUpdateable(HardwareAdaptor.kCollectorSubsystem::update);
 
+		m_slowControllers.addUpdateable(HardwareAdaptor.kDriveSubsystem::update);
+		
+		m_logger.addUpdateable(HardwareAdaptor.kDashboardUpdater::update);
+		m_logger.addUpdateable(HardwareAdaptor.kLEDSubsystem::update);
+		m_logger.start();
+		
+		// Match Setup
+		m_behaviorManager.update(m_matchSetup);
+		
 		System.out.println("*** TECHHOUNDS IS READY TO ROBOT ***");
 	}
 
 	// Runs once when Disabled
 	public void disabledInit() {
 
-		setControllers(false);
-		new SetFlashlight(false).start();
-
 		SmartDashboard.putString(GAME_STATE, "disabled");
+
+		// Disable Our Updaters / Controllers
+		setControllers(false);
+		//new SetFlashlight(false).start();
+
 
 		System.out.println("*** TECHHOUNDS IS DISABLED ***");
 	}
 
 	// Runs once when in Autonomous
 	public void autonomousInit() {
+		
 		SmartDashboard.putString(GAME_STATE, "auton");
 
+		// Enable Our Updaters / Controllers
 		setControllers(true);
-		new RetrieveAuton().start();
 
 		System.out.println("*** TECHHOUNDS IS AUTON ***");
 
@@ -70,37 +79,31 @@ public class Robot extends IterativeRobot {
 
 	// Runs once when in Teleop
 	public void teleopInit() {
+		
 		SmartDashboard.putString(GAME_STATE, "teleop");
 
+		// Enable Our Updaters / Controllers
 		setControllers(true);
-		new MatchSetup().start();
+		
+		// Match Setup
+		m_behaviorManager.update(m_matchSetup);
 
 		System.out.println("*** TECHHOUNDS IS TELEOP ***");
 	}
 	
 	public void setControllers(boolean state) {
 		if(state) {
-			controllers.start();
-			slowControllers.start();
-			dashboardControl.start();
+			m_controllers.start();
+			m_slowControllers.start();
 		} else {
-			controllers.stop();
-			slowControllers.stop();
-			dashboardControl.stop();
+			m_controllers.stop();
+			m_slowControllers.stop();
 		}
-	}
-	
-
-	public void disabledPeriodic() {
-		Scheduler.getInstance().run();
-	}
-
-	public void autonomousPeriodic() {
-		Scheduler.getInstance().run();
 	}
 
 	public void teleopPeriodic() {
-		Scheduler.getInstance().run();
+		// Update Driver / Operator Input
+		m_behaviorManager.update(HardwareAdaptor.kOperatorInterface.getCommands());
 	}
 
 	public void testPeriodic() {

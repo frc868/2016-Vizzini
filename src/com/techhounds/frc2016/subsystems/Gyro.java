@@ -147,12 +147,6 @@ public abstract class Gyro extends HoundSubsystem {
 		SmartDashboard.putNumber("Rotation (X)", getRotation());
 	}
 
-	/**
-	 * No default command is required.
-	 */
-	protected final void initDefaultCommand() {
-
-	}
 
 	/**
 	 * Get the total rotation in degrees since the gyro subsystem was first

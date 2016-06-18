@@ -35,9 +35,5 @@ public class Flashlight extends HoundSubsystem {
 	public void updatePeriodic() {
 		
 	}
-	
-    public void initDefaultCommand() {
-    	
-    }
 }
 

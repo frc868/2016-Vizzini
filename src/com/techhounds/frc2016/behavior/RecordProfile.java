@@ -1,4 +1,4 @@
-package com.techhounds.frc2016.commands._experimental;
+package com.techhounds.frc2016.behavior;
 
 import java.io.File;
 import java.io.PrintWriter;

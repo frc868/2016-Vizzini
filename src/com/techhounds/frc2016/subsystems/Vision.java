@@ -27,10 +27,6 @@ public class Vision extends HoundSubsystem{
 		return SmartDashboard.getNumber("OffCenterDegreesX", 0);
 	}
 
-	protected void initDefaultCommand() {
-		
-	}
-
 	@Override
 	public void updatePeriodic() {
 		

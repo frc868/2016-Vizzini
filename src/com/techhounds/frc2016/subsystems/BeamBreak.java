@@ -25,9 +25,6 @@ public class BeamBreak extends HoundSubsystem {
     public static BeamBreak getInstance(){
     	return instance == null ? new BeamBreak() : instance;
     }
-    
-    public void initDefaultCommand() {
-    	
-    }
+
 }
 
