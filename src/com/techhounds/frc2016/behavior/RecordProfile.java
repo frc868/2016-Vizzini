@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-import com.techhounds.frc2016.ProfileGenerator;
+import com.techhounds.frc2016.TrajectoryLoader;
 import com.techhounds.frc2016.HardwareAdaptor;
 import com.techhounds.frc2016.subsystems.Drive;
 import com.techhounds.frc2016.subsystems.Gyro;
@@ -107,8 +107,8 @@ public class RecordProfile extends PeriodicCommand {
 		segmentsLeft.toArray(left);
 		segmentsRight.toArray(right);
 
-		ProfileGenerator.leftRecorded = new Trajectory(left);
-		ProfileGenerator.rightRecorded = new Trajectory(right);
+		TrajectoryLoader.leftRecorded = new Trajectory(left);
+		TrajectoryLoader.rightRecorded = new Trajectory(right);
 	}
 	
 	public class SaveProfile implements Runnable {

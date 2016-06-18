@@ -49,14 +49,14 @@ public class DriveTrajectoryController implements Controller {
 		isEnabled = false;
 	}
 	
-	public boolean onTarget(double tolerance) {
+	public boolean onTarget() {
 		return leftFollower.isFinished();
 	}
 
 	@Override
 	public DriveSignal update() {
 		
-		if(onTarget(0) || leftFollower == null || rightFollower == null) {
+		if(onTarget() || leftFollower == null || rightFollower == null) {
 			return DriveSignal.STOP;
 		}
 		

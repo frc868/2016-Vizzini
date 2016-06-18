@@ -2,8 +2,10 @@ package com.techhounds.frc2016.behavior;
 
 import com.techhounds.frc2016.HardwareAdaptor;
 import com.techhounds.frc2016.HardwareConstants;
-import com.techhounds.frc2016.OperatorInterface;
-import com.techhounds.frc2016.OperatorInterface.Commands;
+import com.techhounds.frc2016.Systems;
+import com.techhounds.frc2016.behavior.routine.FireRoutine;
+import com.techhounds.frc2016.behavior.routine.PreFireRoutine;
+import com.techhounds.frc2016.behavior.routine.Routine;
 import com.techhounds.frc2016.subsystems.Angler;
 import com.techhounds.frc2016.subsystems.BeamBreak;
 import com.techhounds.frc2016.subsystems.Collector;
@@ -17,65 +19,85 @@ import com.techhounds.frc2016.subsystems.Vision;
 
 public class BehaviorManager {
 	
-	public static final Angler angler = 		HardwareAdaptor.kAnglerSubsystem;
-	public static final BeamBreak beamBreak = 	HardwareAdaptor.kBeamBreakSubsystem;
-	public static final Collector collector = 	HardwareAdaptor.kCollectorSubsystem;
-	public static final Drive drive = 			HardwareAdaptor.kDriveSubsystem;
-	public static final Gyro gyro = 			HardwareAdaptor.kGyroSubsystem;
-	public static final Flashlight flashlight = HardwareAdaptor.kFlashlightSubsystem;
-	public static final LED leds = 				HardwareAdaptor.kLEDSubsystem;
-	public static final Servos winch_enb = 		HardwareAdaptor.kServo_WINCH_ENB;
-	public static final Servos winch_lock = 	HardwareAdaptor.kServo_WINCH_LOC;
-	public static final Servos release = 		HardwareAdaptor.kServo_RELEASE;
-	public static final Shooter shooter = 		HardwareAdaptor.kShooterSubsystem;
-	public static final Vision vision = 		HardwareAdaptor.kVisionSubsystem;
+	static final Angler angler = 			HardwareAdaptor.kAnglerSubsystem;
+	static final BeamBreak beamBreak = 		HardwareAdaptor.kBeamBreakSubsystem;
+	static final Collector collector = 		HardwareAdaptor.kCollectorSubsystem;
+	static final Drive drive = 				HardwareAdaptor.kDriveSubsystem;
+	static final Gyro gyro = 				HardwareAdaptor.kGyroSubsystem;
+	static final Flashlight flashlight = 	HardwareAdaptor.kFlashlightSubsystem;
+	static final LED leds = 				HardwareAdaptor.kLEDSubsystem;
+	static final Servos winch_enb = 		HardwareAdaptor.kServo_WINCH_ENB;
+	static final Servos winch_lock =	 	HardwareAdaptor.kServo_WINCH_LOC;
+	static final Servos release = 			HardwareAdaptor.kServo_RELEASE;
+	static final Shooter shooter = 			HardwareAdaptor.kShooterSubsystem;
+	static final Vision vision = 			HardwareAdaptor.kVisionSubsystem;
 	
-	public void update(Commands[] commands) {
+	private Routine m_routine;
+	
+	public void setRoutine(Routine routine) {
+		m_routine = routine;
+	}
+	
+	public void update(Commands commands) {
 		
-		Commands collectCommand = commands[0];
-		Commands anglerCommand = commands[1];
-		Commands shooterCommand = commands[2];
-		Commands flashlightCommand = commands[3];
-		Commands servoRelease = commands[4];
-		Commands servoWinchDT = commands[5];
-		Commands servoLock = commands[6];
+		Commands.Angler anglerCommand = commands.m_angler;
+		Commands.Collector collectCommand = commands.m_collector;
+		Commands.Shooter shooterCommand = commands.m_shooter;
+		Commands.Flashlight flashlightCommand = commands.m_flashlight;
 		
-		if(collectCommand == Commands.COLLECT_IN) {
-			collector.setPower(beamBreak.ballPresent() ? 0 : HardwareConstants.Collector.inPower);
-		} else if(collectCommand == Commands.COLLECT_OUT) {
-			collector.setPower(HardwareConstants.Collector.outPower);
-		} else if(collectCommand == Commands.COLLECT_FIRE) {
-			collector.setPower(HardwareConstants.Collector.shooterPower);
-		} else {
-			collector.setPower(0.0);
+		if(m_routine != null && m_routine.isFinished()) {
+			setRoutine(null);
 		}
 		
-		if(anglerCommand != Commands.ANGLER_DO_NOTHING) {
-			if(anglerCommand == Commands.ANGLER_TO_UP) {
-				angler.increaseState();
-			} else if(anglerCommand == Commands.ANGLER_TO_DOWN) {
-				angler.decreaseState();
+		if(m_routine != null && !m_routine.uses(Systems.COLLECTOR)) {
+			
+			if(collectCommand == Commands.Collector.IN) {
+				collector.setPower(beamBreak.ballPresent() ? 0 : HardwareConstants.Collector.inPower);
+			} else if(collectCommand == Commands.Collector.OUT) {
+				collector.setPower(HardwareConstants.Collector.outPower);
+			} else if(collectCommand == Commands.Collector.FIRE) {
+				setRoutine(new FireRoutine());
+			} else {
+				collector.setPower(0.0);
 			}
 			
-			if(angler.getState() == 0) {
-	    		angler.setPosition(HardwareConstants.Angler.DOWN);
-	    	} else if(angler.getState() == 1) {
-	    		angler.setPosition(HardwareConstants.Angler.COLLECT);
-	    	} else if(angler.getState() == 2) {
-	    		angler.setPosition(HardwareConstants.Angler.UP);
-	    	}
 		}
 		
-		if(shooterCommand != Commands.SHOOTER_DO_NOTHING) {
-			if(shooterCommand == Commands.SHOOTER_START) {
-				shooter.setSpeed(70.0);
-			} else if(shooterCommand == Commands.SHOOTER_STOP) {
-				shooter.setPower(0.0);
+		if(m_routine != null && !m_routine.uses(Systems.ANGLER)) {
+			
+			if(anglerCommand != Commands.Angler.DO_NOTHING) {
+				if(anglerCommand == Commands.Angler.UP) {
+					angler.increaseState();
+				} else if(anglerCommand == Commands.Angler.DOWN) {
+					angler.decreaseState();
+				}
+				
+				if(angler.getState() == 0) {
+		    		angler.setPosition(HardwareConstants.Angler.DOWN);
+		    	} else if(angler.getState() == 1) {
+		    		angler.setPosition(HardwareConstants.Angler.COLLECT);
+		    	} else if(angler.getState() == 2) {
+		    		angler.setPosition(HardwareConstants.Angler.UP);
+		    	}
 			}
 		}
 		
-		if(flashlightCommand != Commands.FLASHLIGHT_DO_NOTHING) {
-			if(flashlightCommand == Commands.FLASHLIGHT_TOGGLE) 
+		if(m_routine != null && !m_routine.uses(Systems.SHOOTER)) {
+			
+			if(shooterCommand != Commands.Shooter.DO_NOTHING) {
+				if(shooterCommand == Commands.Shooter.START) {
+					setRoutine(new PreFireRoutine());
+				} else if(shooterCommand == Commands.Shooter.STOP) {
+					shooter.setPower(0.0);
+				}
+			}
+		}
+		
+		if(m_routine != null)
+			m_routine.update();
+		
+		if(flashlightCommand != Commands.Flashlight.DO_NOTHING) {
+			if(flashlightCommand == Commands.Flashlight.TOGGLE) 
 				flashlight.toggle();
 		}
 	}

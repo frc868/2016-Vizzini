@@ -7,9 +7,9 @@ import java.util.Scanner;
 import com.techhounds.lib.trajectory.Trajectory;
 import com.techhounds.lib.trajectory.TrajectoryPair;
 
-public class ProfileGenerator {
+public class TrajectoryLoader {
 
-	private static ProfileGenerator instance;
+	private static TrajectoryLoader instance;
 	public static ArrayList<TrajectoryPair> loadedTrajectories;
 	public static Trajectory leftRecorded, rightRecorded;
 	
@@ -17,7 +17,7 @@ public class ProfileGenerator {
 			"2_BALL_LOWBAR_PT1"
 	};
 	
-	private ProfileGenerator() {
+	private TrajectoryLoader() {
 		
 		loadedTrajectories = new ArrayList<>();
 		
@@ -74,7 +74,7 @@ public class ProfileGenerator {
 		return new Trajectory.Segment(dt, x, y, position, velocity, acceleration, jerk, heading);
 	}
 	
-	public static ProfileGenerator getInstance() {
-		return instance == null ? instance = new ProfileGenerator() : instance;
+	public static TrajectoryLoader getInstance() {
+		return instance == null ? instance = new TrajectoryLoader() : instance;
 	}
 }

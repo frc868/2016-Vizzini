@@ -11,6 +11,7 @@ import com.techhounds.frc2016.subsystems.LED;
 import com.techhounds.frc2016.subsystems.Servos;
 import com.techhounds.frc2016.subsystems.Shooter;
 import com.techhounds.frc2016.subsystems.Vision;
+import com.techhounds.lib.hid.ControllerMap;
 import com.techhounds.lib.util.HoundSpeedController;
 import com.techhounds.lib.util.HoundSubsystem;
 
@@ -21,6 +22,7 @@ import edu.wpi.first.wpilibj.Counter;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.Servo;
@@ -102,11 +104,15 @@ public class HardwareAdaptor {
 	public static final BuiltInAccelerometer kAccelerometer = new BuiltInAccelerometer();
 	
 	// Profile Generator
-	public static final ProfileGenerator kProfileGenerator = ProfileGenerator.getInstance();
+	public static final TrajectoryLoader kProfileGenerator = TrajectoryLoader.getInstance();
 	
 	// Operator Interface
 	public static final OperatorInterface kOperatorInterface = new OperatorInterface();
 
+	// Driver Controls
+	public static final ControllerMap kDriverGamepad = new ControllerMap(new Joystick(HardwareConstants.OI.DRIVER_PORT), ControllerMap.Type.XBOX_ONE);
+	public static final ControllerMap kOperatorGamepad = new ControllerMap(new Joystick(HardwareConstants.OI.OPERATOR_PORT), ControllerMap.Type.XBOX_ONE);
+	
 	// Dashboard Updater
 	public static final HoundSubsystem.DashboardUpdate kDashboardUpdater = new HoundSubsystem.DashboardUpdate();
 	

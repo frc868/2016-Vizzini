@@ -2,6 +2,7 @@ package com.techhounds.frc2016.subsystems;
 
 import com.techhounds.frc2016.HardwareAdaptor;
 import com.techhounds.frc2016.HardwareConstants;
+import com.techhounds.frc2016.Robot;
 import com.techhounds.lib.util.DriveSignal;
 import com.techhounds.lib.util.HoundMath;
 import com.techhounds.lib.util.HoundSpeedController;
@@ -169,7 +170,7 @@ public class Drive extends HoundSubsystem implements Updateable {
 	public interface Controller {
 		DriveSignal update();
 		boolean isEnabled();
-		boolean onTarget(double tolerance);
+		boolean onTarget();
 		void enable();
 		void disable();
 	}
@@ -188,8 +189,14 @@ public class Drive extends HoundSubsystem implements Updateable {
 	public void update() {
 		if(driveController != null && driveController.isEnabled()) {	// Closed Loop (i.e. PID / PIDVA)
 			setPower(driveController.update());
+			
+			if(driveController.onTarget()) {
+				driveController.disable();
+				setController(null);
+			}
 		} else {														// Open Loop (i.e. Drive Input)
-			driveJoysticks();
+			if(Robot.robotStatus == Robot.GameState.TELEOP)
+				driveJoysticks();
 		}
 	}
 	

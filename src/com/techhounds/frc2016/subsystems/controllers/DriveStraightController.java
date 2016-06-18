@@ -21,6 +21,8 @@ public class DriveStraightController implements Controller {
 	private Drive drive = HardwareAdaptor.kDriveSubsystem;
 	private Gyro gyro = HardwareAdaptor.kGyroSubsystem;
 	
+	private double tolerance;
+	
 	private SynchronousPID pidControl = new SynchronousPID(Kp, Ki, Kd);
 
 	public DriveStraightController() {
@@ -45,14 +47,18 @@ public class DriveStraightController implements Controller {
 		firstCall = true;
 	}
 	
-	public boolean onTarget(double tolerance) {
+	public void setTolerance(double tolerance) {
+		this.tolerance = tolerance;
+	}
+	
+	public boolean onTarget() {
 		return pidControl.getError() < tolerance;
 	}
 
 	@Override
 	public DriveSignal update() {
 		
-		if(onTarget(2.5)) {
+		if(onTarget()) {
 			return DriveSignal.STOP;
 		}
 		

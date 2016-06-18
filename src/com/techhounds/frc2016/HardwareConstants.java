@@ -18,6 +18,7 @@ public class HardwareConstants {
 	
 	public interface Shooter {
 		final boolean INVERTED = true;
+		final double SHOOTER_SPEED = 70.0;
 	}
 	
 	public interface Drive {

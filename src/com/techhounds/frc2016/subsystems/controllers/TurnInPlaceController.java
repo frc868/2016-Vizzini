@@ -16,7 +16,7 @@ public class TurnInPlaceController implements Controller {
 		Kd = .08;
 	
 	private Gyro gyro = HardwareAdaptor.kGyroSubsystem;
-	
+	private double tolerance;
 	private SynchronousPID pidControl = new SynchronousPID(Kp, Ki, Kd);
 
 	public TurnInPlaceController() {
@@ -40,14 +40,18 @@ public class TurnInPlaceController implements Controller {
 		pidControl.disable();
 	}
 	
-	public boolean onTarget(double tolerance) {
+	public void setTolerance(double tolerance) {
+		this.tolerance = tolerance;
+	}
+	
+	public boolean onTarget() {
 		return pidControl.getError() < tolerance;
 	}
 
 	@Override
 	public DriveSignal update() {
 		
-		if(onTarget(1.0)) {
+		if(onTarget()) {
 			return DriveSignal.STOP;
 		}
 			

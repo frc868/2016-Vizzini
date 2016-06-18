@@ -1,11 +1,15 @@
 
 package com.techhounds.frc2016;
 
-import com.techhounds.frc2016.OperatorInterface.Commands;
 import com.techhounds.frc2016.behavior.BehaviorManager;
+import com.techhounds.frc2016.behavior.Commands;
+import com.techhounds.frc2016.behavior.Commands.Angler;
+import com.techhounds.frc2016.behavior.Commands.Collector;
+import com.techhounds.frc2016.behavior.Commands.Shooter;
 import com.techhounds.lib.util.Updater;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -17,15 +21,15 @@ public class Robot extends IterativeRobot {
 	
 	public BehaviorManager m_behaviorManager = new BehaviorManager();
 	
-	public OperatorInterface.Commands [] m_matchSetup = new OperatorInterface.Commands[] {
-			Commands.ANGLER_TO_UP,
-			Commands.COLLECT_STOP,
-			Commands.SHOOTER_STOP
-	};
+	public Commands m_matchSetup = new Commands();
 	
 	private static final String GAME_STATE = "GameState";
-
 	public static boolean oneControllerMode = false;
+	public static GameState robotStatus;
+	
+	public enum GameState {
+		AUTONOMOUS, TELEOP, DISABLED, ROBOT_INIT, TEST
+	}
 
 	public static boolean isFinal() {
 		return true;
@@ -35,6 +39,11 @@ public class Robot extends IterativeRobot {
 	public void robotInit() {
 
 		SmartDashboard.putString(GAME_STATE, "robotInit");
+		robotStatus = GameState.ROBOT_INIT;
+		
+		m_matchSetup.m_angler = Angler.UP;
+		m_matchSetup.m_collector = Collector.STOP;
+		m_matchSetup.m_shooter = Shooter.STOP;
 		
 		// Setup our Updaters / Controllers
 		m_controllers.addUpdateable(HardwareAdaptor.kShooterSubsystem::update);
@@ -56,7 +65,8 @@ public class Robot extends IterativeRobot {
 	public void disabledInit() {
 
 		SmartDashboard.putString(GAME_STATE, "disabled");
-
+		robotStatus = GameState.DISABLED;
+		
 		// Disable Our Updaters / Controllers
 		setControllers(false);
 		//new SetFlashlight(false).start();
@@ -69,6 +79,7 @@ public class Robot extends IterativeRobot {
 	public void autonomousInit() {
 		
 		SmartDashboard.putString(GAME_STATE, "auton");
+		robotStatus = GameState.AUTONOMOUS;
 
 		// Enable Our Updaters / Controllers
 		setControllers(true);
@@ -81,6 +92,7 @@ public class Robot extends IterativeRobot {
 	public void teleopInit() {
 		
 		SmartDashboard.putString(GAME_STATE, "teleop");
+		robotStatus = GameState.TELEOP;
 
 		// Enable Our Updaters / Controllers
 		setControllers(true);
