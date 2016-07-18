@@ -9,14 +9,18 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class SwitchControllerToEndGame extends Command {
 
-    public SwitchControllerToEndGame() {
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
+	private boolean toSwitch;
+	
+    public SwitchControllerToEndGame(boolean toSwitch) {
+    	this.toSwitch = toSwitch;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	OI.getInstance().initializeEndGame(OI.getInstance().getOperator());
+    	if(toSwitch)
+    		OI.getInstance().initializeEndGame(OI.getInstance().getOperator());
+    	else
+    		OI.getInstance().setupOperator();
     }
 
     // Called repeatedly when this Command is scheduled to run

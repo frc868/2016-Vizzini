@@ -1,6 +1,5 @@
 package com.techhounds.commands.shooter;
 
-import com.techhounds.commands.SetRumble;
 import com.techhounds.subsystems.ShooterSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -15,6 +14,7 @@ public class SetShooterSpeed extends Command {
 	private ShooterSubsystem shooter;
 	private int cnt;
 	private boolean useVision;
+	private Boolean finish = false;
 	
     public SetShooterSpeed(double speed) {
     	this.speed = speed;
@@ -28,6 +28,11 @@ public class SetShooterSpeed extends Command {
     	this(69);
     	this.useVision = useVision;
    
+    }
+    
+    public SetShooterSpeed(double speed, boolean finish) {
+    	this(speed);
+    	this.finish = finish;
     }
 
     // Called just before this Command runs the first time
@@ -46,6 +51,7 @@ public class SetShooterSpeed extends Command {
     	}
     	
     	cnt = 0;
+    	shooter.resetFilteredSpeed2();
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -55,6 +61,11 @@ public class SetShooterSpeed extends Command {
     private Long currTime;
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
+    	
+    	if(finish != null && finish) {
+    		return true;
+    	}
+    	
     	if(shooter.onTarget())
     		cnt++;
     	else

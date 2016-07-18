@@ -84,6 +84,8 @@ public class DriveDistanceStraight extends Command implements PIDSource, PIDOutp
 	protected void initialize() {
 		// minPower = SmartDashboard.getNumber("Min Power To Drive", .2);
 		
+		drive.encodersReset();
+		
 		if(useSaveAngle) {
 			initAngle = gyro.getStoredAngle() + offsetAngle;
 		} else {
@@ -127,7 +129,7 @@ public class DriveDistanceStraight extends Command implements PIDSource, PIDOutp
 	@Override
 	protected void end() {
 		pid.disable();
-		drive.setRightLeftPower(0, 0);
+		drive.setPower(0, 0);
 		// TODO Auto-generated method stub
 
 	}
@@ -184,7 +186,7 @@ public class DriveDistanceStraight extends Command implements PIDSource, PIDOutp
 		
 		lastPower = output;
 	
-		drive.setRightLeftPower(Robot.rangeCheck(output + offset), Robot.rangeCheck(output - offset));
+		drive.setPower(Robot.rangeCheck(output + offset), Robot.rangeCheck(output - offset));
 
 		// TODO Auto-generated method stub
 

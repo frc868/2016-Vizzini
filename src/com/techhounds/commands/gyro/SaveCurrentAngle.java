@@ -12,16 +12,30 @@ public class SaveCurrentAngle extends Command {
 	//Use this command before going across a defense in auton
 	
 	private GyroSubsystem gyro;
-
+	private double offset;
+	
+	private boolean useCurrentSavedAngle;
+	
     public SaveCurrentAngle() {
+    	this(0);
+    }
+    
+    public SaveCurrentAngle(double offset) {
     	gyro = GyroSubsystem.getInstance();
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
+    }
+    
+    public SaveCurrentAngle(double offsetFromCurrentSavedAngle, boolean dontCare) {
+    	this(offsetFromCurrentSavedAngle);
+    	useCurrentSavedAngle = true;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	gyro.storeCurrentAngle();
+    	if(useCurrentSavedAngle) {
+    		gyro.storeCurrentAngle(gyro.getStoredAngle() + offset, false);
+    	} else {
+        	gyro.storeCurrentAngle(offset);
+    	}
     }
 
     // Called repeatedly when this Command is scheduled to run

@@ -7,16 +7,12 @@ import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
-/**
- *
- */
 public class ServoSubsystem extends Subsystem {
     
 	private Servo servo;
 	private double min, max;
 	private static ServoSubsystem instance_winch_enable, instance_winch_lock,
 		instance_scissor_one, instance_scissor_two;
-	public boolean debugging = false;
 	
 	public ServoSubsystem(int port){
 		this(port, 0, 1);
@@ -31,7 +27,6 @@ public class ServoSubsystem extends Subsystem {
 	}
 	
 	public static ServoSubsystem getWinchEnable(){
-		
 		return instance_winch_enable == null ? instance_winch_enable = new ServoSubsystem(RobotMap.Servo.WINCH_ENABLE, RobotMap.Servo.WINCH_ENABLE_MIN, RobotMap.Servo.WINCH_ENABLE_MAX) : instance_winch_enable;
 	}
 	
@@ -53,7 +48,6 @@ public class ServoSubsystem extends Subsystem {
 	
 	public void set(boolean setMax) {
 		servo.set(Robot.rangeCheck(setMax ? max : min));
-		//if setMax servo is set to max, else set to min
 	}
 	
 	public double getPosition() {
@@ -65,8 +59,7 @@ public class ServoSubsystem extends Subsystem {
 	}
 	
     public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
-        //setDefaultCommand(new MySpecialCommand());
+    	
     }
 }
 

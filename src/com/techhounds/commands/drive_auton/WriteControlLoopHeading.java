@@ -1,25 +1,24 @@
-package com.techhounds.commands;
+package com.techhounds.commands.drive_auton;
+
+import com.techhounds.subsystems.DriveSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class Debugger extends Command {
+public class WriteControlLoopHeading extends Command  {
 
 	@Override
 	protected void initialize() {
-		// TODO Auto-generated method stub
-		
+		MotionControlLoop.getInstance().setCurrHeading(-DriveSubsystem.getInstance().getRotationX());
 	}
 
 	@Override
 	protected void execute() {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	protected boolean isFinished() {
 		// TODO Auto-generated method stub
-		return ContinueDebug.continueDebug;
+		return true;
 	}
 
 	@Override

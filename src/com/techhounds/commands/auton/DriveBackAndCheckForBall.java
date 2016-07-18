@@ -21,7 +21,7 @@ public class DriveBackAndCheckForBall extends CommandGroup {
 		addSequential(ballCheck = new WaitForBeanBreak(true));
 	}
 	public DriveBackAndCheckForBall(double stopDistance, double maxSpeed){
-		addParallel(drive = new DriveDistanceStraight(stopDistance, maxSpeed, -RobotMap.DriveTrain.MIN_STRAIGHT_POWER, 5.0, true));
+		addParallel(drive = new DriveDistanceStraight(stopDistance, maxSpeed, -RobotMap.DriveTrain.MIN_STRAIGHT_POWER, 2.0, true));
 		addSequential(ballCheck = new WaitForBeanBreak(true));
 	}
 
@@ -31,7 +31,7 @@ public class DriveBackAndCheckForBall extends CommandGroup {
 			if(!ballCheck.isRunning()) {
 				return true;
 			} else if(!drive.isRunning()){
-				return true;
+				return false;
 			} else {
 				return false;
 			}

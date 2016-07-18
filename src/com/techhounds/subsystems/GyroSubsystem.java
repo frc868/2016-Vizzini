@@ -110,8 +110,12 @@ public abstract class GyroSubsystem extends Subsystem {
 		return instance;
 	}
 	
-	public void storeCurrentAngle(){
-		previousAngle = getRotation();
+	public void storeCurrentAngle(double offset){
+		previousAngle = getRotation() + offset;
+	}
+	
+	public void storeCurrentAngle(double offset, boolean dontCare) {
+		previousAngle = offset;
 	}
 	
 	public double getStoredAngle(){

@@ -26,6 +26,7 @@ public class RotateUsingGyro extends Command implements PIDSource, PIDOutput {
 	//min turn power can be less here, as robot should already be moving
 	private double MIN_TURN_POWER = .3;
 	private double MIN_STRAIT_POWER = .16;
+	private Boolean relative;
 	/**
 	 * Command to perform a relative rotation
 	 * @param angle, in degrees, positive for clockwise, negative for counter-clockwise.
@@ -46,6 +47,11 @@ public class RotateUsingGyro extends Command implements PIDSource, PIDOutput {
     	
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
+    }
+    
+    public RotateUsingGyro(double angle, boolean notRelative) {
+    	this(angle);
+    	relative = notRelative;
     }
     
     public RotateUsingGyro(double angle, double maxPower, boolean doesntMatter) {
@@ -74,7 +80,11 @@ public class RotateUsingGyro extends Command implements PIDSource, PIDOutput {
     // Called just before this Command runs the first time
     protected void initialize() {
     	//angle = angle < 0 ? angle - .5 : angle + .5;
-    	pid.setSetpoint(angle + pidGet());
+    	
+    	if(relative != null)
+    		pid.setSetpoint(angle);
+    	else
+    		pid.setSetpoint(angle + pidGet());
     	pid.enable();
     }
 

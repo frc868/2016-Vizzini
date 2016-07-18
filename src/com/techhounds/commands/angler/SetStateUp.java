@@ -1,6 +1,6 @@
 package com.techhounds.commands.angler;
 
-import com.techhounds.RobotMap;
+import com.techhounds.RobotMap.Angler;
 import com.techhounds.subsystems.AnglerSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -24,15 +24,15 @@ public class SetStateUp extends Command {
     	if(angler.getState() == 0) {
 
 
-    		new SetAnglerPosition(RobotMap.Collector.COLLECTOR_DOWN).start();
+    		new SetAnglerPosition(Angler.DOWN).start();
 
     	} else if(angler.getState() == 1) {
 
-    		new SetAnglerPosition(RobotMap.Collector.COLLECTING).start();
+    		new SetAnglerPosition(Angler.COLLECTING).start();
 
     	} else if(angler.getState() == 2) {
 
-    		new SetAnglerPosition(RobotMap.Collector.COLLECTOR_UP).start();
+    		new SetAnglerPosition(Angler.UP).start();
 
     	} else {
     		System.out.println("OH NO, THERE IS AN ERROR WITH THE STATES!... CALEB!!!");

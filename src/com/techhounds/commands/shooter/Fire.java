@@ -1,6 +1,5 @@
 package com.techhounds.commands.shooter;
 
-import com.techhounds.commands.SetRumble;
 import com.techhounds.commands.collector.SetCollectorPower;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;

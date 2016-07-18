@@ -14,13 +14,12 @@ public class CollectorSubsystem extends Subsystem {
 	private static CollectorSubsystem instance;
 	private CANTalon motor;
 	private PowerDistributionPanel panel;
-	private boolean debugging = false;
 	
 	private CollectorSubsystem() {
 		
 		panel = new PowerDistributionPanel();
 		
-		motor = new CANTalon(RobotMap.Collector.COLLECTOR_MOTOR);
+		motor = new CANTalon(RobotMap.Collector.MOTOR);
 		motor.setInverted(getInverted());
 		motor.enableBrakeMode(true);
 		LiveWindow.addActuator("collector", "motor", motor);
@@ -39,7 +38,7 @@ public class CollectorSubsystem extends Subsystem {
 	}
 	
 	public double getCurrent() {
-		return panel.getCurrent(RobotMap.Collector.COLLECTOR_PDP);
+		return panel.getCurrent(RobotMap.Collector.PDP);
 	}
 	
 	public double getPower(){
@@ -63,11 +62,11 @@ public class CollectorSubsystem extends Subsystem {
 	}
 	
 	public boolean getInverted(){
-		return RobotMap.Collector.COLLECTOR_IS_INVERTED;
+		return RobotMap.Collector.IS_INVERTED;
 	}
 	
 	public void updateSmartDashboard(){
-		if(debugging && !Robot.competing){
+		if(Robot.isDebugState){
 			SmartDashboard.putBoolean("Collector_Is_Going_Inward", getIsIn());
 			SmartDashboard.putBoolean("Collector_Is_Going_Outward", getIsOut());
 			SmartDashboard.putNumber("Collector_Power", getPower());
@@ -76,14 +75,10 @@ public class CollectorSubsystem extends Subsystem {
 	}
 	
 	public static CollectorSubsystem getInstance() {
-		if(instance == null){
-			instance = new CollectorSubsystem();
-		}
-		return instance;
+		return instance == null ? instance = new CollectorSubsystem() : instance;
 	}
 
 	protected void initDefaultCommand() {
-		// TODO Auto-generated method stub
 		
 	}
 }

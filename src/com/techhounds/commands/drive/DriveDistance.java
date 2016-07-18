@@ -98,7 +98,7 @@ public class DriveDistance extends Command implements PIDSource, PIDOutput {
 	@Override
 	protected void end() {
 		pid.disable();
-		drive.setRightLeftPower(0, 0);
+		drive.setPower(0, 0);
 		// TODO Auto-generated method stub
 
 	}

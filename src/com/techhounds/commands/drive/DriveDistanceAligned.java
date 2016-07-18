@@ -87,7 +87,7 @@ public class DriveDistanceAligned extends Command implements PIDSource, PIDOutpu
 	@Override
 	protected void end() {
 		pid.disable();
-		drive.setRightLeftPower(0, 0);
+		drive.setPower(0, 0);
 
 	}
 

@@ -11,34 +11,30 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  *
  */
 public class BeamBreakSubsystem extends Subsystem {
-	/*read only subsystem, does not need to be required
-	 * 
-	 */
-	private DigitalInput sensor;
+
 	private static BeamBreakSubsystem instance;
+	private DigitalInput sensor;
 	
 	private BeamBreakSubsystem(){
-		sensor = new DigitalInput(RobotMap.Collector.BEAM_BREAK_SENSOR);
+		sensor = new DigitalInput(RobotMap.Collector.BEAM_BREAK_DIO);
 		LiveWindow.addSensor("beam_break", "sensor", sensor);
 	}
+	
 	public boolean ballPresent(){
 		return !sensor.get();
 	}
+	
 	public void updateSmartDashboard(){
 		SmartDashboard.putBoolean("Ball Collected", ballPresent());
 	}
+	
     public static BeamBreakSubsystem getInstance(){
-    	if(instance == null){
-    		instance = new BeamBreakSubsystem();
-    	}
-    	return instance;
+    	return instance == null ? instance = new BeamBreakSubsystem() : instance;
+    	
     }
-    // Put methods for controlling this subsystem
-    // here. Call these from Commands.
-
+    
     public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
-        //setDefaultCommand(new MySpecialCommand());
+    	
     }
 }
 

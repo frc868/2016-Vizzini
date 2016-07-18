@@ -2,7 +2,7 @@ package com.techhounds.commands.angler;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-import com.techhounds.RobotMap;
+import com.techhounds.RobotMap.Angler;
 import com.techhounds.subsystems.AnglerSubsystem;
 
 /**
@@ -11,8 +11,8 @@ import com.techhounds.subsystems.AnglerSubsystem;
 public class LimitCheckCommand extends Command {
 	
 	private AnglerSubsystem angler;
-	public double forLim = RobotMap.Collector.ANGLER_FORWARD_LIMIT;
-	public double revLim = RobotMap.Collector.ANGLER_REVERSE_LIMIT;
+	public double forLim = Angler.ANGLER_FORWARD_LIMIT;
+	public double revLim = Angler.ANGLER_REVERSE_LIMIT;
 
     public LimitCheckCommand() {
     	angler = AnglerSubsystem.getInstance();

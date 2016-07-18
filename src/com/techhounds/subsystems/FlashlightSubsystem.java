@@ -10,10 +10,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class FlashlightSubsystem extends Subsystem {
     
-    // Put methods for controlling this subsystem
-    // here. Call these from Commands.
-	
-	Relay flashlight;
+	private Relay flashlight;
 	private static FlashlightSubsystem instance;
 	
 	private FlashlightSubsystem(){
@@ -36,8 +33,7 @@ public class FlashlightSubsystem extends Subsystem {
 	}
 
     public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
-        //setDefaultCommand(new MySpecialCommand());
+    	
     }
 }
 

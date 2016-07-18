@@ -45,7 +45,8 @@ public class RotateUsingVisionContinuous extends Command implements PIDSource, P
     	if(DEBUG){
     		SmartDashboard.putData("Gyro PID", pid);
     	}
-    	pid.setOutputRange(-.65, .65);
+    	//pid.setOutputRange(-.45, .45);
+    	pid.setOutputRange(-.55, .55);
     	pid.setAbsoluteTolerance(1);
     	MIN_TURN_POWER = RobotMap.DriveTrain.MIN_TURN_POWER;
     	

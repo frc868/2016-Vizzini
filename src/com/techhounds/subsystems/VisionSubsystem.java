@@ -11,9 +11,7 @@ public class VisionSubsystem extends Subsystem{
 	}
 	
 	public static VisionSubsystem getInstance() {
-		if(instance == null)
-			instance = new VisionSubsystem();
-		return instance;
+		return instance == null ? instance = new VisionSubsystem() : instance;
 	}
 	
 	public double getDistanceFromBase(){
@@ -29,8 +27,7 @@ public class VisionSubsystem extends Subsystem{
 	}
 
 	protected void initDefaultCommand() {
-		// TODO Auto-generated method stub
-
+		
 	}
 
 }

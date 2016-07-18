@@ -109,7 +109,7 @@ public class DriveUntilTiltPatternWithPower extends CommandGroup {
 		}
 		
 		offset *= Math.abs(power);
-		drive.setRightLeftPower(Robot.rangeCheck(power + offset), Robot.rangeCheck(power - offset));
+		drive.setPower(Robot.rangeCheck(power + offset), Robot.rangeCheck(power - offset));
 	}
 	
 	@Override
@@ -123,7 +123,7 @@ public class DriveUntilTiltPatternWithPower extends CommandGroup {
 	
 	@Override
 	public void end() {
-		drive.setRightLeftPower(0, 0);
+		drive.setPower(0, 0);
 		super.end();
 	}
 }

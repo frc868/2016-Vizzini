@@ -7,9 +7,6 @@ import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
-/**
- *
- */
 public class LEDSubsystem extends Subsystem {
 
 	private DigitalOutput led, led2, collect;
@@ -39,15 +36,10 @@ public class LEDSubsystem extends Subsystem {
 
     public void initDefaultCommand() {
     	setDefaultCommand(new SetLEDMode());
-        // Set the default command for a subsystem here.
-        //setDefaultCommand(new MySpecialCommand());
     }
     
     public static LEDSubsystem getInstance(){
-    	if(instance==null) {
-    		instance = new LEDSubsystem();
-    	}
-    	return instance;
+    	return instance == null ? instance = new LEDSubsystem() : instance;
     }
 }
 
