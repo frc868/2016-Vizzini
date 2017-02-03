@@ -1,9 +1,9 @@
 package com.techhounds.subsystems;
 
+import com.ctre.CANTalon;
 import com.techhounds.Robot;
 import com.techhounds.RobotMap;
 
-import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;

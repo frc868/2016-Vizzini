@@ -3,11 +3,10 @@ package com.techhounds.subsystems;
 import java.io.File;
 import java.io.PrintWriter;
 
+import com.ctre.CANTalon;
 import com.techhounds.Robot;
 import com.techhounds.RobotMap;
 
-import edu.wpi.first.wpilibj.CANTalon;
-import edu.wpi.first.wpilibj.CANTalon.TalonControlMode;
 import edu.wpi.first.wpilibj.Counter;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.PIDController;
