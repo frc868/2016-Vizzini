@@ -8,19 +8,19 @@ import com.techhounds.subsystems.DriveSubsystem;
 import com.techhounds.subsystems.GyroSubsystem;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import jaci.pathfinder.Pathfinder;
-import jaci.pathfinder.Trajectory;
-import jaci.pathfinder.followers.DistanceFollower;
-import jaci.pathfinder.modifiers.TankModifier;
+//import jaci.pathfinder.Pathfinder;
+//import jaci.pathfinder.Trajectory;
+//import jaci.pathfinder.followers.DistanceFollower;
+//import jaci.pathfinder.modifiers.TankModifier;
 
 public class ProfileDrive extends Command200Hz {
 
 	private DriveSubsystem drive;
-	private DistanceFollower leftFollower, rightFollower;
+//	private DistanceFollower leftFollower, rightFollower;
 	
 	private double currHeading;
 	
-	private Trajectory left, right;
+//	private Trajectory left, right;
 	private String savedProfileCount;
 	
 	private double Kp = 0.0, Ki = 0.0, Kd = 0.0, Kv = 1 / 105.0, Ka = 0.00007, Kturn = 0;
@@ -30,7 +30,25 @@ public class ProfileDrive extends Command200Hz {
 		requires(drive = DriveSubsystem.getInstance());
 	}
 
-	public ProfileDrive(Trajectory left, Trajectory right) {
+	@Override
+	protected void init() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	protected void doRun() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	protected boolean doFinish() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+/*	public ProfileDrive(Trajectory left, Trajectory right) {
 		this();
 		this.left = left;
 		this.right = right;
@@ -88,4 +106,5 @@ public class ProfileDrive extends Command200Hz {
 	protected boolean doFinish() {
 		return leftFollower.isFinished();
 	}
+	*/
 }

@@ -9,11 +9,11 @@ import java.util.List;
 import java.util.Scanner;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import jaci.pathfinder.Pathfinder;
+/*import jaci.pathfinder.Pathfinder;
 import jaci.pathfinder.Trajectory;
 import jaci.pathfinder.Waypoint;
 import jaci.pathfinder.followers.DistanceFollower;
-import jaci.pathfinder.modifiers.TankModifier;
+import jaci.pathfinder.modifiers.TankModifier;*/
 
 public class TrajectoryLoader {
 	
@@ -53,10 +53,10 @@ public class TrajectoryLoader {
 			
 			for(int i = 0; i < FILES_TO_LOAD.length; i++) {
 				
-				Trajectory left2 = Pathfinder.readFromCSV(new File("/trajectory/" + FILES_TO_LOAD[i] + "/left.csv"));
-				Trajectory right2 = Pathfinder.readFromCSV(new File("/trajectory/" + FILES_TO_LOAD[i] + "/right.csv"));
+				//Trajectory left2 = Pathfinder.readFromCSV(new File("/trajectory/" + FILES_TO_LOAD[i] + "/left.csv"));
+				//Trajectory right2 = Pathfinder.readFromCSV(new File("/trajectory/" + FILES_TO_LOAD[i] + "/right.csv"));
 				
-				loadedTrajectories.put(FILES_TO_LOAD[i], new TrajectoryPair(left2, right2));
+				//loadedTrajectories.put(FILES_TO_LOAD[i], new TrajectoryPair(left2, right2));
 			}
 		}
 	}

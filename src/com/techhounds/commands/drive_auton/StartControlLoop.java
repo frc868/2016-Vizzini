@@ -28,14 +28,14 @@ public class StartControlLoop extends Command {
 		if(useRecorded != null) {
 			TrajectoryPair trajectory = TrajectoryLoader.recorded;
 			MotionControlLoop.getInstance().useHeading(false);
-			MotionControlLoop.getInstance().setTrajectory(trajectory.getLeft(), trajectory.getRight());
+			//MotionControlLoop.getInstance().setTrajectory(trajectory.getLeft(), trajectory.getRight());
 		} else if(trajectory == null) {
 			MotionControlLoop.getInstance().useHeading(true);
 			TrajectoryPair trajectory = TrajectoryLoader.loadedTrajectories.get(index);
-			MotionControlLoop.getInstance().setTrajectory(trajectory.getLeft(), trajectory.getRight());
+			//MotionControlLoop.getInstance().setTrajectory(trajectory.getLeft(), trajectory.getRight());
 		} else {
 			MotionControlLoop.getInstance().useHeading(true);
-			MotionControlLoop.getInstance().setTrajectory(trajectory.getLeft(), trajectory.getRight());
+			//MotionControlLoop.getInstance().setTrajectory(trajectory.getLeft(), trajectory.getRight());
 		}
 		
 		MotionControlLoop.getInstance().start();

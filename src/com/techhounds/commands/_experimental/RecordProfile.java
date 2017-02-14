@@ -12,8 +12,8 @@ import com.techhounds.TrajectoryPair;
 import com.techhounds.lib.util.Command200Hz;
 import com.techhounds.subsystems.DriveSubsystem;
 
-import jaci.pathfinder.Pathfinder;
-import jaci.pathfinder.Trajectory;
+//import jaci.pathfinder.Pathfinder;
+//import jaci.pathfinder.Trajectory;
 
 public class RecordProfile extends Command200Hz {
 	
@@ -26,8 +26,8 @@ public class RecordProfile extends Command200Hz {
 	private double maxAcc;
 	private double minAcc;
 	
-	public ArrayList<Trajectory.Segment> segmentsLeft = new ArrayList<>();
-	public ArrayList<Trajectory.Segment> segmentsRight = new ArrayList<>();
+//	public ArrayList<Trajectory.Segment> segmentsLeft = new ArrayList<>();
+//	public ArrayList<Trajectory.Segment> segmentsRight = new ArrayList<>();
 	
 	public RecordProfile() {
 		super(100.0);
@@ -40,8 +40,8 @@ public class RecordProfile extends Command200Hz {
 		lastRightVelocity = 0;
 		maxAcc = 0;
 		
-		segmentsLeft = new ArrayList<>();
-		segmentsRight = new ArrayList<>();
+		//segmentsLeft = new ArrayList<>();
+		//segmentsRight = new ArrayList<>();
 		
 		drive.encodersReset();
 		currHeading = drive.getRotationX();
@@ -79,7 +79,7 @@ public class RecordProfile extends Command200Hz {
 		double leftJerk = (leftAcceleration - lastLeftAcc) / measuredDt;
 		double rightJerk = (rightAcceleration - lastRightAcc) / measuredDt;
 		
-		double heading = Pathfinder.d2r(Pathfinder.boundHalfDegrees(-drive.getRotationX() - currHeading));
+		//double heading = Pathfinder.d2r(Pathfinder.boundHalfDegrees(-drive.getRotationX() - currHeading));
 		
 		lastLeftVelocity = leftVelocity;
 		lastRightVelocity = rightVelocity;
@@ -87,11 +87,11 @@ public class RecordProfile extends Command200Hz {
 		lastLeftAcc = leftAcceleration;
 		lastRightAcc = rightAcceleration;
 		
-		Trajectory.Segment segmentLeft = new Trajectory.Segment(dt, x, y, leftPosition, leftVelocity, leftAcceleration, leftJerk, heading);
+		/*Trajectory.Segment segmentLeft = new Trajectory.Segment(dt, x, y, leftPosition, leftVelocity, leftAcceleration, leftJerk, heading);
 		Trajectory.Segment segmentRight = new Trajectory.Segment(dt, x, y, rightPosition, rightVelocity, rightAcceleration, rightJerk, heading);
 		
 		segmentsLeft.add(segmentLeft);
-		segmentsRight.add(segmentRight);
+		segmentsRight.add(segmentRight);*/
 	}
 
 	@Override
@@ -101,7 +101,7 @@ public class RecordProfile extends Command200Hz {
 
 	@Override
 	protected void end() {
-		Trajectory.Segment[] left = new Trajectory.Segment[segmentsLeft.size()];
+		/*Trajectory.Segment[] left = new Trajectory.Segment[segmentsLeft.size()];
 		Trajectory.Segment[] right = new Trajectory.Segment[segmentsRight.size()];
 		
 		Thread thread = new Thread(new SaveProfile());
@@ -110,7 +110,7 @@ public class RecordProfile extends Command200Hz {
 		segmentsLeft.toArray(left);
 		segmentsRight.toArray(right);
 
-		TrajectoryLoader.recorded = new TrajectoryPair(new Trajectory(left), new Trajectory(right));
+		TrajectoryLoader.recorded = new TrajectoryPair(new Trajectory(left), new Trajectory(right));*/
 	}
 	
 	public class SaveProfile implements Runnable {
@@ -118,14 +118,14 @@ public class RecordProfile extends Command200Hz {
 		@Override
 		public void run() {
 
-			Trajectory.Segment[] left = new Trajectory.Segment[segmentsLeft.size()];
+			/*Trajectory.Segment[] left = new Trajectory.Segment[segmentsLeft.size()];
 			Trajectory.Segment[] right = new Trajectory.Segment[segmentsRight.size()];
 			
 			segmentsLeft.toArray(left);
 			segmentsRight.toArray(right);
 
 			Trajectory leftTrajectory = new Trajectory(left);
-			Trajectory rightTrajectory = new Trajectory(right);
+			Trajectory rightTrajectory = new Trajectory(right);*/
 			
 			Date date = Calendar.getInstance().getTime();
 			String currTime = "RECORDED_" + date.getDate() + "-" + (1 + date.getMonth()) + "-" + (1900 + date.getYear()) + "-AT-" + date.getHours() + "-" + date.getMinutes() + "-" + date.getSeconds();
@@ -143,8 +143,8 @@ public class RecordProfile extends Command200Hz {
 				PrintWriter printLeft = new PrintWriter(fileLeft);
 				PrintWriter printRight = new PrintWriter(fileRight);
 
-				serializeTrajectory(printLeft, leftTrajectory);
-				serializeTrajectory(printRight, rightTrajectory);
+				//serializeTrajectory(printLeft, leftTrajectory);
+				//serializeTrajectory(printRight, rightTrajectory);
 				
 				printLeft.close();
 				printRight.close();
@@ -154,7 +154,7 @@ public class RecordProfile extends Command200Hz {
 		}
 	}
 	
-	 private void serializeTrajectory(PrintWriter print, Trajectory trajectory) {
+	/* private void serializeTrajectory(PrintWriter print, Trajectory trajectory) {
 		    String content = "";
 		    for (int i = 0; i < trajectory.length(); ++i) {
 		      Trajectory.Segment segment = trajectory.get(i);
@@ -164,5 +164,5 @@ public class RecordProfile extends Command200Hz {
 		              segment.position, segment.velocity, segment.acceleration, segment.jerk,
 		              segment.heading));
 		    }
-	  }
+	  }*/
 }

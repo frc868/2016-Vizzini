@@ -1,12 +1,12 @@
 package com.techhounds;
 
-import jaci.pathfinder.Trajectory;
+//import jaci.pathfinder.Trajectory;
 
 public class TrajectoryPair {
 
-	private Trajectory left, right;
+	//private Trajectory left, right;
 	
-	public TrajectoryPair(Trajectory left, Trajectory right) {
+	/*public TrajectoryPair(Trajectory left, Trajectory right) {
 		this.left = left;
 		this.right = right;
 	}
@@ -17,5 +17,5 @@ public class TrajectoryPair {
 	
 	public Trajectory getRight() {
 		return right;
-	}
+	}*/
 }

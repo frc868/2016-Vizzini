@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.PrintWriter;
 
 import com.ctre.CANTalon;
+import com.ctre.CANTalon.TalonControlMode;
 import com.techhounds.Robot;
 import com.techhounds.RobotMap;
 

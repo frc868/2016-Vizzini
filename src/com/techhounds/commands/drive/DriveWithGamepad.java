@@ -9,7 +9,6 @@ import com.techhounds.subsystems.DriveSubsystem;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
-import jaci.pathfinder.Trajectory;
 
 /**
  *

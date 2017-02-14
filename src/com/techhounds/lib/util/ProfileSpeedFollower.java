@@ -1,21 +1,21 @@
 package com.techhounds.lib.util;
 
-import jaci.pathfinder.Pathfinder;
-import jaci.pathfinder.Trajectory;
+//import jaci.pathfinder.Pathfinder;
+//import jaci.pathfinder.Trajectory;
 
 public class ProfileSpeedFollower {
 	
-	private Trajectory trajectory;
+	//private Trajectory trajectory;
 	private Double Kp, Ki, Kd, Kv, Ka, Kturn;
 	
 	private int currSeg;
 	private double lastError, sumError;
 	
-	public ProfileSpeedFollower(Trajectory trajectory) {
-		this.trajectory = trajectory;
+	public ProfileSpeedFollower(){//Trajectory trajectory) {
+		//this.trajectory = trajectory;
 	}
 	
-	public ProfileSpeedFollower(Trajectory trajectory, double Kp, double Ki, double Kd, double Kv, double Ka) {
+	/*public ProfileSpeedFollower(Trajectory trajectory, double Kp, double Ki, double Kd, double Kv, double Ka) {
 		this(trajectory);
 		setGains(Kp, Ki, Kd, Kv, Ka);
 	}
@@ -72,5 +72,5 @@ public class ProfileSpeedFollower {
 		currSeg++;
 		
 		return output;
-	}
+	}*/
 }

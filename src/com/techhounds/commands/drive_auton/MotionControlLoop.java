@@ -8,10 +8,10 @@ import com.techhounds.subsystems.DriveSubsystem;
 import com.techhounds.subsystems.GyroSubsystem;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import jaci.pathfinder.Pathfinder;
+/*import jaci.pathfinder.Pathfinder;
 import jaci.pathfinder.Trajectory;
 import jaci.pathfinder.followers.DistanceFollower;
-
+*/
 public class MotionControlLoop {
 
 	private static MotionControlLoop instance;
@@ -19,7 +19,7 @@ public class MotionControlLoop {
 	private Timer timer = null;
 	private boolean heading = true;
 	
-	private DistanceFollower leftFollower, rightFollower;
+	//private DistanceFollower leftFollower, rightFollower;
 	private boolean tuneTurn;
 
 	public static MotionControlLoop getInstance() {
@@ -37,7 +37,7 @@ public class MotionControlLoop {
 	private int currSeg;
 	private double lastError;
 	
-	private Trajectory left, right;
+	//private Trajectory left, right;
 	
 	public void useHeading(boolean heading) {
 		this.heading = heading;
@@ -52,9 +52,9 @@ public class MotionControlLoop {
 		this.Kturn = Kturn;
 	}
 	
-	public void setTrajectory(Trajectory left, Trajectory right) {
+	/*public void setTrajectory(Trajectory left, Trajectory right) {
 		this.left = left; this.right = right;
-	}
+	}*/
 	
 	public void start() {
 		if(timer == null) {
@@ -66,14 +66,14 @@ public class MotionControlLoop {
 			
 			drive.encodersReset();
 			
-			leftFollower = new DistanceFollower(left);
+			/*leftFollower = new DistanceFollower(left);
 			rightFollower = new DistanceFollower(right);
 			
 			tuneTurn = SmartDashboard.getBoolean("Tune Turn?", false);
 			Kturn = SmartDashboard.getNumber("Kturn_Motion", Kturn);
 
 			leftFollower.configurePIDVA(Kp, Ki, Kd, Kv, Ka);
-			rightFollower.configurePIDVA(Kp, Ki, Kd, Kv, Ka);
+			rightFollower.configurePIDVA(Kp, Ki, Kd, Kv, Ka);*/
 			
 			timer.scheduleAtFixedRate(new DriveTask(), 0, (long) ((1 / 100.0) * 1000));
 		}
@@ -91,7 +91,7 @@ public class MotionControlLoop {
 	}
 	
 	public boolean finished() {
-		return leftFollower.isFinished();
+		return true;//leftFollower.isFinished();
 	}
 	
 	public class DriveTask extends TimerTask {
@@ -99,24 +99,24 @@ public class MotionControlLoop {
 		@Override
 		public void run() {
 			
-			double leftSpeed = leftFollower.calculate(drive.getLeftDistance());
-			double rightSpeed = rightFollower.calculate(drive.getRightDistance());
+			//double leftSpeed = leftFollower.calculate(drive.getLeftDistance());
+			//double rightSpeed = rightFollower.calculate(drive.getRightDistance());
 
 			if(tuneTurn) {
-				leftSpeed = 0; rightSpeed = 0;
+				//leftSpeed = 0; rightSpeed = 0;
 			}
 			
 			double turn = 0;//leftFollower.calculateHeading(drive.getRotationX() - ProfileDrive.this.currHeading);
 			
-			double goalHeading = Pathfinder.boundHalfDegrees(Pathfinder.r2d(leftFollower.getHeading()));
+			//double goalHeading = Pathfinder.boundHalfDegrees(Pathfinder.r2d(leftFollower.getHeading()));
 			currSeg++;
 
-			double currHeading = Pathfinder.boundHalfDegrees(-drive.getRotationX() - MotionControlLoop.this.currHeading);
-			double angleDiff = goalHeading - currHeading;
+			//double currHeading = Pathfinder.boundHalfDegrees(-drive.getRotationX() - MotionControlLoop.this.currHeading);
+			//double angleDiff = goalHeading - currHeading;
 
-			turn = heading ? Kturn * angleDiff : 0;// calculateTurn(angleDiff);
+			//turn = heading ? Kturn * angleDiff : 0;// calculateTurn(angleDiff);
 			
-			drive.setPower(rightSpeed - turn, leftSpeed + turn);
+			//drive.setPower(rightSpeed - turn, leftSpeed + turn);
 		}
 		
 		public double calculateTurn(double currAngle) {
@@ -136,7 +136,7 @@ public class MotionControlLoop {
 			return offset;
 		}
 		
-		public double calculate(Trajectory trajectory, double distance) {
+		/*public double calculate(Trajectory trajectory, double distance) {
 			
 			if(finished())
 				return 0;
@@ -156,7 +156,7 @@ public class MotionControlLoop {
 			lastError = error;
 			
 			return output;
-		}
+		}*/
 		
 	}
 	

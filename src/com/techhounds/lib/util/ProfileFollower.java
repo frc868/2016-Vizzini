@@ -1,21 +1,21 @@
 package com.techhounds.lib.util;
 
-import jaci.pathfinder.Pathfinder;
-import jaci.pathfinder.Trajectory;
+//import jaci.pathfinder.Pathfinder;
+//import jaci.pathfinder.Trajectory;
 
 public class ProfileFollower {
 	
-	private Trajectory trajectory;
+	//private Trajectory trajectory;
 	private Double Kp, Ki, Kd, Kv, Ka, Kturn;
 	
 	private int currSeg;
 	private double lastError;
 	
-	public ProfileFollower(Trajectory trajectory) {
-		this.trajectory = trajectory;
+	public ProfileFollower(){//Trajectory trajectory) {
+		//this.trajectory = trajectory;
 	}
 	
-	public ProfileFollower(Trajectory trajectory, double Kp, double Ki, double Kd, double Kv, double Ka) {
+	/*public ProfileFollower(Trajectory trajectory, double Kp, double Ki, double Kd, double Kv, double Ka) {
 		this(trajectory);
 		setGains(Kp, Ki, Kd, Kv, Ka);
 	}
@@ -23,7 +23,7 @@ public class ProfileFollower {
 	public ProfileFollower(Trajectory trajectory, double Kp, double Ki, double Kd, double Kv, double Ka, double Kturn) {
 		this(trajectory);
 		setGains(Kp, Ki, Kd, Kv, Ka, Kturn);
-	}
+	}*/
 
 	public void setGains(double Kp, double Ki, double Kd, double Kv, double Ka) {
 		this.Kp = Kp;
@@ -43,17 +43,17 @@ public class ProfileFollower {
 		currSeg = 0;
 	}
 	
-	public boolean isFinished() {
+	/*public boolean isFinished() {
 		return currSeg > trajectory.length() - 1;
-	}
+	}*/
 	
 	public double calculateOutput(double currDistance) {
 		if(Kp == null || Ki == null || Kd == null || Kv == null || Ka == null 
-				|| isFinished()) {
+				){//|| isFinished()) {
 			return 0;
 		}
 		
-		Trajectory.Segment segment = trajectory.get(currSeg);
+		/*Trajectory.Segment segment = trajectory.get(currSeg);
 			
 		double error = currDistance - segment.position;
 		
@@ -67,19 +67,19 @@ public class ProfileFollower {
 		
 		lastError = error;
 		currSeg++;
-		
-		return output;
+		*/
+		return 0;//output;
 	}
 	
 	public double getHeading() {
-		if(isFinished())
+		//if(isFinished())
 			return 0;
-		return trajectory.get(currSeg).heading;
+		//return trajectory.get(currSeg).heading;
 	}
 	
 	public double calculateHeading(double currHeading) {
-		if(Kturn == null || isFinished())
+		//if(Kturn == null || isFinished())
 			return 0;
-		return Kturn * (Pathfinder.boundHalfDegrees(trajectory.get(currSeg).heading) - Pathfinder.boundHalfDegrees(currHeading));
+		//return Kturn * (Pathfinder.boundHalfDegrees(trajectory.get(currSeg).heading) - Pathfinder.boundHalfDegrees(currHeading));
 	}
 }
